@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="17709" systemVersion="19H114" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="Flyght" representedClassName="Flyght" syncable="YES" codeGenerationType="class">
+        <attribute name="flyghtID" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="flyghtNumber" optional="YES" attributeType="String"/>
+        <relationship name="user" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="flyghts" inverseEntity="User"/>
+    </entity>
+    <entity name="User" representedClassName="User" syncable="YES" codeGenerationType="class">
+        <attribute name="password" optional="YES" attributeType="String"/>
+        <attribute name="userID" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="userName" optional="YES" attributeType="String"/>
+        <relationship name="flyghts" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Flyght" inverseName="user" inverseEntity="Flyght"/>
+    </entity>
+    <elements>
+        <element name="Flyght" positionX="74" positionY="150" width="128" height="88"/>
+        <element name="User" positionX="-373" positionY="18" width="128" height="103"/>
+    </elements>
+</model>

@@ -76,3 +76,64 @@ fastlane/test_output
 # https://github.com/johnno1962/injectionforxcode
 
 iOSInjectionProject/
+Aviato/Podfile.lock
+Aviato/Pods/Manifest.lock
+Aviato/Pods/Pods.xcodeproj/project.pbxproj
+Aviato/Pods/SnapKit/LICENSE
+Aviato/Pods/SnapKit/README.md
+Aviato/Pods/SnapKit/Source/Constraint.swift
+Aviato/Pods/SnapKit/Source/ConstraintAttributes.swift
+Aviato/Pods/SnapKit/Source/ConstraintConfig.swift
+Aviato/Pods/SnapKit/Source/ConstraintConstantTarget.swift
+Aviato/Pods/SnapKit/Source/ConstraintDescription.swift
+Aviato/Pods/SnapKit/Source/ConstraintDirectionalInsets.swift
+Aviato/Pods/SnapKit/Source/ConstraintDirectionalInsetTarget.swift
+Aviato/Pods/SnapKit/Source/ConstraintDSL.swift
+Aviato/Pods/SnapKit/Source/ConstraintInsets.swift
+Aviato/Pods/SnapKit/Source/ConstraintInsetTarget.swift
+Aviato/Pods/SnapKit/Source/ConstraintItem.swift
+Aviato/Pods/SnapKit/Source/ConstraintLayoutGuide+Extensions.swift
+Aviato/Pods/SnapKit/Source/ConstraintLayoutGuide.swift
+Aviato/Pods/SnapKit/Source/ConstraintLayoutGuideDSL.swift
+Aviato/Pods/SnapKit/Source/ConstraintLayoutSupport.swift
+Aviato/Pods/SnapKit/Source/ConstraintLayoutSupportDSL.swift
+Aviato/Pods/SnapKit/Source/ConstraintMaker.swift
+Aviato/Pods/SnapKit/Source/ConstraintMakerEditable.swift
+Aviato/Pods/SnapKit/Source/ConstraintMakerExtendable.swift
+Aviato/Pods/SnapKit/Source/ConstraintMakerFinalizable.swift
+Aviato/Pods/SnapKit/Source/ConstraintMakerPriortizable.swift
+Aviato/Pods/SnapKit/Source/ConstraintMakerRelatable.swift
+Aviato/Pods/SnapKit/Source/ConstraintMultiplierTarget.swift
+Aviato/Pods/SnapKit/Source/ConstraintOffsetTarget.swift
+Aviato/Pods/SnapKit/Source/ConstraintPriority.swift
+Aviato/Pods/SnapKit/Source/ConstraintPriorityTarget.swift
+Aviato/Pods/SnapKit/Source/ConstraintRelatableTarget.swift
+Aviato/Pods/SnapKit/Source/ConstraintRelation.swift
+Aviato/Pods/SnapKit/Source/ConstraintView+Extensions.swift
+Aviato/Pods/SnapKit/Source/ConstraintView.swift
+Aviato/Pods/SnapKit/Source/ConstraintViewDSL.swift
+Aviato/Pods/SnapKit/Source/Debugging.swift
+Aviato/Pods/SnapKit/Source/LayoutConstraint.swift
+Aviato/Pods/SnapKit/Source/LayoutConstraintItem.swift
+Aviato/Pods/SnapKit/Source/Typealiases.swift
+Aviato/Pods/SnapKit/Source/UILayoutSupport+Extensions.swift
+Aviato/Pods/Target Support Files/Pods-Aviato/Pods-Aviato-acknowledgements.markdown
+Aviato/Pods/Target Support Files/Pods-Aviato/Pods-Aviato-acknowledgements.plist
+Aviato/Pods/Target Support Files/Pods-Aviato/Pods-Aviato-dummy.m
+Aviato/Pods/Target Support Files/Pods-Aviato/Pods-Aviato-frameworks-Debug-input-files.xcfilelist
+Aviato/Pods/Target Support Files/Pods-Aviato/Pods-Aviato-frameworks-Debug-output-files.xcfilelist
+Aviato/Pods/Target Support Files/Pods-Aviato/Pods-Aviato-frameworks-Release-input-files.xcfilelist
+Aviato/Pods/Target Support Files/Pods-Aviato/Pods-Aviato-frameworks-Release-output-files.xcfilelist
+Aviato/Pods/Target Support Files/Pods-Aviato/Pods-Aviato-frameworks.sh
+Aviato/Pods/Target Support Files/Pods-Aviato/Pods-Aviato-Info.plist
+Aviato/Pods/Target Support Files/Pods-Aviato/Pods-Aviato-umbrella.h
+Aviato/Pods/Target Support Files/Pods-Aviato/Pods-Aviato.debug.xcconfig
+Aviato/Pods/Target Support Files/Pods-Aviato/Pods-Aviato.modulemap
+Aviato/Pods/Target Support Files/Pods-Aviato/Pods-Aviato.release.xcconfig
+Aviato/Pods/Target Support Files/SnapKit/SnapKit-dummy.m
+Aviato/Pods/Target Support Files/SnapKit/SnapKit-Info.plist
+Aviato/Pods/Target Support Files/SnapKit/SnapKit-prefix.pch
+Aviato/Pods/Target Support Files/SnapKit/SnapKit-umbrella.h
+Aviato/Pods/Target Support Files/SnapKit/SnapKit.debug.xcconfig
+Aviato/Pods/Target Support Files/SnapKit/SnapKit.modulemap
+Aviato/Pods/Target Support Files/SnapKit/SnapKit.release.xcconfig

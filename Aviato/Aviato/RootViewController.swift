@@ -8,27 +8,41 @@
 import UIKit
 
 class RootViewController: UIViewController {
-    private var currentViewController: UIViewController
+    private var currentViewController: UIViewController = UIViewController()
     
-    init() {
-        self.currentViewController = LoginViewController()
-        super.init(nibName: nil, bundle: nil)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .systemRed
-        // Do any additional setup after loading the view.
-        
-        addChild(currentViewController)
-        currentViewController.view.frame = view.bounds
-        view.addSubview(currentViewController.view)
-        currentViewController.didMove(toParent: self)
-        
+        showLoginScreen()
+     
+    }
+    
+    func showLoginScreen() {
+        let loginViewController = LoginViewController()
+        addChild(loginViewController)
+        loginViewController.view.frame = view.bounds
+        view.addSubview(loginViewController.view)
+        loginViewController.didMove(toParent: self)
+        currentViewController.willMove(toParent: nil)
+        currentViewController.view.removeFromSuperview()
+        currentViewController.removeFromParent()
+        currentViewController = loginViewController
+    }
+    
+    func switchToMainScreen() {
+//        let mainViewController = MainViewController()
+        let router = MainRouter()
+        let mainViewController = router.getTabBar()
+        addChild(mainViewController)
+        mainViewController.view.frame = view.bounds
+        view.addSubview(mainViewController.view)
+        mainViewController.didMove(toParent: self)
+        currentViewController.willMove(toParent: nil)
+        currentViewController.view.removeFromSuperview()
+        currentViewController.removeFromParent()
+        currentViewController = mainViewController
+        //       let mainScreen = UINavigationController(rootViewController: mainViewController)
     }
     
     

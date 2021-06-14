@@ -8,8 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		9F717A38B4E8E8A63DCEFD64 /* Pods_Aviato.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D1F596971E5D46456BEB480A /* Pods_Aviato.framework */; };
+		F53251B42677BF0700CA57B6 /* MainRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F53251B32677BF0700CA57B6 /* MainRouter.swift */; };
+		F53251B72677C0F800CA57B6 /* FavoriteFlyghtListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F53251B62677C0F800CA57B6 /* FavoriteFlyghtListViewController.swift */; };
 		F5392EED2677364400866C8F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5392EEC2677364400866C8F /* AppDelegate.swift */; };
-		F5392EEF2677364400866C8F /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5392EEE2677364400866C8F /* SceneDelegate.swift */; };
 		F5392EF12677364400866C8F /* RootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5392EF02677364400866C8F /* RootViewController.swift */; };
 		F5392EF72677364400866C8F /* Aviato.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F5392EF52677364400866C8F /* Aviato.xcdatamodeld */; };
 		F5392EF92677364700866C8F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F5392EF82677364700866C8F /* Assets.xcassets */; };
@@ -28,9 +29,10 @@
 		C80B9156E75F6690218BBF02 /* Pods-Aviato.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Aviato.release.xcconfig"; path = "Target Support Files/Pods-Aviato/Pods-Aviato.release.xcconfig"; sourceTree = "<group>"; };
 		D1F596971E5D46456BEB480A /* Pods_Aviato.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Aviato.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D8466827EDC1A0EE70C1E815 /* Pods-Aviato.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Aviato.debug.xcconfig"; path = "Target Support Files/Pods-Aviato/Pods-Aviato.debug.xcconfig"; sourceTree = "<group>"; };
+		F53251B32677BF0700CA57B6 /* MainRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainRouter.swift; sourceTree = "<group>"; };
+		F53251B62677C0F800CA57B6 /* FavoriteFlyghtListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteFlyghtListViewController.swift; sourceTree = "<group>"; };
 		F5392EE92677364400866C8F /* Aviato.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Aviato.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F5392EEC2677364400866C8F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		F5392EEE2677364400866C8F /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		F5392EF02677364400866C8F /* RootViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootViewController.swift; sourceTree = "<group>"; };
 		F5392EF62677364400866C8F /* Aviato.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Aviato.xcdatamodel; sourceTree = "<group>"; };
 		F5392EF82677364700866C8F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -97,11 +99,12 @@
 			isa = PBXGroup;
 			children = (
 				F5392EEC2677364400866C8F /* AppDelegate.swift */,
-				F5392EEE2677364400866C8F /* SceneDelegate.swift */,
 				F5392EF02677364400866C8F /* RootViewController.swift */,
 				F5392F0526774C6700866C8F /* LoginViewController.swift */,
+				F53251B32677BF0700CA57B6 /* MainRouter.swift */,
 				F5392F142677718C00866C8F /* UserViewModel.swift */,
 				F5392F172677719B00866C8F /* FlyghtViewModel.swift */,
+				F53251B62677C0F800CA57B6 /* FavoriteFlyghtListViewController.swift */,
 				F5392F0E2677571E00866C8F /* MainViewController.swift */,
 				F5392F0826774CA100866C8F /* StorageManager.swift */,
 				F5392F0B26774CB100866C8F /* NetworkManager.swift */,
@@ -231,9 +234,10 @@
 				F5392EF12677364400866C8F /* RootViewController.swift in Sources */,
 				F5392EED2677364400866C8F /* AppDelegate.swift in Sources */,
 				F5392F182677719B00866C8F /* FlyghtViewModel.swift in Sources */,
-				F5392EEF2677364400866C8F /* SceneDelegate.swift in Sources */,
+				F53251B72677C0F800CA57B6 /* FavoriteFlyghtListViewController.swift in Sources */,
 				F5392F0C26774CB100866C8F /* NetworkManager.swift in Sources */,
 				F5392F0926774CA100866C8F /* StorageManager.swift in Sources */,
+				F53251B42677BF0700CA57B6 /* MainRouter.swift in Sources */,
 				F5392F0626774C6700866C8F /* LoginViewController.swift in Sources */,
 				F5392EF72677364400866C8F /* Aviato.xcdatamodeld in Sources */,
 				F5392F152677718C00866C8F /* UserViewModel.swift in Sources */,
@@ -382,6 +386,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 6PXD6WC3AQ;
 				INFOPLIST_FILE = Aviato/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -402,6 +407,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 6PXD6WC3AQ;
 				INFOPLIST_FILE = Aviato/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

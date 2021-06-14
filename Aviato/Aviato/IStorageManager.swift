@@ -8,6 +8,6 @@
 import Foundation
 
 protocol IStorageManager {
-    func loadUsers() -> [User]
-    func addUser(user: UserViewModel)
+    func loadUser(username: String) -> UserViewModel?
+    func addUser(user: UserViewModel, completion: @escaping () -> Void)
 }

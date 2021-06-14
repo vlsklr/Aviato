@@ -14,14 +14,16 @@ class LoginViewController: UIViewController {
     let passwordField: UITextField = UITextField()
     let authButton: UIButton = UIButton()
     let registerButton: UIButton = UIButton()
+    
+    let storage: IStorageManager = StorageManager()
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.view.backgroundColor = .green
         setupUsernameField()
         setupPasswordField()
         setupAuthButton()
         setupRegisterButton()
-        self.view.backgroundColor = .green
     }
     
     func setupUsernameField() {
@@ -79,20 +81,17 @@ class LoginViewController: UIViewController {
     
     @objc func authAction() {
         print("Auth")
+        let user = storage.loadUser(username: userNameField.text!)
+        //AppDelegate.shared.rootViewController.switchToMainScreen()
     }
     
     @objc func registerAction() {
         print("Register")
+        let user = UserViewModel(username: userNameField.text!, password: passwordField.text!)
+        storage.addUser(user: user) {
+            //AppDelegate.shared.rootViewController.switchToMainScreen()
+
+        }
+        
     }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

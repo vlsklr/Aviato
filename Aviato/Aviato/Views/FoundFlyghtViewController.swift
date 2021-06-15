@@ -60,6 +60,8 @@ class FoundFlyghtViewController: UIViewController {
     }
     
     @objc func addToFavorite() {
+        let nm = NetworkManager()
+        nm.reques()
         let tempFlyght = FlyghtViewModel(holder: self.userID, flyghtID: UUID(), flyghtNumber: "1488")
         
 //        let temp:[FlyghtViewModel]? = tmpStorage.getFlyghts(userID: userID)

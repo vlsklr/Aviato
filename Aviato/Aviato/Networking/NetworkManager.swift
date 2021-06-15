@@ -13,7 +13,7 @@ class NetworkManager {
         "x-rapidapi-host": "aerodatabox.p.rapidapi.com"
     ]
     func reques() {
-        let request = NSMutableURLRequest(url: NSURL(string: "https://aerodatabox.p.rapidapi.com/flights/number/KL1395/2020-06-10")! as URL,                                             cachePolicy: .useProtocolCachePolicy,                                         timeoutInterval: 10.0)
+        let request = NSMutableURLRequest(url: NSURL(string: "https://aerodatabox.p.rapidapi.com/flights/number/S75118/2021-06-16")! as URL,                                             cachePolicy: .useProtocolCachePolicy,                                         timeoutInterval: 10.0)
         
     //    let url = URL(string: "https://aerodatabox.p.rapidapi.com/flights/number/KL1395/2020-06-10")! //ТАК ДЕЛАТЬ НЕЛЬЗЯ !!!
 //        var request = URLRequest(url: url)

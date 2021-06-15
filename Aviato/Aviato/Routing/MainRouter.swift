@@ -10,6 +10,7 @@ import UIKit
 
 class MainRouter {
     
+    let userID: UUID
     private let tabBar: UITabBarController
     
     private let mainNavigationController: UINavigationController
@@ -19,14 +20,15 @@ class MainRouter {
     private let flyghtListViewController: FavoriteFlyghtListViewController
     
     
-    init() {
+    init(userID: UUID) {
+        self.userID = userID
         self.tabBar = UITabBarController()
         
-        self.mainViewController = MainViewController()
+        self.mainViewController = MainViewController(userID: self.userID)
         self.mainNavigationController = UINavigationController(rootViewController: self.mainViewController)
         self.mainNavigationController.tabBarItem.title = "123"
         
-        self.flyghtListViewController = FavoriteFlyghtListViewController()
+        self.flyghtListViewController = FavoriteFlyghtListViewController(userID: self.userID )
         self.flyghtListNavigationController = UINavigationController(rootViewController: self.flyghtListViewController)
         self.flyghtListNavigationController.tabBarItem.title = "345"
         

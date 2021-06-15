@@ -30,9 +30,9 @@ class RootViewController: UIViewController {
         currentViewController = loginViewController
     }
     
-    func switchToMainScreen() {
+    func switchToMainScreen(userID: UUID) {
 //        let mainViewController = MainViewController()
-        let router = MainRouter()
+        let router = MainRouter(userID: userID)
         let mainViewController = router.getTabBar()
         addChild(mainViewController)
         mainViewController.view.frame = view.bounds

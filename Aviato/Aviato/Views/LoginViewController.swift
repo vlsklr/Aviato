@@ -84,9 +84,9 @@ class LoginViewController: UIViewController {
         guard let username = userNameField.text, let password = passwordField.text else{return}
         if !username.isEmpty && !password.isEmpty{
             let user = storage.loadUser(username: username)
-            if user?.username == username && user?.password == password {
+            if user?.username == username && user?.password == password && user?.userID != nil {
                 print("logged in")
-                AppDelegate.shared.rootViewController.switchToMainScreen()
+                AppDelegate.shared.rootViewController.switchToMainScreen(userID: user!.userID)
             }
         }
         //AppDelegate.shared.rootViewController.switchToMainScreen()
@@ -96,7 +96,7 @@ class LoginViewController: UIViewController {
         print("Register")
         let user = UserViewModel(userID: UUID(), username: userNameField.text!, password: passwordField.text!)
         storage.addUser(user: user) {
-            AppDelegate.shared.rootViewController.switchToMainScreen()
+            AppDelegate.shared.rootViewController.switchToMainScreen(userID: user.userID)
             
         }
         

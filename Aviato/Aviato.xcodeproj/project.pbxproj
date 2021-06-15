@@ -13,6 +13,8 @@
 		9F717A38B4E8E8A63DCEFD64 /* Pods_Aviato.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D1F596971E5D46456BEB480A /* Pods_Aviato.framework */; };
 		F53251B42677BF0700CA57B6 /* MainRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F53251B32677BF0700CA57B6 /* MainRouter.swift */; };
 		F53251B72677C0F800CA57B6 /* FavoriteFlyghtListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F53251B62677C0F800CA57B6 /* FavoriteFlyghtListViewController.swift */; };
+		F53912E4267919BB00EBC14F /* FlyghtViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F53912E3267919BB00EBC14F /* FlyghtViewCell.swift */; };
+		F53912E72679235200EBC14F /* FavoriteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F53912E62679235200EBC14F /* FavoriteViewController.swift */; };
 		F5392EED2677364400866C8F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5392EEC2677364400866C8F /* AppDelegate.swift */; };
 		F5392EF12677364400866C8F /* RootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5392EF02677364400866C8F /* RootViewController.swift */; };
 		F5392EF72677364400866C8F /* Aviato.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F5392EF52677364400866C8F /* Aviato.xcdatamodeld */; };
@@ -37,6 +39,8 @@
 		D8466827EDC1A0EE70C1E815 /* Pods-Aviato.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Aviato.debug.xcconfig"; path = "Target Support Files/Pods-Aviato/Pods-Aviato.debug.xcconfig"; sourceTree = "<group>"; };
 		F53251B32677BF0700CA57B6 /* MainRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainRouter.swift; sourceTree = "<group>"; };
 		F53251B62677C0F800CA57B6 /* FavoriteFlyghtListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteFlyghtListViewController.swift; sourceTree = "<group>"; };
+		F53912E3267919BB00EBC14F /* FlyghtViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlyghtViewCell.swift; sourceTree = "<group>"; };
+		F53912E62679235200EBC14F /* FavoriteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteViewController.swift; sourceTree = "<group>"; };
 		F5392EE92677364400866C8F /* Aviato.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Aviato.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F5392EEC2677364400866C8F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F5392EF02677364400866C8F /* RootViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootViewController.swift; sourceTree = "<group>"; };
@@ -83,6 +87,65 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		F53912D82678FA2800EBC14F /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				F5392F142677718C00866C8F /* UserViewModel.swift */,
+				F5392F172677719B00866C8F /* FlyghtViewModel.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		F53912DA2678FA4C00EBC14F /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				F5392EF52677364400866C8F /* Aviato.xcdatamodeld */,
+				F5392F1D2677747500866C8F /* IStorageManager.swift */,
+				F5392F0826774CA100866C8F /* StorageManager.swift */,
+			);
+			path = CoreData;
+			sourceTree = "<group>";
+		};
+		F53912DC2678FA8200EBC14F /* Routing */ = {
+			isa = PBXGroup;
+			children = (
+				F53251B32677BF0700CA57B6 /* MainRouter.swift */,
+				F5392EF02677364400866C8F /* RootViewController.swift */,
+			);
+			path = Routing;
+			sourceTree = "<group>";
+		};
+		F53912DE2678FAB100EBC14F /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				F5392F0B26774CB100866C8F /* NetworkManager.swift */,
+				F5392F1A2677745700866C8F /* INetworkManager.swift */,
+			);
+			path = Networking;
+			sourceTree = "<group>";
+		};
+		F53912E02678FADE00EBC14F /* Presenters */ = {
+			isa = PBXGroup;
+			children = (
+				3C7F58D8267890D2001C1193 /* MainViewControllerPresenter.swift */,
+				3C7F58DB267890E7001C1193 /* IMainViewControllerPresenter.swift */,
+			);
+			path = Presenters;
+			sourceTree = "<group>";
+		};
+		F53912E12678FAFC00EBC14F /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				F5392F0526774C6700866C8F /* LoginViewController.swift */,
+				3C7F58DE2678973B001C1193 /* FoundFlyghtViewController.swift */,
+				F53912E62679235200EBC14F /* FavoriteViewController.swift */,
+				F53251B62677C0F800CA57B6 /* FavoriteFlyghtListViewController.swift */,
+				F5392F0E2677571E00866C8F /* MainViewController.swift */,
+				F53912E3267919BB00EBC14F /* FlyghtViewCell.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		F5392EE02677364400866C8F = {
 			isa = PBXGroup;
 			children = (
@@ -104,25 +167,16 @@
 		F5392EEB2677364400866C8F /* Aviato */ = {
 			isa = PBXGroup;
 			children = (
+				F53912E12678FAFC00EBC14F /* Views */,
+				F53912E02678FADE00EBC14F /* Presenters */,
+				F53912DE2678FAB100EBC14F /* Networking */,
+				F53912DC2678FA8200EBC14F /* Routing */,
+				F53912DA2678FA4C00EBC14F /* CoreData */,
+				F53912D82678FA2800EBC14F /* Models */,
 				F5392EEC2677364400866C8F /* AppDelegate.swift */,
-				F5392EF02677364400866C8F /* RootViewController.swift */,
-				F5392F0526774C6700866C8F /* LoginViewController.swift */,
-				F53251B32677BF0700CA57B6 /* MainRouter.swift */,
-				3C7F58DE2678973B001C1193 /* FoundFlyghtViewController.swift */,
-				F5392F142677718C00866C8F /* UserViewModel.swift */,
-				F5392F172677719B00866C8F /* FlyghtViewModel.swift */,
-				F53251B62677C0F800CA57B6 /* FavoriteFlyghtListViewController.swift */,
-				F5392F0E2677571E00866C8F /* MainViewController.swift */,
-				F5392F0826774CA100866C8F /* StorageManager.swift */,
-				3C7F58D8267890D2001C1193 /* MainViewControllerPresenter.swift */,
-				3C7F58DB267890E7001C1193 /* IMainViewControllerPresenter.swift */,
-				F5392F0B26774CB100866C8F /* NetworkManager.swift */,
-				F5392F1A2677745700866C8F /* INetworkManager.swift */,
-				F5392F1D2677747500866C8F /* IStorageManager.swift */,
 				F5392EF82677364700866C8F /* Assets.xcassets */,
 				F5392EFA2677364700866C8F /* LaunchScreen.storyboard */,
 				F5392EFD2677364700866C8F /* Info.plist */,
-				F5392EF52677364400866C8F /* Aviato.xcdatamodeld */,
 			);
 			path = Aviato;
 			sourceTree = "<group>";
@@ -243,6 +297,8 @@
 				F5392EF12677364400866C8F /* RootViewController.swift in Sources */,
 				F5392EED2677364400866C8F /* AppDelegate.swift in Sources */,
 				F5392F182677719B00866C8F /* FlyghtViewModel.swift in Sources */,
+				F53912E4267919BB00EBC14F /* FlyghtViewCell.swift in Sources */,
+				F53912E72679235200EBC14F /* FavoriteViewController.swift in Sources */,
 				3C7F58DF2678973B001C1193 /* FoundFlyghtViewController.swift in Sources */,
 				F53251B72677C0F800CA57B6 /* FavoriteFlyghtListViewController.swift in Sources */,
 				F5392F0C26774CB100866C8F /* NetworkManager.swift in Sources */,

@@ -11,7 +11,18 @@ import SnapKit
 class MainViewController: UIViewController {
     
     let searchBar: UISearchBar = UISearchBar()
+    let userID: UUID
     
+    init(userID: UUID) {
+        self.userID = userID
+
+        super.init(nibName: nil, bundle: nil)
+
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -53,7 +64,7 @@ extension MainViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         guard let searchBarText = searchBar.text else { return }
         print(searchBarText)
-        let popViewController = FoundFlyghtViewController()
+        let popViewController = FoundFlyghtViewController(userID: userID)
         self.present(popViewController, animated: true, completion: nil)
         //presenter?.downloadImage(stringURL: searchBarText)
     }

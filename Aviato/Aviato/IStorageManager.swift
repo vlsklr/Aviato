@@ -10,4 +10,6 @@ import Foundation
 protocol IStorageManager {
     func loadUser(username: String) -> UserViewModel?
     func addUser(user: UserViewModel, completion: @escaping () -> Void)
+    func AddFlyght(flyght: FlyghtViewModel)
+    func removeFlyght(flyght: FlyghtViewModel)
 }

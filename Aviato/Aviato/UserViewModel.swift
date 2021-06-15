@@ -8,7 +8,7 @@
 import Foundation
 
 struct UserViewModel {
-    let userID = UUID()
+    let userID: UUID
     var username: String
     var password: String
 }

@@ -16,7 +16,7 @@ class LoginViewController: UIViewController {
     let registerButton: UIButton = UIButton()
     
     let storage: IStorageManager = StorageManager()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .green
@@ -75,22 +75,29 @@ class LoginViewController: UIViewController {
             make.height.equalTo(25)
             make.width.equalTo(150)
         }
-
+        
         
     }
     
     @objc func authAction() {
         print("Auth")
-        let user = storage.loadUser(username: userNameField.text!)
+        guard let username = userNameField.text, let password = passwordField.text else{return}
+        if !username.isEmpty && !password.isEmpty{
+            let user = storage.loadUser(username: username)
+            if user?.username == username && user?.password == password {
+                print("logged in")
+                AppDelegate.shared.rootViewController.switchToMainScreen()
+            }
+        }
         //AppDelegate.shared.rootViewController.switchToMainScreen()
     }
     
     @objc func registerAction() {
         print("Register")
-        let user = UserViewModel(username: userNameField.text!, password: passwordField.text!)
+        let user = UserViewModel(userID: UUID(), username: userNameField.text!, password: passwordField.text!)
         storage.addUser(user: user) {
-            //AppDelegate.shared.rootViewController.switchToMainScreen()
-
+            AppDelegate.shared.rootViewController.switchToMainScreen()
+            
         }
         
     }

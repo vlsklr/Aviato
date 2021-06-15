@@ -8,6 +8,7 @@
 import Foundation
 
 struct FlyghtViewModel {
+    let holder: UUID
     let flyghtID = UUID()
     var flyghtNumber: String
 }

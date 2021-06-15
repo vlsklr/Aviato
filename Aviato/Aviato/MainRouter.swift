@@ -11,12 +11,13 @@ import UIKit
 class MainRouter {
     
     private let tabBar: UITabBarController
+    
     private let mainNavigationController: UINavigationController
     private let mainViewController: MainViewController
   
-    
     private let flyghtListNavigationController: UINavigationController
     private let flyghtListViewController: FavoriteFlyghtListViewController
+    
     
     init() {
         self.tabBar = UITabBarController()

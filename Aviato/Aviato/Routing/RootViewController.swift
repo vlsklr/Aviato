@@ -9,7 +9,7 @@ import UIKit
 
 class RootViewController: UIViewController {
     private var currentViewController: UIViewController = UIViewController()
-    
+    private var presenter: IPresenter = Presenter()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -19,7 +19,7 @@ class RootViewController: UIViewController {
     }
     
     func showLoginScreen() {
-        let loginViewController = LoginViewController()
+        let loginViewController = LoginViewController(presenter: presenter)
         addChild(loginViewController)
         loginViewController.view.frame = view.bounds
         view.addSubview(loginViewController.view)
@@ -30,9 +30,9 @@ class RootViewController: UIViewController {
         currentViewController = loginViewController
     }
     
-    func switchToMainScreen(userID: UUID) {
+    func switchToMainScreen() {
 //        let mainViewController = MainViewController()
-        let router = MainRouter(userID: userID)
+        let router = MainRouter(presenter: presenter)
         let mainViewController = router.getTabBar()
         addChild(mainViewController)
         mainViewController.view.frame = view.bounds

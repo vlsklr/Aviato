@@ -9,7 +9,7 @@ import UIKit
 import SnapKit
 
 class FlyghtViewCell: UITableViewCell {
-    
+//    var uid: UUID?
     let flyghtNumberLabel: UILabel = UILabel()
 
     override func awakeFromNib() {
@@ -24,6 +24,7 @@ class FlyghtViewCell: UITableViewCell {
     }
     
     func setupCell() {
+//        self.uid = uid
         contentView.addSubview(flyghtNumberLabel)
         flyghtNumberLabel.snp.makeConstraints { make in
               make.leading.equalToSuperview().offset(15)

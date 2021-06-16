@@ -48,6 +48,12 @@ class StorageManager: IStorageManager {
                 let object = Flyght(context: context)
                 object.flyghtID = flyght.flyghtID
                 object.flyghtNumber = flyght.flyghtNumber
+                object.aircraft = flyght.aircraft
+                object.airline = flyght.airline
+                object.arrivalAirport = flyght.arrivalAirport
+                object.arrivalTime = flyght.arrivalDate
+                object.departureTime = flyght.departureDate
+                object.departureAirport = flyght.departureAirport
                 object.user = user
                 try context.save()
                 //DispatchQueue.main.async { completion(nil) }
@@ -60,24 +66,30 @@ class StorageManager: IStorageManager {
     func getFlyghts(userID: UUID) -> [FlyghtViewModel]? {
         let fetchRequest: NSFetchRequest<Flyght> = Flyght.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "ANY user.userID = %@", "\(userID)")
-//        let objct = try! self.persistentContainer.viewContext.fetch(fetchRequest)
         //подумать над форс анвраппом
-        let flyghts = try! self.persistentContainer.viewContext.fetch(fetchRequest).compactMap { FlyghtViewModel(holder: userID, flyghtID: $0.flyghtID ?? UUID(), flyghtNumber: $0.flyghtNumber ?? "") }
+        let flyghts = try! self.persistentContainer.viewContext.fetch(fetchRequest).compactMap { FlyghtViewModel(holder: userID, flyghtID: $0.flyghtID ?? UUID(), flyghtNumber: $0.flyghtNumber ?? "", departureAirport: $0.departureAirport ?? "", arrivalAirport: $0.arrivalAirport ?? "", departureDate: $0.departureTime ?? "", arrivalDate: $0.arrivalTime ?? "", aircraft: $0.aircraft ?? "", airline: $0.airline ?? "" )
+        }
         return flyghts
     }
     
     func getFlyght(flyghtID: UUID) -> FlyghtViewModel? {
         let fetchRequest: NSFetchRequest<Flyght> = Flyght.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "flyghtID = %@", "\(flyghtID)")
-//        let objct = try! self.persistentContainer.viewContext.fetch(fetchRequest)
+        //        let objct = try! self.persistentContainer.viewContext.fetch(fetchRequest)
         //подумать над форс анвраппом
-        let flyghts = try! self.persistentContainer.viewContext.fetch(fetchRequest).first
-        let flyghtViewModel = FlyghtViewModel(holder: UUID(), flyghtID: flyghtID, flyghtNumber: (flyghts?.flyghtNumber)!)
-        return flyghtViewModel
+        if let flyghts = try? self.persistentContainer.viewContext.fetch(fetchRequest).first {
+            let flyghtViewModel = FlyghtViewModel(holder: UUID(), flyghtID: flyghtID, flyghtNumber: (flyghts.flyghtNumber!), departureAirport: flyghts.departureAirport!, arrivalAirport: flyghts.arrivalAirport!, departureDate: flyghts.departureTime!, arrivalDate: flyghts.arrivalTime!, aircraft: flyghts.aircraft!, airline: flyghts.airline!)
+            return flyghtViewModel
+        }
+        //
+        
+        return nil
         
     }
     
-    func removeFlyght(flyghtID: UUID, completion: @escaping () -> Void)  {
+//    func removeFlyght(flyghtID: UUID, completion: @escaping () -> Void)  {
+    func removeFlyght(flyghtID: UUID) {
+
         self.persistentContainer.performBackgroundTask { context in
             let fetchRequest: NSFetchRequest<Flyght> = Flyght.fetchRequest()
             fetchRequest.predicate = NSPredicate(format: "\(#keyPath(Flyght.flyghtID)) = %@", "\(flyghtID)")
@@ -85,7 +97,7 @@ class StorageManager: IStorageManager {
                 context.delete(object)
             }
             try? context.save()
-            DispatchQueue.main.async { completion() }
+//            DispatchQueue.main.async { completion() }
         }
     }
 }

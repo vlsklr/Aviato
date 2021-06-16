@@ -14,8 +14,16 @@ class LoginViewController: UIViewController {
     let passwordField: UITextField = UITextField()
     let authButton: UIButton = UIButton()
     let registerButton: UIButton = UIButton()
+    let presenter: IPresenter
     
-    let storage: IStorageManager = StorageManager()
+    init(presenter: IPresenter) {
+        self.presenter = presenter
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -83,22 +91,16 @@ class LoginViewController: UIViewController {
         print("Auth")
         guard let username = userNameField.text, let password = passwordField.text else{return}
         if !username.isEmpty && !password.isEmpty{
-            let user = storage.loadUser(username: username)
-            if user?.username == username && user?.password == password && user?.userID != nil {
-                print("logged in")
-                AppDelegate.shared.rootViewController.switchToMainScreen(userID: user!.userID)
-            }
+            presenter.authentificateUser(username: username, password: password)
         }
         //AppDelegate.shared.rootViewController.switchToMainScreen()
     }
     
     @objc func registerAction() {
         print("Register")
-        let user = UserViewModel(userID: UUID(), username: userNameField.text!, password: passwordField.text!)
-        storage.addUser(user: user) {
-            AppDelegate.shared.rootViewController.switchToMainScreen(userID: user.userID)
-            
+        guard let username = userNameField.text, let password = passwordField.text else{return}
+        if !username.isEmpty && !password.isEmpty{
+            presenter.registerUser(username: username, password: password)
         }
-        
     }
 }

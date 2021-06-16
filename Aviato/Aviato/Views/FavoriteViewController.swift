@@ -11,10 +11,10 @@ class FavoriteViewController: UIViewController {
 
     let flyghtNumberLabel: UILabel = UILabel()
     let saveButton: UIButton = UIButton()
-    let flyghtID: UUID
+    var flyghtInfo: FlyghtViewModel?
     
-    init(flyghtID: UUID) {
-        self.flyghtID = flyghtID
+    init(flyghtViewInfo: FlyghtViewModel) {
+        self.flyghtInfo = flyghtViewInfo
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -24,12 +24,11 @@ class FavoriteViewController: UIViewController {
     
     
     
-    let tmpStorage: IStorageManager = StorageManager()
+//    let tmpStorage: IStorageManager = StorageManager()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .brown
-        setupButton()
         setupLabel()
 
         // Do any additional setup after loading the view.
@@ -37,53 +36,16 @@ class FavoriteViewController: UIViewController {
     
     func setupLabel() {
         self.view.addSubview(flyghtNumberLabel)
-        let flyght = tmpStorage.getFlyght(flyghtID: flyghtID)
-        flyghtNumberLabel.text = "\(flyght?.flyghtID) + \(flyght?.flyghtNumber)"
+        
+//        let flyght = tmpStorage.getFlyght(flyghtID: flyghtID)
+        
+        
+        flyghtNumberLabel.text = "\(flyghtInfo!.aircraft) + \(flyghtInfo!.flyghtNumber)"
         flyghtNumberLabel.snp.makeConstraints { (make) in
             make.top.equalToSuperview().offset(150)
             make.leading.equalToSuperview().offset(16)
-            make.width.equalTo(100)
+            make.width.equalTo(200)
             make.height.equalTo(50)
         }
     }
-    
-    func setupButton() {
-        self.view.addSubview(saveButton)
-        saveButton.setTitle("Добавить в избранное", for: .normal)
-        saveButton.backgroundColor = .yellow
-        saveButton.addTarget(self, action: #selector(addToFavorite), for: .touchUpInside)
-        saveButton.snp.makeConstraints { (make) in
-            make.top.equalToSuperview().offset(100)
-            make.trailing.equalToSuperview().offset(-16)
-            make.width.equalTo(100)
-            make.height.equalTo(50)
-        }
-        
-    }
-    
-    @objc func addToFavorite() {
-        let tempFlyght = FlyghtViewModel(holder: self.flyghtID, flyghtID: UUID(), flyghtNumber: "1488")
-        
-//        let temp:[FlyghtViewModel]? = tmpStorage.getFlyghts(userID: userID)
-        
-//        tmpStorage.removeFlyght(flyghtID: temp![0].flyghtID)
-        
-//        tmpStorage.getFlyghts(userID: userID)
-        
-       tmpStorage.AddFlyght(flyght: tempFlyght)
-        
-        
-    }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

@@ -11,10 +11,12 @@ import SnapKit
 class MainViewController: UIViewController {
     
     let searchBar: UISearchBar = UISearchBar()
-    let userID: UUID
+    let presenter: IPresenter
+//    let userID: UUID
     
-    init(userID: UUID) {
-        self.userID = userID
+    init(presenter: IPresenter) {
+//        self.userID = userID
+        self.presenter = presenter
 
         super.init(nibName: nil, bundle: nil)
 
@@ -30,9 +32,6 @@ class MainViewController: UIViewController {
         self.navigationController?.navigationBar.backgroundColor = .systemBlue
         setupSearchbar()
         setupSwipeDown()
-        
-        
-        // Do any additional setup after loading the view.
     }
     
     func setupSwipeDown() {
@@ -40,7 +39,6 @@ class MainViewController: UIViewController {
         swipeDown.delegate = self
         swipeDown.direction =  UISwipeGestureRecognizer.Direction.down
         self.view.addGestureRecognizer(swipeDown)
-        
     }
     
     func setupSearchbar() {
@@ -60,13 +58,24 @@ class MainViewController: UIViewController {
     }
 }
 
+extension MainViewController: IFoundFlyghtViewController {
+    func showFoundFlyght(flyghtViewInfo: FlyghtViewModel) {
+        let popViewController = FoundFlyghtViewController(flyghtViewInfo: flyghtViewInfo, presenter: self.presenter)
+        self.present(popViewController, animated: true, completion: nil)
+    }
+    
+    
+}
+
+
 extension MainViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         guard let searchBarText = searchBar.text else { return }
         print(searchBarText)
-        let popViewController = FoundFlyghtViewController(userID: userID)
-        self.present(popViewController, animated: true, completion: nil)
-        //presenter?.downloadImage(stringURL: searchBarText)
+        presenter.findFlyghtInfo(view: self, flyghtNumber: searchBarText)
+        
+//        let popViewController = FoundFlyghtViewController(userID: userID)
+//        self.present(popViewController, animated: true, completion: nil)
     }
 }
 

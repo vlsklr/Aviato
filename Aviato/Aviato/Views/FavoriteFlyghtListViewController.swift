@@ -10,15 +10,17 @@ import SnapKit
 
 class FavoriteFlyghtListViewController: UIViewController {
     
-    let userID: UUID
+//    let userID: UUID
     let tableView: UITableView = UITableView()
+    let presenter: IPresenter
     
-    let tmpStorage: IStorageManager = StorageManager()
+//    let tmpStorage: IStorageManager = StorageManager()
     
     
     
-    init(userID: UUID) {
-        self.userID = userID
+    init(presenter: IPresenter) {
+//        self.userID = userID
+        self.presenter = presenter
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -53,12 +55,11 @@ class FavoriteFlyghtListViewController: UIViewController {
 extension FavoriteFlyghtListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let deleteAction = UIContextualAction(style: .destructive, title: "Delete") { _, _, complete in
-            let flyghtID = self.tmpStorage.getFlyghts(userID: self.userID)![indexPath.row]
-
-            self.tmpStorage.removeFlyght(flyghtID: flyghtID.flyghtID, completion: {
-                tableView.reloadData()
-
-            })
+            if let flyghtID = self.presenter.getFlyghts()?[indexPath.row] {
+                self.presenter.removeFlyght(flyghtID: flyghtID.flyghtID, completion: {
+                    tableView.reloadData()
+                })
+            }
             complete(true)
         }
         let configuration = UISwipeActionsConfiguration(actions: [deleteAction])
@@ -67,24 +68,38 @@ extension FavoriteFlyghtListViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let flyght: FlyghtViewModel = tmpStorage.getFlyghts(userID: userID)![indexPath.row]
-        let popViewController = FavoriteViewController(flyghtID: flyght.flyghtID)
-        self.present(popViewController, animated: true, completion: nil)
+        presenter.getFavorite(view: self, indexPath: indexPath)
+        if let flyght: FlyghtViewModel = presenter.getFlyghts()?[indexPath.row] {
+//            let popViewController = FavoriteViewController(flyghtID: flyght.flyghtID)
+//            self.present(popViewController, animated: true, completion: nil)
+        }
+
         
     }
 }
 
 extension FavoriteFlyghtListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return tmpStorage.getFlyghts(userID: userID)?.count ?? 0
+        return presenter.getFlyghts()?.count ?? 0
+        
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! FlyghtViewCell
         cell.setupCell()
-        let getter:[FlyghtViewModel] = tmpStorage.getFlyghts(userID: userID)!
-        cell.flyghtNumberLabel.text = getter[indexPath.row].flyghtNumber
+        if let getter:[FlyghtViewModel] = presenter.getFlyghts() {
+            cell.flyghtNumberLabel.text = getter[indexPath.row].flyghtNumber
+        }
         return cell
+    }
+    
+    
+}
+
+extension FavoriteFlyghtListViewController: IFavoriteFlyghtViewController {
+    func showFavoriteFlyght(flyghtViewInfo: FlyghtViewModel) {
+        let popViewController = FavoriteViewController(flyghtViewInfo: flyghtViewInfo)
+        self.present(popViewController, animated: true, completion: nil)
     }
     
     

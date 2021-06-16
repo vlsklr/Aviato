@@ -10,10 +10,12 @@ import SnapKit
 class FoundFlyghtViewController: UIViewController {
     let flyghtNumberLaber: UILabel = UILabel()
     let saveButton: UIButton = UIButton()
-    let userID: UUID
+    let flyghtViewInfo: FlyghtViewModel
+    let presenter: IPresenter
     
-    init(userID: UUID) {
-        self.userID = userID
+    init(flyghtViewInfo: FlyghtViewModel, presenter: IPresenter) {
+        self.presenter = presenter
+        self.flyghtViewInfo = flyghtViewInfo
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -21,9 +23,7 @@ class FoundFlyghtViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    
-    
-    let tmpStorage: IStorageManager = StorageManager()
+//    let tmpStorage: IStorageManager = StorageManager()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,7 +36,7 @@ class FoundFlyghtViewController: UIViewController {
     
     func setupLabel() {
         self.view.addSubview(flyghtNumberLaber)
-        flyghtNumberLaber.text = "1488"
+        flyghtNumberLaber.text = flyghtViewInfo.flyghtNumber
         flyghtNumberLaber.snp.makeConstraints { (make) in
             make.top.equalToSuperview().offset(150)
             make.leading.equalToSuperview().offset(16)
@@ -60,31 +60,19 @@ class FoundFlyghtViewController: UIViewController {
     }
     
     @objc func addToFavorite() {
-        let nm = NetworkManager()
-        nm.reques()
-        let tempFlyght = FlyghtViewModel(holder: self.userID, flyghtID: UUID(), flyghtNumber: "1488")
-        
-//        let temp:[FlyghtViewModel]? = tmpStorage.getFlyghts(userID: userID)
-        
-//        tmpStorage.removeFlyght(flyghtID: temp![0].flyghtID)
-        
-//        tmpStorage.getFlyghts(userID: userID)
-        
-       tmpStorage.AddFlyght(flyght: tempFlyght)
-        
-        
+        presenter.addToFavorite(flyght: self.flyghtViewInfo)
+        self.dismiss(animated: true, completion: nil)
     }
 
     
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
+
+//extension FoundFlyghtViewController: IFoundFlyghtViewController {
+//    func showFoundFlyght(flyghtViewInfo: FlyghtViewModel) {
+//        let popViewController = FoundFlyghtViewController(flyghtViewInfo: flyghtViewInfo)
+//        self.present(popViewController, animated: true, completion: nil)
+//    }
+//
+//
+//}

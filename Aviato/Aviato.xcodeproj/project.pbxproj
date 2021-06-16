@@ -28,6 +28,10 @@
 		F5392F182677719B00866C8F /* FlyghtViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5392F172677719B00866C8F /* FlyghtViewModel.swift */; };
 		F5392F1B2677745700866C8F /* INetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5392F1A2677745700866C8F /* INetworkManager.swift */; };
 		F5392F1E2677747500866C8F /* IStorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5392F1D2677747500866C8F /* IStorageManager.swift */; };
+		F539A4CD267A475900AF0BCB /* Presenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F539A4CC267A475900AF0BCB /* Presenter.swift */; };
+		F539A4D0267A477400AF0BCB /* IPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F539A4CF267A477400AF0BCB /* IPresenter.swift */; };
+		F539A4D3267A727200AF0BCB /* IFoundFlyghtViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F539A4D2267A727200AF0BCB /* IFoundFlyghtViewController.swift */; };
+		F539A4D6267A8AB000AF0BCB /* IFavoriteFlyghtViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F539A4D5267A8AB000AF0BCB /* IFavoriteFlyghtViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -56,6 +60,10 @@
 		F5392F172677719B00866C8F /* FlyghtViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlyghtViewModel.swift; sourceTree = "<group>"; };
 		F5392F1A2677745700866C8F /* INetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = INetworkManager.swift; sourceTree = "<group>"; };
 		F5392F1D2677747500866C8F /* IStorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IStorageManager.swift; sourceTree = "<group>"; };
+		F539A4CC267A475900AF0BCB /* Presenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Presenter.swift; sourceTree = "<group>"; };
+		F539A4CF267A477400AF0BCB /* IPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IPresenter.swift; sourceTree = "<group>"; };
+		F539A4D2267A727200AF0BCB /* IFoundFlyghtViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IFoundFlyghtViewController.swift; sourceTree = "<group>"; };
+		F539A4D5267A8AB000AF0BCB /* IFavoriteFlyghtViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IFavoriteFlyghtViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -129,6 +137,8 @@
 			children = (
 				3C7F58D8267890D2001C1193 /* MainViewControllerPresenter.swift */,
 				3C7F58DB267890E7001C1193 /* IMainViewControllerPresenter.swift */,
+				F539A4CC267A475900AF0BCB /* Presenter.swift */,
+				F539A4CF267A477400AF0BCB /* IPresenter.swift */,
 			);
 			path = Presenters;
 			sourceTree = "<group>";
@@ -140,7 +150,9 @@
 				3C7F58DE2678973B001C1193 /* FoundFlyghtViewController.swift */,
 				F53912E62679235200EBC14F /* FavoriteViewController.swift */,
 				F53251B62677C0F800CA57B6 /* FavoriteFlyghtListViewController.swift */,
+				F539A4D2267A727200AF0BCB /* IFoundFlyghtViewController.swift */,
 				F5392F0E2677571E00866C8F /* MainViewController.swift */,
+				F539A4D5267A8AB000AF0BCB /* IFavoriteFlyghtViewController.swift */,
 				F53912E3267919BB00EBC14F /* FlyghtViewCell.swift */,
 			);
 			path = Views;
@@ -295,16 +307,20 @@
 			buildActionMask = 2147483647;
 			files = (
 				F5392EF12677364400866C8F /* RootViewController.swift in Sources */,
+				F539A4CD267A475900AF0BCB /* Presenter.swift in Sources */,
 				F5392EED2677364400866C8F /* AppDelegate.swift in Sources */,
 				F5392F182677719B00866C8F /* FlyghtViewModel.swift in Sources */,
 				F53912E4267919BB00EBC14F /* FlyghtViewCell.swift in Sources */,
 				F53912E72679235200EBC14F /* FavoriteViewController.swift in Sources */,
+				F539A4D6267A8AB000AF0BCB /* IFavoriteFlyghtViewController.swift in Sources */,
 				3C7F58DF2678973B001C1193 /* FoundFlyghtViewController.swift in Sources */,
 				F53251B72677C0F800CA57B6 /* FavoriteFlyghtListViewController.swift in Sources */,
 				F5392F0C26774CB100866C8F /* NetworkManager.swift in Sources */,
 				F5392F0926774CA100866C8F /* StorageManager.swift in Sources */,
 				F53251B42677BF0700CA57B6 /* MainRouter.swift in Sources */,
+				F539A4D3267A727200AF0BCB /* IFoundFlyghtViewController.swift in Sources */,
 				F5392F0626774C6700866C8F /* LoginViewController.swift in Sources */,
+				F539A4D0267A477400AF0BCB /* IPresenter.swift in Sources */,
 				3C7F58D9267890D2001C1193 /* MainViewControllerPresenter.swift in Sources */,
 				F5392EF72677364400866C8F /* Aviato.xcdatamodeld in Sources */,
 				F5392F152677718C00866C8F /* UserViewModel.swift in Sources */,

@@ -8,5 +8,6 @@
 import Foundation
 
 protocol INetworkManager {
+    func loadFlyghtInfo(flyghtNumber: String) -> FlyghtInfo?
     
 }

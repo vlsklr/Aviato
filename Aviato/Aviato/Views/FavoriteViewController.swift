@@ -6,9 +6,10 @@
 //
 
 import UIKit
+import SnapKit
 
 class FavoriteViewController: UIViewController {
-
+    
     let flyghtNumberLabel: UILabel = UILabel()
     let departureAirportLabel: UILabel = UILabel()
     let departureDateLabel: UILabel = UILabel()
@@ -36,8 +37,8 @@ class FavoriteViewController: UIViewController {
         setupArrivalAirportLabel()
         setupArrivalDateLabel()
         setupAircraftLabel()
-
-
+        
+        
     }
     
     func setupFlyghtNumberLabel() {
@@ -115,9 +116,5 @@ class FavoriteViewController: UIViewController {
             make.width.equalToSuperview().offset(16)
             make.height.equalTo(50)
         }
-        
     }
-
-
-    
 }

@@ -46,13 +46,11 @@ class NetworkManager: INetworkManager {
         "x-rapidapi-key": "80d9739b9fmsh282407e5e41686ap1bd973jsna0ddd84bd19b",
         "x-rapidapi-host": "aerodatabox.p.rapidapi.com"
     ]
-    //    func loadFlyghtInfo(flyghtNumber: String) -> FlyghtInfo? {
+    
     func loadFlyghtInfo(flyghtNumber: String, completion: @escaping (Result<FlyghtInfo, Error>) -> Void) {
-        
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
         let dateString = dateFormatter.string(from: Date())
-        
         guard let url = URL(string: "https://aerodatabox.p.rapidapi.com/flights/number/\(flyghtNumber))/\(dateString)?withAircraftImage=false&withLocation=false") else { return }
         let request = NSMutableURLRequest(url: url, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 10.0)
         request.httpMethod = "GET"
@@ -78,13 +76,9 @@ class NetworkManager: INetworkManager {
                     else {
                         completion(.failure(FlyghtErrors.wrongFlyght))
                     }
-                    
                 }
             }
         }).resume()
     }
-    
-    
-    
 }
 

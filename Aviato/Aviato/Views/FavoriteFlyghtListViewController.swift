@@ -10,12 +10,10 @@ import SnapKit
 
 class FavoriteFlyghtListViewController: UIViewController {
     
-    //    let userID: UUID
     let tableView: UITableView = UITableView()
     let presenter: IPresenter
     
     init(presenter: IPresenter) {
-        //        self.userID = userID
         self.presenter = presenter
         super.init(nibName: nil, bundle: nil)
     }
@@ -23,6 +21,7 @@ class FavoriteFlyghtListViewController: UIViewController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
     override func viewDidAppear(_ animated: Bool) {
         initTableView()
         tableView.reloadData()
@@ -31,10 +30,9 @@ class FavoriteFlyghtListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .cyan
-        
-        // Do any additional setup after loading the view.
     }
-    func initTableView() {
+    func
+    initTableView() {
         view.addSubview(tableView)
         tableView.backgroundColor = .blue
         tableView.delegate = self
@@ -65,14 +63,12 @@ extension FavoriteFlyghtListViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         presenter.getFavorite(view: self, indexPath: indexPath)
-        
     }
 }
 
 extension FavoriteFlyghtListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return presenter.getFlyghts()?.count ?? 0
-        
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -83,12 +79,9 @@ extension FavoriteFlyghtListViewController: UITableViewDataSource {
                 cell.flyghtNumberLabel.text = "Рейс \(getter[indexPath.row].flyghtNumber)"
                 cell.departireTimeLabel.text = "Отбывает в \(getter[indexPath.row].departureDate)"
             }
-            
         }
         return cell
     }
-    
-    
 }
 
 extension FavoriteFlyghtListViewController: IFavoriteFlyghtViewController {
@@ -96,6 +89,4 @@ extension FavoriteFlyghtListViewController: IFavoriteFlyghtViewController {
         let popViewController = FavoriteViewController(flyghtViewInfo: flyghtViewInfo)
         self.present(popViewController, animated: true, completion: nil)
     }
-    
-    
 }

@@ -39,11 +39,9 @@ class FlyghtViewCell: UITableViewCell {
             make.height.equalTo(20)
         }
         
-        
         self.contentView.snp.makeConstraints { make in
             make.width.equalToSuperview()
             make.height.equalTo(80)
         }
     }
-    
 }

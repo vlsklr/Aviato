@@ -15,7 +15,6 @@ class RootViewController: UIViewController {
         super.viewDidLoad()
         self.view.backgroundColor = .systemRed
         showLoginScreen()
-     
     }
     
     func showLoginScreen() {
@@ -31,7 +30,6 @@ class RootViewController: UIViewController {
     }
     
     func switchToMainScreen() {
-//        let mainViewController = MainViewController()
         let router = MainRouter(presenter: presenter)
         let mainViewController = router.getTabBar()
         addChild(mainViewController)
@@ -42,7 +40,6 @@ class RootViewController: UIViewController {
         currentViewController.view.removeFromSuperview()
         currentViewController.removeFromParent()
         currentViewController = mainViewController
-        //       let mainScreen = UINavigationController(rootViewController: mainViewController)
     }
     
     

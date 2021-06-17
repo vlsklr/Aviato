@@ -16,7 +16,6 @@ class MainViewController: UIViewController {
     init(presenter: IPresenter) {
         self.presenter = presenter
         super.init(nibName: nil, bundle: nil)
-
     }
     
     required init?(coder: NSCoder) {
@@ -30,12 +29,11 @@ class MainViewController: UIViewController {
         setupSearchbar()
         setupSwipeDown()
         let addItem = UIBarButtonItem(title: "Выйти", style: .plain, target: self, action: #selector(logout))
-                navigationItem.leftBarButtonItem = addItem
+        navigationItem.leftBarButtonItem = addItem
     }
     
     @objc func logout() {
         presenter.logout()
-        
     }
     
     func setupSwipeDown() {
@@ -67,8 +65,6 @@ extension MainViewController: IFoundFlyghtViewController {
         let popViewController = FoundFlyghtViewController(flyghtViewInfo: flyghtViewInfo, presenter: self.presenter)
         self.present(popViewController, animated: true, completion: nil)
     }
-    
-    
 }
 
 extension MainViewController: UISearchBarDelegate {
@@ -88,8 +84,8 @@ extension MainViewController: UIGestureRecognizerDelegate {
 extension MainViewController: IAlert {
     func showAlert(message: String) {
         let alert = UIAlertController(title: "Ошибка", message: message, preferredStyle: .alert)
-              alert.addAction(UIAlertAction(title: "ОК", style: .default))
-              self.present(alert, animated: true)
+        alert.addAction(UIAlertAction(title: "ОК", style: .default))
+        self.present(alert, animated: true)
     }
 }
 

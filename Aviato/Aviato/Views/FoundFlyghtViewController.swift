@@ -7,6 +7,7 @@
 
 import UIKit
 import SnapKit
+
 class FoundFlyghtViewController: UIViewController {
     let flyghtNumberLabel: UILabel = UILabel()
     let departureAirportLabel: UILabel = UILabel()

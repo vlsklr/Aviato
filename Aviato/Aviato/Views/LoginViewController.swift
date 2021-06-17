@@ -83,28 +83,23 @@ class LoginViewController: UIViewController {
             make.height.equalTo(25)
             make.width.equalTo(150)
         }
-        
-        
     }
     
     @objc func authAction() {
         guard let username = userNameField.text, let password = passwordField.text else{return}
-            presenter.authentificateUser(view: self, username: username, password: password)
+        presenter.authentificateUser(view: self, username: username, password: password)
     }
     
     @objc func registerAction() {
         guard let username = userNameField.text, let password = passwordField.text else{return}
         presenter.registerUser(view: self, username: username, password: password)
-
-        if !username.isEmpty && !password.isEmpty{
-        }
     }
 }
 
 extension LoginViewController: IAlert {
     func showAlert(message: String) {
         let alert = UIAlertController(title: "Ошибка", message: message, preferredStyle: .alert)
-              alert.addAction(UIAlertAction(title: "ОК", style: .default))
-              self.present(alert, animated: true)
+        alert.addAction(UIAlertAction(title: "ОК", style: .default))
+        self.present(alert, animated: true)
     }
 }

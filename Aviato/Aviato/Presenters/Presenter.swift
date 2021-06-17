@@ -54,7 +54,6 @@ class Presenter: IPresenter {
                 print(error)
                 DispatchQueue.main.async {
                     view.showAlert(message: "Информация о данном рейсе отсутствует" )
-
                 }
             case .success(let info):
                 print(info)
@@ -68,7 +67,6 @@ class Presenter: IPresenter {
     
     func addToFavorite(flyght: FlyghtViewModel) {
         storageManager.AddFlyght(flyght: flyght)
-        
     }
     
     func getFlyghts() -> [FlyghtViewModel]? {
@@ -87,5 +85,4 @@ class Presenter: IPresenter {
             completion()
         }
     }
-    
 }

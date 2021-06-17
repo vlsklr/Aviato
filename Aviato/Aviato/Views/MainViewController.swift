@@ -12,12 +12,9 @@ class MainViewController: UIViewController {
     
     let searchBar: UISearchBar = UISearchBar()
     let presenter: IPresenter
-//    let userID: UUID
     
     init(presenter: IPresenter) {
-//        self.userID = userID
         self.presenter = presenter
-
         super.init(nibName: nil, bundle: nil)
 
     }
@@ -32,6 +29,13 @@ class MainViewController: UIViewController {
         self.navigationController?.navigationBar.backgroundColor = .systemBlue
         setupSearchbar()
         setupSwipeDown()
+        let addItem = UIBarButtonItem(title: "Выйти", style: .plain, target: self, action: #selector(logout))
+                navigationItem.leftBarButtonItem = addItem
+    }
+    
+    @objc func logout() {
+        presenter.logout()
+        
     }
     
     func setupSwipeDown() {
@@ -67,15 +71,11 @@ extension MainViewController: IFoundFlyghtViewController {
     
 }
 
-
 extension MainViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         guard let searchBarText = searchBar.text else { return }
         print(searchBarText)
         presenter.findFlyghtInfo(view: self, flyghtNumber: searchBarText)
-        
-//        let popViewController = FoundFlyghtViewController(userID: userID)
-//        self.present(popViewController, animated: true, completion: nil)
     }
 }
 
@@ -84,3 +84,12 @@ extension MainViewController: UIGestureRecognizerDelegate {
         return true
     }
 }
+
+extension MainViewController: IAlert {
+    func showAlert(message: String) {
+        let alert = UIAlertController(title: "Ошибка", message: message, preferredStyle: .alert)
+              alert.addAction(UIAlertAction(title: "ОК", style: .default))
+              self.present(alert, animated: true)
+    }
+}
+

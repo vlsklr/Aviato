@@ -13,39 +13,57 @@ class Presenter: IPresenter {
     private let networkManager: INetworkManager = NetworkManager()
     private var userID: UUID = UUID()
     
-    func authentificateUser(username: String, password: String) {
-        let user = storageManager.loadUser(username: username)
-        if user?.username == username && user?.password == password && user?.userID != nil {
-            print("logged in")
-            self.userID = user!.userID
-            AppDelegate.shared.rootViewController.switchToMainScreen()
+    func authentificateUser(view: IAlert,username: String, password: String) {
+        if username.isEmpty || password.isEmpty {
+            view.showAlert(message: "Введите данные")
+        }else {
+            let user = storageManager.loadUser(username: username)
+            if user?.username == username && user?.password == password && user?.userID != nil {
+                self.userID = user!.userID
+                AppDelegate.shared.rootViewController.switchToMainScreen()
+            }
+            else {
+                view.showAlert(message: "Данные неверны или такого пользователя не существует")
+            }
         }
     }
     
-    func registerUser(username: String, password: String) {
-        let user = UserViewModel(userID: userID, username: username, password: password)
-        storageManager.addUser(user: user) {
-            AppDelegate.shared.rootViewController.switchToMainScreen()
+    func registerUser(view: IAlert, username: String, password: String) {
+        if username.isEmpty || password.isEmpty {
+            view.showAlert(message: "Введите данные")
+        } else if let user = storageManager.loadUser(username: username) {
+            view.showAlert(message: "Пользователь \(user.username) уже существует")
         }
+        else {
+            let user = UserViewModel(userID: userID, username: username, password: password)
+            storageManager.addUser(user: user) {
+                AppDelegate.shared.rootViewController.switchToMainScreen()
+            }
+        }
+    }
+    
+    func logout() {
+        AppDelegate.shared.rootViewController.showLoginScreen()
     }
     
     func findFlyghtInfo(view: IFoundFlyghtViewController, flyghtNumber: String) {
-       // заглушка
-        var info: FlyghtInfo = FlyghtInfo(codeshareStatus: "status", number: "KL0422", status: "Arrived", arrival: Arrival(scheduledTimeUtc: "TIME", airport: Airport(name: "Tolmachevo", countryCode: "RU")), departure: Departure(scheduledTimeUtc: "TIME1", airport: Airport(name: "Pulkovo", countryCode: "RU")), aircraft: Aircraft(model: "Boeing 737-NG"), airline: Airline(name: "Ы7"))
         
-        
-        var viewInfo: FlyghtViewModel = FlyghtViewModel(holder: self.userID, flyghtID: UUID(), flyghtNumber: info.number, departureAirport: "\(info.departure.airport.countryCode)  \(info.departure.airport.name)", arrivalAirport: "\(info.arrival.airport.countryCode)  \(info.arrival.airport.name)", departureDate: info.departure.scheduledTimeUtc, arrivalDate: info.arrival.scheduledTimeUtc, aircraft: info.aircraft.model, airline: info.airline.name)
-        
-        view.showFoundFlyght(flyghtViewInfo: viewInfo)
-        
-        
-//        let foundFlyghtView: IFoundFlyghtViewController = FoundFlyghtViewController(flyghtViewInfo: viewInfo)
-//        foundFlyghtView.showFoundFlyght(flyghtViewInfo: viewInfo)
-        print(viewInfo)
-//            info = self.networkManager.loadFlyghtInfo(flyghtNumber: flyghtNumber)
+        self.networkManager.loadFlyghtInfo(flyghtNumber: flyghtNumber, completion: {[weak self] result in
+            switch result {
+            case .failure(let error):
+                print(error)
+                DispatchQueue.main.async {
+                    view.showAlert(message: "Информация о данном рейсе отсутствует" )
 
-
-    
+                }
+            case .success(let info):
+                print(info)
+                let viewInfo: FlyghtViewModel = FlyghtViewModel(holder: self!.userID, flyghtID: UUID(), flyghtNumber: info.number, departureAirport: "\(info.departure.airport.countryCode)  \(info.departure.airport.name)", arrivalAirport: "\(info.arrival.airport.countryCode)  \(info.arrival.airport.name)", departureDate: info.departure.scheduledTimeUtc, arrivalDate: info.arrival.scheduledTimeUtc, aircraft: info.aircraft.model, airline: info.airline.name)
+                DispatchQueue.main.async {
+                    view.showFoundFlyght(flyghtViewInfo: viewInfo)
+                }
+            }
+        })
     }
     
     func addToFavorite(flyght: FlyghtViewModel) {

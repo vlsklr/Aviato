@@ -10,16 +10,12 @@ import SnapKit
 
 class FavoriteFlyghtListViewController: UIViewController {
     
-//    let userID: UUID
+    //    let userID: UUID
     let tableView: UITableView = UITableView()
     let presenter: IPresenter
     
-//    let tmpStorage: IStorageManager = StorageManager()
-    
-    
-    
     init(presenter: IPresenter) {
-//        self.userID = userID
+        //        self.userID = userID
         self.presenter = presenter
         super.init(nibName: nil, bundle: nil)
     }
@@ -69,11 +65,6 @@ extension FavoriteFlyghtListViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         presenter.getFavorite(view: self, indexPath: indexPath)
-        if let flyght: FlyghtViewModel = presenter.getFlyghts()?[indexPath.row] {
-//            let popViewController = FavoriteViewController(flyghtID: flyght.flyghtID)
-//            self.present(popViewController, animated: true, completion: nil)
-        }
-
         
     }
 }
@@ -88,7 +79,11 @@ extension FavoriteFlyghtListViewController: UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! FlyghtViewCell
         cell.setupCell()
         if let getter:[FlyghtViewModel] = presenter.getFlyghts() {
-            cell.flyghtNumberLabel.text = getter[indexPath.row].flyghtNumber
+            if indexPath.row < getter.count {
+                cell.flyghtNumberLabel.text = "Рейс \(getter[indexPath.row].flyghtNumber)"
+                cell.departireTimeLabel.text = "Отбывает в \(getter[indexPath.row].departureDate)"
+            }
+            
         }
         return cell
     }

@@ -46,19 +46,22 @@ class NetworkManager: INetworkManager {
         "x-rapidapi-key": "80d9739b9fmsh282407e5e41686ap1bd973jsna0ddd84bd19b",
         "x-rapidapi-host": "aerodatabox.p.rapidapi.com"
     ]
-    func loadFlyghtInfo(flyghtNumber: String) -> FlyghtInfo? {
+    //    func loadFlyghtInfo(flyghtNumber: String) -> FlyghtInfo? {
+    func loadFlyghtInfo(flyghtNumber: String, completion: @escaping (Result<FlyghtInfo, Error>) -> Void) {
+        
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
         let dateString = dateFormatter.string(from: Date())
-        let request = NSMutableURLRequest(url: NSURL(string: "https://aerodatabox.p.rapidapi.com/flights/number/\(flyghtNumber))/\(dateString)?withAircraftImage=false&withLocation=false")! as URL, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 10.0)
         
+        guard let url = URL(string: "https://aerodatabox.p.rapidapi.com/flights/number/\(flyghtNumber))/\(dateString)?withAircraftImage=false&withLocation=false") else { return }
+        let request = NSMutableURLRequest(url: url, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 10.0)
         request.httpMethod = "GET"
         request.allHTTPHeaderFields = headers
         let session = URLSession.shared
         var flyght: FlyghtInfo? = nil
         session.dataTask(with: request as URLRequest, completionHandler: { (data, response, error) -> Void in
             if (error != nil) {
-                print(error)
+                completion(.failure(FlyghtErrors.wrongFlyght))
             } else {
                 let httpResponse = response as? HTTPURLResponse
                 if let data = data {
@@ -67,16 +70,18 @@ class NetworkManager: INetworkManager {
                         if let result: [FlyghtInfo] = try? JSONDecoder().decode([FlyghtInfo].self, from: data) {
                             if let flyghtInfo = result.last {
                                 flyght = flyghtInfo
+                                completion(.success(flyght!))
                                 print(flyghtInfo.departure.airport.name)
                             }
                         }
+                    }
+                    else {
+                        completion(.failure(FlyghtErrors.wrongFlyght))
                     }
                     
                 }
             }
         }).resume()
-        return flyght
-        
     }
     
     

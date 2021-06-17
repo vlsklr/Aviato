@@ -36,6 +36,8 @@ class MainRouter {
         self.flyghtListNavigationController.tabBarItem.title = "345"
         
         self.tabBar.setViewControllers([self.mainNavigationController, self.flyghtListNavigationController], animated: true)
+        
+       
     }
     
     func getTabBar() -> UITabBarController {

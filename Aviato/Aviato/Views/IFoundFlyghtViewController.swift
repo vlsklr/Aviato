@@ -8,6 +8,6 @@
 import Foundation
 
 
-protocol IFoundFlyghtViewController {
+protocol IFoundFlyghtViewController: IAlert {
     func showFoundFlyght(flyghtViewInfo: FlyghtViewModel)
 }

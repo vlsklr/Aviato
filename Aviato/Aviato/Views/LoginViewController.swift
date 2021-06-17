@@ -88,19 +88,23 @@ class LoginViewController: UIViewController {
     }
     
     @objc func authAction() {
-        print("Auth")
         guard let username = userNameField.text, let password = passwordField.text else{return}
-        if !username.isEmpty && !password.isEmpty{
-            presenter.authentificateUser(username: username, password: password)
-        }
-        //AppDelegate.shared.rootViewController.switchToMainScreen()
+            presenter.authentificateUser(view: self, username: username, password: password)
     }
     
     @objc func registerAction() {
-        print("Register")
         guard let username = userNameField.text, let password = passwordField.text else{return}
+        presenter.registerUser(view: self, username: username, password: password)
+
         if !username.isEmpty && !password.isEmpty{
-            presenter.registerUser(username: username, password: password)
         }
+    }
+}
+
+extension LoginViewController: IAlert {
+    func showAlert(message: String) {
+        let alert = UIAlertController(title: "Ошибка", message: message, preferredStyle: .alert)
+              alert.addAction(UIAlertAction(title: "ОК", style: .default))
+              self.present(alert, animated: true)
     }
 }

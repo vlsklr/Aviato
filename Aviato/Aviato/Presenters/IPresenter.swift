@@ -8,8 +8,9 @@
 import Foundation
 
 protocol IPresenter {
-    func authentificateUser(username: String, password: String)
-    func registerUser(username: String, password: String)
+    func authentificateUser(view: IAlert, username: String, password: String)
+    func registerUser(view: IAlert, username: String, password: String)
+    func logout()
 //    func findFlyghtInfo(flyghtNumber: String)
     func findFlyghtInfo(view: IFoundFlyghtViewController, flyghtNumber: String)
     func addToFavorite(flyght: FlyghtViewModel)

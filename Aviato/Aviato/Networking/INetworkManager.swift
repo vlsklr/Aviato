@@ -8,6 +8,7 @@
 import Foundation
 
 protocol INetworkManager {
-    func loadFlyghtInfo(flyghtNumber: String) -> FlyghtInfo?
+//    func loadFlyghtInfo(flyghtNumber: String) -> FlyghtInfo?
+    func loadFlyghtInfo(flyghtNumber: String, completion: @escaping (Result<FlyghtInfo, Error>) -> Void)
     
 }

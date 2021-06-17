@@ -31,7 +31,7 @@ class FoundFlyghtViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = .brown
+        self.view.backgroundColor = UIColor(red: 0.243, green: 0.776, blue: 1, alpha: 1)
         setupButton()
         setupFlyghtNumberLabel()
         setupDepartureAirportLabel()
@@ -44,11 +44,12 @@ class FoundFlyghtViewController: UIViewController {
     func setupFlyghtNumberLabel() {
         self.view.addSubview(flyghtNumberLabel)
         flyghtNumberLabel.text = "Номер рейса \(flyghtViewInfo.airline) \(flyghtViewInfo.flyghtNumber)"
+        flyghtNumberLabel.backgroundColor = .white
         flyghtNumberLabel.snp.makeConstraints { (make) in
             make.top.equalToSuperview().offset(100)
-            make.leading.equalToSuperview().offset(16)
-            make.trailing.equalToSuperview().offset(-16)
-            make.width.equalToSuperview()
+            make.leading.equalToSuperview().offset(43)
+            make.trailing.equalToSuperview().offset(-43)
+//            make.width.equalToSuperview()
             make.height.equalTo(50)
         }
     }
@@ -57,11 +58,12 @@ class FoundFlyghtViewController: UIViewController {
         self.view.addSubview(departureAirportLabel)
         departureAirportLabel.text = "Аэропорт отбытия \(flyghtViewInfo.departureAirport)"
         departureAirportLabel.numberOfLines = 0
+        departureAirportLabel.backgroundColor = .white
         departureAirportLabel.snp.makeConstraints { (make) in
             make.top.equalTo(flyghtNumberLabel).offset(50)
-            make.leading.equalToSuperview().offset(16)
-            make.trailing.equalToSuperview().offset(-16)
-            make.width.equalToSuperview().offset(-16)
+            make.leading.equalToSuperview().offset(43)
+            make.trailing.equalToSuperview().offset(-43)
+//            make.width.equalToSuperview().offset(-16)
             make.height.equalTo(50)
         }
     }
@@ -70,11 +72,12 @@ class FoundFlyghtViewController: UIViewController {
         self.view.addSubview(departureDateLabel)
         departureDateLabel.text = "Время отбытия \(flyghtViewInfo.departureDate)"
         departureDateLabel.numberOfLines = 0
+        departureDateLabel.backgroundColor = .white
         departureDateLabel.snp.makeConstraints { (make) in
             make.top.equalTo(departureAirportLabel).offset(50)
-            make.leading.equalToSuperview().offset(16)
-            make.trailing.equalToSuperview().offset(-16)
-            make.width.equalToSuperview().offset(16)
+            make.leading.equalToSuperview().offset(43)
+            make.trailing.equalToSuperview().offset(-43)
+//            make.width.equalToSuperview().offset(16)
             make.height.equalTo(50)
         }
     }
@@ -83,11 +86,12 @@ class FoundFlyghtViewController: UIViewController {
         self.view.addSubview(arrivalAirportLabel)
         arrivalAirportLabel.text = "Аэропорт прибытия \(flyghtViewInfo.arrivalAirport)"
         arrivalAirportLabel.numberOfLines = 0
+        arrivalAirportLabel.backgroundColor = .white
         arrivalAirportLabel.snp.makeConstraints { (make) in
             make.top.equalTo(departureDateLabel).offset(50)
-            make.leading.equalToSuperview().offset(16)
-            make.trailing.equalToSuperview().offset(-16)
-            make.width.equalToSuperview().offset(-16)
+            make.leading.equalToSuperview().offset(43)
+            make.trailing.equalToSuperview().offset(-43)
+//            make.width.equalToSuperview().offset(-43)
             make.height.equalTo(50)
         }
     }
@@ -96,11 +100,12 @@ class FoundFlyghtViewController: UIViewController {
         self.view.addSubview(arrivalDateLabel)
         arrivalDateLabel.text = "Время прибытия \(flyghtViewInfo.arrivalDate)"
         arrivalDateLabel.numberOfLines = 0
+        arrivalDateLabel.backgroundColor = .white
         arrivalDateLabel.snp.makeConstraints { (make) in
             make.top.equalTo(arrivalAirportLabel).offset(50)
-            make.leading.equalToSuperview().offset(16)
-            make.trailing.equalToSuperview().offset(-16)
-            make.width.equalToSuperview().offset(16)
+            make.leading.equalToSuperview().offset(43)
+            make.trailing.equalToSuperview().offset(-43)
+//            make.width.equalToSuperview().offset(16)
             make.height.equalTo(50)
         }
     }
@@ -109,11 +114,14 @@ class FoundFlyghtViewController: UIViewController {
         self.view.addSubview(aircraftLabel)
         aircraftLabel.text = "Самолет \(flyghtViewInfo.aircraft)"
         aircraftLabel.numberOfLines = 0
+        aircraftLabel.backgroundColor = .white
+        aircraftLabel.layer.cornerRadius = 25
+        aircraftLabel.layer.maskedCorners = [.layerMaxXMaxYCorner, .layerMinXMaxYCorner]
         aircraftLabel.snp.makeConstraints { (make) in
             make.top.equalTo(arrivalDateLabel).offset(50)
-            make.leading.equalToSuperview().offset(16)
-            make.trailing.equalToSuperview().offset(-16)
-            make.width.equalToSuperview().offset(16)
+            make.leading.equalToSuperview().offset(43)
+            make.trailing.equalToSuperview().offset(-43)
+//            make.width.equalToSuperview().offset(16)
             make.height.equalTo(50)
         }
         
@@ -127,9 +135,10 @@ class FoundFlyghtViewController: UIViewController {
         saveButton.layer.cornerRadius = 10
         saveButton.addTarget(self, action: #selector(addToFavorite), for: .touchUpInside)
         saveButton.snp.makeConstraints { (make) in
-            make.top.equalToSuperview()
-            make.trailing.equalToSuperview()
-            make.width.equalTo(150)
+            make.bottom.equalToSuperview().offset(-50)
+//            make.top.equalTo(aircraftLabel).offset(35)
+            make.leading.equalToSuperview().offset(43)
+            make.trailing.equalToSuperview().offset(-43)
             make.height.equalTo(50)
         }
         

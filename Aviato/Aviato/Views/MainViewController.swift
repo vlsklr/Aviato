@@ -11,6 +11,8 @@ import SnapKit
 class MainViewController: UIViewController {
     
     let searchBar: UISearchBar = UISearchBar()
+    let searchButton: UIButton = UIButton()
+    let logoutButton: UIButton = UIButton()
     let presenter: IPresenter
     
     init(presenter: IPresenter) {
@@ -24,16 +26,60 @@ class MainViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = .gray
         self.navigationController?.navigationBar.backgroundColor = .systemBlue
         setupSearchbar()
+        setupSearchButton()
         setupSwipeDown()
-        let addItem = UIBarButtonItem(title: "Выйти", style: .plain, target: self, action: #selector(logout))
-        navigationItem.leftBarButtonItem = addItem
+        setupLogoutButton()
+        if let airportImage = UIImage(named: "airport_bgc") {
+        self.view.backgroundColor = UIColor(patternImage: airportImage)
+        }
+//        let addItem = UIBarButtonItem(title: "Выйти", style: .plain, target: self, action: #selector(logout))
+//        navigationItem.leftBarButtonItem = addItem
+        navigationController?.setNavigationBarHidden(true, animated: false)
     }
+    
+    
     
     @objc func logout() {
         presenter.logout()
+    }
+    
+    func setupSearchButton() {
+        self.view.addSubview(searchButton)
+        searchButton.backgroundColor = .white
+        searchButton.layer.borderColor = #colorLiteral(red: 0.243, green: 0.776, blue: 1, alpha: 1)
+        searchButton.layer.borderWidth = 3
+        searchButton.setTitle("Искать", for: .normal)
+        searchButton.setTitleColor(UIColor(red: 0.243, green: 0.776, blue: 1, alpha: 1), for: .normal)
+        searchButton.layer.cornerRadius = 25
+        searchButton.addTarget(self, action: #selector(search), for: .touchUpInside)
+        searchButton.snp.makeConstraints { (make) in
+            make.top.equalTo(searchBar.snp.bottom).offset(10)
+            make.centerX.equalToSuperview()
+            make.leading.equalToSuperview().offset(16)
+            make.trailing.equalToSuperview().offset(-16)
+            make.height.equalTo(50)
+        }
+    }
+    
+    func setupLogoutButton() {
+        self.view.addSubview(logoutButton)
+        logoutButton.backgroundColor = .white
+        logoutButton.layer.borderColor = #colorLiteral(red: 0.243, green: 0.776, blue: 1, alpha: 1)
+        logoutButton.layer.borderWidth = 3
+        logoutButton.setTitle("Выйти", for: .normal)
+        logoutButton.setTitleColor(UIColor(red: 0.243, green: 0.776, blue: 1, alpha: 1), for: .normal)
+        logoutButton.layer.cornerRadius = 25
+        logoutButton.addTarget(self, action: #selector(logout), for: .touchUpInside)
+        logoutButton.snp.makeConstraints { (make) in
+            make.top.equalToSuperview().offset(75)
+//            make.centerX.equalToSuperview()
+//            make.leading.equalToSuperview().offset(43)
+            make.trailing.equalToSuperview().offset(-16)
+            make.height.equalTo(50)
+            make.width.equalTo(150)
+        }
     }
     
     func setupSwipeDown() {
@@ -47,12 +93,25 @@ class MainViewController: UIViewController {
         view.addSubview(searchBar)
         searchBar.delegate = self
         searchBar.placeholder = "Найти рейс"
+        searchBar.clipsToBounds = true
+        searchBar.layer.cornerRadius = 25
+       
+        searchBar.layer.borderColor = #colorLiteral(red: 0.243, green: 0.776, blue: 1, alpha: 1)
+        searchBar.layer.borderWidth = 3
+
         searchBar.snp.makeConstraints { contsraint in
-            contsraint.top.equalTo(view).offset(90)
+            contsraint.top.equalTo(view).offset(250)
             contsraint.centerX.equalToSuperview()
-            contsraint.width.equalToSuperview()
             contsraint.height.equalTo(50)
+            contsraint.leading.equalToSuperview().offset(16)
+            contsraint.trailing.equalToSuperview().offset(-16)
         }
+    }
+    
+    @objc func search() {
+        guard let searchBarText = searchBar.text else { return }
+        print(searchBarText)
+        presenter.findFlyghtInfo(view: self, flyghtNumber: searchBarText)
     }
     
     @objc func hideKeyboardOnSwipeDown() {
@@ -88,4 +147,5 @@ extension MainViewController: IAlert {
         self.present(alert, animated: true)
     }
 }
+
 

@@ -21,6 +21,11 @@ class FlyghtViewCell: UITableViewCell {
     }
     
     func setupCell() {
+//        self.layer.cornerRadius = 25
+//        contentView.layer.cornerRadius = 25
+//        contentView.backgroundColor = .none
+//        contentView.layer.opacity = 0.8
+        
         contentView.addSubview(flyghtNumberLabel)
         flyghtNumberLabel.snp.makeConstraints { make in
             make.leading.equalToSuperview().offset(16)
@@ -40,7 +45,9 @@ class FlyghtViewCell: UITableViewCell {
         }
         
         self.contentView.snp.makeConstraints { make in
-            make.width.equalToSuperview()
+            make.leading.equalToSuperview().offset(1)
+            make.trailing.equalToSuperview().offset(-1)
+//            make.width.equalToSuperview()
             make.height.equalTo(80)
         }
     }

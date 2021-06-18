@@ -47,7 +47,6 @@ class Presenter: IPresenter {
     }
     
     func findFlyghtInfo(view: IFoundFlyghtViewController, flyghtNumber: String) {
-        
         self.networkManager.loadFlyghtInfo(flyghtNumber: flyghtNumber, completion: {[weak self] result in
             switch result {
             case .failure(let error):

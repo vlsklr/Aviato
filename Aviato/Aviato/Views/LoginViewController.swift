@@ -27,8 +27,10 @@ class LoginViewController: UIViewController {
     }
     
     override func viewDidLoad() {
+        navigationController?.setNavigationBarHidden(true, animated: false)
         super.viewDidLoad()
         self.view.backgroundColor = UIColor(red: 0.243, green: 0.776, blue: 1, alpha: 1)
+        setupSwipeDown()
         setupLogoView()
         setupUsernameField()
         setupPasswordField()
@@ -122,6 +124,13 @@ class LoginViewController: UIViewController {
         }
     }
     
+    func setupSwipeDown() {
+        let swipeDown = UISwipeGestureRecognizer(target: self, action: #selector(self.hideKeyboardOnSwipeDown))
+        swipeDown.delegate = self
+        swipeDown.direction =  UISwipeGestureRecognizer.Direction.down
+        self.view.addGestureRecognizer(swipeDown)
+    }
+    
     @objc func anim(button: UIButton) {
         var animator = UIViewPropertyAnimator()
         animator = UIViewPropertyAnimator(duration: 0.2, curve: .easeOut, animations: {
@@ -151,6 +160,10 @@ class LoginViewController: UIViewController {
         presenter.authentificateUser(view: self, username: username, password: password)
     }
     
+    @objc func hideKeyboardOnSwipeDown() {
+        view.endEditing(true)
+    }
+    
     @objc func registerAction() {
         
         var animator = UIViewPropertyAnimator()
@@ -172,5 +185,11 @@ extension LoginViewController: IAlert {
         let alert = UIAlertController(title: "Ошибка", message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "ОК", style: .default))
         self.present(alert, animated: true)
+    }
+}
+
+extension LoginViewController: UIGestureRecognizerDelegate {
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        return true
     }
 }

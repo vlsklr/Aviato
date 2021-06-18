@@ -34,8 +34,6 @@ class MainViewController: UIViewController {
         if let airportImage = UIImage(named: "airport_bgc") {
             self.view.backgroundColor = UIColor(patternImage: airportImage)
         }
-        //        let addItem = UIBarButtonItem(title: "Выйти", style: .plain, target: self, action: #selector(logout))
-        //        navigationItem.leftBarButtonItem = addItem
         navigationController?.setNavigationBarHidden(true, animated: false)
     }
     

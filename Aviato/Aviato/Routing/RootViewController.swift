@@ -31,14 +31,33 @@ class RootViewController: UIViewController {
     func switchToMainScreen() {
         let router = MainRouter(presenter: presenter)
         let mainViewController = router.getTabBar()
-        addChild(mainViewController)
-        mainViewController.view.frame = view.bounds
-        view.addSubview(mainViewController.view)
-        mainViewController.didMove(toParent: self)
+        animateFadeTransition(to: mainViewController)
+//        addChild(mainViewController)
+//        mainViewController.view.frame = view.bounds
+//        view.addSubview(mainViewController.view)
+//        mainViewController.didMove(toParent: self)
+//        currentViewController.willMove(toParent: nil)
+//        currentViewController.view.removeFromSuperview()
+//        currentViewController.removeFromParent()
+//        currentViewController = mainViewController
+        
+        
+    }
+    
+
+
+    
+    private func animateFadeTransition(to new: UIViewController, completion: (() -> Void)? = nil) {
         currentViewController.willMove(toParent: nil)
-        currentViewController.view.removeFromSuperview()
-        currentViewController.removeFromParent()
-        currentViewController = mainViewController
+        addChild(new)
+       
+       transition(from: currentViewController, to: new, duration: 0.5, options: [.transitionCrossDissolve, .curveEaseOut], animations: {
+       }) { completed in
+        self.currentViewController.removeFromParent()
+        new.didMove(toParent: self)
+            self.currentViewController = new
+            completion?()
+       }
     }
     
     

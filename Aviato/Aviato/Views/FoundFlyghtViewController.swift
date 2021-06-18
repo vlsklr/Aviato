@@ -127,7 +127,6 @@ class FoundFlyghtViewController: UIViewController {
             make.top.equalTo(arrivalDateLabel.snp.bottom)
             make.leading.equalToSuperview().offset(43)
             make.trailing.equalToSuperview().offset(-43)
-//            make.width.equalToSuperview().offset(16)
             make.height.equalTo(75)
         }
         

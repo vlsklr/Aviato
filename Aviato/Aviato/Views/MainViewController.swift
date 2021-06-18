@@ -40,13 +40,6 @@ class MainViewController: UIViewController {
     
     
     @objc func logout() {
-        var animator = UIViewPropertyAnimator()
-        animator = UIViewPropertyAnimator(duration: 0.2, curve: .easeOut, animations: {
-            
-            self.logoutButton.backgroundColor = .white
-            
-        })
-        animator.startAnimation()
         presenter.logout()
     }
     
@@ -71,21 +64,25 @@ class MainViewController: UIViewController {
     
     func setupLogoutButton() {
         self.view.addSubview(logoutButton)
-        logoutButton.backgroundColor = .white
-        logoutButton.layer.borderColor = #colorLiteral(red: 0.243, green: 0.776, blue: 1, alpha: 1)
-        logoutButton.layer.borderWidth = 3
-        logoutButton.setTitle("Выйти", for: .normal)
-        logoutButton.setTitleColor(UIColor(red: 0.243, green: 0.776, blue: 1, alpha: 1), for: .normal)
-        logoutButton.layer.cornerRadius = 25
+        
+        let yourAttributes: [NSAttributedString.Key: Any] = [
+            .font: UIFont.systemFont(ofSize: 14),
+            .foregroundColor: UIColor.darkGray,
+            .underlineStyle: NSUnderlineStyle.single.rawValue
+        ]
+        
+        let attributeString = NSMutableAttributedString(
+              string: "Сменить аккаунт",
+              attributes: yourAttributes
+           )
+        logoutButton.setAttributedTitle(attributeString, for: .normal)
+        logoutButton.backgroundColor = .clear
         logoutButton.addTarget(self, action: #selector(logout), for: .touchUpInside)
-        logoutButton.addTarget(self, action: #selector(anim), for: .touchDown)
         logoutButton.snp.makeConstraints { (make) in
-            make.top.equalToSuperview().offset(75)
-            //            make.centerX.equalToSuperview()
-            //            make.leading.equalToSuperview().offset(43)
+            make.top.equalTo(searchButton.snp.bottom).offset(15)
+            make.leading.equalToSuperview().offset(16)
             make.trailing.equalToSuperview().offset(-16)
-            make.height.equalTo(50)
-            make.width.equalTo(150)
+            make.height.equalTo(10)
         }
     }
     
@@ -102,7 +99,6 @@ class MainViewController: UIViewController {
         searchBar.placeholder = "Найти рейс"
         searchBar.clipsToBounds = true
         searchBar.layer.cornerRadius = 25
-        
         searchBar.layer.borderColor = #colorLiteral(red: 0.243, green: 0.776, blue: 1, alpha: 1)
         searchBar.layer.borderWidth = 3
         
@@ -118,9 +114,7 @@ class MainViewController: UIViewController {
     @objc func search() {
         var animator = UIViewPropertyAnimator()
         animator = UIViewPropertyAnimator(duration: 0.2, curve: .easeOut, animations: {
-            
             self.searchButton.backgroundColor = .white
-            
         })
         animator.startAnimation()
 
@@ -160,6 +154,12 @@ extension MainViewController: UISearchBarDelegate {
         print(searchBarText)
         presenter.findFlyghtInfo(view: self, flyghtNumber: searchBarText)
     }
+    
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+       }
+
+       func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+       }
 }
 
 extension MainViewController: UIGestureRecognizerDelegate {

@@ -24,8 +24,7 @@ class MainRouter {
         self.mainViewController = MainViewController(presenter: self.presenter)
         self.mainNavigationController = UINavigationController(rootViewController: self.mainViewController)
         self.mainNavigationController.tabBarItem.title = "Найти"
-    
-//        self.mainViewController.tabBarItem.badgeColor = .white
+        
         self.flyghtListViewController = FavoriteFlyghtListViewController(presenter: self.presenter )
         self.flyghtListNavigationController = UINavigationController(rootViewController: self.flyghtListViewController)
         self.flyghtListNavigationController.tabBarItem.title = "Избранное"
@@ -34,7 +33,6 @@ class MainRouter {
             self.mainNavigationController.tabBarItem.image = UIImage(systemName: "airplane")
             self.flyghtListNavigationController.tabBarItem.image = UIImage(systemName: "star.fill")
         } else {
-            // Fallback on earlier versions
         }
         
         self.tabBar.setViewControllers([self.mainNavigationController, self.flyghtListNavigationController], animated: true)

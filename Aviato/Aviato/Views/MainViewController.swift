@@ -32,16 +32,23 @@ class MainViewController: UIViewController {
         setupSwipeDown()
         setupLogoutButton()
         if let airportImage = UIImage(named: "airport_bgc") {
-        self.view.backgroundColor = UIColor(patternImage: airportImage)
+            self.view.backgroundColor = UIColor(patternImage: airportImage)
         }
-//        let addItem = UIBarButtonItem(title: "Выйти", style: .plain, target: self, action: #selector(logout))
-//        navigationItem.leftBarButtonItem = addItem
+        //        let addItem = UIBarButtonItem(title: "Выйти", style: .plain, target: self, action: #selector(logout))
+        //        navigationItem.leftBarButtonItem = addItem
         navigationController?.setNavigationBarHidden(true, animated: false)
     }
     
     
     
     @objc func logout() {
+        var animator = UIViewPropertyAnimator()
+        animator = UIViewPropertyAnimator(duration: 0.2, curve: .easeOut, animations: {
+            
+            self.logoutButton.backgroundColor = .white
+            
+        })
+        animator.startAnimation()
         presenter.logout()
     }
     
@@ -54,6 +61,7 @@ class MainViewController: UIViewController {
         searchButton.setTitleColor(UIColor(red: 0.243, green: 0.776, blue: 1, alpha: 1), for: .normal)
         searchButton.layer.cornerRadius = 25
         searchButton.addTarget(self, action: #selector(search), for: .touchUpInside)
+        searchButton.addTarget(self, action: #selector(anim), for: .touchDown)
         searchButton.snp.makeConstraints { (make) in
             make.top.equalTo(searchBar.snp.bottom).offset(10)
             make.centerX.equalToSuperview()
@@ -72,10 +80,11 @@ class MainViewController: UIViewController {
         logoutButton.setTitleColor(UIColor(red: 0.243, green: 0.776, blue: 1, alpha: 1), for: .normal)
         logoutButton.layer.cornerRadius = 25
         logoutButton.addTarget(self, action: #selector(logout), for: .touchUpInside)
+        logoutButton.addTarget(self, action: #selector(anim), for: .touchDown)
         logoutButton.snp.makeConstraints { (make) in
             make.top.equalToSuperview().offset(75)
-//            make.centerX.equalToSuperview()
-//            make.leading.equalToSuperview().offset(43)
+            //            make.centerX.equalToSuperview()
+            //            make.leading.equalToSuperview().offset(43)
             make.trailing.equalToSuperview().offset(-16)
             make.height.equalTo(50)
             make.width.equalTo(150)
@@ -95,10 +104,10 @@ class MainViewController: UIViewController {
         searchBar.placeholder = "Найти рейс"
         searchBar.clipsToBounds = true
         searchBar.layer.cornerRadius = 25
-       
+        
         searchBar.layer.borderColor = #colorLiteral(red: 0.243, green: 0.776, blue: 1, alpha: 1)
         searchBar.layer.borderWidth = 3
-
+        
         searchBar.snp.makeConstraints { contsraint in
             contsraint.top.equalTo(view).offset(250)
             contsraint.centerX.equalToSuperview()
@@ -109,6 +118,14 @@ class MainViewController: UIViewController {
     }
     
     @objc func search() {
+        var animator = UIViewPropertyAnimator()
+        animator = UIViewPropertyAnimator(duration: 0.2, curve: .easeOut, animations: {
+            
+            self.searchButton.backgroundColor = .white
+            
+        })
+        animator.startAnimation()
+
         guard let searchBarText = searchBar.text else { return }
         print(searchBarText)
         presenter.findFlyghtInfo(view: self, flyghtNumber: searchBarText)
@@ -117,6 +134,19 @@ class MainViewController: UIViewController {
     @objc func hideKeyboardOnSwipeDown() {
         view.endEditing(true)
     }
+    
+    @objc func anim(button: UIButton) {
+        var animator = UIViewPropertyAnimator()
+        animator = UIViewPropertyAnimator(duration: 0.2, curve: .easeOut, animations: {
+            button.backgroundColor = UIColor(red: 0.243, green: 0.776, blue: 1, alpha: 1)
+            button.layer.borderColor = UIColor.white.cgColor
+            button.setTitleColor(.white, for: .highlighted)
+
+        })
+        animator.startAnimation()
+      
+    }
+    
 }
 
 extension MainViewController: IFoundFlyghtViewController {

@@ -32,25 +32,29 @@ class FoundFlyghtViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor(red: 0.243, green: 0.776, blue: 1, alpha: 1)
-        setupButton()
         setupFlyghtNumberLabel()
         setupDepartureAirportLabel()
         setupDepartureDateLabel()
         setupArrivalAirportLabel()
         setupArrivalDateLabel()
         setupAircraftLabel()
+        setupButton()
+
     }
     
     func setupFlyghtNumberLabel() {
         self.view.addSubview(flyghtNumberLabel)
         flyghtNumberLabel.text = "Номер рейса \(flyghtViewInfo.airline) \(flyghtViewInfo.flyghtNumber)"
         flyghtNumberLabel.backgroundColor = .white
+        flyghtNumberLabel.layer.cornerRadius = 25
+        flyghtNumberLabel.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
+        flyghtNumberLabel.clipsToBounds = true
+        flyghtNumberLabel.textAlignment = .center
         flyghtNumberLabel.snp.makeConstraints { (make) in
             make.top.equalToSuperview().offset(100)
             make.leading.equalToSuperview().offset(43)
             make.trailing.equalToSuperview().offset(-43)
-//            make.width.equalToSuperview()
-            make.height.equalTo(50)
+            make.height.equalTo(75)
         }
     }
     
@@ -59,12 +63,12 @@ class FoundFlyghtViewController: UIViewController {
         departureAirportLabel.text = "Аэропорт отбытия \(flyghtViewInfo.departureAirport)"
         departureAirportLabel.numberOfLines = 0
         departureAirportLabel.backgroundColor = .white
+        departureAirportLabel.textAlignment = .center
         departureAirportLabel.snp.makeConstraints { (make) in
-            make.top.equalTo(flyghtNumberLabel).offset(50)
+            make.top.equalTo(flyghtNumberLabel.snp.bottom)
             make.leading.equalToSuperview().offset(43)
             make.trailing.equalToSuperview().offset(-43)
-//            make.width.equalToSuperview().offset(-16)
-            make.height.equalTo(50)
+            make.height.equalTo(75)
         }
     }
     
@@ -73,12 +77,12 @@ class FoundFlyghtViewController: UIViewController {
         departureDateLabel.text = "Время отбытия \(flyghtViewInfo.departureDate)"
         departureDateLabel.numberOfLines = 0
         departureDateLabel.backgroundColor = .white
+        departureDateLabel.textAlignment = .center
         departureDateLabel.snp.makeConstraints { (make) in
-            make.top.equalTo(departureAirportLabel).offset(50)
+            make.top.equalTo(departureAirportLabel.snp.bottom)
             make.leading.equalToSuperview().offset(43)
             make.trailing.equalToSuperview().offset(-43)
-//            make.width.equalToSuperview().offset(16)
-            make.height.equalTo(50)
+            make.height.equalTo(75)
         }
     }
     
@@ -87,12 +91,12 @@ class FoundFlyghtViewController: UIViewController {
         arrivalAirportLabel.text = "Аэропорт прибытия \(flyghtViewInfo.arrivalAirport)"
         arrivalAirportLabel.numberOfLines = 0
         arrivalAirportLabel.backgroundColor = .white
+        arrivalAirportLabel.textAlignment = .center
         arrivalAirportLabel.snp.makeConstraints { (make) in
-            make.top.equalTo(departureDateLabel).offset(50)
+            make.top.equalTo(departureDateLabel.snp.bottom)
             make.leading.equalToSuperview().offset(43)
             make.trailing.equalToSuperview().offset(-43)
-//            make.width.equalToSuperview().offset(-43)
-            make.height.equalTo(50)
+            make.height.equalTo(75)
         }
     }
     
@@ -101,12 +105,12 @@ class FoundFlyghtViewController: UIViewController {
         arrivalDateLabel.text = "Время прибытия \(flyghtViewInfo.arrivalDate)"
         arrivalDateLabel.numberOfLines = 0
         arrivalDateLabel.backgroundColor = .white
+        arrivalDateLabel.textAlignment = .center
         arrivalDateLabel.snp.makeConstraints { (make) in
-            make.top.equalTo(arrivalAirportLabel).offset(50)
+            make.top.equalTo(arrivalAirportLabel.snp.bottom)
             make.leading.equalToSuperview().offset(43)
             make.trailing.equalToSuperview().offset(-43)
-//            make.width.equalToSuperview().offset(16)
-            make.height.equalTo(50)
+            make.height.equalTo(75)
         }
     }
     
@@ -114,15 +118,17 @@ class FoundFlyghtViewController: UIViewController {
         self.view.addSubview(aircraftLabel)
         aircraftLabel.text = "Самолет \(flyghtViewInfo.aircraft)"
         aircraftLabel.numberOfLines = 0
+        aircraftLabel.clipsToBounds = true
         aircraftLabel.backgroundColor = .white
         aircraftLabel.layer.cornerRadius = 25
         aircraftLabel.layer.maskedCorners = [.layerMaxXMaxYCorner, .layerMinXMaxYCorner]
+        aircraftLabel.textAlignment = .center
         aircraftLabel.snp.makeConstraints { (make) in
-            make.top.equalTo(arrivalDateLabel).offset(50)
+            make.top.equalTo(arrivalDateLabel.snp.bottom)
             make.leading.equalToSuperview().offset(43)
             make.trailing.equalToSuperview().offset(-43)
 //            make.width.equalToSuperview().offset(16)
-            make.height.equalTo(50)
+            make.height.equalTo(75)
         }
         
     }
@@ -130,13 +136,16 @@ class FoundFlyghtViewController: UIViewController {
     func setupButton() {
         self.view.addSubview(saveButton)
         saveButton.setTitle("Добавить в избранное", for: .normal)
-        saveButton.backgroundColor = .yellow
-        saveButton.setTitleColor(.black, for: .normal)
-        saveButton.layer.cornerRadius = 10
+        saveButton.setTitleColor(.white, for: .normal)
+        saveButton.layer.cornerRadius = 25
+        saveButton.backgroundColor = UIColor(red: 0.243, green: 0.776, blue: 1, alpha: 1)
+        saveButton.layer.borderColor = UIColor.white.cgColor
+        saveButton.layer.borderWidth = 3
+        
         saveButton.addTarget(self, action: #selector(addToFavorite), for: .touchUpInside)
         saveButton.snp.makeConstraints { (make) in
-            make.bottom.equalToSuperview().offset(-50)
-//            make.top.equalTo(aircraftLabel).offset(35)
+//            make.bottom.equalToSuperview().offset(-50)
+            make.top.equalTo(aircraftLabel.snp.bottom).offset(35)
             make.leading.equalToSuperview().offset(43)
             make.trailing.equalToSuperview().offset(-43)
             make.height.equalTo(50)

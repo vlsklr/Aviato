@@ -87,9 +87,10 @@ class LoginViewController: UIViewController {
     func setupAuthButton() {
         self.view.addSubview(authButton)
         authButton.addTarget(self, action: #selector(authAction), for: .touchUpInside)
-        authButton.backgroundColor = .blue
+        authButton.addTarget(self, action: #selector(anim), for: .touchDown)
         authButton.setTitle("Войти", for: .normal)
         authButton.layer.cornerRadius = 25
+        
         authButton.backgroundColor = UIColor(red: 0.243, green: 0.776, blue: 1, alpha: 1)
         authButton.layer.borderColor = UIColor.white.cgColor
         authButton.layer.borderWidth = 3
@@ -106,6 +107,7 @@ class LoginViewController: UIViewController {
         self.view.addSubview(registerButton)
         registerButton.setTitle("Зарегистрироваться", for: .normal)
         registerButton.addTarget(self, action: #selector(registerAction), for: .touchUpInside)
+        registerButton.addTarget(self, action: #selector(anim), for: .touchDown)
         registerButton.backgroundColor = .blue
         registerButton.layer.cornerRadius = 25
         registerButton.backgroundColor = UIColor(red: 0.243, green: 0.776, blue: 1, alpha: 1)
@@ -120,12 +122,46 @@ class LoginViewController: UIViewController {
         }
     }
     
+    @objc func anim(button: UIButton) {
+        var animator = UIViewPropertyAnimator()
+        animator = UIViewPropertyAnimator(duration: 0.2, curve: .easeOut, animations: {
+            button.backgroundColor = .white
+            button.layer.borderColor = UIColor(red: 0.243, green: 0.776, blue: 1, alpha: 1).cgColor
+            button.setTitleColor(UIColor(red: 0.243, green: 0.776, blue: 1, alpha: 1), for: .highlighted)
+
+        })
+        animator.startAnimation()
+      
+    }
+    
     @objc func authAction() {
+        
+        var animator = UIViewPropertyAnimator()
+        animator = UIViewPropertyAnimator(duration: 0.2, curve: .easeOut, animations: {
+            
+            self.authButton.backgroundColor = UIColor(red: 0.243, green: 0.776, blue: 1, alpha: 1)
+            self.authButton.layer.borderColor = UIColor.white.cgColor
+
+            
+        })
+        animator.startAnimation()
+
+        
         guard let username = userNameField.text, let password = passwordField.text else{return}
         presenter.authentificateUser(view: self, username: username, password: password)
     }
     
     @objc func registerAction() {
+        
+        var animator = UIViewPropertyAnimator()
+        animator = UIViewPropertyAnimator(duration: 0.2, curve: .easeOut, animations: {
+            
+            self.registerButton.backgroundColor = UIColor(red: 0.243, green: 0.776, blue: 1, alpha: 1)
+            self.registerButton.layer.borderColor = UIColor.white.cgColor
+
+            
+        })
+        animator.startAnimation()
         guard let username = userNameField.text, let password = passwordField.text else{return}
         presenter.registerUser(view: self, username: username, password: password)
     }

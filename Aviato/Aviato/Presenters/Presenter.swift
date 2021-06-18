@@ -75,8 +75,10 @@ class Presenter: IPresenter {
     }
     
     func getFavorite(view: IFavoriteFlyghtViewController, indexPath: IndexPath) {
-        let fl = storageManager.getFlyghts(userID: userID)
-        view.showFavoriteFlyght(flyghtViewInfo: fl![indexPath.row])
+        guard let flyght = storageManager.getFlyghts(userID: userID) else {return}
+        if indexPath.row < flyght.count {
+            view.showFavoriteFlyght(flyghtViewInfo: flyght[indexPath.row])
+        }
     }
     
     func removeFlyght(flyghtID: UUID, completion: @escaping () -> Void) {

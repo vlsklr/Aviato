@@ -29,19 +29,25 @@ class FavoriteFlyghtListViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = .cyan
+        navigationController?.setNavigationBarHidden(true, animated: false)
+        
     }
     func
     initTableView() {
         view.addSubview(tableView)
-        tableView.backgroundColor = .blue
+        
+        if let airportImage = UIImage(named: "airport_bgc") {
+            self.view.backgroundColor = UIColor(patternImage: airportImage)
+        }
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(FlyghtViewCell.self, forCellReuseIdentifier: "cell")
+        tableView.layer.cornerRadius = 25
         tableView.snp.makeConstraints { constraint in
-            constraint.top.equalToSuperview()
-            constraint.width.equalToSuperview()
-            constraint.height.equalToSuperview()
+            constraint.top.equalToSuperview().offset(50)
+            constraint.leading.equalToSuperview().offset(16)
+            constraint.trailing.equalToSuperview().offset(-16)
+            constraint.bottom.equalToSuperview().offset(-100)
         }
     }
 }
@@ -73,6 +79,8 @@ extension FavoriteFlyghtListViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! FlyghtViewCell
+        
+        cell.backgroundColor = UIColor.clear
         cell.setupCell()
         if let getter:[FlyghtViewModel] = presenter.getFlyghts() {
             if indexPath.row < getter.count {

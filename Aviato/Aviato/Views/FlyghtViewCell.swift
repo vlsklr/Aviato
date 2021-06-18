@@ -12,6 +12,8 @@ class FlyghtViewCell: UITableViewCell {
     let flyghtNumberLabel: UILabel = UILabel()
     let departireTimeLabel: UILabel = UILabel()
     
+    let testView: UIView = UIView()
+    
     override func awakeFromNib() {
         super.awakeFromNib()
     }
@@ -21,6 +23,7 @@ class FlyghtViewCell: UITableViewCell {
     }
     
     func setupCell() {
+        
         contentView.addSubview(flyghtNumberLabel)
         flyghtNumberLabel.snp.makeConstraints { make in
             make.leading.equalToSuperview().offset(16)
@@ -40,7 +43,8 @@ class FlyghtViewCell: UITableViewCell {
         }
         
         self.contentView.snp.makeConstraints { make in
-            make.width.equalToSuperview()
+            make.leading.equalToSuperview().offset(1)
+            make.trailing.equalToSuperview().offset(-1)
             make.height.equalTo(80)
         }
     }

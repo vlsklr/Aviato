@@ -32,21 +32,7 @@ class RootViewController: UIViewController {
         let router = MainRouter(presenter: presenter)
         let mainViewController = router.getTabBar()
         animateFadeTransition(to: mainViewController)
-//        addChild(mainViewController)
-//        mainViewController.view.frame = view.bounds
-//        view.addSubview(mainViewController.view)
-//        mainViewController.didMove(toParent: self)
-//        currentViewController.willMove(toParent: nil)
-//        currentViewController.view.removeFromSuperview()
-//        currentViewController.removeFromParent()
-//        currentViewController = mainViewController
-        
-        
     }
-    
-
-
-    
     private func animateFadeTransition(to new: UIViewController, completion: (() -> Void)? = nil) {
         currentViewController.willMove(toParent: nil)
         addChild(new)
@@ -59,8 +45,6 @@ class RootViewController: UIViewController {
             completion?()
        }
     }
-    
-    
     
 }
 

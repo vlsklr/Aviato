@@ -80,13 +80,12 @@ class StorageManager: IStorageManager {
     }
     
     func removeFlyght(flyghtID: UUID) {
-        self.persistentContainer.performBackgroundTask { context in
+        let context = persistentContainer.viewContext
             let fetchRequest: NSFetchRequest<Flyght> = Flyght.fetchRequest()
             fetchRequest.predicate = NSPredicate(format: "\(#keyPath(Flyght.flyghtID)) = %@", "\(flyghtID)")
             if let object = try? context.fetch(fetchRequest).first {
                 context.delete(object)
             }
             try? context.save()
-        }
     }
 }

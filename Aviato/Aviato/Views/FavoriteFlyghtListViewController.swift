@@ -56,12 +56,12 @@ extension FavoriteFlyghtListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let deleteAction = UIContextualAction(style: .destructive, title: "Delete") { _, _, complete in
             if let flyghtID = self.presenter.getFlyghts()?[indexPath.row] {
-                self.presenter.removeFlyght(flyghtID: flyghtID.flyghtID, completion: {
-                    tableView.reloadData()
-                })
+                self.presenter.removeFlyght(flyghtID: flyghtID.flyghtID)
+                tableView.reloadData()
             }
             complete(true)
         }
+
         let configuration = UISwipeActionsConfiguration(actions: [deleteAction])
         configuration.performsFirstActionWithFullSwipe = true
         return configuration

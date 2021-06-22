@@ -80,10 +80,7 @@ class Presenter: IPresenter {
         }
     }
     
-    func removeFlyght(flyghtID: UUID, completion: @escaping () -> Void) {
+    func removeFlyght(flyghtID: UUID) {
         storageManager.removeFlyght(flyghtID: flyghtID)
-        DispatchQueue.main.async {
-            completion()
-        }
     }
 }

@@ -68,7 +68,10 @@ extension FavoriteFlyghtListViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let cell = tableView.cellForRow(at: indexPath) as! FlyghtViewCell
+        print(cell.entityID)
         presenter.getFavorite(view: self, indexPath: indexPath)
+        
     }
 }
 
@@ -81,7 +84,8 @@ extension FavoriteFlyghtListViewController: UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! FlyghtViewCell
         
         cell.backgroundColor = UIColor.clear
-        cell.setupCell()
+        cell.setupCell(id: UUID())
+        
         if let getter:[FlyghtViewModel] = presenter.getFlyghts() {
             if indexPath.row < getter.count {
                 cell.flyghtNumberLabel.text = "Рейс \(getter[indexPath.row].flyghtNumber)"

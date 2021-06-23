@@ -137,3 +137,4 @@ Aviato/Pods/Target Support Files/SnapKit/SnapKit-umbrella.h
 Aviato/Pods/Target Support Files/SnapKit/SnapKit.debug.xcconfig
 Aviato/Pods/Target Support Files/SnapKit/SnapKit.modulemap
 Aviato/Pods/Target Support Files/SnapKit/SnapKit.release.xcconfig
+.DS_Store

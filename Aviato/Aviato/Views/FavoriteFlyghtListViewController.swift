@@ -32,8 +32,7 @@ class FavoriteFlyghtListViewController: UIViewController {
         navigationController?.setNavigationBarHidden(true, animated: false)
         
     }
-    func
-    initTableView() {
+    func initTableView() {
         view.addSubview(tableView)
         
         if let airportImage = UIImage(named: "airport_bgc") {
@@ -55,13 +54,14 @@ class FavoriteFlyghtListViewController: UIViewController {
 extension FavoriteFlyghtListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let deleteAction = UIContextualAction(style: .destructive, title: "Delete") { _, _, complete in
-            if let flyghtID = self.presenter.getFlyghts()?[indexPath.row] {
-                self.presenter.removeFlyght(flyghtID: flyghtID.flyghtID)
+            let cell = tableView.cellForRow(at: indexPath) as! FlyghtViewCell
+            if let flyghtID = cell.entityID {
+                self.presenter.removeFlyght(flyghtID: flyghtID)
                 tableView.reloadData()
             }
             complete(true)
         }
-
+        
         let configuration = UISwipeActionsConfiguration(actions: [deleteAction])
         configuration.performsFirstActionWithFullSwipe = true
         return configuration
@@ -69,9 +69,10 @@ extension FavoriteFlyghtListViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let cell = tableView.cellForRow(at: indexPath) as! FlyghtViewCell
-        print(cell.entityID)
-        presenter.getFavorite(view: self, indexPath: indexPath)
-        
+        if let entityID = cell.entityID {
+            presenter.getFavorite(view: self, flyghtID: entityID)
+            
+        }
     }
 }
 
@@ -82,12 +83,11 @@ extension FavoriteFlyghtListViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! FlyghtViewCell
-        
         cell.backgroundColor = UIColor.clear
-        cell.setupCell(id: UUID())
         
         if let getter:[FlyghtViewModel] = presenter.getFlyghts() {
             if indexPath.row < getter.count {
+                cell.setupCell(id: getter[indexPath.row].flyghtID)
                 cell.flyghtNumberLabel.text = "Рейс \(getter[indexPath.row].flyghtNumber)"
                 cell.departireTimeLabel.text = "Отбывает в \(getter[indexPath.row].departureDate)"
             }

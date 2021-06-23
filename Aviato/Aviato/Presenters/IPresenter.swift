@@ -14,7 +14,6 @@ protocol IPresenter {
     func findFlyghtInfo(view: IFoundFlyghtViewController, flyghtNumber: String)
     func addToFavorite(flyght: FlyghtViewModel)
     func getFlyghts() -> [FlyghtViewModel]?
-//    func removeFlyght(flyghtID: UUID, completion: @escaping () -> Void)
     func removeFlyght(flyghtID: UUID)
-    func getFavorite(view: IFavoriteFlyghtViewController, indexPath: IndexPath)
+    func getFavorite(view: IFavoriteFlyghtViewController, flyghtID: UUID)
 }

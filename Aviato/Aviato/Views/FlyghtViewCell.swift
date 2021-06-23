@@ -11,8 +11,8 @@ import SnapKit
 class FlyghtViewCell: UITableViewCell {
     let flyghtNumberLabel: UILabel = UILabel()
     let departireTimeLabel: UILabel = UILabel()
+    var entityID: UUID?
     
-    let testView: UIView = UIView()
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -22,8 +22,8 @@ class FlyghtViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
     }
     
-    func setupCell() {
-        
+    func setupCell(id: UUID) {
+        entityID = id
         contentView.addSubview(flyghtNumberLabel)
         flyghtNumberLabel.snp.makeConstraints { make in
             make.leading.equalToSuperview().offset(16)

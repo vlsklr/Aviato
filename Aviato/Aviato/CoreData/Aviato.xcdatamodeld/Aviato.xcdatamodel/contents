@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="17709" systemVersion="19H114" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="17709" systemVersion="19H1030" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Flyght" representedClassName="Flyght" syncable="YES" codeGenerationType="class">
         <attribute name="aircraft" optional="YES" attributeType="String"/>
         <attribute name="airline" optional="YES" attributeType="String"/>
         <attribute name="arrivalAirport" optional="YES" attributeType="String"/>
-        <attribute name="arrivalTime" optional="YES" attributeType="String"/>
+        <attribute name="arrivalTime" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="departureAirport" optional="YES" attributeType="String"/>
-        <attribute name="departureTime" optional="YES" attributeType="String"/>
+        <attribute name="departureTime" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="flyghtID" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="flyghtNumber" optional="YES" attributeType="String"/>
         <relationship name="user" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="flyghts" inverseEntity="User"/>

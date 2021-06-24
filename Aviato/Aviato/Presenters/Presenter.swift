@@ -47,6 +47,8 @@ class Presenter: IPresenter {
     }
     
     func findFlyghtInfo(view: IFoundFlyghtViewController, flyghtNumber: String) {
+        
+
         self.networkManager.loadFlyghtInfo(flyghtNumber: flyghtNumber, completion: {[weak self] result in
             switch result {
             case .failure(let error):
@@ -56,7 +58,18 @@ class Presenter: IPresenter {
                 }
             case .success(let info):
                 print(info)
-                let viewInfo: FlyghtViewModel = FlyghtViewModel(holder: self!.userID, flyghtID: UUID(), flyghtNumber: info.number, departureAirport: "\(info.departure.airport.countryCode)  \(info.departure.airport.name)", arrivalAirport: "\(info.arrival.airport.countryCode)  \(info.arrival.airport.name)", departureDate: info.departure.scheduledTimeUtc, arrivalDate: info.arrival.scheduledTimeUtc, aircraft: info.aircraft.model, airline: info.airline.name)
+                let dateFormatter = DateFormatter()
+                dateFormatter.dateFormat = "yyyy-MM-dd HH:mmZ"
+                dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
+                let departureDateUTC = dateFormatter.date(from:info.departure.scheduledTimeUtc)!
+                let arrivalDateUTC = dateFormatter.date(from: info.arrival.scheduledTimeUtc)!
+                
+                dateFormatter.dateFormat = "yyyy-MM-dd HH:mm"
+                dateFormatter.timeZone = TimeZone.current
+                let departureDateLocal = dateFormatter.string(from: departureDateUTC)
+                let arrivalDateLocal  = dateFormatter.string(from: arrivalDateUTC)
+                
+                let viewInfo: FlyghtViewModel = FlyghtViewModel(holder: self!.userID, flyghtID: UUID(), flyghtNumber: info.number, departureAirport: "\(info.departure.airport.countryCode)  \(info.departure.airport.name)", arrivalAirport: "\(info.arrival.airport.countryCode)  \(info.arrival.airport.name)", departureDate: departureDateUTC, arrivalDate: arrivalDateUTC, aircraft: info.aircraft.model, airline: info.airline.name, departureDateLocal: departureDateLocal, arrivalDateLocal: arrivalDateLocal)
                 DispatchQueue.main.async {
                     view.showFoundFlyght(flyghtViewInfo: viewInfo)
                 }

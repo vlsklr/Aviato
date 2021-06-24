@@ -89,7 +89,7 @@ extension FavoriteFlyghtListViewController: UITableViewDataSource {
             if indexPath.row < getter.count {
                 cell.setupCell(id: getter[indexPath.row].flyghtID)
                 cell.flyghtNumberLabel.text = "Рейс \(getter[indexPath.row].flyghtNumber)"
-                cell.departireTimeLabel.text = "Отбывает в \(getter[indexPath.row].departureDate)"
+                cell.departireTimeLabel.text = "Отбывает(местное)  \(getter[indexPath.row].departureDateLocal)"
             }
         }
         return cell

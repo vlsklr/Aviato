@@ -13,8 +13,10 @@ class FavoriteViewController: UIViewController {
     let flyghtNumberLabel: UILabel = UILabel()
     let departureAirportLabel: UILabel = UILabel()
     let departureDateLabel: UILabel = UILabel()
+    let departureDateLocalLabel: UILabel = UILabel()
     let arrivalAirportLabel: UILabel = UILabel()
     let arrivalDateLabel: UILabel = UILabel()
+    let arrivalDateLocalLabel: UILabel = UILabel()
     let aircraftLabel: UILabel = UILabel()
     var flyghtViewInfo: FlyghtViewModel
     
@@ -34,8 +36,10 @@ class FavoriteViewController: UIViewController {
         setupFlyghtNumberLabel()
         setupDepartureAirportLabel()
         setupDepartureDateLabel()
+        setupDeartureDateLocalLabel()
         setupArrivalAirportLabel()
         setupArrivalDateLabel()
+        setupArrivalDateLocalLabel()
         setupAircraftLabel()
         
     }
@@ -72,12 +76,26 @@ class FavoriteViewController: UIViewController {
     
     func setupDepartureDateLabel() {
         self.view.addSubview(departureDateLabel)
-        departureDateLabel.text = "Время отбытия \(flyghtViewInfo.departureDate)"
+        departureDateLabel.text = "Время отбытия UTC \(flyghtViewInfo.departureDate)"
         departureDateLabel.numberOfLines = 0
         departureDateLabel.backgroundColor = .white
         departureDateLabel.textAlignment = .center
         departureDateLabel.snp.makeConstraints { (make) in
             make.top.equalTo(departureAirportLabel.snp.bottom)
+            make.leading.equalToSuperview().offset(43)
+            make.trailing.equalToSuperview().offset(-43)
+            make.height.equalTo(75)
+        }
+    }
+    
+    func setupDeartureDateLocalLabel() {
+        self.view.addSubview(departureDateLocalLabel)
+        departureDateLocalLabel.text = "Время отбытия местное \(flyghtViewInfo.departureDateLocal)"
+        departureDateLocalLabel.numberOfLines = 0
+        departureDateLocalLabel.backgroundColor = .white
+        departureDateLocalLabel.textAlignment = .center
+        departureDateLocalLabel.snp.makeConstraints { (make) in
+            make.top.equalTo(departureDateLabel.snp.bottom)
             make.leading.equalToSuperview().offset(43)
             make.trailing.equalToSuperview().offset(-43)
             make.height.equalTo(75)
@@ -91,7 +109,7 @@ class FavoriteViewController: UIViewController {
         arrivalAirportLabel.backgroundColor = .white
         arrivalAirportLabel.textAlignment = .center
         arrivalAirportLabel.snp.makeConstraints { (make) in
-            make.top.equalTo(departureDateLabel.snp.bottom)
+            make.top.equalTo(departureDateLocalLabel.snp.bottom)
             make.leading.equalToSuperview().offset(43)
             make.trailing.equalToSuperview().offset(-43)
             make.height.equalTo(75)
@@ -100,12 +118,26 @@ class FavoriteViewController: UIViewController {
     
     func setupArrivalDateLabel() {
         self.view.addSubview(arrivalDateLabel)
-        arrivalDateLabel.text = "Время прибытия \(flyghtViewInfo.arrivalDate)"
+        arrivalDateLabel.text = "Время прибытия UTC \(flyghtViewInfo.arrivalDate)"
         arrivalDateLabel.numberOfLines = 0
         arrivalDateLabel.backgroundColor = .white
         arrivalDateLabel.textAlignment = .center
         arrivalDateLabel.snp.makeConstraints { (make) in
             make.top.equalTo(arrivalAirportLabel.snp.bottom)
+            make.leading.equalToSuperview().offset(43)
+            make.trailing.equalToSuperview().offset(-43)
+            make.height.equalTo(75)
+        }
+    }
+    
+    func setupArrivalDateLocalLabel() {
+        self.view.addSubview(arrivalDateLocalLabel)
+        arrivalDateLocalLabel.text = "Время прибытия местное \(flyghtViewInfo.arrivalDateLocal)"
+        arrivalDateLocalLabel.numberOfLines = 0
+        arrivalDateLocalLabel.backgroundColor = .white
+        arrivalDateLocalLabel.textAlignment = .center
+        arrivalDateLocalLabel.snp.makeConstraints { (make) in
+            make.top.equalTo(arrivalDateLabel.snp.bottom)
             make.leading.equalToSuperview().offset(43)
             make.trailing.equalToSuperview().offset(-43)
             make.height.equalTo(75)
@@ -122,7 +154,7 @@ class FavoriteViewController: UIViewController {
         aircraftLabel.layer.maskedCorners = [.layerMaxXMaxYCorner, .layerMinXMaxYCorner]
         aircraftLabel.textAlignment = .center
         aircraftLabel.snp.makeConstraints { (make) in
-            make.top.equalTo(arrivalDateLabel.snp.bottom)
+            make.top.equalTo(arrivalDateLocalLabel.snp.bottom)
             make.leading.equalToSuperview().offset(43)
             make.trailing.equalToSuperview().offset(-43)
 //            make.width.equalToSuperview().offset(16)

@@ -64,16 +64,23 @@ class StorageManager: IStorageManager {
     func getFlyghts(userID: UUID) -> [FlyghtViewModel]? {
         let fetchRequest: NSFetchRequest<Flyght> = Flyght.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "ANY user.userID = %@", "\(userID)")
-        let flyghts = try? self.persistentContainer.viewContext.fetch(fetchRequest).compactMap { FlyghtViewModel(holder: userID, flyghtID: $0.flyghtID ?? UUID(), flyghtNumber: $0.flyghtNumber ?? "", departureAirport: $0.departureAirport ?? "", arrivalAirport: $0.arrivalAirport ?? "", departureDate: $0.departureTime ?? "", arrivalDate: $0.arrivalTime ?? "", aircraft: $0.aircraft ?? "", airline: $0.airline ?? "" )
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm"
+        dateFormatter.timeZone = TimeZone.current
+        
+        let flyghts = try? self.persistentContainer.viewContext.fetch(fetchRequest).compactMap { FlyghtViewModel(holder: userID, flyghtID: $0.flyghtID ?? UUID(), flyghtNumber: $0.flyghtNumber ?? "", departureAirport: $0.departureAirport ?? "", arrivalAirport: $0.arrivalAirport ?? "", departureDate: $0.departureTime ?? Date(), arrivalDate: $0.arrivalTime ?? Date(), aircraft: $0.aircraft ?? "", airline: $0.airline ?? "", departureDateLocal: dateFormatter.string(from: $0.departureTime ?? Date()) , arrivalDateLocal: dateFormatter.string(from: $0.arrivalTime ?? Date()))
         }
         return flyghts
     }
     
     func getFlyght(flyghtID: UUID) -> FlyghtViewModel? {
         let fetchRequest: NSFetchRequest<Flyght> = Flyght.fetchRequest()
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm"
+        dateFormatter.timeZone = TimeZone.current
         fetchRequest.predicate = NSPredicate(format: "flyghtID = %@", "\(flyghtID)")
         if let flyghts = try? self.persistentContainer.viewContext.fetch(fetchRequest).first {
-            let flyghtViewModel = FlyghtViewModel(holder: UUID(), flyghtID: flyghtID, flyghtNumber: (flyghts.flyghtNumber!), departureAirport: flyghts.departureAirport!, arrivalAirport: flyghts.arrivalAirport!, departureDate: flyghts.departureTime!, arrivalDate: flyghts.arrivalTime!, aircraft: flyghts.aircraft!, airline: flyghts.airline!)
+            let flyghtViewModel = FlyghtViewModel(holder: UUID(), flyghtID: flyghtID, flyghtNumber: (flyghts.flyghtNumber!), departureAirport: flyghts.departureAirport!, arrivalAirport: flyghts.arrivalAirport!, departureDate: flyghts.departureTime!, arrivalDate: flyghts.arrivalTime!, aircraft: flyghts.aircraft!, airline: flyghts.airline!, departureDateLocal: dateFormatter.string(from: flyghts.departureTime!), arrivalDateLocal: dateFormatter.string(from: flyghts.arrivalTime!))
             return flyghtViewModel
         }
         return nil

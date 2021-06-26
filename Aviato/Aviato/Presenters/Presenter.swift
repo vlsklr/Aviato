@@ -47,7 +47,8 @@ class Presenter: IPresenter {
     }
     
     func findFlyghtInfo(view: IFoundFlyghtViewController, flyghtNumber: String) {
-        
+        storageManager.contains(userID: userID, flyghtNumber: "KL 1223")
+
 
         self.networkManager.loadFlyghtInfo(flyghtNumber: flyghtNumber, completion: {[weak self] result in
             switch result {
@@ -69,7 +70,7 @@ class Presenter: IPresenter {
                 let departureDateLocal = dateFormatter.string(from: departureDateUTC)
                 let arrivalDateLocal  = dateFormatter.string(from: arrivalDateUTC)
                 
-                let viewInfo: FlyghtViewModel = FlyghtViewModel(holder: self!.userID, flyghtID: UUID(), flyghtNumber: info.number, departureAirport: "\(info.departure.airport.countryCode)  \(info.departure.airport.name)", arrivalAirport: "\(info.arrival.airport.countryCode)  \(info.arrival.airport.name)", departureDate: departureDateUTC, arrivalDate: arrivalDateUTC, aircraft: info.aircraft.model, airline: info.airline.name, departureDateLocal: departureDateLocal, arrivalDateLocal: arrivalDateLocal)
+                let viewInfo: FlyghtViewModel = FlyghtViewModel(holder: self!.userID, flyghtID: UUID(), flyghtNumber: flyghtNumber, departureAirport: "\(info.departure.airport.countryCode)  \(info.departure.airport.name)", arrivalAirport: "\(info.arrival.airport.countryCode)  \(info.arrival.airport.name)", departureDate: departureDateUTC, arrivalDate: arrivalDateUTC, aircraft: info.aircraft.model, airline: info.airline.name, departureDateLocal: departureDateLocal, arrivalDateLocal: arrivalDateLocal)
                 DispatchQueue.main.async {
                     view.showFoundFlyght(flyghtViewInfo: viewInfo)
                 }
@@ -78,7 +79,7 @@ class Presenter: IPresenter {
     }
     
     func addToFavorite(flyght: FlyghtViewModel) {
-        storageManager.AddFlyght(flyght: flyght)
+        storageManager.addFlyght(flyght: flyght)
     }
     
     func getFlyghts() -> [FlyghtViewModel]? {

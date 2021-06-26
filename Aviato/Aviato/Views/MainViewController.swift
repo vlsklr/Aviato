@@ -64,7 +64,6 @@ class MainViewController: UIViewController {
     
     func setupLogoutButton() {
         self.view.addSubview(logoutButton)
-        
         let yourAttributes: [NSAttributedString.Key: Any] = [
             .font: UIFont.systemFont(ofSize: 14),
             .foregroundColor: UIColor.darkGray,

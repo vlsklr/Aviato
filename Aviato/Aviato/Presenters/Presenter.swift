@@ -4,7 +4,6 @@
 //
 //  Created by Vlad on 16.06.2021.
 //
-
 import Foundation
 
 
@@ -47,9 +46,6 @@ class Presenter: IPresenter {
     }
     
     func findFlyghtInfo(view: IFoundFlyghtViewController, flyghtNumber: String) {
-        storageManager.contains(userID: userID, flyghtNumber: "KL 1223")
-
-
         self.networkManager.loadFlyghtInfo(flyghtNumber: flyghtNumber, completion: {[weak self] result in
             switch result {
             case .failure(let error):
@@ -78,8 +74,12 @@ class Presenter: IPresenter {
         })
     }
     
-    func addToFavorite(flyght: FlyghtViewModel) {
-        storageManager.addFlyght(flyght: flyght)
+    func addToFavorite(view: IAlert, flyght: FlyghtViewModel) {
+        if storageManager.contains(userID: userID, flyghtNumber: flyght.flyghtNumber){
+            view.showAlert(message: "Данный рейс уже сохранен в избранном")
+        }else{
+            storageManager.addFlyght(flyght: flyght)
+        }
     }
     
     func getFlyghts() -> [FlyghtViewModel]? {

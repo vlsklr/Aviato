@@ -98,10 +98,9 @@ class StorageManager: IStorageManager {
     }
     
     func contains(userID: UUID, flyghtNumber: String) -> Bool {
-        
         let fetchRequest: NSFetchRequest<Flyght> = Flyght.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "user.userID = %@ AND flyghtNumber = %@", argumentArray: [userID, flyghtNumber])
-        if let flyghts = try? self.persistentContainer.viewContext.fetch(fetchRequest).first {
+        if (try? self.persistentContainer.viewContext.fetch(fetchRequest).first) != nil {
             return true
         }
         return false

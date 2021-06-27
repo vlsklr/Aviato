@@ -10,7 +10,6 @@ import SnapKit
 
 class FoundFlyghtViewController: UIViewController {
     
-    
     let flyghtNumberLabel: UILabel = UILabel()
     let departureAirportLabel: UILabel = UILabel()
     let departureDateLabel: UILabel = UILabel()
@@ -173,10 +172,8 @@ class FoundFlyghtViewController: UIViewController {
         saveButton.backgroundColor = UIColor(red: 0.243, green: 0.776, blue: 1, alpha: 1)
         saveButton.layer.borderColor = UIColor.white.cgColor
         saveButton.layer.borderWidth = 3
-        
         saveButton.addTarget(self, action: #selector(addToFavorite), for: .touchUpInside)
         saveButton.snp.makeConstraints { (make) in
-            //            make.bottom.equalToSuperview().offset(-50)
             make.top.equalTo(aircraftLabel.snp.bottom).offset(35)
             make.leading.equalToSuperview().offset(43)
             make.trailing.equalToSuperview().offset(-43)
@@ -185,18 +182,17 @@ class FoundFlyghtViewController: UIViewController {
     }
     
     @objc func addToFavorite() {
-        presenter.addToFavorite(view: self, flyght: self.flyghtViewInfo)
-        self.dismiss(animated: true, completion: nil)
+        if presenter.addToFavorite(view: self, flyght: self.flyghtViewInfo) {
+            self.dismiss(animated: true, completion: nil)
+        }
     }
 }
 
 extension FoundFlyghtViewController: IAlert {
     func showAlert(message: String) {
-//        self.dismiss(animated: true, completion: nil)
-        print("12345")
         let alert = UIAlertController(title: "Ошибка", message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "ОК", style: .default))
-        present(alert, animated: true)
+        self.present(alert, animated: true)
     }
 }
 

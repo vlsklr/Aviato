@@ -47,7 +47,6 @@ class LoginViewController: UIViewController {
             make.trailing.equalToSuperview().offset(-43)
             make.top.equalToSuperview().offset(150)
             make.height.equalTo(100)
-            
         })
     }
     
@@ -64,9 +63,7 @@ class LoginViewController: UIViewController {
             make.trailing.equalToSuperview().offset(-43)
             make.top.equalToSuperview().offset(350)
             make.height.equalTo(50)
-            
         })
-        
     }
     
     func setupPasswordField() {
@@ -92,7 +89,6 @@ class LoginViewController: UIViewController {
         authButton.addTarget(self, action: #selector(anim), for: .touchDown)
         authButton.setTitle("Войти", for: .normal)
         authButton.layer.cornerRadius = 25
-        
         authButton.backgroundColor = UIColor(red: 0.243, green: 0.776, blue: 1, alpha: 1)
         authButton.layer.borderColor = UIColor.white.cgColor
         authButton.layer.borderWidth = 3
@@ -137,25 +133,17 @@ class LoginViewController: UIViewController {
             button.backgroundColor = .white
             button.layer.borderColor = UIColor(red: 0.243, green: 0.776, blue: 1, alpha: 1).cgColor
             button.setTitleColor(UIColor(red: 0.243, green: 0.776, blue: 1, alpha: 1), for: .highlighted)
-
         })
         animator.startAnimation()
-      
     }
     
     @objc func authAction() {
-        
         var animator = UIViewPropertyAnimator()
         animator = UIViewPropertyAnimator(duration: 0.2, curve: .easeOut, animations: {
-            
             self.authButton.backgroundColor = UIColor(red: 0.243, green: 0.776, blue: 1, alpha: 1)
             self.authButton.layer.borderColor = UIColor.white.cgColor
-
-            
         })
         animator.startAnimation()
-
-        
         guard let username = userNameField.text, let password = passwordField.text else{return}
         presenter.authentificateUser(view: self, username: username, password: password)
     }
@@ -165,14 +153,10 @@ class LoginViewController: UIViewController {
     }
     
     @objc func registerAction() {
-        
         var animator = UIViewPropertyAnimator()
         animator = UIViewPropertyAnimator(duration: 0.2, curve: .easeOut, animations: {
-            
             self.registerButton.backgroundColor = UIColor(red: 0.243, green: 0.776, blue: 1, alpha: 1)
             self.registerButton.layer.borderColor = UIColor.white.cgColor
-
-            
         })
         animator.startAnimation()
         guard let username = userNameField.text, let password = passwordField.text else{return}

@@ -74,11 +74,13 @@ class Presenter: IPresenter {
         })
     }
     
-    func addToFavorite(view: IAlert, flyght: FlyghtViewModel) {
+    func addToFavorite(view: IAlert, flyght: FlyghtViewModel) -> Bool {
         if storageManager.contains(userID: userID, flyghtNumber: flyght.flyghtNumber){
             view.showAlert(message: "Данный рейс уже сохранен в избранном")
+            return false
         }else{
             storageManager.addFlyght(flyght: flyght)
+            return true
         }
     }
     

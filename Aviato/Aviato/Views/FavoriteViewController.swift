@@ -41,7 +41,6 @@ class FavoriteViewController: UIViewController {
         setupArrivalDateLabel()
         setupArrivalDateLocalLabel()
         setupAircraftLabel()
-        
     }
     
     func setupFlyghtNumberLabel() {
@@ -157,9 +156,7 @@ class FavoriteViewController: UIViewController {
             make.top.equalTo(arrivalDateLocalLabel.snp.bottom)
             make.leading.equalToSuperview().offset(43)
             make.trailing.equalToSuperview().offset(-43)
-//            make.width.equalToSuperview().offset(16)
             make.height.equalTo(75)
         }
-        
     }
 }

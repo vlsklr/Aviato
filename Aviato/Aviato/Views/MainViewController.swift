@@ -37,8 +37,6 @@ class MainViewController: UIViewController {
         navigationController?.setNavigationBarHidden(true, animated: false)
     }
     
-    
-    
     @objc func logout() {
         presenter.logout()
     }
@@ -64,17 +62,15 @@ class MainViewController: UIViewController {
     
     func setupLogoutButton() {
         self.view.addSubview(logoutButton)
-        
         let yourAttributes: [NSAttributedString.Key: Any] = [
             .font: UIFont.systemFont(ofSize: 14),
             .foregroundColor: UIColor.darkGray,
             .underlineStyle: NSUnderlineStyle.single.rawValue
         ]
-        
         let attributeString = NSMutableAttributedString(
-              string: "Сменить аккаунт",
-              attributes: yourAttributes
-           )
+            string: "Сменить аккаунт",
+            attributes: yourAttributes
+        )
         logoutButton.setAttributedTitle(attributeString, for: .normal)
         logoutButton.backgroundColor = .clear
         logoutButton.addTarget(self, action: #selector(logout), for: .touchUpInside)
@@ -101,7 +97,6 @@ class MainViewController: UIViewController {
         searchBar.layer.cornerRadius = 25
         searchBar.layer.borderColor = #colorLiteral(red: 0.243, green: 0.776, blue: 1, alpha: 1)
         searchBar.layer.borderWidth = 3
-        
         searchBar.snp.makeConstraints { contsraint in
             contsraint.top.equalTo(view).offset(250)
             contsraint.centerX.equalToSuperview()
@@ -117,7 +112,6 @@ class MainViewController: UIViewController {
             self.searchButton.backgroundColor = .white
         })
         animator.startAnimation()
-
         guard let searchBarText = searchBar.text else { return }
         print(searchBarText)
         presenter.findFlyghtInfo(view: self, flyghtNumber: searchBarText)
@@ -133,12 +127,9 @@ class MainViewController: UIViewController {
             button.backgroundColor = UIColor(red: 0.243, green: 0.776, blue: 1, alpha: 1)
             button.layer.borderColor = UIColor.white.cgColor
             button.setTitleColor(.white, for: .highlighted)
-
         })
         animator.startAnimation()
-      
     }
-    
 }
 
 extension MainViewController: IFoundFlyghtViewController {
@@ -154,12 +145,11 @@ extension MainViewController: UISearchBarDelegate {
         print(searchBarText)
         presenter.findFlyghtInfo(view: self, flyghtNumber: searchBarText)
     }
-    
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
-       }
-
-       func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
-       }
+    }
+    
+    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+    }
 }
 
 extension MainViewController: UIGestureRecognizerDelegate {

@@ -12,7 +12,7 @@ protocol IPresenter {
     func registerUser(view: IAlert, username: String, password: String)
     func logout()
     func findFlyghtInfo(view: IFoundFlyghtViewController, flyghtNumber: String)
-    func addToFavorite(flyght: FlyghtViewModel)
+    func addToFavorite(view: IAlert, flyght: FlyghtViewModel) -> Bool
     func getFlyghts() -> [FlyghtViewModel]?
     func removeFlyght(flyghtID: UUID)
     func getFavorite(view: IFavoriteFlyghtViewController, flyghtID: UUID)

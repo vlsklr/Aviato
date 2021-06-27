@@ -39,7 +39,7 @@ class StorageManager: IStorageManager {
         }
     }
     
-    func AddFlyght(flyght: FlyghtViewModel) {
+    func addFlyght(flyght: FlyghtViewModel) {
         self.persistentContainer.performBackgroundTask { context in
             do {
                 let fetchRequest: NSFetchRequest<User> = User.fetchRequest()
@@ -64,6 +64,7 @@ class StorageManager: IStorageManager {
     func getFlyghts(userID: UUID) -> [FlyghtViewModel]? {
         let fetchRequest: NSFetchRequest<Flyght> = Flyght.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "ANY user.userID = %@", "\(userID)")
+        //        fetchRequest.predicate = NSPredicate(format: "ANY user.userID =  \(userID)")
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm"
         dateFormatter.timeZone = TimeZone.current
@@ -88,11 +89,20 @@ class StorageManager: IStorageManager {
     
     func removeFlyght(flyghtID: UUID) {
         let context = persistentContainer.viewContext
-            let fetchRequest: NSFetchRequest<Flyght> = Flyght.fetchRequest()
-            fetchRequest.predicate = NSPredicate(format: "\(#keyPath(Flyght.flyghtID)) = %@", "\(flyghtID)")
-            if let object = try? context.fetch(fetchRequest).first {
-                context.delete(object)
-            }
-            try? context.save()
+        let fetchRequest: NSFetchRequest<Flyght> = Flyght.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "\(#keyPath(Flyght.flyghtID)) = %@", "\(flyghtID)")
+        if let object = try? context.fetch(fetchRequest).first {
+            context.delete(object)
+        }
+        try? context.save()
+    }
+    
+    func contains(userID: UUID, flyghtNumber: String) -> Bool {
+        let fetchRequest: NSFetchRequest<Flyght> = Flyght.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "user.userID = %@ AND flyghtNumber = %@", argumentArray: [userID, flyghtNumber])
+        if (try? self.persistentContainer.viewContext.fetch(fetchRequest).first) != nil {
+            return true
+        }
+        return false
     }
 }

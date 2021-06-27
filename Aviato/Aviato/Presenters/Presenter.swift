@@ -4,7 +4,6 @@
 //
 //  Created by Vlad on 16.06.2021.
 //
-
 import Foundation
 
 
@@ -47,8 +46,6 @@ class Presenter: IPresenter {
     }
     
     func findFlyghtInfo(view: IFoundFlyghtViewController, flyghtNumber: String) {
-        
-
         self.networkManager.loadFlyghtInfo(flyghtNumber: flyghtNumber, completion: {[weak self] result in
             switch result {
             case .failure(let error):
@@ -69,7 +66,7 @@ class Presenter: IPresenter {
                 let departureDateLocal = dateFormatter.string(from: departureDateUTC)
                 let arrivalDateLocal  = dateFormatter.string(from: arrivalDateUTC)
                 
-                let viewInfo: FlyghtViewModel = FlyghtViewModel(holder: self!.userID, flyghtID: UUID(), flyghtNumber: info.number, departureAirport: "\(info.departure.airport.countryCode)  \(info.departure.airport.name)", arrivalAirport: "\(info.arrival.airport.countryCode)  \(info.arrival.airport.name)", departureDate: departureDateUTC, arrivalDate: arrivalDateUTC, aircraft: info.aircraft.model, airline: info.airline.name, departureDateLocal: departureDateLocal, arrivalDateLocal: arrivalDateLocal)
+                let viewInfo: FlyghtViewModel = FlyghtViewModel(holder: self!.userID, flyghtID: UUID(), flyghtNumber: flyghtNumber, departureAirport: "\(info.departure.airport.countryCode)  \(info.departure.airport.name)", arrivalAirport: "\(info.arrival.airport.countryCode)  \(info.arrival.airport.name)", departureDate: departureDateUTC, arrivalDate: arrivalDateUTC, aircraft: info.aircraft.model, airline: info.airline.name, departureDateLocal: departureDateLocal, arrivalDateLocal: arrivalDateLocal)
                 DispatchQueue.main.async {
                     view.showFoundFlyght(flyghtViewInfo: viewInfo)
                 }
@@ -77,8 +74,14 @@ class Presenter: IPresenter {
         })
     }
     
-    func addToFavorite(flyght: FlyghtViewModel) {
-        storageManager.AddFlyght(flyght: flyght)
+    func addToFavorite(view: IAlert, flyght: FlyghtViewModel) -> Bool {
+        if storageManager.contains(userID: userID, flyghtNumber: flyght.flyghtNumber){
+            view.showAlert(message: "Данный рейс уже сохранен в избранном")
+            return false
+        }else{
+            storageManager.addFlyght(flyght: flyght)
+            return true
+        }
     }
     
     func getFlyghts() -> [FlyghtViewModel]? {

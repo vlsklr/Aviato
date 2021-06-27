@@ -9,6 +9,7 @@ import UIKit
 import SnapKit
 
 class FoundFlyghtViewController: UIViewController {
+    
     let flyghtNumberLabel: UILabel = UILabel()
     let departureAirportLabel: UILabel = UILabel()
     let departureDateLabel: UILabel = UILabel()
@@ -43,7 +44,7 @@ class FoundFlyghtViewController: UIViewController {
         setupArrivalDateLocalLabel()
         setupAircraftLabel()
         setupButton()
-
+        
     }
     
     func setupFlyghtNumberLabel() {
@@ -55,7 +56,7 @@ class FoundFlyghtViewController: UIViewController {
         flyghtNumberLabel.clipsToBounds = true
         flyghtNumberLabel.textAlignment = .center
         flyghtNumberLabel.snp.makeConstraints { (make) in
-            make.top.equalToSuperview().offset(100)
+            make.top.equalToSuperview().offset(50)
             make.leading.equalToSuperview().offset(43)
             make.trailing.equalToSuperview().offset(-43)
             make.height.equalTo(75)
@@ -161,7 +162,6 @@ class FoundFlyghtViewController: UIViewController {
             make.trailing.equalToSuperview().offset(-43)
             make.height.equalTo(75)
         }
-        
     }
     
     func setupButton() {
@@ -172,21 +172,27 @@ class FoundFlyghtViewController: UIViewController {
         saveButton.backgroundColor = UIColor(red: 0.243, green: 0.776, blue: 1, alpha: 1)
         saveButton.layer.borderColor = UIColor.white.cgColor
         saveButton.layer.borderWidth = 3
-        
         saveButton.addTarget(self, action: #selector(addToFavorite), for: .touchUpInside)
         saveButton.snp.makeConstraints { (make) in
-//            make.bottom.equalToSuperview().offset(-50)
             make.top.equalTo(aircraftLabel.snp.bottom).offset(35)
             make.leading.equalToSuperview().offset(43)
             make.trailing.equalToSuperview().offset(-43)
             make.height.equalTo(50)
         }
-        
     }
     
     @objc func addToFavorite() {
-        presenter.addToFavorite(flyght: self.flyghtViewInfo)
-        self.dismiss(animated: true, completion: nil)
+        if presenter.addToFavorite(view: self, flyght: self.flyghtViewInfo) {
+            self.dismiss(animated: true, completion: nil)
+        }
+    }
+}
+
+extension FoundFlyghtViewController: IAlert {
+    func showAlert(message: String) {
+        let alert = UIAlertController(title: "Ошибка", message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "ОК", style: .default))
+        self.present(alert, animated: true)
     }
 }
 

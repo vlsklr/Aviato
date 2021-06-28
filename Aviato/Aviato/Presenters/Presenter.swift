@@ -11,7 +11,7 @@ class Presenter: IPresenter {
     private let storageManager: IStorageManager = StorageManager()
     private let networkManager: INetworkManager = NetworkManager()
     private var userID: UUID = UUID()
-    
+
     func authentificateUser(view: IAlert,username: String, password: String) {
         if username.isEmpty || password.isEmpty {
             view.showAlert(message: "Введите данные")
@@ -26,7 +26,7 @@ class Presenter: IPresenter {
             }
         }
     }
-    
+
     func registerUser(view: IAlert, username: String, password: String) {
         if username.isEmpty || password.isEmpty {
             view.showAlert(message: "Введите данные")
@@ -40,11 +40,11 @@ class Presenter: IPresenter {
             }
         }
     }
-    
+
     func logout() {
         AppDelegate.shared.rootViewController.showLoginScreen()
     }
-    
+
     func findFlyghtInfo(view: IFoundFlyghtViewController, flyghtNumber: String) {
         self.networkManager.loadFlyghtInfo(flyghtNumber: flyghtNumber, completion: {[weak self] result in
             switch result {
@@ -60,20 +60,20 @@ class Presenter: IPresenter {
                 dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
                 let departureDateUTC = dateFormatter.date(from:info.departure.scheduledTimeUtc)!
                 let arrivalDateUTC = dateFormatter.date(from: info.arrival.scheduledTimeUtc)!
-                
+
                 dateFormatter.dateFormat = "yyyy-MM-dd HH:mm"
                 dateFormatter.timeZone = TimeZone.current
                 let departureDateLocal = dateFormatter.string(from: departureDateUTC)
                 let arrivalDateLocal  = dateFormatter.string(from: arrivalDateUTC)
-                
-                let viewInfo: FlyghtViewModel = FlyghtViewModel(holder: self!.userID, flyghtID: UUID(), flyghtNumber: flyghtNumber, departureAirport: "\(info.departure.airport.countryCode)  \(info.departure.airport.name)", arrivalAirport: "\(info.arrival.airport.countryCode)  \(info.arrival.airport.name)", departureDate: departureDateUTC, arrivalDate: arrivalDateUTC, aircraft: info.aircraft.model, airline: info.airline.name, departureDateLocal: departureDateLocal, arrivalDateLocal: arrivalDateLocal)
+
+                let viewInfo: FlyghtViewModel = FlyghtViewModel(holder: self!.userID, flyghtID: UUID(), flyghtNumber: info.number, departureAirport: "\(info.departure.airport.countryCode)  \(info.departure.airport.name)", arrivalAirport: "\(info.arrival.airport.countryCode)  \(info.arrival.airport.name)", departureDate: departureDateUTC, arrivalDate: arrivalDateUTC, aircraft: info.aircraft.model, airline: info.airline.name, status: info.status, departureDateLocal: departureDateLocal, arrivalDateLocal: arrivalDateLocal)
                 DispatchQueue.main.async {
                     view.showFoundFlyght(flyghtViewInfo: viewInfo)
                 }
             }
         })
     }
-    
+
     func addToFavorite(view: IAlert, flyght: FlyghtViewModel) -> Bool {
         if storageManager.contains(userID: userID, flyghtNumber: flyght.flyghtNumber){
             view.showAlert(message: "Данный рейс уже сохранен в избранном")
@@ -83,19 +83,19 @@ class Presenter: IPresenter {
             return true
         }
     }
-    
+
     func getFlyghts() -> [FlyghtViewModel]? {
         let savedFlyghts = storageManager.getFlyghts(userID: userID)
         return savedFlyghts
     }
-    
+
     func getFavorite(view: IFavoriteFlyghtViewController, flyghtID: UUID) {
         guard let flyght = storageManager.getFlyght(flyghtID: flyghtID) else {
             return
         }
         view.showFavoriteFlyght(flyghtViewInfo: flyght)
     }
-    
+
     func removeFlyght(flyghtID: UUID) {
         storageManager.removeFlyght(flyghtID: flyghtID)
     }

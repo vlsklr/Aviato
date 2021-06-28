@@ -11,6 +11,7 @@ import SnapKit
 class FavoriteViewController: UIViewController {
     
     let flyghtNumberLabel: UILabel = UILabel()
+    let flyghtStatusLabel: UILabel = UILabel()
     let departureAirportLabel: UILabel = UILabel()
     let departureDateLabel: UILabel = UILabel()
     let departureDateLocalLabel: UILabel = UILabel()
@@ -34,6 +35,7 @@ class FavoriteViewController: UIViewController {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor(red: 0.243, green: 0.776, blue: 1, alpha: 1)
         setupFlyghtNumberLabel()
+        setupFlyghtStatusLabel()
         setupDepartureAirportLabel()
         setupDepartureDateLabel()
         setupDeartureDateLocalLabel()
@@ -52,12 +54,28 @@ class FavoriteViewController: UIViewController {
         flyghtNumberLabel.clipsToBounds = true
         flyghtNumberLabel.textAlignment = .center
         flyghtNumberLabel.snp.makeConstraints { (make) in
-            make.top.equalToSuperview().offset(100)
+            make.top.equalToSuperview().offset(50)
             make.leading.equalToSuperview().offset(43)
             make.trailing.equalToSuperview().offset(-43)
             make.height.equalTo(75)
         }
     }
+    
+    func setupFlyghtStatusLabel() {
+        self.view.addSubview(flyghtStatusLabel)
+        flyghtStatusLabel.text = "Статус рейса: \(flyghtViewInfo.status)"
+        flyghtStatusLabel.backgroundColor = .white
+        flyghtStatusLabel.numberOfLines = 0
+        flyghtStatusLabel.clipsToBounds = true
+        flyghtStatusLabel.textAlignment = .center
+        flyghtStatusLabel.snp.makeConstraints { (make) in
+            make.top.equalTo(flyghtNumberLabel.snp.bottom)
+            make.leading.equalToSuperview().offset(43)
+            make.trailing.equalToSuperview().offset(-43)
+            make.height.equalTo(75)
+        }
+    }
+
     
     func setupDepartureAirportLabel() {
         self.view.addSubview(departureAirportLabel)
@@ -66,7 +84,7 @@ class FavoriteViewController: UIViewController {
         departureAirportLabel.backgroundColor = .white
         departureAirportLabel.textAlignment = .center
         departureAirportLabel.snp.makeConstraints { (make) in
-            make.top.equalTo(flyghtNumberLabel.snp.bottom)
+            make.top.equalTo(flyghtStatusLabel.snp.bottom)
             make.leading.equalToSuperview().offset(43)
             make.trailing.equalToSuperview().offset(-43)
             make.height.equalTo(75)

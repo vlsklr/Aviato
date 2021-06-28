@@ -17,7 +17,7 @@ struct FlyghtViewModel {
     var arrivalDate: Date
     var aircraft: String
     var airline: String
-    
+    var status: String
     var departureDateLocal: String
     var arrivalDateLocal: String
     

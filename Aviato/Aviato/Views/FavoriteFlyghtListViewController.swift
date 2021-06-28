@@ -78,7 +78,7 @@ extension FavoriteFlyghtListViewController: UITableViewDelegate {
 
 extension FavoriteFlyghtListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return presenter.getFlyghts()?.count ?? 0
+        return presenter.getFlyghtsCount()
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

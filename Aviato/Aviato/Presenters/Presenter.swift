@@ -83,7 +83,10 @@ class Presenter: IPresenter {
             return true
         }
     }
-
+    func getFlyghtsCount() -> Int {
+        return storageManager.flyghtsCount(userID: userID)
+        
+    }
     func getFlyghts() -> [FlyghtViewModel]? {
         let savedFlyghts = storageManager.getFlyghts(userID: userID)
         return savedFlyghts

@@ -14,6 +14,7 @@ protocol IStorageManager {
     func removeFlyght(flyghtID: UUID)
     func getFlyghts(userID: UUID) -> [FlyghtViewModel]?
     func getFlyght(flyghtID: UUID) -> FlyghtViewModel?
+    func flyghtsCount(userID: UUID) -> Int
     func contains(userID: UUID, flyghtNumber: String) -> Bool
 
 }

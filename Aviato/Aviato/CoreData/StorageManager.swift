@@ -65,7 +65,6 @@ class StorageManager: IStorageManager {
     func getFlyghts(userID: UUID) -> [FlyghtViewModel]? {
         let fetchRequest: NSFetchRequest<Flyght> = Flyght.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "ANY user.userID = %@", "\(userID)")
-        //        fetchRequest.predicate = NSPredicate(format: "ANY user.userID =  \(userID)")
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm"
         dateFormatter.timeZone = TimeZone.current
@@ -73,6 +72,13 @@ class StorageManager: IStorageManager {
         let flyghts = try? self.persistentContainer.viewContext.fetch(fetchRequest).compactMap { FlyghtViewModel(holder: userID, flyghtID: $0.flyghtID ?? UUID(), flyghtNumber: $0.flyghtNumber ?? "", departureAirport: $0.departureAirport ?? "", arrivalAirport: $0.arrivalAirport ?? "", departureDate: $0.departureTime ?? Date(), arrivalDate: $0.arrivalTime ?? Date(), aircraft: $0.aircraft ?? "", airline: $0.airline ?? "", status: $0.status ?? "", departureDateLocal: dateFormatter.string(from: $0.departureTime ?? Date()) , arrivalDateLocal: dateFormatter.string(from: $0.arrivalTime ?? Date()))
         }
         return flyghts
+    }
+    
+    func flyghtsCount(userID: UUID) -> Int {
+        let fetchRequest: NSFetchRequest<Flyght> = Flyght.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "ANY user.userID = %@", "\(userID)")
+        let flyghtsCount = try? self.persistentContainer.viewContext.fetch(fetchRequest).count
+        return flyghtsCount ?? 0
     }
     
     func getFlyght(flyghtID: UUID) -> FlyghtViewModel? {

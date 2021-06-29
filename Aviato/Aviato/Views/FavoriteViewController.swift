@@ -20,6 +20,17 @@ class FavoriteViewController: UIViewController {
     let arrivalDateLocalLabel: UILabel = UILabel()
     let aircraftLabel: UILabel = UILabel()
     var flyghtViewInfo: FlyghtViewModel
+    var scrollView: UIScrollView = UIScrollView()
+    
+    let scrollViewContainer: UIStackView = {
+           let view = UIStackView()
+
+           view.axis = .vertical
+           view.spacing = 10
+
+           view.translatesAutoresizingMaskIntoConstraints = false
+           return view
+       }()
     
     init(flyghtViewInfo: FlyghtViewModel) {
         self.flyghtViewInfo = flyghtViewInfo
@@ -34,6 +45,7 @@ class FavoriteViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor(red: 0.243, green: 0.776, blue: 1, alpha: 1)
+        setupScrollView()
         setupFlyghtNumberLabel()
         setupFlyghtStatusLabel()
         setupDepartureAirportLabel()
@@ -45,24 +57,42 @@ class FavoriteViewController: UIViewController {
         setupAircraftLabel()
     }
     
+    func setupScrollView() {
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        self.view.addSubview(scrollView)
+        scrollView.addSubview(scrollViewContainer)
+        scrollView.contentSize = CGSize(width: view.bounds.width, height: view.bounds.height)
+        scrollView.snp.makeConstraints { (make) in
+            make.top.equalToSuperview()
+            make.leading.equalToSuperview()
+            make.trailing.equalToSuperview()
+            make.bottom.equalToSuperview()
+
+        }
+        scrollViewContainer.snp.makeConstraints { (make) in
+            make.width.equalToSuperview().offset(-43)
+        }
+    }
+    
     func setupFlyghtNumberLabel() {
-        self.view.addSubview(flyghtNumberLabel)
+        self.scrollViewContainer.addArrangedSubview(flyghtNumberLabel)
         flyghtNumberLabel.text = "Номер рейса \(flyghtViewInfo.airline) \(flyghtViewInfo.flyghtNumber)"
         flyghtNumberLabel.backgroundColor = .white
         flyghtNumberLabel.layer.cornerRadius = 25
         flyghtNumberLabel.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
         flyghtNumberLabel.clipsToBounds = true
         flyghtNumberLabel.textAlignment = .center
+        flyghtNumberLabel.numberOfLines = 0
+
         flyghtNumberLabel.snp.makeConstraints { (make) in
             make.top.equalToSuperview().offset(50)
             make.leading.equalToSuperview().offset(43)
-            make.trailing.equalToSuperview().offset(-43)
             make.height.equalTo(75)
         }
     }
     
     func setupFlyghtStatusLabel() {
-        self.view.addSubview(flyghtStatusLabel)
+        self.scrollViewContainer.addArrangedSubview(flyghtStatusLabel)
         flyghtStatusLabel.text = "Статус рейса: \(flyghtViewInfo.status)"
         flyghtStatusLabel.backgroundColor = .white
         flyghtStatusLabel.numberOfLines = 0
@@ -71,14 +101,13 @@ class FavoriteViewController: UIViewController {
         flyghtStatusLabel.snp.makeConstraints { (make) in
             make.top.equalTo(flyghtNumberLabel.snp.bottom)
             make.leading.equalToSuperview().offset(43)
-            make.trailing.equalToSuperview().offset(-43)
             make.height.equalTo(75)
         }
     }
 
     
     func setupDepartureAirportLabel() {
-        self.view.addSubview(departureAirportLabel)
+        self.scrollViewContainer.addArrangedSubview(departureAirportLabel)
         departureAirportLabel.text = "Аэропорт отбытия \(flyghtViewInfo.departureAirport)"
         departureAirportLabel.numberOfLines = 0
         departureAirportLabel.backgroundColor = .white
@@ -86,13 +115,12 @@ class FavoriteViewController: UIViewController {
         departureAirportLabel.snp.makeConstraints { (make) in
             make.top.equalTo(flyghtStatusLabel.snp.bottom)
             make.leading.equalToSuperview().offset(43)
-            make.trailing.equalToSuperview().offset(-43)
             make.height.equalTo(75)
         }
     }
     
     func setupDepartureDateLabel() {
-        self.view.addSubview(departureDateLabel)
+        self.scrollViewContainer.addArrangedSubview(departureDateLabel)
         departureDateLabel.text = "Время отбытия UTC \(flyghtViewInfo.departureDate)"
         departureDateLabel.numberOfLines = 0
         departureDateLabel.backgroundColor = .white
@@ -100,13 +128,12 @@ class FavoriteViewController: UIViewController {
         departureDateLabel.snp.makeConstraints { (make) in
             make.top.equalTo(departureAirportLabel.snp.bottom)
             make.leading.equalToSuperview().offset(43)
-            make.trailing.equalToSuperview().offset(-43)
             make.height.equalTo(75)
         }
     }
     
     func setupDeartureDateLocalLabel() {
-        self.view.addSubview(departureDateLocalLabel)
+        self.scrollViewContainer.addArrangedSubview(departureDateLocalLabel)
         departureDateLocalLabel.text = "Время отбытия местное \(flyghtViewInfo.departureDateLocal)"
         departureDateLocalLabel.numberOfLines = 0
         departureDateLocalLabel.backgroundColor = .white
@@ -114,13 +141,12 @@ class FavoriteViewController: UIViewController {
         departureDateLocalLabel.snp.makeConstraints { (make) in
             make.top.equalTo(departureDateLabel.snp.bottom)
             make.leading.equalToSuperview().offset(43)
-            make.trailing.equalToSuperview().offset(-43)
             make.height.equalTo(75)
         }
     }
     
     func setupArrivalAirportLabel() {
-        self.view.addSubview(arrivalAirportLabel)
+        self.scrollViewContainer.addArrangedSubview(arrivalAirportLabel)
         arrivalAirportLabel.text = "Аэропорт прибытия \(flyghtViewInfo.arrivalAirport)"
         arrivalAirportLabel.numberOfLines = 0
         arrivalAirportLabel.backgroundColor = .white
@@ -128,13 +154,12 @@ class FavoriteViewController: UIViewController {
         arrivalAirportLabel.snp.makeConstraints { (make) in
             make.top.equalTo(departureDateLocalLabel.snp.bottom)
             make.leading.equalToSuperview().offset(43)
-            make.trailing.equalToSuperview().offset(-43)
             make.height.equalTo(75)
         }
     }
     
     func setupArrivalDateLabel() {
-        self.view.addSubview(arrivalDateLabel)
+        self.scrollViewContainer.addArrangedSubview(arrivalDateLabel)
         arrivalDateLabel.text = "Время прибытия UTC \(flyghtViewInfo.arrivalDate)"
         arrivalDateLabel.numberOfLines = 0
         arrivalDateLabel.backgroundColor = .white
@@ -142,13 +167,12 @@ class FavoriteViewController: UIViewController {
         arrivalDateLabel.snp.makeConstraints { (make) in
             make.top.equalTo(arrivalAirportLabel.snp.bottom)
             make.leading.equalToSuperview().offset(43)
-            make.trailing.equalToSuperview().offset(-43)
             make.height.equalTo(75)
         }
     }
     
     func setupArrivalDateLocalLabel() {
-        self.view.addSubview(arrivalDateLocalLabel)
+        self.scrollViewContainer.addArrangedSubview(arrivalDateLocalLabel)
         arrivalDateLocalLabel.text = "Время прибытия местное \(flyghtViewInfo.arrivalDateLocal)"
         arrivalDateLocalLabel.numberOfLines = 0
         arrivalDateLocalLabel.backgroundColor = .white
@@ -156,13 +180,12 @@ class FavoriteViewController: UIViewController {
         arrivalDateLocalLabel.snp.makeConstraints { (make) in
             make.top.equalTo(arrivalDateLabel.snp.bottom)
             make.leading.equalToSuperview().offset(43)
-            make.trailing.equalToSuperview().offset(-43)
             make.height.equalTo(75)
         }
     }
     
     func setupAircraftLabel() {
-        self.view.addSubview(aircraftLabel)
+        self.scrollViewContainer.addArrangedSubview(aircraftLabel)
         aircraftLabel.text = "Самолет \(flyghtViewInfo.aircraft)"
         aircraftLabel.numberOfLines = 0
         aircraftLabel.clipsToBounds = true
@@ -173,7 +196,6 @@ class FavoriteViewController: UIViewController {
         aircraftLabel.snp.makeConstraints { (make) in
             make.top.equalTo(arrivalDateLocalLabel.snp.bottom)
             make.leading.equalToSuperview().offset(43)
-            make.trailing.equalToSuperview().offset(-43)
             make.height.equalTo(75)
         }
     }

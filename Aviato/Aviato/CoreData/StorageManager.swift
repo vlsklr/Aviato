@@ -94,6 +94,27 @@ class StorageManager: IStorageManager {
         return nil
     }
     
+    func updateFlyght(flyghtID: UUID, flyght: FlyghtViewModel) {
+        self.persistentContainer.performBackgroundTask { context in
+            do {
+                let fetchRequest: NSFetchRequest<Flyght> = Flyght.fetchRequest()
+                fetchRequest.predicate = NSPredicate(format: "flyghtID = %@", "\(flyghtID)")
+                if let foundFlyght = try? self.persistentContainer.viewContext.fetch(fetchRequest).first {
+                    foundFlyght.setValue(flyght.airline, forKey: "airline")
+                    foundFlyght.setValue(flyght.aircraft, forKey: "aircraft")
+                    foundFlyght.setValue(flyght.arrivalAirport, forKey: "arrivalAirport")
+                    foundFlyght.setValue(flyght.arrivalDate, forKey: "arrivalTime")
+                    foundFlyght.setValue(flyght.departureAirport, forKey: "departureAirport")
+                    foundFlyght.setValue(flyght.departureDate, forKey: "departureTime")
+                    foundFlyght.setValue(flyght.status, forKey: "status")
+                }
+                try context.save()
+            } catch {
+                print("Something wrong in updateFlyght \(error)")
+            }
+        }
+    }
+    
     func removeFlyght(flyghtID: UUID) {
         let context = persistentContainer.viewContext
         let fetchRequest: NSFetchRequest<Flyght> = Flyght.fetchRequest()

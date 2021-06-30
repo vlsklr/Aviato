@@ -98,6 +98,10 @@ class Presenter: IPresenter {
         }
         view.showFavoriteFlyght(flyghtViewInfo: flyght)
     }
+    
+    func updateFlyghtInfo(view: FavoriteFlyghtListViewController) {
+//        storageManager.updateFlyght(flyghtID: flyghtID, flyght: flyght)
+    }
 
     func removeFlyght(flyghtID: UUID) {
         storageManager.removeFlyght(flyghtID: flyghtID)

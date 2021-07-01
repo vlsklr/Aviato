@@ -131,12 +131,16 @@ class Presenter: IPresenter {
                             
                             let viewInfo: FlyghtViewModel = FlyghtViewModel(holder: self!.userID, flyghtID: flyghtID, flyghtNumber: info.number, departureAirport: "\(info.departure.airport.countryCode)  \(info.departure.airport.name)", arrivalAirport: "\(info.arrival.airport.countryCode)  \(info.arrival.airport.name)", departureDate: departureDateUTC, arrivalDate: arrivalDateUTC, aircraft: info.aircraft.model, airline: info.airline.name, status: info.status, departureDateLocal: departureDateLocal, arrivalDateLocal: arrivalDateLocal)
                             self!.storageManager.updateFlyght(flyghtID: flyghtID, flyght: viewInfo)
+                            
+                            
+                            DispatchQueue.main.async {
+                                view.tableView.reloadData()
+                            }
                         }
                     })
                 }
             }
         }
-        view.tableView.reloadData()
         //        print(view.tableView.indexPathsForVisibleRows?.count)
         //        view.tableView.cellForRow(at: )
         //        storageManager.updateFlyght(flyghtID: flyghtID, flyght: flyght)

@@ -56,6 +56,8 @@ class StorageManager: IStorageManager {
                 object.departureTime = flyght.departureDate
                 object.departureAirport = flyght.departureAirport
                 object.user = user
+                object.lastModified = Date()
+
                 try context.save()
             } catch {
             }
@@ -95,7 +97,8 @@ class StorageManager: IStorageManager {
     }
     
     func updateFlyght(flyghtID: UUID, flyght: FlyghtViewModel) {
-        self.persistentContainer.performBackgroundTask { context in
+        let context = persistentContainer.viewContext
+//        self.persistentContainer.performBackgroundTask { context in
             do {
                 let fetchRequest: NSFetchRequest<Flyght> = Flyght.fetchRequest()
                 fetchRequest.predicate = NSPredicate(format: "flyghtID = %@", "\(flyghtID)")
@@ -107,12 +110,14 @@ class StorageManager: IStorageManager {
                     foundFlyght.setValue(flyght.departureAirport, forKey: "departureAirport")
                     foundFlyght.setValue(flyght.departureDate, forKey: "departureTime")
                     foundFlyght.setValue(flyght.status, forKey: "status")
+                    foundFlyght.lastModified = Date()
+                    print(foundFlyght.lastModified)
                 }
                 try context.save()
             } catch {
                 print("Something wrong in updateFlyght \(error)")
             }
-        }
+//        }
     }
     
     func removeFlyght(flyghtID: UUID) {

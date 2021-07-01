@@ -43,7 +43,7 @@ struct FlyghtInfo: Decodable {
 
 class NetworkManager: INetworkManager {
     let headers = [
-        "x-rapidapi-key": "",
+        "x-rapidapi-key": "70a607d589msh88f1ca71d373f94p1f8c7ajsn073208dac2df",
         "x-rapidapi-host": "aerodatabox.p.rapidapi.com"
     ]
     

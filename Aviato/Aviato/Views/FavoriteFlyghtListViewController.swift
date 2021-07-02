@@ -12,6 +12,11 @@ class FavoriteFlyghtListViewController: UIViewController {
     
     let tableView: UITableView = UITableView()
     let presenter: IPresenter
+    let refreshControll: UIRefreshControl = {
+        let refresh = UIRefreshControl()
+        refresh.addTarget(self, action: #selector(refreshFlyghts(sender:)), for: .valueChanged)
+        return refresh
+    }()
     
     init(presenter: IPresenter) {
         self.presenter = presenter
@@ -30,8 +35,15 @@ class FavoriteFlyghtListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.setNavigationBarHidden(true, animated: false)
+        tableView.refreshControl = refreshControll
         
     }
+    
+    @objc func refreshFlyghts(sender: UIRefreshControl) {
+        presenter.updateFlyghtInfo(view: self)
+        sender.endRefreshing()
+    }
+    
     func initTableView() {
         view.addSubview(tableView)
         

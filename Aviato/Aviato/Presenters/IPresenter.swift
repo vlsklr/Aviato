@@ -14,7 +14,8 @@ protocol IPresenter {
     func findFlyghtInfo(view: IFoundFlyghtViewController, flyghtNumber: String)
     func addToFavorite(view: IAlert, flyght: FlyghtViewModel) -> Bool
     func getFlyghts() -> [FlyghtViewModel]?
-    func getFlyghtsCount() -> Int 
+    func getFlyghtsCount() -> Int
+    func updateFlyghtInfo(view: FavoriteFlyghtListViewController)
     func removeFlyght(flyghtID: UUID)
     func getFavorite(view: IFavoriteFlyghtViewController, flyghtID: UUID)
 }

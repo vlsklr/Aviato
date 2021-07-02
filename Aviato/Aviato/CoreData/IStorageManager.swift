@@ -12,6 +12,7 @@ protocol IStorageManager {
     func addUser(user: UserViewModel, completion: @escaping () -> Void)
     func addFlyght(flyght: FlyghtViewModel)
     func removeFlyght(flyghtID: UUID)
+    func updateFlyght(flyghtID: UUID, flyght: FlyghtViewModel)
     func getFlyghts(userID: UUID) -> [FlyghtViewModel]?
     func getFlyght(flyghtID: UUID) -> FlyghtViewModel?
     func flyghtsCount(userID: UUID) -> Int

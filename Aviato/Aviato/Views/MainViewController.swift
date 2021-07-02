@@ -13,6 +13,7 @@ class MainViewController: UIViewController {
     let searchBar: UISearchBar = UISearchBar()
     let searchButton: UIButton = UIButton()
     let logoutButton: UIButton = UIButton()
+    let verticalMargins: CGFloat = 16.0
     let presenter: IPresenter
     
     init(presenter: IPresenter) {
@@ -54,8 +55,8 @@ class MainViewController: UIViewController {
         searchButton.snp.makeConstraints { (make) in
             make.top.equalTo(searchBar.snp.bottom).offset(10)
             make.centerX.equalToSuperview()
-            make.leading.equalToSuperview().offset(16)
-            make.trailing.equalToSuperview().offset(-16)
+            make.leading.equalToSuperview().offset(verticalMargins)
+            make.trailing.equalToSuperview().offset(-1 * verticalMargins)
             make.height.equalTo(50)
         }
     }
@@ -76,8 +77,8 @@ class MainViewController: UIViewController {
         logoutButton.addTarget(self, action: #selector(logout), for: .touchUpInside)
         logoutButton.snp.makeConstraints { (make) in
             make.top.equalTo(searchButton.snp.bottom).offset(15)
-            make.leading.equalToSuperview().offset(16)
-            make.trailing.equalToSuperview().offset(-16)
+            make.leading.equalToSuperview().offset(verticalMargins)
+            make.trailing.equalToSuperview().offset(-1 * verticalMargins)
             make.height.equalTo(10)
         }
     }
@@ -101,9 +102,10 @@ class MainViewController: UIViewController {
             contsraint.top.equalTo(view).offset(250)
             contsraint.centerX.equalToSuperview()
             contsraint.height.equalTo(50)
-            contsraint.leading.equalToSuperview().offset(16)
-            contsraint.trailing.equalToSuperview().offset(-16)
+            contsraint.leading.equalToSuperview().offset(verticalMargins)
+            contsraint.trailing.equalToSuperview().offset(-1 * verticalMargins)
         }
+        searchBar.setCenteredPlaceHolder(viewWidth: view.bounds.width, verticalMargins: verticalMargins)
     }
     
     @objc func search() {
@@ -129,6 +131,21 @@ class MainViewController: UIViewController {
             button.setTitleColor(.white, for: .highlighted)
         })
         animator.startAnimation()
+    }
+}
+//Расширение SearchBar помещающее placeholder в центр
+extension UISearchBar {
+    func setCenteredPlaceHolder(viewWidth: CGFloat, verticalMargins: CGFloat){
+        let textFieldInsideSearchBar = self.value(forKey: "searchField") as? UITextField
+        let margins:CGFloat = verticalMargins * 2
+        let searchBarWidth = viewWidth - margins
+        let placeholderIconWidth = textFieldInsideSearchBar?.leftView?.frame.width
+        let placeHolderWidth = textFieldInsideSearchBar?.attributedPlaceholder?.size().width
+        let offsetIconToPlaceholder: CGFloat = 8
+        let placeHolderWithIcon = placeholderIconWidth! + offsetIconToPlaceholder
+        
+        let offset = UIOffset(horizontal: ((searchBarWidth / 2) - (placeHolderWidth! / 2) - placeHolderWithIcon), vertical: 0)
+        self.setPositionAdjustment(offset, for: .search)
     }
 }
 

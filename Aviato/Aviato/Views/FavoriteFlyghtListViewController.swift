@@ -11,8 +11,9 @@ import SnapKit
 class FavoriteFlyghtListViewController: UIViewController {
     
     let tableView: UITableView = UITableView()
-    let presenter: IPresenter
-    let refreshControll: UIRefreshControl = {
+    private let activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
+    private let presenter: IPresenter
+    private let refreshControll: UIRefreshControl = {
         let refresh = UIRefreshControl()
         refresh.addTarget(self, action: #selector(refreshFlyghts(sender:)), for: .valueChanged)
         return refresh
@@ -36,12 +37,28 @@ class FavoriteFlyghtListViewController: UIViewController {
         super.viewDidLoad()
         navigationController?.setNavigationBarHidden(true, animated: false)
         tableView.refreshControl = refreshControll
+        initActivityIndicator()
         
     }
     
     @objc func refreshFlyghts(sender: UIRefreshControl) {
         presenter.updateFlyghtInfo(view: self)
         sender.endRefreshing()
+    }
+    
+    func toggleActivityIndicator() {
+        activityIndicator.isAnimating ? activityIndicator.stopAnimating() : activityIndicator.startAnimating()
+    }
+    
+    func initActivityIndicator() {
+        tableView.addSubview(activityIndicator)
+        activityIndicator.transform = CGAffineTransform(scaleX: 3, y: 3)
+        activityIndicator.snp.makeConstraints { (make) in
+            make.centerX.equalToSuperview()
+            make.centerY.equalToSuperview()
+            make.width.equalTo(250)
+            make.height.equalTo(250)
+        }
     }
     
     func initTableView() {

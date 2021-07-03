@@ -107,6 +107,8 @@ class Presenter: IPresenter {
      */
     func updateFlyghtInfo(view: FavoriteFlyghtListViewController) {
         let totalSections = view.tableView.numberOfSections
+        var upatingCounter = 0
+        view.toggleActivityIndicator()
         for section in 0..<totalSections {
             let totalRowsInSection = view.tableView.numberOfRows(inSection: section)
             for row in 0..<totalRowsInSection {
@@ -130,8 +132,12 @@ class Presenter: IPresenter {
                         //В departureDateLocal и arrivalDateLocal ничего не подставляется, так как эти данные в CoreData не сохраняются, при обновлении tableView все равно сгенерируются при загрузке из CoreData
                         let viewInfo: FlyghtViewModel = FlyghtViewModel(holder: self!.userID, flyghtID: flyghtID, flyghtNumber: info.number, departureAirport: "\(info.departure.airport.countryCode)  \(info.departure.airport.name)", arrivalAirport: "\(info.arrival.airport.countryCode)  \(info.arrival.airport.name)", departureDate: departureDateUTC, arrivalDate: arrivalDateUTC, aircraft: info.aircraft.model, airline: info.airline.name, status: info.status, departureDateLocal: "", arrivalDateLocal: "")
                         self?.storageManager.updateFlyght(flyghtID: flyghtID, flyght: viewInfo)
+                        upatingCounter += 1
                         DispatchQueue.main.async {
                             view.tableView.reloadData()
+                            if upatingCounter == totalRowsInSection - 1 {
+                                view.toggleActivityIndicator()
+                            }
                         }
                     }
                 })

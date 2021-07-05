@@ -27,17 +27,21 @@ class Presenter: IPresenter {
         }
     }
     
-    func registerUser(view: IAlert, username: String, password: String) {
+    func registerUser(view: IAlert, username: String, password: String) -> Bool {
         if username.isEmpty || password.isEmpty {
             view.showAlert(message: "Введите данные")
+            return false
         } else if let user = storageManager.loadUser(username: username) {
             view.showAlert(message: "Пользователь \(user.username) уже существует")
+            return false
         }
         else {
             let user = UserViewModel(userID: userID, username: username, password: password)
-            storageManager.addUser(user: user) {
-                AppDelegate.shared.rootViewController.switchToMainScreen()
-            }
+            storageManager.addUser(user: user)
+            return true
+//            storageManager.addUser(user: user) {
+//                AppDelegate.shared.rootViewController.switchToMainScreen()
+//            }
         }
     }
     

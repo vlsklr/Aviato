@@ -52,7 +52,7 @@ class FavoriteFlyghtListViewController: UIViewController {
     
     func initActivityIndicator() {
         tableView.addSubview(activityIndicator)
-        activityIndicator.transform = CGAffineTransform(scaleX: 3, y: 3)
+        activityIndicator.transform = CGAffineTransform(scaleX: 2, y: 2)
         activityIndicator.snp.makeConstraints { (make) in
             make.centerX.equalToSuperview()
             make.centerY.equalToSuperview()

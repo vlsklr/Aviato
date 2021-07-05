@@ -13,6 +13,7 @@ class MainViewController: UIViewController {
     let searchBar: UISearchBar = UISearchBar()
     let searchButton: UIButton = UIButton()
     let logoutButton: UIButton = UIButton()
+    private let activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
     let verticalMargins: CGFloat = 16.0
     let presenter: IPresenter
     
@@ -32,6 +33,7 @@ class MainViewController: UIViewController {
         setupSearchButton()
         setupSwipeDown()
         setupLogoutButton()
+        setupActivityIndicator()
         if let airportImage = UIImage(named: "airport_bgc") {
             self.view.backgroundColor = UIColor(patternImage: airportImage)
         }
@@ -40,6 +42,21 @@ class MainViewController: UIViewController {
     
     @objc func logout() {
         presenter.logout()
+    }
+    
+    func setupActivityIndicator() {
+        self.view.addSubview(activityIndicator)
+        activityIndicator.transform = CGAffineTransform(scaleX: 2, y: 2)
+        activityIndicator.snp.makeConstraints { (make) in
+            make.centerX.equalToSuperview()
+            make.centerY.equalToSuperview()
+            make.width.equalTo(250)
+            make.height.equalTo(250)
+        }
+    }
+    
+    func toggleActivityIndicator() {
+        activityIndicator.isAnimating ? activityIndicator.stopAnimating() : activityIndicator.startAnimating()
     }
     
     func setupSearchButton() {

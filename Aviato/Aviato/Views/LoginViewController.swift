@@ -42,7 +42,6 @@ class LoginViewController: UIViewController {
         self.view.addSubview(logoView)
         logoView.image = UIImage(named: "aviato_logo")
         logoView.snp.makeConstraints({ (make) in
-            make.centerX.equalToSuperview()
             make.leading.equalToSuperview().offset(43)
             make.trailing.equalToSuperview().offset(-43)
             make.top.equalToSuperview().offset(150)
@@ -58,10 +57,9 @@ class LoginViewController: UIViewController {
         userNameField.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
         userNameField.textAlignment = .center
         userNameField.snp.makeConstraints({ (make) in
-            make.centerX.equalToSuperview()
             make.leading.equalToSuperview().offset(43)
             make.trailing.equalToSuperview().offset(-43)
-            make.top.equalToSuperview().offset(350)
+            make.top.equalTo(logoView.snp.bottom).offset(75)
             make.height.equalTo(50)
         })
     }
@@ -76,7 +74,6 @@ class LoginViewController: UIViewController {
         self.view.addSubview(passwordField)
         passwordField.snp.makeConstraints({ (make) in
             make.top.equalTo(userNameField.snp.bottom)
-            make.centerX.equalToSuperview()
             make.leading.equalToSuperview().offset(43)
             make.trailing.equalToSuperview().offset(-43)
             make.height.equalTo(50)
@@ -94,7 +91,6 @@ class LoginViewController: UIViewController {
         authButton.layer.borderWidth = 3
         authButton.snp.makeConstraints { (make) in
             make.top.equalTo(passwordField.snp.bottom).offset(10)
-            make.centerX.equalToSuperview()
             make.leading.equalToSuperview().offset(43)
             make.trailing.equalToSuperview().offset(-43)
             make.height.equalTo(50)
@@ -103,17 +99,20 @@ class LoginViewController: UIViewController {
     
     func setupRegisterButton() {
         self.view.addSubview(registerButton)
-        registerButton.setTitle("Зарегистрироваться", for: .normal)
+        let yourAttributes: [NSAttributedString.Key: Any] = [
+            .font: UIFont.systemFont(ofSize: 14),
+            .foregroundColor: UIColor.darkGray,
+            .underlineStyle: NSUnderlineStyle.single.rawValue
+        ]
+        let attributeString = NSMutableAttributedString(
+            string: "Все еще нет аккаунта?",
+            attributes: yourAttributes
+        )
+        registerButton.setAttributedTitle(attributeString, for: .normal)
+        registerButton.backgroundColor = .clear
         registerButton.addTarget(self, action: #selector(registerAction), for: .touchUpInside)
-        registerButton.addTarget(self, action: #selector(anim), for: .touchDown)
-        registerButton.backgroundColor = .blue
-        registerButton.layer.cornerRadius = 25
-        registerButton.backgroundColor = UIColor(red: 0.243, green: 0.776, blue: 1, alpha: 1)
-        registerButton.layer.borderColor = UIColor.white.cgColor
-        registerButton.layer.borderWidth = 3
         registerButton.snp.makeConstraints { (make) in
             make.top.equalTo(authButton.snp.bottom).offset(10)
-            make.centerX.equalToSuperview()
             make.leading.equalToSuperview().offset(43)
             make.trailing.equalToSuperview().offset(-43)
             make.height.equalTo(50)
@@ -153,14 +152,8 @@ class LoginViewController: UIViewController {
     }
     
     @objc func registerAction() {
-        var animator = UIViewPropertyAnimator()
-        animator = UIViewPropertyAnimator(duration: 0.2, curve: .easeOut, animations: {
-            self.registerButton.backgroundColor = UIColor(red: 0.243, green: 0.776, blue: 1, alpha: 1)
-            self.registerButton.layer.borderColor = UIColor.white.cgColor
-        })
-        animator.startAnimation()
-        guard let username = userNameField.text, let password = passwordField.text else{return}
-        presenter.registerUser(view: self, username: username, password: password)
+        let registrationViewController = RegistrationViewController()
+        self.present(registrationViewController, animated: true, completion: nil)
     }
 }
 

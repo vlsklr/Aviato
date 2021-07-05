@@ -28,14 +28,14 @@ class StorageManager: IStorageManager {
         return user
     }
     
-    func addUser(user: UserViewModel, completion: @escaping () -> Void) {
+    func addUser(user: UserViewModel) {//, completion: @escaping () -> Void) {
         self.persistentContainer.performBackgroundTask { context in
             let object = User(context: context)
             object.userID = user.userID
             object.userName = user.username
             object.password = user.password
             try? context.save()
-            DispatchQueue.main.asyncAfter(deadline: .now(), execute: { completion() })
+//            DispatchQueue.main.asyncAfter(deadline: .now(), execute: { completion() })
         }
     }
     

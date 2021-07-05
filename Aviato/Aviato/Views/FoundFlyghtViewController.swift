@@ -25,7 +25,6 @@ class FoundFlyghtViewController: FavoriteViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupButton()
-        
     }
        
     func setupButton() {
@@ -44,15 +43,11 @@ class FoundFlyghtViewController: FavoriteViewController {
         }
     }
     
-
-    
     @objc func addToFavorite() {
         if presenter.addToFavorite(view: self, flyght: self.flyghtViewInfo) {
             self.dismiss(animated: true, completion: nil)
         }
     }
-    
-  
 }
 
 extension FoundFlyghtViewController: IAlert {

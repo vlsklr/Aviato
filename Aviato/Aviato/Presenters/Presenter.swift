@@ -16,7 +16,7 @@ class Presenter: IPresenter {
         if username.isEmpty || password.isEmpty {
             view.showAlert(message: "Введите данные")
         }else {
-            let user = storageManager.loadUser(username: username)
+            let user = storageManager.loadUser(username: username, userID: nil)
             if user?.username == username && user?.password == password && user?.userID != nil {
                 self.userID = user!.userID
                 AppDelegate.shared.rootViewController.switchToMainScreen()
@@ -31,7 +31,7 @@ class Presenter: IPresenter {
         if username.isEmpty || password.isEmpty {
             view.showAlert(message: "Введите данные")
             return false
-        } else if let user = storageManager.loadUser(username: username) {
+        } else if let user = storageManager.loadUser(username: username, userID: nil) {
             view.showAlert(message: "Пользователь \(user.username) уже существует")
             return false
         }
@@ -43,6 +43,10 @@ class Presenter: IPresenter {
 //                AppDelegate.shared.rootViewController.switchToMainScreen()
 //            }
         }
+    }
+    
+    func getUser() -> UserViewModel? {
+        return storageManager.loadUser(username: nil, userID: userID)
     }
     
     func logout() {

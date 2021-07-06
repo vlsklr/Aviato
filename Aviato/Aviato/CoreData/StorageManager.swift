@@ -20,9 +20,13 @@ class StorageManager: IStorageManager {
         return container
     }()
     
-    func loadUser(username: String) -> UserViewModel? {
+    func loadUser(username: String?, userID: UUID?) -> UserViewModel? {
         let fetchRequest: NSFetchRequest<User> = User.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "\(#keyPath(User.userName)) = %@", username)
+        if let userName = username {
+        fetchRequest.predicate = NSPredicate(format: "\(#keyPath(User.userName)) = %@", userName)
+        } else if let userID = userID {
+            fetchRequest.predicate = NSPredicate(format: "\(#keyPath(User.userID)) = %@", "\(userID)")
+        }
         guard let object = try? self.persistentContainer.viewContext.fetch(fetchRequest).first else { return nil }
         let user: UserViewModel = UserViewModel(userID: object.userID!, username: object.userName!, password: object.password!)
         return user

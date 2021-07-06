@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3C4C61FD26941E060086E4FE /* UserProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C4C61FC26941E060086E4FE /* UserProfileViewController.swift */; };
 		3C7F58DF2678973B001C1193 /* FoundFlyghtViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7F58DE2678973B001C1193 /* FoundFlyghtViewController.swift */; };
 		3CEC5BA1267B3FB700059058 /* IAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CEC5BA0267B3FB700059058 /* IAlert.swift */; };
 		3CEC5BA4267B56C100059058 /* FlyghtErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CEC5BA3267B56C100059058 /* FlyghtErrors.swift */; };
@@ -36,6 +37,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3C4C61FC26941E060086E4FE /* UserProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileViewController.swift; sourceTree = "<group>"; };
 		3C7F58DE2678973B001C1193 /* FoundFlyghtViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoundFlyghtViewController.swift; sourceTree = "<group>"; };
 		3CEC5BA0267B3FB700059058 /* IAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IAlert.swift; sourceTree = "<group>"; };
 		3CEC5BA3267B56C100059058 /* FlyghtErrors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlyghtErrors.swift; sourceTree = "<group>"; };
@@ -149,6 +151,7 @@
 			children = (
 				F5392F0526774C6700866C8F /* LoginViewController.swift */,
 				3CEC5BA0267B3FB700059058 /* IAlert.swift */,
+				3C4C61FC26941E060086E4FE /* UserProfileViewController.swift */,
 				3C7F58DE2678973B001C1193 /* FoundFlyghtViewController.swift */,
 				F53912E62679235200EBC14F /* FavoriteViewController.swift */,
 				3CF97BD72692DECD0070CC9D /* RegistrationViewController.swift */,
@@ -310,6 +313,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F5392EF12677364400866C8F /* RootViewController.swift in Sources */,
+				3C4C61FD26941E060086E4FE /* UserProfileViewController.swift in Sources */,
 				F539A4CD267A475900AF0BCB /* Presenter.swift in Sources */,
 				F5392EED2677364400866C8F /* AppDelegate.swift in Sources */,
 				F5392F182677719B00866C8F /* FlyghtViewModel.swift in Sources */,

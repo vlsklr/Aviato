@@ -12,7 +12,6 @@ class MainViewController: UIViewController {
     
     let searchBar: UISearchBar = UISearchBar()
     let searchButton: UIButton = UIButton()
-    let logoutButton: UIButton = UIButton()
     private let activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
     let verticalMargins: CGFloat = 16.0
     let presenter: IPresenter
@@ -32,16 +31,11 @@ class MainViewController: UIViewController {
         setupSearchbar()
         setupSearchButton()
         setupSwipeDown()
-        setupLogoutButton()
         setupActivityIndicator()
         if let airportImage = UIImage(named: "airport_bgc") {
             self.view.backgroundColor = UIColor(patternImage: airportImage)
         }
         navigationController?.setNavigationBarHidden(true, animated: false)
-    }
-    
-    @objc func logout() {
-        presenter.logout()
     }
     
     func setupActivityIndicator() {
@@ -77,29 +71,7 @@ class MainViewController: UIViewController {
             make.height.equalTo(50)
         }
     }
-    
-    func setupLogoutButton() {
-        self.view.addSubview(logoutButton)
-        let yourAttributes: [NSAttributedString.Key: Any] = [
-            .font: UIFont.systemFont(ofSize: 14),
-            .foregroundColor: UIColor.darkGray,
-            .underlineStyle: NSUnderlineStyle.single.rawValue
-        ]
-        let attributeString = NSMutableAttributedString(
-            string: "Сменить аккаунт",
-            attributes: yourAttributes
-        )
-        logoutButton.setAttributedTitle(attributeString, for: .normal)
-        logoutButton.backgroundColor = .clear
-        logoutButton.addTarget(self, action: #selector(logout), for: .touchUpInside)
-        logoutButton.snp.makeConstraints { (make) in
-            make.top.equalTo(searchButton.snp.bottom).offset(15)
-            make.leading.equalToSuperview().offset(verticalMargins)
-            make.trailing.equalToSuperview().offset(-1 * verticalMargins)
-            make.height.equalTo(10)
-        }
-    }
-    
+        
     func setupSwipeDown() {
         let swipeDown = UISwipeGestureRecognizer(target: self, action: #selector(self.hideKeyboardOnSwipeDown))
         swipeDown.delegate = self

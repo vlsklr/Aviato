@@ -10,6 +10,7 @@ import Foundation
 protocol IPresenter {
     func authentificateUser(view: IAlert, username: String, password: String)
     func registerUser(view: IAlert, username: String, password: String) -> Bool
+    func getUser() -> UserViewModel?
     func logout()
     func findFlyghtInfo(view: IFoundFlyghtViewController, flyghtNumber: String)
     func addToFavorite(view: IAlert, flyght: FlyghtViewModel) -> Bool

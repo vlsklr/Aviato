@@ -14,6 +14,8 @@ class MainRouter {
     private let mainViewController: MainViewController
     private let flyghtListNavigationController: UINavigationController
     private let flyghtListViewController: FavoriteFlyghtListViewController
+    private let userProfileViewController: UserProfileViewController
+    private let userProfileNavigationController: UINavigationController
     private let presenter: IPresenter
     
     
@@ -29,13 +31,20 @@ class MainRouter {
         self.flyghtListNavigationController = UINavigationController(rootViewController: self.flyghtListViewController)
         self.flyghtListNavigationController.tabBarItem.title = "Избранное"
         
+        self.userProfileViewController = UserProfileViewController(presenter: self.presenter)
+        self.userProfileNavigationController = UINavigationController(rootViewController: self.userProfileViewController)
+        self.userProfileNavigationController.tabBarItem.title = "Профиль"
+        
+        
+        
         if #available(iOS 13.0, *) {
             self.mainNavigationController.tabBarItem.image = UIImage(systemName: "airplane")
             self.flyghtListNavigationController.tabBarItem.image = UIImage(systemName: "star.fill")
+            self.userProfileNavigationController.tabBarItem.image = UIImage(systemName: "person.crop.square.fill")
         } else {
         }
         
-        self.tabBar.setViewControllers([self.mainNavigationController, self.flyghtListNavigationController], animated: true)
+        self.tabBar.setViewControllers([self.mainNavigationController, self.flyghtListNavigationController, self.userProfileNavigationController], animated: true)
     }
     
     func getTabBar() -> UITabBarController {

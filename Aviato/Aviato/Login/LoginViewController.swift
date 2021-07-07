@@ -175,7 +175,7 @@ extension LoginViewController: UIGestureRecognizerDelegate {
 }
 
 extension LoginViewController: IloginViewController {
-    //Показывает созданный в LoginPresenter RegistrationViewController1
+    //Показывает созданный в LoginPresenter RegistrationViewController
     func presentRegisterViewController(view: RegistrationViewController) {
         present(view, animated: true, completion: nil)
     }

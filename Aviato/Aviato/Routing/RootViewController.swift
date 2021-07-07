@@ -17,7 +17,9 @@ class RootViewController: UIViewController {
     }
     
     func showLoginScreen() {
-        let loginViewController = LoginViewController(presenter: presenter)
+        let loginPresenter: ILoginPresenter = LoginPresenter()
+        let loginViewController = LoginViewController(presenter: loginPresenter)
+//        let loginViewController = LoginViewController(presenter: presenter)
         addChild(loginViewController)
         loginViewController.view.frame = view.bounds
         view.addSubview(loginViewController.view)

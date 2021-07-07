@@ -9,6 +9,10 @@
 /* Begin PBXBuildFile section */
 		3C4C61FD26941E060086E4FE /* UserProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C4C61FC26941E060086E4FE /* UserProfileViewController.swift */; };
 		3C7F58DF2678973B001C1193 /* FoundFlyghtViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7F58DE2678973B001C1193 /* FoundFlyghtViewController.swift */; };
+		3C88585E2695715200A134C7 /* LoginPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C88585D2695715200A134C7 /* LoginPresenter.swift */; };
+		3C885862269571AA00A134C7 /* ILoginPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C885861269571AA00A134C7 /* ILoginPresenter.swift */; };
+		3C8858672695766300A134C7 /* RegistrationPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C8858662695766300A134C7 /* RegistrationPresenter.swift */; };
+		3C88586B2695786600A134C7 /* IRegistrationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C88586A2695786600A134C7 /* IRegistrationViewController.swift */; };
 		3CEC5BA1267B3FB700059058 /* IAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CEC5BA0267B3FB700059058 /* IAlert.swift */; };
 		3CEC5BA4267B56C100059058 /* FlyghtErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CEC5BA3267B56C100059058 /* FlyghtErrors.swift */; };
 		3CF97BD82692DECD0070CC9D /* RegistrationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CF97BD72692DECD0070CC9D /* RegistrationViewController.swift */; };
@@ -39,6 +43,10 @@
 /* Begin PBXFileReference section */
 		3C4C61FC26941E060086E4FE /* UserProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileViewController.swift; sourceTree = "<group>"; };
 		3C7F58DE2678973B001C1193 /* FoundFlyghtViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoundFlyghtViewController.swift; sourceTree = "<group>"; };
+		3C88585D2695715200A134C7 /* LoginPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginPresenter.swift; sourceTree = "<group>"; };
+		3C885861269571AA00A134C7 /* ILoginPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ILoginPresenter.swift; sourceTree = "<group>"; };
+		3C8858662695766300A134C7 /* RegistrationPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationPresenter.swift; sourceTree = "<group>"; };
+		3C88586A2695786600A134C7 /* IRegistrationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IRegistrationViewController.swift; sourceTree = "<group>"; };
 		3CEC5BA0267B3FB700059058 /* IAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IAlert.swift; sourceTree = "<group>"; };
 		3CEC5BA3267B56C100059058 /* FlyghtErrors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlyghtErrors.swift; sourceTree = "<group>"; };
 		3CF97BD72692DECD0070CC9D /* RegistrationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationViewController.swift; sourceTree = "<group>"; };
@@ -82,6 +90,26 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3C88585C2695712400A134C7 /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				3C88585D2695715200A134C7 /* LoginPresenter.swift */,
+				3C885861269571AA00A134C7 /* ILoginPresenter.swift */,
+				F5392F0526774C6700866C8F /* LoginViewController.swift */,
+			);
+			path = Login;
+			sourceTree = "<group>";
+		};
+		3C8858652695761400A134C7 /* Registration */ = {
+			isa = PBXGroup;
+			children = (
+				3CF97BD72692DECD0070CC9D /* RegistrationViewController.swift */,
+				3C8858662695766300A134C7 /* RegistrationPresenter.swift */,
+				3C88586A2695786600A134C7 /* IRegistrationViewController.swift */,
+			);
+			path = Registration;
+			sourceTree = "<group>";
+		};
 		5F07F9D683FEC57B5E681485 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -149,12 +177,10 @@
 		F53912E12678FAFC00EBC14F /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				F5392F0526774C6700866C8F /* LoginViewController.swift */,
 				3CEC5BA0267B3FB700059058 /* IAlert.swift */,
 				3C4C61FC26941E060086E4FE /* UserProfileViewController.swift */,
 				3C7F58DE2678973B001C1193 /* FoundFlyghtViewController.swift */,
 				F53912E62679235200EBC14F /* FavoriteViewController.swift */,
-				3CF97BD72692DECD0070CC9D /* RegistrationViewController.swift */,
 				F53251B62677C0F800CA57B6 /* FavoriteFlyghtListViewController.swift */,
 				F539A4D2267A727200AF0BCB /* IFoundFlyghtViewController.swift */,
 				F5392F0E2677571E00866C8F /* MainViewController.swift */,
@@ -185,6 +211,8 @@
 		F5392EEB2677364400866C8F /* Aviato */ = {
 			isa = PBXGroup;
 			children = (
+				3C8858652695761400A134C7 /* Registration */,
+				3C88585C2695712400A134C7 /* Login */,
 				F53912E12678FAFC00EBC14F /* Views */,
 				F53912E02678FADE00EBC14F /* Presenters */,
 				F53912DE2678FAB100EBC14F /* Networking */,
@@ -313,14 +341,18 @@
 			buildActionMask = 2147483647;
 			files = (
 				F5392EF12677364400866C8F /* RootViewController.swift in Sources */,
+				3C8858672695766300A134C7 /* RegistrationPresenter.swift in Sources */,
 				3C4C61FD26941E060086E4FE /* UserProfileViewController.swift in Sources */,
 				F539A4CD267A475900AF0BCB /* Presenter.swift in Sources */,
 				F5392EED2677364400866C8F /* AppDelegate.swift in Sources */,
+				3C88585E2695715200A134C7 /* LoginPresenter.swift in Sources */,
 				F5392F182677719B00866C8F /* FlyghtViewModel.swift in Sources */,
 				3CF97BD82692DECD0070CC9D /* RegistrationViewController.swift in Sources */,
 				F53912E4267919BB00EBC14F /* FlyghtViewCell.swift in Sources */,
+				3C88586B2695786600A134C7 /* IRegistrationViewController.swift in Sources */,
 				F53912E72679235200EBC14F /* FavoriteViewController.swift in Sources */,
 				F539A4D6267A8AB000AF0BCB /* IFavoriteFlyghtViewController.swift in Sources */,
+				3C885862269571AA00A134C7 /* ILoginPresenter.swift in Sources */,
 				3C7F58DF2678973B001C1193 /* FoundFlyghtViewController.swift in Sources */,
 				F53251B72677C0F800CA57B6 /* FavoriteFlyghtListViewController.swift in Sources */,
 				F5392F0C26774CB100866C8F /* NetworkManager.swift in Sources */,

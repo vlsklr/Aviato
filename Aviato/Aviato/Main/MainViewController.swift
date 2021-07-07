@@ -14,9 +14,9 @@ class MainViewController: UIViewController {
     let searchButton: UIButton = UIButton()
     private let activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
     let verticalMargins: CGFloat = 16.0
-    let presenter: IPresenter
+    let presenter: IMainPresenter
     
-    init(presenter: IPresenter) {
+    init(presenter: IMainPresenter) {
         self.presenter = presenter
         super.init(nibName: nil, bundle: nil)
     }
@@ -49,10 +49,6 @@ class MainViewController: UIViewController {
         }
     }
     
-    func toggleActivityIndicator() {
-        activityIndicator.isAnimating ? activityIndicator.stopAnimating() : activityIndicator.startAnimating()
-    }
-    
     func setupSearchButton() {
         self.view.addSubview(searchButton)
         searchButton.backgroundColor = .white
@@ -71,7 +67,7 @@ class MainViewController: UIViewController {
             make.height.equalTo(50)
         }
     }
-        
+    
     func setupSwipeDown() {
         let swipeDown = UISwipeGestureRecognizer(target: self, action: #selector(self.hideKeyboardOnSwipeDown))
         swipeDown.delegate = self
@@ -138,12 +134,6 @@ extension UISearchBar {
     }
 }
 
-extension MainViewController: IFoundFlyghtViewController {
-    func showFoundFlyght(flyghtViewInfo: FlyghtViewModel) {
-        let popViewController = FoundFlyghtViewController(flyghtViewInfo: flyghtViewInfo, presenter: self.presenter)
-        self.present(popViewController, animated: true, completion: nil)
-    }
-}
 
 extension MainViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
@@ -172,4 +162,12 @@ extension MainViewController: IAlert {
     }
 }
 
-
+extension MainViewController: IMainViewController {
+    func showFoundFlyght(foundFlyghtViewController: FoundFlyghtViewController) {
+        self.present(foundFlyghtViewController, animated: true, completion: nil)
+    }
+    
+    func toggleActivityIndicator() {
+        activityIndicator.isAnimating ? activityIndicator.stopAnimating() : activityIndicator.startAnimating()
+    }
+}

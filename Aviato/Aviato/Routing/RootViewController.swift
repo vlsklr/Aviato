@@ -30,15 +30,14 @@ class RootViewController: UIViewController {
         currentViewController = loginViewController
     }
     
-    func switchToMainScreen() {
-        let router = MainRouter(presenter: presenter)
+    func switchToMainScreen(userID: UUID) {
+        let router = MainRouter(presenter: presenter, userID: userID)
         let mainViewController = router.getTabBar()
         animateFadeTransition(to: mainViewController)
     }
     private func animateFadeTransition(to new: UIViewController, completion: (() -> Void)? = nil) {
         currentViewController.willMove(toParent: nil)
         addChild(new)
-       
        transition(from: currentViewController, to: new, duration: 0.5, options: [.transitionCrossDissolve, .curveEaseOut], animations: {
        }) { completed in
         self.currentViewController.removeFromParent()

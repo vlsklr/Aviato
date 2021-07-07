@@ -19,7 +19,7 @@ class Presenter: IPresenter {
             let user = storageManager.loadUser(username: username, userID: nil)
             if user?.username == username && user?.password == password && user?.userID != nil {
                 self.userID = user!.userID
-                AppDelegate.shared.rootViewController.switchToMainScreen()
+//                AppDelegate.shared.rootViewController.switchToMainScreen()
             }
             else {
                 view.showAlert(message: "Данные неверны или такого пользователя не существует")

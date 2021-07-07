@@ -11,10 +11,10 @@ import SnapKit
 class FoundFlyghtViewController: FavoriteViewController {
 
     let saveButton: UIButton = UIButton()
-    let presenter: IPresenter
+//    let presenter: IPresenter
     
-    init(flyghtViewInfo: FlyghtViewModel, presenter: IPresenter) {
-        self.presenter = presenter
+    override init(flyghtViewInfo: FlyghtViewModel) { //}, presenter: IPresenter) {
+//        self.presenter = presenter
         super.init(flyghtViewInfo: flyghtViewInfo)
     }
     
@@ -44,9 +44,9 @@ class FoundFlyghtViewController: FavoriteViewController {
     }
     
     @objc func addToFavorite() {
-        if presenter.addToFavorite(view: self, flyght: self.flyghtViewInfo) {
-            self.dismiss(animated: true, completion: nil)
-        }
+//        if presenter.addToFavorite(view: self, flyght: self.flyghtViewInfo) {
+//            self.dismiss(animated: true, completion: nil)
+//        }
     }
 }
 

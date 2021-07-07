@@ -12,18 +12,22 @@ class MainRouter {
     private let tabBar: UITabBarController
     private let mainNavigationController: UINavigationController
     private let mainViewController: MainViewController
+    private let mainPresenter: IMainPresenter
     private let flyghtListNavigationController: UINavigationController
     private let flyghtListViewController: FavoriteFlyghtListViewController
     private let userProfileViewController: UserProfileViewController
     private let userProfileNavigationController: UINavigationController
     private let presenter: IPresenter
+    private let userID: UUID
     
     
-    init(presenter: IPresenter) {
+    init(presenter: IPresenter, userID: UUID) {
         self.presenter = presenter
+        self.userID = UUID()
         self.tabBar = UITabBarController()
         tabBar.tabBar.barTintColor =  UIColor(red: 0.243, green: 0.776, blue: 1, alpha: 1)
-        self.mainViewController = MainViewController(presenter: self.presenter)
+        self.mainPresenter = MainPresenter(userID: userID)
+        self.mainViewController = MainViewController(presenter: self.mainPresenter)
         self.mainNavigationController = UINavigationController(rootViewController: self.mainViewController)
         self.mainNavigationController.tabBarItem.title = "Найти"
         

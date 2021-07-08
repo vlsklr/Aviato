@@ -54,13 +54,13 @@ class Presenter: IPresenter {
     }
     
     func findFlyghtInfo(view: IFoundFlyghtViewController, flyghtNumber: String) {
-        view.toggleActivityIndicator()
+//        view.toggleActivityIndicator()
         self.networkManager.loadFlyghtInfo(flyghtNumber: flyghtNumber, completion: {[weak self] result in
             switch result {
             case .failure(let error):
                 print(error)
                 DispatchQueue.main.async {
-                    view.toggleActivityIndicator()
+//                    view.toggleActivityIndicator()
                     view.showAlert(message: "Информация о данном рейсе отсутствует" )
                 }
             case .success(let info):
@@ -78,8 +78,8 @@ class Presenter: IPresenter {
                 
                 let viewInfo: FlyghtViewModel = FlyghtViewModel(holder: self!.userID, flyghtID: UUID(), flyghtNumber: info.number, departureAirport: "\(info.departure.airport.countryCode)  \(info.departure.airport.name)", arrivalAirport: "\(info.arrival.airport.countryCode)  \(info.arrival.airport.name)", departureDate: departureDateUTC, arrivalDate: arrivalDateUTC, aircraft: info.aircraft.model, airline: info.airline.name, status: info.status, departureDateLocal: departureDateLocal, arrivalDateLocal: arrivalDateLocal)
                 DispatchQueue.main.async {
-                    view.toggleActivityIndicator()
-                    view.showFoundFlyght(flyghtViewInfo: viewInfo)
+//                    view.toggleActivityIndicator()
+//                    view.showFoundFlyght(flyghtViewInfo: viewInfo)
                 }
             }
         })

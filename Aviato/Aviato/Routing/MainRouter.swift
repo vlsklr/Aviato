@@ -13,6 +13,7 @@ class MainRouter {
     private let mainNavigationController: UINavigationController
     private let mainViewController: MainViewController
     private let mainPresenter: IMainPresenter
+    private let flyghtsListPresenter: IFavoriteFlyghtListPresenter
     private let flyghtListNavigationController: UINavigationController
     private let flyghtListViewController: FavoriteFlyghtListViewController
     private let userProfileViewController: UserProfileViewController
@@ -31,7 +32,8 @@ class MainRouter {
         self.mainNavigationController = UINavigationController(rootViewController: self.mainViewController)
         self.mainNavigationController.tabBarItem.title = "Найти"
         
-        self.flyghtListViewController = FavoriteFlyghtListViewController(presenter: self.presenter )
+        self.flyghtsListPresenter = FavoriteFlyghtListPresenter(userID: userID)
+        self.flyghtListViewController = FavoriteFlyghtListViewController(presenter: self.flyghtsListPresenter)
         self.flyghtListNavigationController = UINavigationController(rootViewController: self.flyghtListViewController)
         self.flyghtListNavigationController.tabBarItem.title = "Избранное"
         

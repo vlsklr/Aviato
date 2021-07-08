@@ -17,7 +17,9 @@ class MainPresenter: IMainPresenter {
     }
     
     func findFlyghtInfo(view: IMainViewController, flyghtNumber: String) {
-        view.toggleActivityIndicator()
+        DispatchQueue.main.async {
+            view.toggleActivityIndicator()
+        }
         self.networkManager.loadFlyghtInfo(flyghtNumber: flyghtNumber, completion: {[weak self] result in
             switch result {
             case .failure(let error):
@@ -40,11 +42,12 @@ class MainPresenter: IMainPresenter {
                 let arrivalDateLocal  = dateFormatter.string(from: arrivalDateUTC)
                 
                 let viewInfo: FlyghtViewModel = FlyghtViewModel(holder: self!.userID, flyghtID: UUID(), flyghtNumber: info.number, departureAirport: "\(info.departure.airport.countryCode)  \(info.departure.airport.name)", arrivalAirport: "\(info.arrival.airport.countryCode)  \(info.arrival.airport.name)", departureDate: departureDateUTC, arrivalDate: arrivalDateUTC, aircraft: info.aircraft.model, airline: info.airline.name, status: info.status, departureDateLocal: departureDateLocal, arrivalDateLocal: arrivalDateLocal)
-                let foundFlyghtViewController = FoundFlyghtViewController(flyghtViewInfo: viewInfo)
+                let foundFlyghtPresenter = FoundFlyghtPresenter(userID: self!.userID)
+                let foundFlyghtViewController = FoundFlyghtViewController(flyghtViewInfo: viewInfo, presenter: foundFlyghtPresenter)
+                
                 DispatchQueue.main.async {
                     view.toggleActivityIndicator()
                     view.showFoundFlyght(foundFlyghtViewController: foundFlyghtViewController)
-//                    view.showFoundFlyght(flyghtViewInfo: viewInfo)
                 }
             }
         })

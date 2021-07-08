@@ -12,7 +12,7 @@ class LoginPresenter: ILoginPresenter {
     
     let storageManager: IStorageManager = StorageManager()
     var userID: UUID = UUID()
-
+    
     func authentificateUser(view: IAlert,username: String, password: String) {
         if username.isEmpty || password.isEmpty {
             view.showAlert(message: "Введите данные")
@@ -27,16 +27,18 @@ class LoginPresenter: ILoginPresenter {
             }
         }
     }
-// Метод создает экземпляр ViewController экрана регистрации и говорит вызвавшему ViewController отобразить этот ViewController
+    // Метод создает экземпляр ViewController экрана регистрации и говорит вызвавшему ViewController отобразить этот ViewController
     func registerUser(view: IloginViewController) {
         let registrationPresenter: IRegistrationPresenter = RegistrationPresenter()
         let registrationViewController = RegistrationViewController(presenter: registrationPresenter)
-        view.presentRegisterViewController(view: registrationViewController)
+        DispatchQueue.main.async {
+            view.presentRegisterViewController(view: registrationViewController)
+        }
     }
     
     func logout() {
         AppDelegate.shared.rootViewController.showLoginScreen()
     }
-
+    
     
 }

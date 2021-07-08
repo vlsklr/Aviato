@@ -12,14 +12,14 @@ class FavoriteFlyghtListViewController: UIViewController {
     
     let tableView: UITableView = UITableView()
     private let activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
-    private let presenter: IPresenter
+    private let presenter: IFavoriteFlyghtListPresenter
     private let refreshControll: UIRefreshControl = {
         let refresh = UIRefreshControl()
         refresh.addTarget(self, action: #selector(refreshFlyghts(sender:)), for: .valueChanged)
         return refresh
     }()
     
-    init(presenter: IPresenter) {
+    init(presenter: IFavoriteFlyghtListPresenter) {
         self.presenter = presenter
         super.init(nibName: nil, bundle: nil)
     }
@@ -104,7 +104,6 @@ extension FavoriteFlyghtListViewController: UITableViewDelegate {
         }
     }
 }
-
 extension FavoriteFlyghtListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return presenter.getFlyghtsCount()

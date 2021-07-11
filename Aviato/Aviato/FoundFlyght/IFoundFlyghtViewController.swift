@@ -7,6 +7,5 @@
 
 
 protocol IFoundFlyghtViewController: IAlert {
-    func showFoundFlyght(flyghtViewInfo: FlyghtViewModel)
-    func toggleActivityIndicator() 
+    func dismissFoundView()
 }

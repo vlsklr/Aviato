@@ -9,7 +9,7 @@ import UIKit
 
 class RootViewController: UIViewController {
     private var currentViewController: UIViewController = UIViewController()
-    private var presenter: IPresenter = Presenter()
+//    private var presenter: IPresenter = Presenter()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -17,7 +17,9 @@ class RootViewController: UIViewController {
     }
     
     func showLoginScreen() {
-        let loginViewController = LoginViewController(presenter: presenter)
+        let loginPresenter: ILoginPresenter = LoginPresenter()
+        let loginViewController = LoginViewController(presenter: loginPresenter)
+//        let loginViewController = LoginViewController(presenter: presenter)
         addChild(loginViewController)
         loginViewController.view.frame = view.bounds
         view.addSubview(loginViewController.view)
@@ -28,15 +30,14 @@ class RootViewController: UIViewController {
         currentViewController = loginViewController
     }
     
-    func switchToMainScreen() {
-        let router = MainRouter(presenter: presenter)
+    func switchToMainScreen(userID: UUID) {
+        let router = MainRouter(userID: userID)
         let mainViewController = router.getTabBar()
         animateFadeTransition(to: mainViewController)
     }
     private func animateFadeTransition(to new: UIViewController, completion: (() -> Void)? = nil) {
         currentViewController.willMove(toParent: nil)
         addChild(new)
-       
        transition(from: currentViewController, to: new, duration: 0.5, options: [.transitionCrossDissolve, .curveEaseOut], animations: {
        }) { completed in
         self.currentViewController.removeFromParent()

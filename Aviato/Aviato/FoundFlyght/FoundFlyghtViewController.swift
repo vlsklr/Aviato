@@ -9,11 +9,11 @@ import UIKit
 import SnapKit
 
 class FoundFlyghtViewController: FavoriteViewController {
-
-    let saveButton: UIButton = UIButton()
-    let presenter: IPresenter
     
-    init(flyghtViewInfo: FlyghtViewModel, presenter: IPresenter) {
+    let saveButton: UIButton = UIButton()
+    let presenter: IFoundFlyghtPresenter
+    
+    init(flyghtViewInfo: FlyghtViewModel, presenter: IFoundFlyghtPresenter) { //}, presenter: IPresenter) {
         self.presenter = presenter
         super.init(flyghtViewInfo: flyghtViewInfo)
     }
@@ -26,7 +26,7 @@ class FoundFlyghtViewController: FavoriteViewController {
         super.viewDidLoad()
         setupButton()
     }
-       
+    
     func setupButton() {
         self.scrollViewContainer.addArrangedSubview(saveButton)
         saveButton.setTitle("Добавить в избранное", for: .normal)
@@ -44,9 +44,7 @@ class FoundFlyghtViewController: FavoriteViewController {
     }
     
     @objc func addToFavorite() {
-        if presenter.addToFavorite(view: self, flyght: self.flyghtViewInfo) {
-            self.dismiss(animated: true, completion: nil)
-        }
+        presenter.addToFavorite(view: self, flyght: self.flyghtViewInfo)
     }
 }
 
@@ -58,3 +56,10 @@ extension FoundFlyghtViewController: IAlert {
     }
 }
 
+extension FoundFlyghtViewController: IFoundFlyghtViewController {
+    func dismissFoundView() {
+        self.dismiss(animated: true)
+    }
+    
+    
+}

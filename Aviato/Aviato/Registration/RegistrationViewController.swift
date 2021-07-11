@@ -12,7 +12,16 @@ class RegistrationViewController: UIViewController {
     let usernameField: UITextField = UITextField()
     let passwordField: UITextField = UITextField()
     let registerButton: UIButton = UIButton()
-    let presenter: Presenter = Presenter()
+    let presenter: IRegistrationPresenter
+    
+    init(presenter: IRegistrationPresenter) {
+        self.presenter = presenter
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -89,9 +98,7 @@ class RegistrationViewController: UIViewController {
             return
         }
         //При случае спросить нормально ли делать так, что сама View себя закрывает, по результату работы метода презентера или команду на закрытие должен отдать сам презентер
-        if presenter.registerUser(view: self, username: username, password: password) {
-            dismiss(animated: true)
-        }
+         presenter.registerUser(view: self, username: username, password: password) 
     }
 }
 
@@ -101,4 +108,17 @@ extension RegistrationViewController: IAlert {
         alert.addAction(UIAlertAction(title: "ОК", style: .default))
         self.present(alert, animated: true)
     }
+}
+
+extension RegistrationViewController: IRegistrationViewController {
+    func presentSelf() {
+        self.present(self, animated: true, completion: nil)
+
+    }
+    
+    func dismissView() {
+        dismiss(animated: true)
+    }
+    
+    
 }

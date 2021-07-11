@@ -12,26 +12,32 @@ class MainRouter {
     private let tabBar: UITabBarController
     private let mainNavigationController: UINavigationController
     private let mainViewController: MainViewController
+    private let mainPresenter: IMainPresenter
+    private let flyghtsListPresenter: IFavoriteFlyghtListPresenter
     private let flyghtListNavigationController: UINavigationController
     private let flyghtListViewController: FavoriteFlyghtListViewController
     private let userProfileViewController: UserProfileViewController
     private let userProfileNavigationController: UINavigationController
-    private let presenter: IPresenter
+    private let userProfilePresenter: IUserProfilePresenter
+    private let userID: UUID
     
     
-    init(presenter: IPresenter) {
-        self.presenter = presenter
+    init(userID: UUID) {
+        self.userID = UUID()
         self.tabBar = UITabBarController()
         tabBar.tabBar.barTintColor =  UIColor(red: 0.243, green: 0.776, blue: 1, alpha: 1)
-        self.mainViewController = MainViewController(presenter: self.presenter)
+        self.mainPresenter = MainPresenter(userID: userID)
+        self.mainViewController = MainViewController(presenter: self.mainPresenter)
         self.mainNavigationController = UINavigationController(rootViewController: self.mainViewController)
         self.mainNavigationController.tabBarItem.title = "Найти"
         
-        self.flyghtListViewController = FavoriteFlyghtListViewController(presenter: self.presenter )
+        self.flyghtsListPresenter = FavoriteFlyghtListPresenter(userID: userID)
+        self.flyghtListViewController = FavoriteFlyghtListViewController(presenter: self.flyghtsListPresenter)
         self.flyghtListNavigationController = UINavigationController(rootViewController: self.flyghtListViewController)
         self.flyghtListNavigationController.tabBarItem.title = "Избранное"
         
-        self.userProfileViewController = UserProfileViewController(presenter: self.presenter)
+        self.userProfilePresenter = UserProfilePresenter(userID: userID)
+        self.userProfileViewController = UserProfileViewController(presenter: self.userProfilePresenter)
         self.userProfileNavigationController = UINavigationController(rootViewController: self.userProfileViewController)
         self.userProfileNavigationController.tabBarItem.title = "Профиль"
         

@@ -8,6 +8,10 @@
 import UIKit
 import SnapKit
 
+protocol IloginViewController {
+    func presentRegisterViewController(view: RegistrationViewController)
+}
+
 class LoginViewController: UIViewController {
     
     let userNameField: UITextField = UITextField()
@@ -15,9 +19,9 @@ class LoginViewController: UIViewController {
     let authButton: UIButton = UIButton()
     let registerButton: UIButton = UIButton()
     let logoView: UIImageView = UIImageView()
-    let presenter: IPresenter
+    let presenter: ILoginPresenter
     
-    init(presenter: IPresenter) {
+    init(presenter: ILoginPresenter	) {
         self.presenter = presenter
         super.init(nibName: nil, bundle: nil)
     }
@@ -152,8 +156,7 @@ class LoginViewController: UIViewController {
     }
     
     @objc func registerAction() {
-        let registrationViewController = RegistrationViewController()
-        self.present(registrationViewController, animated: true, completion: nil)
+        presenter.registerUser(view: self)
     }
 }
 
@@ -168,5 +171,12 @@ extension LoginViewController: IAlert {
 extension LoginViewController: UIGestureRecognizerDelegate {
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
         return true
+    }
+}
+
+extension LoginViewController: IloginViewController {
+    //Показывает созданный в LoginPresenter RegistrationViewController
+    func presentRegisterViewController(view: RegistrationViewController) {
+        present(view, animated: true, completion: nil)
     }
 }

@@ -8,13 +8,18 @@
 import UIKit
 import SnapKit
 
-class UserProfileViewController: UIViewController {
+protocol IUserProfileViewController {
+    func showUserInfo(userInfo: UserViewModel)
     
-    let presenter: IPresenter
+}
+
+class UserProfileViewController: UIViewController, IUserProfileViewController {
+    
+    let presenter: IUserProfilePresenter
     let usernameLabel: UILabel = UILabel()
     let logoutButton: UIButton = UIButton()
     
-    init(presenter: IPresenter) {
+    init(presenter: IUserProfilePresenter) {
         self.presenter = presenter
         super.init(nibName: nil, bundle: nil)
     }
@@ -67,7 +72,12 @@ class UserProfileViewController: UIViewController {
     }
     
     func setupData() {
-        let userInfo: UserViewModel = presenter.getUser() ?? UserViewModel(userID: UUID(), username: "111", password: "111")
-        usernameLabel.text = "Имя пользователя: " + userInfo.username
+        presenter.getUser(userViewController: self)
     }
+    
+    func showUserInfo(userInfo: UserViewModel) {
+        usernameLabel.text = "Имя пользователя: " + userInfo.username
+        
+    }
+    
 }

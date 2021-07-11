@@ -39,10 +39,9 @@
 		F5392F182677719B00866C8F /* FlyghtViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5392F172677719B00866C8F /* FlyghtViewModel.swift */; };
 		F5392F1B2677745700866C8F /* INetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5392F1A2677745700866C8F /* INetworkManager.swift */; };
 		F5392F1E2677747500866C8F /* IStorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5392F1D2677747500866C8F /* IStorageManager.swift */; };
-		F539A4CD267A475900AF0BCB /* Presenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F539A4CC267A475900AF0BCB /* Presenter.swift */; };
-		F539A4D0267A477400AF0BCB /* IPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F539A4CF267A477400AF0BCB /* IPresenter.swift */; };
 		F539A4D3267A727200AF0BCB /* IFoundFlyghtViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F539A4D2267A727200AF0BCB /* IFoundFlyghtViewController.swift */; };
 		F539A4D6267A8AB000AF0BCB /* IFavoriteFlyghtViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F539A4D5267A8AB000AF0BCB /* IFavoriteFlyghtViewController.swift */; };
+		F55A4628269B31BD00A3B352 /* UserProfilePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F55A4627269B31BD00A3B352 /* UserProfilePresenter.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -82,10 +81,9 @@
 		F5392F172677719B00866C8F /* FlyghtViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlyghtViewModel.swift; sourceTree = "<group>"; };
 		F5392F1A2677745700866C8F /* INetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = INetworkManager.swift; sourceTree = "<group>"; };
 		F5392F1D2677747500866C8F /* IStorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IStorageManager.swift; sourceTree = "<group>"; };
-		F539A4CC267A475900AF0BCB /* Presenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Presenter.swift; sourceTree = "<group>"; };
-		F539A4CF267A477400AF0BCB /* IPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IPresenter.swift; sourceTree = "<group>"; };
 		F539A4D2267A727200AF0BCB /* IFoundFlyghtViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IFoundFlyghtViewController.swift; sourceTree = "<group>"; };
 		F539A4D5267A8AB000AF0BCB /* IFavoriteFlyghtViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IFavoriteFlyghtViewController.swift; sourceTree = "<group>"; };
+		F55A4627269B31BD00A3B352 /* UserProfilePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfilePresenter.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -110,14 +108,16 @@
 			path = FoundFlyght;
 			sourceTree = "<group>";
 		};
-		3C74DA132697116A00779D00 /* FavoriteList */ = {
+		3C74DA132697116A00779D00 /* Favorite */ = {
 			isa = PBXGroup;
 			children = (
+				F53912E62679235200EBC14F /* FavoriteViewController.swift */,
+				F539A4D5267A8AB000AF0BCB /* IFavoriteFlyghtViewController.swift */,
 				F53251B62677C0F800CA57B6 /* FavoriteFlyghtListViewController.swift */,
 				3C74DA17269711BD00779D00 /* FavoriteFlyghtsListPresenter.swift */,
 				F53912E3267919BB00EBC14F /* FlyghtViewCell.swift */,
 			);
-			path = FavoriteList;
+			path = Favorite;
 			sourceTree = "<group>";
 		};
 		3C88585C2695712400A134C7 /* Login */ = {
@@ -206,24 +206,13 @@
 			path = Networking;
 			sourceTree = "<group>";
 		};
-		F53912E02678FADE00EBC14F /* Presenters */ = {
+		F53912E12678FAFC00EBC14F /* Supporting */ = {
 			isa = PBXGroup;
 			children = (
-				F539A4CC267A475900AF0BCB /* Presenter.swift */,
-				F539A4CF267A477400AF0BCB /* IPresenter.swift */,
-			);
-			path = Presenters;
-			sourceTree = "<group>";
-		};
-		F53912E12678FAFC00EBC14F /* Views */ = {
-			isa = PBXGroup;
-			children = (
+				F5392EEC2677364400866C8F /* AppDelegate.swift */,
 				3CEC5BA0267B3FB700059058 /* IAlert.swift */,
-				F53912E62679235200EBC14F /* FavoriteViewController.swift */,
-				3C4C61FC26941E060086E4FE /* UserProfileViewController.swift */,
-				F539A4D5267A8AB000AF0BCB /* IFavoriteFlyghtViewController.swift */,
 			);
-			path = Views;
+			path = Supporting;
 			sourceTree = "<group>";
 		};
 		F5392EE02677364400866C8F = {
@@ -247,23 +236,31 @@
 		F5392EEB2677364400866C8F /* Aviato */ = {
 			isa = PBXGroup;
 			children = (
-				3C74DA132697116A00779D00 /* FavoriteList */,
+				F55A4626269B313000A3B352 /* UserProfile */,
+				3C74DA132697116A00779D00 /* Favorite */,
 				3C74DA0E2696F84E00779D00 /* FoundFlyght */,
 				F53171D02695E9DA00911C89 /* Main */,
 				3C8858652695761400A134C7 /* Registration */,
 				3C88585C2695712400A134C7 /* Login */,
-				F53912E12678FAFC00EBC14F /* Views */,
-				F53912E02678FADE00EBC14F /* Presenters */,
+				F53912E12678FAFC00EBC14F /* Supporting */,
 				F53912DE2678FAB100EBC14F /* Networking */,
 				F53912DC2678FA8200EBC14F /* Routing */,
 				F53912DA2678FA4C00EBC14F /* CoreData */,
 				F53912D82678FA2800EBC14F /* Models */,
-				F5392EEC2677364400866C8F /* AppDelegate.swift */,
 				F5392EF82677364700866C8F /* Assets.xcassets */,
 				F5392EFA2677364700866C8F /* LaunchScreen.storyboard */,
 				F5392EFD2677364700866C8F /* Info.plist */,
 			);
 			path = Aviato;
+			sourceTree = "<group>";
+		};
+		F55A4626269B313000A3B352 /* UserProfile */ = {
+			isa = PBXGroup;
+			children = (
+				3C4C61FC26941E060086E4FE /* UserProfileViewController.swift */,
+				F55A4627269B31BD00A3B352 /* UserProfilePresenter.swift */,
+			);
+			path = UserProfile;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -382,7 +379,6 @@
 				F5392EF12677364400866C8F /* RootViewController.swift in Sources */,
 				3C8858672695766300A134C7 /* RegistrationPresenter.swift in Sources */,
 				3C4C61FD26941E060086E4FE /* UserProfileViewController.swift in Sources */,
-				F539A4CD267A475900AF0BCB /* Presenter.swift in Sources */,
 				F5392EED2677364400866C8F /* AppDelegate.swift in Sources */,
 				3C88585E2695715200A134C7 /* LoginPresenter.swift in Sources */,
 				F5392F182677719B00866C8F /* FlyghtViewModel.swift in Sources */,
@@ -392,6 +388,7 @@
 				F53912E72679235200EBC14F /* FavoriteViewController.swift in Sources */,
 				F539A4D6267A8AB000AF0BCB /* IFavoriteFlyghtViewController.swift in Sources */,
 				3C885862269571AA00A134C7 /* ILoginPresenter.swift in Sources */,
+				F55A4628269B31BD00A3B352 /* UserProfilePresenter.swift in Sources */,
 				3C7F58DF2678973B001C1193 /* FoundFlyghtViewController.swift in Sources */,
 				3C74DA18269711BD00779D00 /* FavoriteFlyghtsListPresenter.swift in Sources */,
 				F53251B72677C0F800CA57B6 /* FavoriteFlyghtListViewController.swift in Sources */,
@@ -402,7 +399,6 @@
 				F53251B42677BF0700CA57B6 /* MainRouter.swift in Sources */,
 				F539A4D3267A727200AF0BCB /* IFoundFlyghtViewController.swift in Sources */,
 				F5392F0626774C6700866C8F /* LoginViewController.swift in Sources */,
-				F539A4D0267A477400AF0BCB /* IPresenter.swift in Sources */,
 				3C74DA102696F9FB00779D00 /* FoundFlyghtPresenter.swift in Sources */,
 				F5392EF72677364400866C8F /* Aviato.xcdatamodeld in Sources */,
 				F5392F152677718C00866C8F /* UserViewModel.swift in Sources */,

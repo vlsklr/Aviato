@@ -10,7 +10,7 @@ import Foundation
 protocol IFavoriteFlyghtListPresenter {
     func getFlyghtsCount() -> Int
     func getFlyghts() -> [FlyghtViewModel]?
-    func getFavorite(view: IFavoriteFlyghtViewController, flyghtID: UUID)
+    func getFavorite(view: IFavoriteListFlyghtViewController, flyghtID: UUID)
     func updateFlyghtInfo(view: FavoriteFlyghtListViewController)
     func removeFlyght(flyghtID: UUID)
 }
@@ -35,11 +35,13 @@ class FavoriteFlyghtListPresenter: IFavoriteFlyghtListPresenter {
         return savedFlyghts
     }
     
-    func getFavorite(view: IFavoriteFlyghtViewController, flyghtID: UUID) {
+    func getFavorite(view: IFavoriteListFlyghtViewController, flyghtID: UUID) {
         guard let flyght = storageManager.getFlyght(flyghtID: flyghtID) else {
             return
         }
-        view.showFavoriteFlyght(flyghtViewInfo: flyght)
+        let favoiteViewController = FavoriteViewController(flyghtViewInfo: flyght)
+        
+        view.showFavoriteFlyght(flyghtViewController: favoiteViewController)
     }
     /*
      Метод обновляет информацию о рейсах сохраненных в избранное для конкретного пользователя

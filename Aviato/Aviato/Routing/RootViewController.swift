@@ -9,7 +9,7 @@ import UIKit
 
 class RootViewController: UIViewController {
     private var currentViewController: UIViewController = UIViewController()
-    private var presenter: IPresenter = Presenter()
+//    private var presenter: IPresenter = Presenter()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,7 +31,7 @@ class RootViewController: UIViewController {
     }
     
     func switchToMainScreen(userID: UUID) {
-        let router = MainRouter(presenter: presenter, userID: userID)
+        let router = MainRouter(userID: userID)
         let mainViewController = router.getTabBar()
         animateFadeTransition(to: mainViewController)
     }

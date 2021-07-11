@@ -124,9 +124,8 @@ extension FavoriteFlyghtListViewController: UITableViewDataSource {
     }
 }
 
-extension FavoriteFlyghtListViewController: IFavoriteFlyghtViewController {
-    func showFavoriteFlyght(flyghtViewInfo: FlyghtViewModel) {
-        let popViewController = FavoriteViewController(flyghtViewInfo: flyghtViewInfo)
-        self.present(popViewController, animated: true, completion: nil)
+extension FavoriteFlyghtListViewController: IFavoriteListFlyghtViewController {
+    func showFavoriteFlyght(flyghtViewController: FavoriteViewController) {
+        self.present(flyghtViewController, animated: true, completion: nil)
     }
 }

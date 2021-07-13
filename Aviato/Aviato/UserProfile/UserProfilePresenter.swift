@@ -10,10 +10,13 @@ import Foundation
 protocol IUserProfilePresenter {
     func logout()
     func getUser(userViewController: IUserProfileViewController)
+    func removeUser()
+    
     
 }
 
 class UserProfilePresenter: IUserProfilePresenter {
+
     let userID: UUID
     let storageManager = StorageManager()
     
@@ -29,6 +32,11 @@ class UserProfilePresenter: IUserProfilePresenter {
     
     func logout() {
         AppDelegate.shared.rootViewController.showLoginScreen()
+    }
+    
+    func removeUser() {
+        storageManager.deleteUser(userID: self.userID)
+        logout()
     }
     
 }

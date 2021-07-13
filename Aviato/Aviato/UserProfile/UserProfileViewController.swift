@@ -18,6 +18,7 @@ class UserProfileViewController: UIViewController, IUserProfileViewController {
     let presenter: IUserProfilePresenter
     let usernameLabel: UILabel = UILabel()
     let logoutButton: UIButton = UIButton()
+    let removeUserButton: UIButton = UIButton()
     
     init(presenter: IUserProfilePresenter) {
         self.presenter = presenter
@@ -34,6 +35,7 @@ class UserProfileViewController: UIViewController, IUserProfileViewController {
         navigationController?.setNavigationBarHidden(true, animated: false)
         setupUsernameLabel()
         setupLogoutButton()
+        setupRemoveUserButton()
         setupData()
     }
     
@@ -65,6 +67,26 @@ class UserProfileViewController: UIViewController, IUserProfileViewController {
             make.width.equalTo(75)
             make.height.equalTo(50)
         }
+    }
+    
+    func setupRemoveUserButton() {
+        self.view.addSubview(removeUserButton)
+        removeUserButton.setTitle("Удалить пользователя", for: .normal)
+        removeUserButton.layer.cornerRadius = 25
+        removeUserButton.backgroundColor = .red
+        removeUserButton.layer.borderColor = UIColor.white.cgColor
+        removeUserButton.layer.borderWidth = 3
+        removeUserButton.addTarget(self, action: #selector(removeUser), for: .touchUpInside)
+        removeUserButton.snp.makeConstraints { (make) in
+            make.leading.equalToSuperview().offset(43)
+            make.trailing.equalToSuperview().offset(-43)
+            make.bottom.equalToSuperview().offset(-100)
+            make.height.equalTo(50)
+        }
+    }
+    
+    @objc func removeUser() {
+        presenter.removeUser()
     }
     
     @objc func logout() {

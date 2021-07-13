@@ -23,7 +23,7 @@ class StorageManager: IStorageManager {
     func loadUser(username: String?, userID: UUID?) -> UserViewModel? {
         let fetchRequest: NSFetchRequest<User> = User.fetchRequest()
         if let userName = username {
-        fetchRequest.predicate = NSPredicate(format: "\(#keyPath(User.userName)) = %@", userName)
+            fetchRequest.predicate = NSPredicate(format: "\(#keyPath(User.userName)) = %@", userName)
         } else if let userID = userID {
             fetchRequest.predicate = NSPredicate(format: "\(#keyPath(User.userID)) = %@", "\(userID)")
         }
@@ -39,8 +39,18 @@ class StorageManager: IStorageManager {
             object.userName = user.username
             object.password = user.password
             try? context.save()
-//            DispatchQueue.main.asyncAfter(deadline: .now(), execute: { completion() })
+            //            DispatchQueue.main.asyncAfter(deadline: .now(), execute: { completion() })
         }
+    }
+    
+    func deleteUser(userID: UUID) {
+        let context = persistentContainer.viewContext
+        let fetchRequest: NSFetchRequest<User> = User.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "\(#keyPath(User.userID)) = %@", "\(userID)")
+        if let object = try? context.fetch(fetchRequest).first {
+            context.delete(object)
+        }
+        try? context.save()
     }
     
     func addFlyght(flyght: FlyghtViewModel) {
@@ -61,7 +71,6 @@ class StorageManager: IStorageManager {
                 object.departureAirport = flyght.departureAirport
                 object.user = user
                 object.lastModified = Date()
-                
                 try context.save()
             } catch {
             }

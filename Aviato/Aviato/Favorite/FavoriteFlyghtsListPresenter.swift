@@ -51,6 +51,9 @@ class FavoriteFlyghtListPresenter: IFavoriteFlyghtListPresenter {
      4. Если данные успешно загружены, обновляем их в CoreData
      */
     func updateFlyghtInfo(view: FavoriteFlyghtListViewController) {
+        DispatchQueue.main.async {
+            
+        
         let totalSections = view.tableView.numberOfSections
         var upatingCounter = 0
         view.toggleActivityIndicator()
@@ -59,13 +62,14 @@ class FavoriteFlyghtListPresenter: IFavoriteFlyghtListPresenter {
             for row in 0..<totalRowsInSection {
                 let cell = view.tableView.cellForRow(at: IndexPath(row: row, section: section)) as! FlyghtViewCell
                 guard let flyghtID = cell.entityID else {return}
-                let flyght = storageManager.getFlyght(flyghtID: flyghtID)
+                let flyght = self.storageManager.getFlyght(flyghtID: flyghtID)
                 // Приведение номера рейса в соответствие с требованиями API. Для запроса к API нужно писать номер рейса без пробела "KLM1116" или "KL1116", но сам API возвращает номер рейса в таком формате: "KL 1116"
                 guard let flyghtNumber = flyght?.flyghtNumber.replacingOccurrences(of: " ", with: "") else {return}
                 self.networkManager.loadFlyghtInfo(flyghtNumber: flyghtNumber, completion: {[weak self] result in
                     switch result {
                     case .failure(let error):
                         print(error)
+                        view.toggleActivityIndicator()
                     case .success(let info):
                         print(info)
                         let dateFormatter = DateFormatter()
@@ -79,8 +83,8 @@ class FavoriteFlyghtListPresenter: IFavoriteFlyghtListPresenter {
                         self?.storageManager.updateFlyght(flyghtID: flyghtID, flyght: viewInfo)
                         upatingCounter += 1
                         DispatchQueue.main.async {
-                            view.tableView.reloadData()
-                            if upatingCounter == totalRowsInSection - 1 {
+                            if upatingCounter == totalRowsInSection {
+                                view.tableView.reloadData()
                                 view.toggleActivityIndicator()
                             }
                         }
@@ -88,6 +92,7 @@ class FavoriteFlyghtListPresenter: IFavoriteFlyghtListPresenter {
                 })
             }
         }
+    }
     }
     
     func removeFlyght(flyghtID: UUID) {

@@ -31,7 +31,8 @@ class UserProfilePresenter: IUserProfilePresenter {
     }
     
     func logout() {
-        AppDelegate.shared.rootViewController.showLoginScreen()
+//        AppDelegate.shared.rootViewController.showLoginScreen()
+        AppDelegate.shared.rootViewController.switchToLogout()
     }
     
     func removeUser() {

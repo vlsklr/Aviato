@@ -87,7 +87,7 @@ class LoginViewController: UIViewController {
     func setupAuthButton() {
         self.view.addSubview(authButton)
         authButton.addTarget(self, action: #selector(authAction), for: .touchUpInside)
-        authButton.addTarget(self, action: #selector(anim), for: .touchDown)
+        authButton.addTarget(self, action: #selector(animateButtonAction), for: .touchDown)
         authButton.setTitle("Войти", for: .normal)
         authButton.layer.cornerRadius = 25
         authButton.backgroundColor = UIColor(red: 0.243, green: 0.776, blue: 1, alpha: 1)
@@ -130,7 +130,7 @@ class LoginViewController: UIViewController {
         self.view.addGestureRecognizer(swipeDown)
     }
     
-    @objc func anim(button: UIButton) {
+    @objc func animateButtonAction(button: UIButton) {
         var animator = UIViewPropertyAnimator()
         animator = UIViewPropertyAnimator(duration: 0.2, curve: .easeOut, animations: {
             button.backgroundColor = .white

@@ -35,7 +35,9 @@ class FoundFlyghtViewController: FavoriteViewController {
         saveButton.backgroundColor = UIColor(red: 0.243, green: 0.776, blue: 1, alpha: 1)
         saveButton.layer.borderColor = UIColor.white.cgColor
         saveButton.layer.borderWidth = 3
+        saveButton.addTarget(self, action: #selector(animateButtonAction), for: .touchDown)
         saveButton.addTarget(self, action: #selector(addToFavorite), for: .touchUpInside)
+
         saveButton.snp.makeConstraints { (make) in
             make.top.equalTo(aircraftLabel.snp.bottom).offset(35)
             make.leading.equalToSuperview().offset(43)
@@ -44,7 +46,23 @@ class FoundFlyghtViewController: FavoriteViewController {
     }
     
     @objc func addToFavorite() {
+        var animator = UIViewPropertyAnimator()
+        animator = UIViewPropertyAnimator(duration: 0.2, curve: .easeOut, animations: {
+            self.saveButton.backgroundColor = UIColor(red: 0.243, green: 0.776, blue: 1, alpha: 1)
+            self.saveButton.layer.borderColor = UIColor.white.cgColor
+        })
+        animator.startAnimation()
         presenter.addToFavorite(view: self, flyght: self.flyghtViewInfo)
+    }
+    
+    @objc func animateButtonAction() {
+        var animator = UIViewPropertyAnimator()
+        animator = UIViewPropertyAnimator(duration: 0.2, curve: .easeOut, animations: {
+            self.saveButton.backgroundColor = .white
+            self.saveButton.layer.borderColor = UIColor(red: 0.243, green: 0.776, blue: 1, alpha: 1).cgColor
+            self.saveButton.setTitleColor(UIColor(red: 0.243, green: 0.776, blue: 1, alpha: 1), for: .highlighted)
+        })
+        animator.startAnimation()
     }
 }
 

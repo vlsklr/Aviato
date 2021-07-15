@@ -58,7 +58,7 @@ class MainViewController: UIViewController {
         searchButton.setTitleColor(UIColor(red: 0.243, green: 0.776, blue: 1, alpha: 1), for: .normal)
         searchButton.layer.cornerRadius = 25
         searchButton.addTarget(self, action: #selector(search), for: .touchUpInside)
-        searchButton.addTarget(self, action: #selector(anim), for: .touchDown)
+        searchButton.addTarget(self, action: #selector(anim(button:)), for: .touchDown)
         searchButton.snp.makeConstraints { (make) in
             make.top.equalTo(searchBar.snp.bottom).offset(10)
             make.centerX.equalToSuperview()

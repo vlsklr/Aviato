@@ -9,7 +9,6 @@ import UIKit
 
 class RootViewController: UIViewController {
     private var currentViewController: UIViewController = UIViewController()
-//    private var presenter: IPresenter = Presenter()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -19,7 +18,6 @@ class RootViewController: UIViewController {
     func showLoginScreen() {
         let loginPresenter: ILoginPresenter = LoginPresenter()
         let loginViewController = LoginViewController(presenter: loginPresenter)
-//        let loginViewController = LoginViewController(presenter: presenter)
         addChild(loginViewController)
         loginViewController.view.frame = view.bounds
         view.addSubview(loginViewController.view)
@@ -35,16 +33,39 @@ class RootViewController: UIViewController {
         let mainViewController = router.getTabBar()
         animateFadeTransition(to: mainViewController)
     }
+    
+    func switchToLogout() {
+        let loginPresenter: ILoginPresenter = LoginPresenter()
+        let loginViewController = LoginViewController(presenter: loginPresenter)
+        let logoutScreen = UINavigationController(rootViewController: loginViewController)
+        animateDismissTransition(to: logoutScreen)
+    }
+    
+    private func animateDismissTransition(to new: UIViewController, completion: (() -> Void)? = nil) {
+        let initialFrame = CGRect(x: -view.bounds.width, y: 0, width: view.bounds.width, height: view.bounds.height)
+        currentViewController.willMove(toParent: nil)
+        new.view.frame = initialFrame
+        addChild(new)
+        transition(from: currentViewController, to: new, duration: 1, options: [], animations: {
+            new.view.frame = self.view.bounds
+        }) { completed in
+            self.currentViewController.removeFromParent()
+            new.didMove(toParent: self)
+            self.currentViewController = new
+            completion?()
+        }
+    }
+    
     private func animateFadeTransition(to new: UIViewController, completion: (() -> Void)? = nil) {
         currentViewController.willMove(toParent: nil)
         addChild(new)
-       transition(from: currentViewController, to: new, duration: 0.5, options: [.transitionCrossDissolve, .curveEaseOut], animations: {
-       }) { completed in
-        self.currentViewController.removeFromParent()
-        new.didMove(toParent: self)
+        transition(from: currentViewController, to: new, duration: 0.5, options: [.transitionCrossDissolve, .curveEaseOut], animations: {
+        }) { completed in
+            self.currentViewController.removeFromParent()
+            new.didMove(toParent: self)
             self.currentViewController = new
             completion?()
-       }
+        }
     }
     
 }

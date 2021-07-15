@@ -19,6 +19,7 @@ class UserProfileViewController: UIViewController, IUserProfileViewController {
     let usernameLabel: UILabel = UILabel()
     let logoutButton: UIButton = UIButton()
     let removeUserButton: UIButton = UIButton()
+    var buttonPressed: Bool = false
     
     init(presenter: IUserProfilePresenter) {
         self.presenter = presenter
@@ -76,6 +77,7 @@ class UserProfileViewController: UIViewController, IUserProfileViewController {
         removeUserButton.backgroundColor = .red
         removeUserButton.layer.borderColor = UIColor.white.cgColor
         removeUserButton.layer.borderWidth = 3
+        removeUserButton.addTarget(self, action: #selector(toggleAnimationButtonColor), for: .touchDown)
         removeUserButton.addTarget(self, action: #selector(removeUser), for: .touchUpInside)
         removeUserButton.snp.makeConstraints { (make) in
             make.leading.equalToSuperview().offset(43)
@@ -86,11 +88,23 @@ class UserProfileViewController: UIViewController, IUserProfileViewController {
     }
     
     @objc func removeUser() {
+        toggleAnimationButtonColor()
         presenter.removeUser()
     }
     
     @objc func logout() {
         presenter.logout()
+    }
+    
+    @objc func toggleAnimationButtonColor() {
+        var animator = UIViewPropertyAnimator()
+        animator = UIViewPropertyAnimator(duration: 0.2, curve: .easeOut, animations: {
+            self.removeUserButton.backgroundColor = self.buttonPressed ? .white : .red
+            self.removeUserButton.layer.borderColor = self.buttonPressed ? UIColor.red.cgColor : UIColor.white.cgColor
+            self.removeUserButton.setTitleColor(self.buttonPressed ? UIColor.red : UIColor.white, for: .highlighted)
+        })
+        buttonPressed = !buttonPressed
+        animator.startAnimation()
     }
     
     func setupData() {

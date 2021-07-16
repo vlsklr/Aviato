@@ -78,6 +78,4 @@ extension FoundFlyghtViewController: IFoundFlyghtViewController {
     func dismissFoundView() {
         self.dismiss(animated: true)
     }
-    
-    
 }

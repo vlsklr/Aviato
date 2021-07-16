@@ -37,7 +37,6 @@ class FoundFlyghtViewController: FavoriteViewController {
         saveButton.layer.borderWidth = 3
         saveButton.addTarget(self, action: #selector(animateButtonAction), for: .touchDown)
         saveButton.addTarget(self, action: #selector(addToFavorite), for: .touchUpInside)
-
         saveButton.snp.makeConstraints { (make) in
             make.top.equalTo(aircraftLabel.snp.bottom).offset(35)
             make.leading.equalToSuperview().offset(43)

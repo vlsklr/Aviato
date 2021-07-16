@@ -15,6 +15,7 @@ class MainViewController: UIViewController {
     private let activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
     let verticalMargins: CGFloat = 16.0
     let presenter: IMainPresenter
+    var searchButtonPressed: Bool = false
     
     init(presenter: IMainPresenter) {
         self.presenter = presenter
@@ -58,7 +59,7 @@ class MainViewController: UIViewController {
         searchButton.setTitleColor(UIColor(red: 0.243, green: 0.776, blue: 1, alpha: 1), for: .normal)
         searchButton.layer.cornerRadius = 25
         searchButton.addTarget(self, action: #selector(search), for: .touchUpInside)
-        searchButton.addTarget(self, action: #selector(anim(button:)), for: .touchDown)
+        searchButton.addTarget(self, action: #selector(toggleAnimationButtonColor(button:)), for: .touchDown)
         searchButton.snp.makeConstraints { (make) in
             make.top.equalTo(searchBar.snp.bottom).offset(10)
             make.centerX.equalToSuperview()
@@ -94,11 +95,7 @@ class MainViewController: UIViewController {
     }
     
     @objc func search() {
-        var animator = UIViewPropertyAnimator()
-        animator = UIViewPropertyAnimator(duration: 0.2, curve: .easeOut, animations: {
-            self.searchButton.backgroundColor = .white
-        })
-        animator.startAnimation()
+        toggleAnimationButtonColor(button: self.searchButton)
         guard let searchBarText = searchBar.text else { return }
         print(searchBarText)
         presenter.findFlyghtInfo(view: self, flyghtNumber: searchBarText)
@@ -107,14 +104,15 @@ class MainViewController: UIViewController {
     @objc func hideKeyboardOnSwipeDown() {
         view.endEditing(true)
     }
-    
-    @objc func anim(button: UIButton) {
+    //Анимированно переключает цвет кнопки при нажатии на нее
+    @objc func toggleAnimationButtonColor(button: UIButton) {
         var animator = UIViewPropertyAnimator()
         animator = UIViewPropertyAnimator(duration: 0.2, curve: .easeOut, animations: {
-            button.backgroundColor = UIColor(red: 0.243, green: 0.776, blue: 1, alpha: 1)
-            button.layer.borderColor = UIColor.white.cgColor
-            button.setTitleColor(.white, for: .highlighted)
+            button.backgroundColor = self.searchButtonPressed ? UIColor(red: 0.243, green: 0.776, blue: 1, alpha: 1) : .white
+            button.layer.borderColor = self.searchButtonPressed ? UIColor.white.cgColor : UIColor(red: 0.243, green: 0.776, blue: 1, alpha: 1).cgColor
+            button.setTitleColor(self.searchButtonPressed ? UIColor.white : UIColor(red: 0.243, green: 0.776, blue: 1, alpha: 1), for: .highlighted)
         })
+        searchButtonPressed = !searchButtonPressed
         animator.startAnimation()
     }
 }

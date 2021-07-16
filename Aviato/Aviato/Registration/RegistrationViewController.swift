@@ -13,6 +13,7 @@ class RegistrationViewController: UIViewController {
     let passwordField: UITextField = UITextField()
     let registerButton: UIButton = UIButton()
     let presenter: IRegistrationPresenter
+    var registerButtonPressed: Bool = false
     
     init(presenter: IRegistrationPresenter) {
         self.presenter = presenter
@@ -68,7 +69,7 @@ class RegistrationViewController: UIViewController {
         registerButton.backgroundColor = UIColor(red: 0.243, green: 0.776, blue: 1, alpha: 1)
         registerButton.layer.borderColor = UIColor.white.cgColor
         registerButton.layer.borderWidth = 3
-        registerButton.addTarget(self, action: #selector(animate), for: .touchDown)
+        registerButton.addTarget(self, action: #selector(toggleAnimationButtonColor(button:)), for: .touchDown)
         registerButton.snp.makeConstraints { (make) in
             make.leading.equalToSuperview().offset(43)
             make.trailing.equalToSuperview().offset(-43)
@@ -77,13 +78,14 @@ class RegistrationViewController: UIViewController {
         }
     }
     
-    @objc func animate() {
+    @objc func toggleAnimationButtonColor(button: UIButton) {
         var animator = UIViewPropertyAnimator()
         animator = UIViewPropertyAnimator(duration: 0.2, curve: .easeOut, animations: {
-            self.registerButton.backgroundColor = .white
-            self.registerButton.layer.borderColor = UIColor(red: 0.243, green: 0.776, blue: 1, alpha: 1).cgColor
-            self.registerButton.setTitleColor(UIColor(red: 0.243, green: 0.776, blue: 1, alpha: 1), for: .highlighted)
+            button.backgroundColor = self.registerButtonPressed ? .white : UIColor(red: 0.243, green: 0.776, blue: 1, alpha: 1)
+            button.layer.borderColor = self.registerButtonPressed ? UIColor(red: 0.243, green: 0.776, blue: 1, alpha: 1).cgColor : UIColor.white.cgColor
+            button.setTitleColor(self.registerButtonPressed ? UIColor(red: 0.243, green: 0.776, blue: 1, alpha: 1) : UIColor.white, for: .highlighted)
         })
+        registerButtonPressed = !registerButtonPressed
         animator.startAnimation()
     }
     

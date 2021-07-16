@@ -20,6 +20,7 @@ class LoginViewController: UIViewController {
     let registerButton: UIButton = UIButton()
     let logoView: UIImageView = UIImageView()
     let presenter: ILoginPresenter
+    var authButtonPressed: Bool = false
     
     init(presenter: ILoginPresenter	) {
         self.presenter = presenter
@@ -87,7 +88,7 @@ class LoginViewController: UIViewController {
     func setupAuthButton() {
         self.view.addSubview(authButton)
         authButton.addTarget(self, action: #selector(authAction), for: .touchUpInside)
-        authButton.addTarget(self, action: #selector(animateButtonAction), for: .touchDown)
+        authButton.addTarget(self, action: #selector(toggleAnimationButtonColor(button:)), for: .touchDown)
         authButton.setTitle("Войти", for: .normal)
         authButton.layer.cornerRadius = 25
         authButton.backgroundColor = UIColor(red: 0.243, green: 0.776, blue: 1, alpha: 1)
@@ -130,23 +131,21 @@ class LoginViewController: UIViewController {
         self.view.addGestureRecognizer(swipeDown)
     }
     
-    @objc func animateButtonAction(button: UIButton) {
+
+    
+    @objc func toggleAnimationButtonColor(button: UIButton) {
         var animator = UIViewPropertyAnimator()
         animator = UIViewPropertyAnimator(duration: 0.2, curve: .easeOut, animations: {
-            button.backgroundColor = .white
-            button.layer.borderColor = UIColor(red: 0.243, green: 0.776, blue: 1, alpha: 1).cgColor
-            button.setTitleColor(UIColor(red: 0.243, green: 0.776, blue: 1, alpha: 1), for: .highlighted)
+            button.backgroundColor = self.authButtonPressed ? .white : UIColor(red: 0.243, green: 0.776, blue: 1, alpha: 1)
+            button.layer.borderColor = self.authButtonPressed ? UIColor(red: 0.243, green: 0.776, blue: 1, alpha: 1).cgColor : UIColor.white.cgColor
+            button.setTitleColor(self.authButtonPressed ? UIColor(red: 0.243, green: 0.776, blue: 1, alpha: 1) : UIColor.white, for: .highlighted)
         })
+        authButtonPressed = !authButtonPressed
         animator.startAnimation()
     }
     
     @objc func authAction() {
-        var animator = UIViewPropertyAnimator()
-        animator = UIViewPropertyAnimator(duration: 0.2, curve: .easeOut, animations: {
-            self.authButton.backgroundColor = UIColor(red: 0.243, green: 0.776, blue: 1, alpha: 1)
-            self.authButton.layer.borderColor = UIColor.white.cgColor
-        })
-        animator.startAnimation()
+        toggleAnimationButtonColor(button: self.authButton)
         guard let username = userNameField.text, let password = passwordField.text else{return}
         presenter.authentificateUser(view: self, username: username, password: password)
     }

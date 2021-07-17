@@ -24,6 +24,7 @@
 		F53171D82695EBD100911C89 /* IMainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F53171D72695EBD100911C89 /* IMainViewController.swift */; };
 		F53251B42677BF0700CA57B6 /* MainRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F53251B32677BF0700CA57B6 /* MainRouter.swift */; };
 		F53251B72677C0F800CA57B6 /* FavoriteFlyghtListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F53251B62677C0F800CA57B6 /* FavoriteFlyghtListViewController.swift */; };
+		F5346B6726A29E0400B04780 /* KeyChainManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5346B6626A29E0400B04780 /* KeyChainManager.swift */; };
 		F53912E4267919BB00EBC14F /* FlyghtViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F53912E3267919BB00EBC14F /* FlyghtViewCell.swift */; };
 		F53912E72679235200EBC14F /* FavoriteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F53912E62679235200EBC14F /* FavoriteViewController.swift */; };
 		F5392EED2677364400866C8F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5392EEC2677364400866C8F /* AppDelegate.swift */; };
@@ -64,6 +65,7 @@
 		F53171D72695EBD100911C89 /* IMainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IMainViewController.swift; sourceTree = "<group>"; };
 		F53251B32677BF0700CA57B6 /* MainRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainRouter.swift; sourceTree = "<group>"; };
 		F53251B62677C0F800CA57B6 /* FavoriteFlyghtListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteFlyghtListViewController.swift; sourceTree = "<group>"; };
+		F5346B6626A29E0400B04780 /* KeyChainManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyChainManager.swift; sourceTree = "<group>"; };
 		F53912E3267919BB00EBC14F /* FlyghtViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlyghtViewCell.swift; sourceTree = "<group>"; };
 		F53912E62679235200EBC14F /* FavoriteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteViewController.swift; sourceTree = "<group>"; };
 		F5392EE92677364400866C8F /* Aviato.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Aviato.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -211,6 +213,7 @@
 			children = (
 				F5392EEC2677364400866C8F /* AppDelegate.swift */,
 				3CEC5BA0267B3FB700059058 /* IAlert.swift */,
+				F5346B6626A29E0400B04780 /* KeyChainManager.swift */,
 			);
 			path = Supporting;
 			sourceTree = "<group>";
@@ -380,6 +383,7 @@
 				3C8858672695766300A134C7 /* RegistrationPresenter.swift in Sources */,
 				3C4C61FD26941E060086E4FE /* UserProfileViewController.swift in Sources */,
 				F5392EED2677364400866C8F /* AppDelegate.swift in Sources */,
+				F5346B6726A29E0400B04780 /* KeyChainManager.swift in Sources */,
 				3C88585E2695715200A134C7 /* LoginPresenter.swift in Sources */,
 				F5392F182677719B00866C8F /* FlyghtViewModel.swift in Sources */,
 				3CF97BD82692DECD0070CC9D /* RegistrationViewController.swift in Sources */,

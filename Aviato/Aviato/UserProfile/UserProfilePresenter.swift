@@ -31,6 +31,7 @@ class UserProfilePresenter: IUserProfilePresenter {
     }
     
     func logout() {
+        KeyChainManager.deleteUserSession()
         AppDelegate.shared.rootViewController.switchToLogout()
     }
     

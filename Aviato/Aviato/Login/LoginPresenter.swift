@@ -20,6 +20,7 @@ class LoginPresenter: ILoginPresenter {
             let user = storageManager.loadUser(username: username, userID: nil)
             if user?.username == username && user?.password == password && user?.userID != nil {
                 self.userID = user!.userID
+                KeyChainManager.saveSessionToKeyChain(userID: userID)
                 AppDelegate.shared.rootViewController.switchToMainScreen(userID: userID)
             }
             else {
@@ -35,6 +36,8 @@ class LoginPresenter: ILoginPresenter {
             view.presentRegisterViewController(view: registrationViewController)
         }
     }
+    
+
     
     func logout() {
         AppDelegate.shared.rootViewController.showLoginScreen()

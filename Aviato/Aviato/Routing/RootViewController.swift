@@ -12,7 +12,13 @@ class RootViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        showLoginScreen()
+        guard let userID = KeyChainManager.readUserSession() else {
+            showLoginScreen()
+            return
+        }
+        showMainScreen(userID: userID)
+
+
     }
     
     func showLoginScreen() {
@@ -26,6 +32,19 @@ class RootViewController: UIViewController {
         currentViewController.view.removeFromSuperview()
         currentViewController.removeFromParent()
         currentViewController = loginViewController
+    }
+    
+    func showMainScreen(userID: UUID) {
+        let router = MainRouter(userID: userID)
+        let mainViewController = router.getTabBar()
+        addChild(mainViewController)
+        mainViewController.view.frame = view.bounds
+        view.addSubview(mainViewController.view)
+        mainViewController.didMove(toParent: self)
+        currentViewController.willMove(toParent: nil)
+        currentViewController.view.removeFromSuperview()
+        currentViewController.removeFromParent()
+        currentViewController = mainViewController
     }
     
     func switchToMainScreen(userID: UUID) {

@@ -11,6 +11,10 @@ import SnapKit
 class RegistrationViewController: UIViewController {
     let usernameField: UITextField = UITextField()
     let passwordField: UITextField = UITextField()
+    let emailField: UITextField = UITextField()
+    let nameField: UITextField = UITextField()
+    let birthDateTextField: UITextField = UITextField()
+    let datePicker = UIDatePicker()
     let registerButton: UIButton = UIButton()
     let presenter: IRegistrationPresenter
     var registerButtonPressed: Bool = false
@@ -29,7 +33,11 @@ class RegistrationViewController: UIViewController {
         view.backgroundColor = UIColor(red: 0.243, green: 0.776, blue: 1, alpha: 1)
         setupUsernameField()
         setupPasswordField()
+        setupEmailField()
+        setupNameField()
+        setupDateField()
         setupRegisterButton()
+
     }
     
     func setupUsernameField() {
@@ -61,6 +69,63 @@ class RegistrationViewController: UIViewController {
         }
     }
     
+    func setupEmailField() {
+        self.view.addSubview(emailField)
+        emailField.backgroundColor = .white
+        emailField.layer.cornerRadius = 25
+        emailField.placeholder = "Email"
+        emailField.textAlignment = .center
+        emailField.snp.makeConstraints { (make) in
+            make.leading.equalToSuperview().offset(43)
+            make.trailing.equalToSuperview().offset(-43)
+            make.top.equalTo(passwordField.snp.bottom).offset(10)
+            make.height.equalTo(50)
+        }
+    }
+    
+    func setupNameField() {
+        self.view.addSubview(nameField)
+        nameField.backgroundColor = .white
+        nameField.layer.cornerRadius = 25
+        nameField.placeholder = "Имя"
+        nameField.textAlignment = .center
+        nameField.snp.makeConstraints { (make) in
+            make.leading.equalToSuperview().offset(43)
+            make.trailing.equalToSuperview().offset(-43)
+            make.top.equalTo(emailField.snp.bottom).offset(10)
+            make.height.equalTo(50)
+        }
+    }
+    
+    func setupDateField() {
+        self.view.addSubview(birthDateTextField)
+        birthDateTextField.inputView = datePicker
+        datePicker.datePickerMode = .date
+        datePicker.locale = Locale(identifier: Locale.preferredLanguages.first!)
+        if #available(iOS 13.4, *) {
+            datePicker.preferredDatePickerStyle = .wheels
+        } else {
+            // Fallback on earlier versions
+        }
+        let toolbar = UIToolbar()
+        toolbar.sizeToFit()
+        let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(donePressed))
+        toolbar.setItems([doneButton], animated: true)
+        
+        birthDateTextField.inputAccessoryView = toolbar
+        birthDateTextField.backgroundColor = .white
+        birthDateTextField.layer.cornerRadius = 25
+        birthDateTextField.placeholder = "Дата рождения"
+        birthDateTextField.textAlignment = .center
+        birthDateTextField.snp.makeConstraints { (make) in
+            make.leading.equalToSuperview().offset(43)
+            make.trailing.equalToSuperview().offset(-43)
+            make.top.equalTo(nameField.snp.bottom).offset(10)
+            make.height.equalTo(50)
+        }
+
+    }
+    
     func setupRegisterButton() {
         self.view.addSubview(registerButton)
         registerButton.addTarget(self, action: #selector(registerUser), for: .touchUpInside)
@@ -73,7 +138,7 @@ class RegistrationViewController: UIViewController {
         registerButton.snp.makeConstraints { (make) in
             make.leading.equalToSuperview().offset(43)
             make.trailing.equalToSuperview().offset(-43)
-            make.top.equalTo(passwordField.snp.bottom).offset(10)
+            make.top.equalTo(birthDateTextField.snp.bottom).offset(10)
             make.height.equalTo(50)
         }
     }
@@ -89,6 +154,15 @@ class RegistrationViewController: UIViewController {
         animator.startAnimation()
     }
     
+    @objc func donePressed() {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = .medium
+        dateFormatter.timeStyle = .none
+        self.birthDateTextField.text = dateFormatter.string(from: datePicker.date)
+        self.view.endEditing(true)
+        
+    }
+    
     @objc func registerUser() {
         var animator = UIViewPropertyAnimator()
         animator = UIViewPropertyAnimator(duration: 0.2, curve: .easeOut, animations: {
@@ -96,11 +170,11 @@ class RegistrationViewController: UIViewController {
             self.registerButton.layer.borderColor = UIColor.white.cgColor
         })
         animator.startAnimation()
-        guard let username = usernameField.text, let password = passwordField.text else {
+        guard let username = usernameField.text, let password = passwordField.text, let name = nameField.text, let email = emailField.text else {
             return
         }
         //При случае спросить нормально ли делать так, что сама View себя закрывает, по результату работы метода презентера или команду на закрытие должен отдать сам презентер
-         presenter.registerUser(view: self, username: username, password: password) 
+        presenter.registerUser(view: self, username: username, password: password, birthDate: datePicker.date, email: email, name: name)
     }
 }
 
@@ -115,7 +189,6 @@ extension RegistrationViewController: IAlert {
 extension RegistrationViewController: IRegistrationViewController {
     func presentSelf() {
         self.present(self, animated: true, completion: nil)
-
     }
     
     func dismissView() {

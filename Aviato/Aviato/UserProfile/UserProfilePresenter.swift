@@ -26,7 +26,7 @@ class UserProfilePresenter: IUserProfilePresenter {
     
     func getUser(userViewController: IUserProfileViewController) {
         let user = storageManager.loadUser(username: nil, userID: userID)
-        userViewController.showUserInfo(userInfo: user ?? UserViewModel(userID: UUID(), username: "", password: ""))
+        userViewController.showUserInfo(userInfo: user ?? UserViewModel(userID: UUID(), username: "", password: "", birthDate: Date(), email: "", name: ""))
         
     }
     

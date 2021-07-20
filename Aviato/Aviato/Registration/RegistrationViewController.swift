@@ -37,11 +37,12 @@ class RegistrationViewController: UIViewController {
         setupNameField()
         setupDateField()
         setupRegisterButton()
-
+        
     }
     
     func setupUsernameField() {
         self.view.addSubview(usernameField)
+        usernameField.addTarget(self, action: #selector(textFieldsChanged), for: .editingChanged)
         usernameField.backgroundColor = .white
         usernameField.layer.cornerRadius = 25
         usernameField.placeholder = "Имя пользователя"
@@ -56,6 +57,7 @@ class RegistrationViewController: UIViewController {
     
     func setupPasswordField() {
         self.view.addSubview(passwordField)
+        passwordField.addTarget(self, action: #selector(textFieldsChanged), for: .editingChanged)
         passwordField.layer.cornerRadius = 25
         passwordField.placeholder = "Пароль"
         passwordField.textAlignment = .center
@@ -71,6 +73,8 @@ class RegistrationViewController: UIViewController {
     
     func setupEmailField() {
         self.view.addSubview(emailField)
+        emailField.addTarget(self, action: #selector(textFieldsChanged), for: .editingChanged)
+        emailField.addTarget(self, action: #selector(validateEmailField), for: .editingChanged)
         emailField.backgroundColor = .white
         emailField.layer.cornerRadius = 25
         emailField.placeholder = "Email"
@@ -85,6 +89,7 @@ class RegistrationViewController: UIViewController {
     
     func setupNameField() {
         self.view.addSubview(nameField)
+        nameField.addTarget(self, action: #selector(textFieldsChanged), for: .editingChanged)
         nameField.backgroundColor = .white
         nameField.layer.cornerRadius = 25
         nameField.placeholder = "Имя"
@@ -99,6 +104,7 @@ class RegistrationViewController: UIViewController {
     
     func setupDateField() {
         self.view.addSubview(birthDateTextField)
+        birthDateTextField.addTarget(self, action: #selector(textFieldsChanged), for: .allEditingEvents)
         birthDateTextField.inputView = datePicker
         datePicker.datePickerMode = .date
         datePicker.locale = Locale(identifier: Locale.preferredLanguages.first!)
@@ -123,17 +129,20 @@ class RegistrationViewController: UIViewController {
             make.top.equalTo(nameField.snp.bottom).offset(10)
             make.height.equalTo(50)
         }
-
+        
     }
     
     func setupRegisterButton() {
         self.view.addSubview(registerButton)
+        registerButton.isEnabled = false
         registerButton.addTarget(self, action: #selector(registerUser), for: .touchUpInside)
         registerButton.setTitle("Зарегистрироваться", for: .normal)
         registerButton.layer.cornerRadius = 25
         registerButton.backgroundColor = UIColor(red: 0.243, green: 0.776, blue: 1, alpha: 1)
-        registerButton.layer.borderColor = UIColor.white.cgColor
+        registerButton.layer.borderColor = UIColor.gray.cgColor
         registerButton.layer.borderWidth = 3
+        registerButton.setTitleColor(.white, for: .normal)
+        registerButton.setTitleColor(.gray, for: .disabled)
         registerButton.addTarget(self, action: #selector(toggleAnimationButtonColor(button:)), for: .touchDown)
         registerButton.snp.makeConstraints { (make) in
             make.leading.equalToSuperview().offset(43)
@@ -141,6 +150,12 @@ class RegistrationViewController: UIViewController {
             make.top.equalTo(birthDateTextField.snp.bottom).offset(10)
             make.height.equalTo(50)
         }
+    }
+    //Проверка email на валидность
+    func isValidEmail(email: String) -> Bool {
+        let emailRegEx = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{1,4}$"
+        let emailTest = NSPredicate(format:"SELF MATCHES[c] %@", emailRegEx)
+        return emailTest.evaluate(with: email)
     }
     
     @objc func toggleAnimationButtonColor(button: UIButton) {
@@ -175,6 +190,32 @@ class RegistrationViewController: UIViewController {
         }
         //При случае спросить нормально ли делать так, что сама View себя закрывает, по результату работы метода презентера или команду на закрытие должен отдать сам презентер
         presenter.registerUser(view: self, username: username, password: password, birthDate: datePicker.date, email: email, name: name)
+    }
+    
+    @objc func textFieldsChanged() {
+        if usernameField.hasText && passwordField.hasText && nameField.hasText && emailField.hasText && birthDateTextField.hasText {
+            if isValidEmail(email: emailField.text!) {
+                registerButton.layer.borderColor = UIColor.white.cgColor
+                registerButton.isEnabled = true
+            } else {
+                registerButton.isEnabled = false
+
+            }
+            
+        } else {
+            registerButton.layer.borderColor = UIColor.gray.cgColor
+            registerButton.isEnabled = false
+        }
+    }
+    
+    @objc func validateEmailField() {
+        if isValidEmail(email: emailField.text ?? "") {
+            emailField.layer.borderWidth = 0
+        } else {
+            emailField.layer.borderWidth = 3
+            emailField.layer.borderColor = UIColor.red.cgColor
+            
+        }
     }
 }
 

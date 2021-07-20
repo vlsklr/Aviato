@@ -28,7 +28,7 @@ class StorageManager: IStorageManager {
             fetchRequest.predicate = NSPredicate(format: "\(#keyPath(User.userID)) = %@", "\(userID)")
         }
         guard let object = try? self.persistentContainer.viewContext.fetch(fetchRequest).first else { return nil }
-        let user: UserViewModel = UserViewModel(userID: object.userID!, username: object.userName!, password: object.password!)
+        let user: UserViewModel = UserViewModel(userID: object.userID ?? UUID(), username: object.userName ?? "empty" , password: object.password ?? "empty", birthDate: object.birthDate ?? Date(), email: object.email ?? "empty", name: object.name ?? "empty")
         return user
     }
     
@@ -38,6 +38,9 @@ class StorageManager: IStorageManager {
             object.userID = user.userID
             object.userName = user.username
             object.password = user.password
+            object.email = user.email
+            object.birthDate = user.birthDate
+            object.name = user.name
             try? context.save()
             //            DispatchQueue.main.asyncAfter(deadline: .now(), execute: { completion() })
         }

@@ -17,6 +17,9 @@ class UserProfileViewController: UIViewController, IUserProfileViewController {
     
     let presenter: IUserProfilePresenter
     let usernameLabel: UILabel = UILabel()
+    let emailLabel: UILabel = UILabel()
+    let nameLabel: UILabel = UILabel()
+    let birthDate: UILabel = UILabel()
     let logoutButton: UIButton = UIButton()
     let removeUserButton: UIButton = UIButton()
     var buttonPressed: Bool = false
@@ -35,6 +38,9 @@ class UserProfileViewController: UIViewController, IUserProfileViewController {
         self.view.backgroundColor = UIColor(red: 0.243, green: 0.776, blue: 1, alpha: 1)
         navigationController?.setNavigationBarHidden(true, animated: false)
         setupUsernameLabel()
+        setupEmailLabel()
+        setupNameLabel()
+        setupBirthDateLabel()
         setupLogoutButton()
         setupRemoveUserButton()
         setupData()
@@ -55,6 +61,56 @@ class UserProfileViewController: UIViewController, IUserProfileViewController {
             make.height.equalTo(50)
         }
     }
+    
+    func setupEmailLabel() {
+        self.view.addSubview(emailLabel)
+        emailLabel.text = "123456"
+        emailLabel.backgroundColor = .white
+        emailLabel.layer.cornerRadius = 25
+        emailLabel.clipsToBounds = true
+        emailLabel.textAlignment = .center
+        emailLabel.numberOfLines = 0
+        emailLabel.snp.makeConstraints { (make) in
+            make.top.equalTo(usernameLabel.snp.bottom).offset(10)
+            make.leading.equalToSuperview().offset(16)
+            make.trailing.equalToSuperview().offset(-16)
+            make.height.equalTo(50)
+        }
+    }
+    
+    func setupNameLabel() {
+        self.view.addSubview(nameLabel)
+        nameLabel.text = "123456"
+        nameLabel.backgroundColor = .white
+        nameLabel.layer.cornerRadius = 25
+        nameLabel.clipsToBounds = true
+        nameLabel.textAlignment = .center
+        nameLabel.numberOfLines = 0
+        nameLabel.snp.makeConstraints { (make) in
+            make.top.equalTo(emailLabel.snp.bottom).offset(10)
+            make.leading.equalToSuperview().offset(16)
+            make.trailing.equalToSuperview().offset(-16)
+            make.height.equalTo(50)
+        }
+    }
+    
+    func setupBirthDateLabel() {
+        self.view.addSubview(birthDate)
+        birthDate.text = "123456"
+        birthDate.backgroundColor = .white
+        birthDate.layer.cornerRadius = 25
+        birthDate.clipsToBounds = true
+        birthDate.textAlignment = .center
+        birthDate.numberOfLines = 0
+        birthDate.snp.makeConstraints { (make) in
+            make.top.equalTo(nameLabel.snp.bottom).offset(10)
+            make.leading.equalToSuperview().offset(16)
+            make.trailing.equalToSuperview().offset(-16)
+            make.height.equalTo(50)
+        }
+    }
+    
+    
     
     func setupLogoutButton() {
         self.view.addSubview(logoutButton)
@@ -113,6 +169,12 @@ class UserProfileViewController: UIViewController, IUserProfileViewController {
     
     func showUserInfo(userInfo: UserViewModel) {
         usernameLabel.text = "Имя пользователя: " + userInfo.username
+        emailLabel.text = "Email: " + userInfo.email
+        nameLabel.text = "Имя: " + userInfo.name
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = .medium
+        dateFormatter.timeStyle = .none
+        birthDate.text = "Дата рождения: " + dateFormatter.string(from: userInfo.birthDate)
         
     }
     

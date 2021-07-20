@@ -11,4 +11,7 @@ struct UserViewModel {
     let userID: UUID
     var username: String
     var password: String
+    var birthDate: Date
+    var email: String
+    var name: String
 }

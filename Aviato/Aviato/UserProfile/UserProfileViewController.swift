@@ -16,6 +16,7 @@ protocol IUserProfileViewController {
 class UserProfileViewController: UIViewController, IUserProfileViewController {
     
     let presenter: IUserProfilePresenter
+    let userPhoto: UIImageView = UIImageView()
     let usernameLabel: UILabel = UILabel()
     let emailLabel: UILabel = UILabel()
     let nameLabel: UILabel = UILabel()
@@ -37,6 +38,7 @@ class UserProfileViewController: UIViewController, IUserProfileViewController {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor(red: 0.243, green: 0.776, blue: 1, alpha: 1)
         navigationController?.setNavigationBarHidden(true, animated: false)
+        setupUserImage()
         setupUsernameLabel()
         setupEmailLabel()
         setupNameLabel()
@@ -44,6 +46,22 @@ class UserProfileViewController: UIViewController, IUserProfileViewController {
         setupLogoutButton()
         setupRemoveUserButton()
         setupData()
+    }
+    
+    func setupUserImage() {
+        self.view.addSubview(userPhoto)
+        userPhoto.backgroundColor = .white
+        //Скругление угло height/2
+        userPhoto.layer.cornerRadius = 125
+        let tapOnImage = UITapGestureRecognizer(target: self, action: #selector(showActionSheet))
+        userPhoto.addGestureRecognizer(tapOnImage)
+        userPhoto.isUserInteractionEnabled = true
+        userPhoto.snp.makeConstraints { (make) in
+            make.top.equalToSuperview().offset(100)
+            make.centerX.equalToSuperview()
+            make.width.equalTo(250)
+            make.height.equalTo(250)
+        }
     }
     
     func setupUsernameLabel() {
@@ -55,7 +73,8 @@ class UserProfileViewController: UIViewController, IUserProfileViewController {
         usernameLabel.textAlignment = .center
         usernameLabel.numberOfLines = 0
         usernameLabel.snp.makeConstraints { (make) in
-            make.top.equalToSuperview().offset(100)
+            //            make.top.equalToSuperview().offset(100)
+            make.top.equalTo(userPhoto.snp.bottom).offset(10)
             make.leading.equalToSuperview().offset(16)
             make.trailing.equalToSuperview().offset(-16)
             make.height.equalTo(50)
@@ -163,6 +182,23 @@ class UserProfileViewController: UIViewController, IUserProfileViewController {
         animator.startAnimation()
     }
     
+    @objc func showActionSheet() {
+        let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        let camera = UIAlertAction(title: "Camera", style: .default) { (_) in
+            self.chooseImagePicker(source: .camera)
+        }
+        let photo = UIAlertAction(title: "Photo", style: .default) { (_) in
+            self.chooseImagePicker(source: .photoLibrary)
+        }
+        let cancel = UIAlertAction(title: "Cancel", style: .cancel)
+        
+        actionSheet.addAction(camera)
+        actionSheet.addAction(photo)
+        actionSheet.addAction(cancel)
+        present(actionSheet,animated: true)
+        
+    }
+    
     func setupData() {
         presenter.getUser(userViewController: self)
     }
@@ -178,4 +214,26 @@ class UserProfileViewController: UIViewController, IUserProfileViewController {
         
     }
     
+}
+
+
+
+extension UserProfileViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate{
+    func chooseImagePicker(source: UIImagePickerController.SourceType) {
+        if UIImagePickerController.isSourceTypeAvailable(source){
+            let imagePicker = UIImagePickerController()
+            imagePicker.delegate = self
+            imagePicker.allowsEditing = true
+            imagePicker.sourceType = source
+            present(imagePicker, animated: true)
+        }
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+                userPhoto.image = info[.editedImage] as? UIImage
+                userPhoto.contentMode = .scaleAspectFill
+                userPhoto.clipsToBounds = true
+//                imageChanged = true
+        dismiss(animated: true)
+    }
 }

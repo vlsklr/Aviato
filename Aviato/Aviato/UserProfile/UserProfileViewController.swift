@@ -21,6 +21,7 @@ class UserProfileViewController: UIViewController {
     let emailLabel: UILabel = UILabel()
     let nameLabel: UILabel = UILabel()
     let birthDate: UILabel = UILabel()
+    let editProfileButton: UIButton = UIButton()
     let logoutButton: UIButton = UIButton()
     let removeUserButton: UIButton = UIButton()
     var buttonPressed: Bool = false
@@ -44,6 +45,7 @@ class UserProfileViewController: UIViewController {
         setupNameLabel()
         setupBirthDateLabel()
         setupLogoutButton()
+        setupEditButton()
         setupRemoveUserButton()
         setupData()
     }
@@ -129,7 +131,18 @@ class UserProfileViewController: UIViewController {
         }
     }
     
-    
+    func setupEditButton() {
+        self.view.addSubview(editProfileButton)
+        editProfileButton.setTitle("Редактировать", for: .normal)
+        editProfileButton.backgroundColor = .clear
+        editProfileButton.addTarget(self, action: #selector(editProfile), for: .touchUpInside)
+        editProfileButton.snp.makeConstraints { (make) in
+            make.leading.equalToSuperview().offset(16)
+            make.top.equalToSuperview().offset(50)
+            make.width.equalTo(100)
+            make.height.equalTo(50)
+        }
+    }
     
     func setupLogoutButton() {
         self.view.addSubview(logoutButton)
@@ -160,6 +173,11 @@ class UserProfileViewController: UIViewController {
             make.bottom.equalToSuperview().offset(-100)
             make.height.equalTo(50)
         }
+    }
+    
+    @objc func editProfile() {
+        presenter.editUser(view: self)
+        
     }
     
     @objc func removeUser() {

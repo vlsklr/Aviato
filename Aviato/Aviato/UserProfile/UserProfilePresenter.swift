@@ -11,6 +11,7 @@ protocol IUserProfilePresenter {
     func logout()
     func getUser(userViewController: IUserProfileViewController)
     func removeUser()
+    func editUser(view: IUserProfileViewController)
     
     
 }

@@ -10,10 +10,10 @@ import SnapKit
 
 protocol IUserProfileViewController {
     func showUserInfo(userInfo: UserViewModel)
-    
+    func showEditUserProfileScreen(view: EditUserProfileViewController)
 }
 
-class UserProfileViewController: UIViewController, IUserProfileViewController {
+class UserProfileViewController: UIViewController {
     
     let presenter: IUserProfilePresenter
     let userPhoto: UIImageView = UIImageView()
@@ -53,9 +53,9 @@ class UserProfileViewController: UIViewController, IUserProfileViewController {
         userPhoto.backgroundColor = .white
         //Скругление угло height/2
         userPhoto.layer.cornerRadius = 125
-        let tapOnImage = UITapGestureRecognizer(target: self, action: #selector(showActionSheet))
-        userPhoto.addGestureRecognizer(tapOnImage)
-        userPhoto.isUserInteractionEnabled = true
+//        let tapOnImage = UITapGestureRecognizer(target: self, action: #selector(showActionSheet))
+//        userPhoto.addGestureRecognizer(tapOnImage)
+//        userPhoto.isUserInteractionEnabled = true
         userPhoto.snp.makeConstraints { (make) in
             make.top.equalToSuperview().offset(100)
             make.centerX.equalToSuperview()
@@ -182,26 +182,16 @@ class UserProfileViewController: UIViewController, IUserProfileViewController {
         animator.startAnimation()
     }
     
-    @objc func showActionSheet() {
-        let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        let camera = UIAlertAction(title: "Camera", style: .default) { (_) in
-            self.chooseImagePicker(source: .camera)
-        }
-        let photo = UIAlertAction(title: "Photo", style: .default) { (_) in
-            self.chooseImagePicker(source: .photoLibrary)
-        }
-        let cancel = UIAlertAction(title: "Cancel", style: .cancel)
-        
-        actionSheet.addAction(camera)
-        actionSheet.addAction(photo)
-        actionSheet.addAction(cancel)
-        present(actionSheet,animated: true)
-        
-    }
+   
     
     func setupData() {
         presenter.getUser(userViewController: self)
     }
+
+    
+}
+
+extension UserProfileViewController: IUserProfileViewController {
     
     func showUserInfo(userInfo: UserViewModel) {
         usernameLabel.text = "Имя пользователя: " + userInfo.username
@@ -214,26 +204,10 @@ class UserProfileViewController: UIViewController, IUserProfileViewController {
         
     }
     
-}
-
-
-
-extension UserProfileViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate{
-    func chooseImagePicker(source: UIImagePickerController.SourceType) {
-        if UIImagePickerController.isSourceTypeAvailable(source){
-            let imagePicker = UIImagePickerController()
-            imagePicker.delegate = self
-            imagePicker.allowsEditing = true
-            imagePicker.sourceType = source
-            present(imagePicker, animated: true)
-        }
-    }
     
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-                userPhoto.image = info[.editedImage] as? UIImage
-                userPhoto.contentMode = .scaleAspectFill
-                userPhoto.clipsToBounds = true
-//                imageChanged = true
-        dismiss(animated: true)
+    func showEditUserProfileScreen(view: EditUserProfileViewController) {
+        present(view, animated: true, completion: nil)
     }
 }
+
+

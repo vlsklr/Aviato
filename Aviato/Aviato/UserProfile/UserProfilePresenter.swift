@@ -40,4 +40,10 @@ class UserProfilePresenter: IUserProfilePresenter {
         logout()
     }
     
+    func editUser(view: IUserProfileViewController) {
+        let presenter: IEditUserProfilePresenter = EditUserProfilePresenter()
+        let viewController: EditUserProfileViewController = EditUserProfileViewController(editPresenter: presenter)
+        view.showEditUserProfileScreen(view: viewController)
+    }
+    
 }

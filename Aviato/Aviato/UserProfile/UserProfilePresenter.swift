@@ -42,7 +42,7 @@ class UserProfilePresenter: IUserProfilePresenter {
     }
     
     func editUser(view: IUserProfileViewController) {
-        let presenter: IEditUserProfilePresenter = EditUserProfilePresenter()
+        let presenter: IEditUserProfilePresenter = EditUserProfilePresenter(userID: self.userID)
         let viewController: EditUserProfileViewController = EditUserProfileViewController(editPresenter: presenter)
         view.showEditUserProfileScreen(view: viewController)
     }

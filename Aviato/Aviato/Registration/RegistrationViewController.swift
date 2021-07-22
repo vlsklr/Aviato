@@ -175,7 +175,6 @@ class RegistrationViewController: UIViewController {
         dateFormatter.timeStyle = .none
         self.birthDateTextField.text = dateFormatter.string(from: datePicker.date)
         self.view.endEditing(true)
-        
     }
     
     @objc func registerUser() {

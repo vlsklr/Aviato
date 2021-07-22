@@ -56,6 +56,25 @@ class StorageManager: IStorageManager {
         try? context.save()
     }
     
+    func updateUser(userID: UUID, userInfo: UserViewModel) {
+        let context = persistentContainer.viewContext
+        do {
+            let fetchRequest: NSFetchRequest<User> = User.fetchRequest()
+            fetchRequest.predicate = NSPredicate(format: "userID = %@", "\(userID)")
+            if let foundUser = try? self.persistentContainer.viewContext.fetch(fetchRequest).first {
+                foundUser.setValue(userInfo.birthDate, forKey: "birthDate")
+                foundUser.setValue(userInfo.name, forKey: "name")
+                foundUser.setValue(userInfo.email, forKey: "email")
+                foundUser.setValue(userInfo.username, forKey: "userName")
+
+            }
+            try context.save()
+        } catch {
+            print("Something wrong in updateUser \(error)")
+        }
+    }
+
+    
     func addFlyght(flyght: FlyghtViewModel) {
         self.persistentContainer.performBackgroundTask { context in
             do {

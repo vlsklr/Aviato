@@ -11,20 +11,14 @@ import Foundation
 
 protocol IEditUserProfilePresenter {
     func removeUser()
-    func editUser()
+    func updateUserInfo(userInfo: UserViewModel)
+    func getUser(userEditingViewController: IEditUserProfileViewController)
 }
 
-class EditUserProfilePresenter: IEditUserProfilePresenter {
-    let storageManager: IStorageManager = StorageManager()
+class EditUserProfilePresenter: UserProfilePresenter, IEditUserProfilePresenter {
     
-    func editUser() {
-        
-    }
-    
-    
-    func logout() {
-        KeyChainManager.deleteUserSession()
-        AppDelegate.shared.rootViewController.switchToLogout()
+    func updateUserInfo(userInfo: UserViewModel) {
+        storageManager.updateUser(userID: userID, userInfo: userInfo)
     }
     
     func removeUser() {
@@ -32,11 +26,9 @@ class EditUserProfilePresenter: IEditUserProfilePresenter {
         logout()
     }
     
-    let userID: UUID
-
-    
-    init(userID: UUID) {
-        self.userID = userID
+    func getUser(userEditingViewController: IEditUserProfileViewController) {
+        let user = storageManager.loadUser(username: nil, userID: userID)
+        userEditingViewController.showUserInfo(userInfo: user ?? UserViewModel(userID: UUID(), username: "", password: "", birthDate: Date(), email: "", name: ""))
     }
     
 }

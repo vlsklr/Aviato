@@ -8,7 +8,7 @@
 import UIKit
 
 protocol IEditUserProfileViewController {
-    
+    func showUserInfo(userInfo: UserViewModel)
 }
 
 class EditUserProfileViewController: UIViewController {
@@ -35,6 +35,10 @@ class EditUserProfileViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func viewDidDisappear(_ animated: Bool) {
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "refresh"), object:nil, userInfo: nil)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor(red: 0.243, green: 0.776, blue: 1, alpha: 1)
@@ -46,6 +50,7 @@ class EditUserProfileViewController: UIViewController {
         setupNameField()
         setupDateField()
         setupRemoveUserButton()
+        editProfilePresenter.getUser(userEditingViewController: self)
         // Do any additional setup after loading the view.
     }
     
@@ -63,6 +68,7 @@ class EditUserProfileViewController: UIViewController {
     
     func setupSaveButton() {
         self.view.addSubview(saveButton)
+        saveButton.addTarget(self, action: #selector(saveAction), for: .touchUpInside)
         saveButton.setTitle("Сохранить", for: .normal)
         saveButton.snp.makeConstraints { (make) in
             make.trailing.equalToSuperview().offset(-16)
@@ -234,9 +240,26 @@ class EditUserProfileViewController: UIViewController {
     @objc func cancelAction() {
         dismiss(animated: true, completion: nil)
     }
+    
+    @objc func saveAction() {
+        let userInfo: UserViewModel = UserViewModel(userID: UUID(), username: usernameField.text!, password: "String", birthDate: datePicker.date, email: emailField.text!, name: nameField.text!)
+        editProfilePresenter.updateUserInfo(userInfo: userInfo)
+        dismiss(animated: true)
+    }
 }
 
 extension EditUserProfileViewController: IEditUserProfileViewController {
+    func showUserInfo(userInfo: UserViewModel) {
+        usernameField.text = userInfo.username
+        nameField.text = userInfo.name
+        emailField.text = userInfo.email
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = .medium
+        dateFormatter.timeStyle = .none
+        self.birthDateTextField.text = dateFormatter.string(from: userInfo.birthDate)
+      
+    }
+    
     
 }
 

@@ -10,9 +10,7 @@ import Foundation
 protocol IUserProfilePresenter {
     func logout()
     func getUser(userViewController: IUserProfileViewController)
-    func removeUser()
     func editUser(view: IUserProfileViewController)
-    
     
 }
 
@@ -36,10 +34,6 @@ class UserProfilePresenter: IUserProfilePresenter {
         AppDelegate.shared.rootViewController.switchToLogout()
     }
     
-    func removeUser() {
-        storageManager.deleteUser(userID: self.userID)
-        logout()
-    }
     
     func editUser(view: IUserProfileViewController) {
         let presenter: IEditUserProfilePresenter = EditUserProfilePresenter(userID: self.userID)

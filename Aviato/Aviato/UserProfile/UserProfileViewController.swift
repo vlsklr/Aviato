@@ -23,7 +23,6 @@ class UserProfileViewController: UIViewController {
     let birthDate: UILabel = UILabel()
     let editProfileButton: UIButton = UIButton()
     let logoutButton: UIButton = UIButton()
-    let removeUserButton: UIButton = UIButton()
     var buttonPressed: Bool = false
     
     init(presenter: IUserProfilePresenter) {
@@ -34,6 +33,7 @@ class UserProfileViewController: UIViewController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -46,8 +46,10 @@ class UserProfileViewController: UIViewController {
         setupBirthDateLabel()
         setupLogoutButton()
         setupEditButton()
-        setupRemoveUserButton()
         setupData()
+        //Для обновления информации во ViewController после редактирования в EditUserProfileViewController
+        NotificationCenter.default.addObserver(self, selector: #selector(UserProfileViewController.setupData), name: NSNotification.Name(rawValue: "refresh"), object: nil)
+
     }
     
     func setupUserImage() {
@@ -55,9 +57,6 @@ class UserProfileViewController: UIViewController {
         userPhoto.backgroundColor = .white
         //Скругление угло height/2
         userPhoto.layer.cornerRadius = 125
-//        let tapOnImage = UITapGestureRecognizer(target: self, action: #selector(showActionSheet))
-//        userPhoto.addGestureRecognizer(tapOnImage)
-//        userPhoto.isUserInteractionEnabled = true
         userPhoto.snp.makeConstraints { (make) in
             make.top.equalToSuperview().offset(100)
             make.centerX.equalToSuperview()
@@ -139,7 +138,7 @@ class UserProfileViewController: UIViewController {
         editProfileButton.snp.makeConstraints { (make) in
             make.leading.equalToSuperview().offset(16)
             make.top.equalToSuperview().offset(50)
-            make.width.equalTo(100)
+            make.width.equalTo(150)
             make.height.equalTo(50)
         }
     }
@@ -158,37 +157,16 @@ class UserProfileViewController: UIViewController {
         }
     }
     
-    func setupRemoveUserButton() {
-        self.view.addSubview(removeUserButton)
-        removeUserButton.setTitle("Удалить пользователя", for: .normal)
-        removeUserButton.layer.cornerRadius = 25
-        removeUserButton.backgroundColor = .red
-        removeUserButton.layer.borderColor = UIColor.white.cgColor
-        removeUserButton.layer.borderWidth = 3
-        removeUserButton.addTarget(self, action: #selector(toggleAnimationButtonColor(button: )), for: .touchDown)
-        removeUserButton.addTarget(self, action: #selector(removeUser), for: .touchUpInside)
-        removeUserButton.snp.makeConstraints { (make) in
-            make.leading.equalToSuperview().offset(43)
-            make.trailing.equalToSuperview().offset(-43)
-            make.bottom.equalToSuperview().offset(-100)
-            make.height.equalTo(50)
-        }
-    }
-    
     @objc func editProfile() {
         presenter.editUser(view: self)
         
-    }
-    
-    @objc func removeUser() {
-        toggleAnimationButtonColor(button: self.removeUserButton)
-        presenter.removeUser()
     }
     
     @objc func logout() {
         presenter.logout()
     }
     
+    //Возможно переделаю для других кнопок
     @objc func toggleAnimationButtonColor(button: UIButton) {
         var animator = UIViewPropertyAnimator()
         animator = UIViewPropertyAnimator(duration: 0.2, curve: .easeOut, animations: {
@@ -200,12 +178,11 @@ class UserProfileViewController: UIViewController {
         animator.startAnimation()
     }
     
-   
     
-    func setupData() {
+    @objc func setupData() {
         presenter.getUser(userViewController: self)
     }
-
+    
     
 }
 

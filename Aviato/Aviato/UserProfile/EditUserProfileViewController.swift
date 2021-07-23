@@ -7,7 +7,7 @@
 
 import UIKit
 
-protocol IEditUserProfileViewController {
+protocol IEditUserProfileViewController: IAlert {
     func showUserInfo(userInfo: UserViewModel)
 }
 
@@ -51,7 +51,6 @@ class EditUserProfileViewController: UIViewController {
         setupDateField()
         setupRemoveUserButton()
         editProfilePresenter.getUser(userEditingViewController: self)
-        // Do any additional setup after loading the view.
     }
     
     func setupCancelButton() {
@@ -68,6 +67,8 @@ class EditUserProfileViewController: UIViewController {
     
     func setupSaveButton() {
         self.view.addSubview(saveButton)
+        saveButton.isEnabled = false
+        saveButton.setTitleColor(.gray, for: .normal)
         saveButton.addTarget(self, action: #selector(saveAction), for: .touchUpInside)
         saveButton.setTitle("Сохранить", for: .normal)
         saveButton.snp.makeConstraints { (make) in
@@ -96,7 +97,7 @@ class EditUserProfileViewController: UIViewController {
     
     func setupUsernameField() {
         self.view.addSubview(usernameField)
-        //        usernameField.addTarget(self, action: #selector(textFieldsChanged), for: .editingChanged)
+        usernameField.addTarget(self, action: #selector(textFieldsChanged), for: .editingChanged)
         usernameField.inputAccessoryView = setupDoneToolbar(tag: 0)
         usernameField.backgroundColor = .white
         usernameField.layer.cornerRadius = 25
@@ -112,8 +113,8 @@ class EditUserProfileViewController: UIViewController {
     
     func setupEmailField() {
         self.view.addSubview(emailField)
-        //        emailField.addTarget(self, action: #selector(textFieldsChanged), for: .editingChanged)
-        //        emailField.addTarget(self, action: #selector(validateEmailField), for: .editingChanged)
+        emailField.addTarget(self, action: #selector(textFieldsChanged), for: .editingChanged)
+        emailField.addTarget(self, action: #selector(validateEmailField), for: .editingChanged)
         emailField.inputAccessoryView = setupDoneToolbar(tag: 0)
         emailField.backgroundColor = .white
         emailField.layer.cornerRadius = 25
@@ -129,7 +130,7 @@ class EditUserProfileViewController: UIViewController {
     
     func setupNameField() {
         self.view.addSubview(nameField)
-        //        nameField.addTarget(self, action: #selector(textFieldsChanged), for: .editingChanged)
+        nameField.addTarget(self, action: #selector(textFieldsChanged), for: .editingChanged)
         nameField.backgroundColor = .white
         nameField.layer.cornerRadius = 25
         nameField.placeholder = "Имя"
@@ -145,7 +146,7 @@ class EditUserProfileViewController: UIViewController {
     
     func setupDateField() {
         self.view.addSubview(birthDateTextField)
-        //        birthDateTextField.addTarget(self, action: #selector(textFieldsChanged), for: .allEditingEvents)
+        birthDateTextField.addTarget(self, action: #selector(textFieldsChanged), for: .allEditingEvents)
         birthDateTextField.inputView = datePicker
         datePicker.datePickerMode = .date
         datePicker.locale = Locale(identifier: Locale.preferredLanguages.first!)
@@ -184,7 +185,6 @@ class EditUserProfileViewController: UIViewController {
         }
     }
     
-    
     func setupDoneToolbar(tag: Int) -> UIToolbar {
         let toolbar = UIToolbar()
         toolbar.sizeToFit()
@@ -192,6 +192,13 @@ class EditUserProfileViewController: UIViewController {
         doneButton.tag = 1
         toolbar.setItems([doneButton], animated: true)
         return toolbar
+    }
+    
+    //Проверка email на валидность
+    func isValidEmail(email: String) -> Bool {
+        let emailRegEx = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{1,4}$"
+        let emailTest = NSPredicate(format:"SELF MATCHES[c] %@", emailRegEx)
+        return emailTest.evaluate(with: email)
     }
     
     @objc func removeUser() {
@@ -242,9 +249,39 @@ class EditUserProfileViewController: UIViewController {
     }
     
     @objc func saveAction() {
-        let userInfo: UserViewModel = UserViewModel(userID: UUID(), username: usernameField.text!, password: "String", birthDate: datePicker.date, email: emailField.text!, name: nameField.text!)
-        editProfilePresenter.updateUserInfo(userInfo: userInfo)
-        dismiss(animated: true)
+        guard let username = usernameField.text, let email = emailField.text, let name = nameField.text else {
+            return
+        }
+        let userInfo: UserViewModel = UserViewModel(userID: UUID(), username: username, password: "String", birthDate: datePicker.date, email: email, name: name)
+        if editProfilePresenter.updateUserInfo(view: self, userInfo: userInfo) {
+            dismiss(animated: true)
+        }
+    }
+    
+    @objc func textFieldsChanged() {
+        if usernameField.hasText && (passwordField.hasText || nameField.hasText || emailField.hasText || birthDateTextField.hasText) {
+            if isValidEmail(email: emailField.text!) {
+                saveButton.setTitleColor(.white, for: .normal)
+                saveButton.isEnabled = true
+            } else {
+                saveButton.isEnabled = false
+                
+            }
+            
+        } else {
+            saveButton.setTitleColor(.gray, for: .normal)
+            saveButton.isEnabled = false
+        }
+    }
+    
+    @objc func validateEmailField() {
+        if isValidEmail(email: emailField.text ?? "") {
+            emailField.layer.borderWidth = 0
+        } else {
+            emailField.layer.borderWidth = 3
+            emailField.layer.borderColor = UIColor.red.cgColor
+            
+        }
     }
 }
 
@@ -257,10 +294,15 @@ extension EditUserProfileViewController: IEditUserProfileViewController {
         dateFormatter.dateStyle = .medium
         dateFormatter.timeStyle = .none
         self.birthDateTextField.text = dateFormatter.string(from: userInfo.birthDate)
-      
     }
-    
-    
+}
+
+extension EditUserProfileViewController: IAlert {
+    func showAlert(message: String) {
+        let alert = UIAlertController(title: "Ошибка", message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "ОК", style: .default))
+        self.present(alert, animated: true)
+    }
 }
 
 extension EditUserProfileViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate{

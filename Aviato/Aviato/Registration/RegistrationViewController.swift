@@ -178,12 +178,7 @@ class RegistrationViewController: UIViewController {
     }
     
     @objc func registerUser() {
-        var animator = UIViewPropertyAnimator()
-        animator = UIViewPropertyAnimator(duration: 0.2, curve: .easeOut, animations: {
-            self.registerButton.backgroundColor = UIColor(red: 0.243, green: 0.776, blue: 1, alpha: 1)
-            self.registerButton.layer.borderColor = UIColor.white.cgColor
-        })
-        animator.startAnimation()
+        toggleAnimationButtonColor(button: self.registerButton)
         guard let username = usernameField.text, let password = passwordField.text, let name = nameField.text, let email = emailField.text else {
             return
         }

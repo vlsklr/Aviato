@@ -14,4 +14,5 @@ struct UserViewModel {
     var birthDate: Date
     var email: String
     var name: String
+    var avatarPath: String
 }

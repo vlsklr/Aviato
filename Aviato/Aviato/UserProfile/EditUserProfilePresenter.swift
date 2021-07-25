@@ -30,8 +30,6 @@ class EditUserProfilePresenter: UserProfilePresenter, IEditUserProfilePresenter 
         } else {
             view.showAlert(message: "Такой пользователь уже существует")
             return false
-            
-            //            print("Такой пользователь уже существует")
         }
     }
     
@@ -50,7 +48,7 @@ class EditUserProfilePresenter: UserProfilePresenter, IEditUserProfilePresenter 
             let path = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
             let url = path.appendingPathComponent(fileName).appendingPathExtension("png")
             do {
-            try data.write(to: url)
+                try data.write(to: url)
             } catch {
                 print(error)
             }

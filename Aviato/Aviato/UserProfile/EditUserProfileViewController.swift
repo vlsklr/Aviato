@@ -25,6 +25,7 @@ class EditUserProfileViewController: UIViewController {
     let removeUserButton: UIButton = UIButton()
     let editProfilePresenter: IEditUserProfilePresenter
     var buttonPressed: Bool = false
+    var imageChanged: Bool = false
     
     init(editPresenter: IEditUserProfilePresenter) {
         self.editProfilePresenter = editPresenter
@@ -84,6 +85,7 @@ class EditUserProfileViewController: UIViewController {
         userPhoto.backgroundColor = .white
         //Скругление угло height/2
         userPhoto.layer.cornerRadius = 125
+        userPhoto.clipsToBounds = true
         let tapOnImage = UITapGestureRecognizer(target: self, action: #selector(showActionSheet))
         userPhoto.addGestureRecognizer(tapOnImage)
         userPhoto.isUserInteractionEnabled = true
@@ -259,7 +261,7 @@ class EditUserProfileViewController: UIViewController {
     }
     
     @objc func textFieldsChanged() {
-        if usernameField.hasText && (passwordField.hasText || nameField.hasText || emailField.hasText || birthDateTextField.hasText) {
+        if usernameField.hasText && (passwordField.hasText || nameField.hasText || emailField.hasText || birthDateTextField.hasText || imageChanged) {
             if isValidEmail(email: emailField.text!) {
                 saveButton.setTitleColor(.white, for: .normal)
                 saveButton.isEnabled = true
@@ -294,6 +296,10 @@ extension EditUserProfileViewController: IEditUserProfileViewController {
         dateFormatter.dateStyle = .medium
         dateFormatter.timeStyle = .none
         self.birthDateTextField.text = dateFormatter.string(from: userInfo.birthDate)
+        guard let path = URL(string: userInfo.avatarPath), let img = try? Data(contentsOf: path) else {
+            return
+        }
+        userPhoto.image = UIImage.init(data: img)
     }
 }
 
@@ -320,7 +326,8 @@ extension EditUserProfileViewController: UIImagePickerControllerDelegate, UINavi
         userPhoto.image = info[.editedImage] as? UIImage
         userPhoto.contentMode = .scaleAspectFill
         userPhoto.clipsToBounds = true
-        //                imageChanged = true
+        imageChanged = true
+        textFieldsChanged()
         dismiss(animated: true)
     }
 }

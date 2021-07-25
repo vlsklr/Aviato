@@ -57,6 +57,7 @@ class UserProfileViewController: UIViewController {
         userPhoto.backgroundColor = .white
         //Скругление угло height/2
         userPhoto.layer.cornerRadius = 125
+        userPhoto.clipsToBounds = true
         userPhoto.snp.makeConstraints { (make) in
             make.top.equalToSuperview().offset(100)
             make.centerX.equalToSuperview()
@@ -187,7 +188,6 @@ class UserProfileViewController: UIViewController {
 }
 
 extension UserProfileViewController: IUserProfileViewController {
-    
     func showUserInfo(userInfo: UserViewModel) {
         usernameLabel.text = "Имя пользователя: " + userInfo.username
         emailLabel.text = "Email: " + userInfo.email
@@ -196,8 +196,11 @@ extension UserProfileViewController: IUserProfileViewController {
         dateFormatter.dateStyle = .medium
         dateFormatter.timeStyle = .none
         birthDate.text = "Дата рождения: " + dateFormatter.string(from: userInfo.birthDate)
-        let img = try? Data(contentsOf: URL(string: userInfo.avatarPath)!)
-        print("11")
+        guard let path = URL(string: userInfo.avatarPath), let img = try? Data(contentsOf: path) else {
+            return
+        }
+        userPhoto.image = UIImage.init(data: img)
+
         
     }
     

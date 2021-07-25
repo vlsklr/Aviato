@@ -52,6 +52,13 @@ class StorageManager: IStorageManager {
         let fetchRequest: NSFetchRequest<User> = User.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "\(#keyPath(User.userID)) = %@", "\(userID)")
         if let object = try? context.fetch(fetchRequest).first {
+            //Удаляет аватар, если он есть 
+            if FileManager.default.fileExists(atPath: object.avatarPath ?? "") {
+                // Delete file
+                try? FileManager.default.removeItem(atPath: object.avatarPath ?? "")
+            } else {
+                print("File does not exist")
+            }
             context.delete(object)
         }
         try? context.save()
@@ -68,14 +75,14 @@ class StorageManager: IStorageManager {
                 foundUser.setValue(userInfo.email, forKey: "email")
                 foundUser.setValue(userInfo.username, forKey: "userName")
                 foundUser.setValue(userInfo.avatarPath, forKey: "avatarPath")
-
+                
             }
             try context.save()
         } catch {
             print("Something wrong in updateUser \(error)")
         }
     }
-
+    
     
     func addFlyght(flyght: FlyghtViewModel) {
         self.persistentContainer.performBackgroundTask { context in

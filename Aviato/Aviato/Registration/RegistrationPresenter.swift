@@ -22,7 +22,7 @@ class RegistrationPresenter: IRegistrationPresenter {
             view.showAlert(message: "Пользователь \(user.username) уже существует")
         }
         else {
-            let user = UserViewModel(userID: UUID(), username: username, password: password, birthDate: birthDate, email: email, name: name)
+            let user = UserViewModel(userID: UUID(), username: username, password: password, birthDate: birthDate, email: email, name: name, avatarPath: "")
             storageManager.addUser(user: user)
             view.dismissView()
         }

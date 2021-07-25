@@ -28,7 +28,7 @@ class StorageManager: IStorageManager {
             fetchRequest.predicate = NSPredicate(format: "\(#keyPath(User.userID)) = %@", "\(userID)")
         }
         guard let object = try? self.persistentContainer.viewContext.fetch(fetchRequest).first else { return nil }
-        let user: UserViewModel = UserViewModel(userID: object.userID ?? UUID(), username: object.userName ?? "empty" , password: object.password ?? "empty", birthDate: object.birthDate ?? Date(), email: object.email ?? "empty", name: object.name ?? "empty")
+        let user: UserViewModel = UserViewModel(userID: object.userID ?? UUID(), username: object.userName ?? "empty" , password: object.password ?? "empty", birthDate: object.birthDate ?? Date(), email: object.email ?? "empty", name: object.name ?? "empty", avatarPath: object.avatarPath ?? "")
         return user
     }
     
@@ -41,6 +41,7 @@ class StorageManager: IStorageManager {
             object.email = user.email
             object.birthDate = user.birthDate
             object.name = user.name
+            object.avatarPath = user.avatarPath
             try? context.save()
             //            DispatchQueue.main.asyncAfter(deadline: .now(), execute: { completion() })
         }
@@ -51,10 +52,37 @@ class StorageManager: IStorageManager {
         let fetchRequest: NSFetchRequest<User> = User.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "\(#keyPath(User.userID)) = %@", "\(userID)")
         if let object = try? context.fetch(fetchRequest).first {
+            //Удаляет аватар, если он есть 
+            if FileManager.default.fileExists(atPath: object.avatarPath ?? "") {
+                // Delete file
+                try? FileManager.default.removeItem(atPath: object.avatarPath ?? "")
+            } else {
+                print("File does not exist")
+            }
             context.delete(object)
         }
         try? context.save()
     }
+    
+    func updateUser(userID: UUID, userInfo: UserViewModel) {
+        let context = persistentContainer.viewContext
+        do {
+            let fetchRequest: NSFetchRequest<User> = User.fetchRequest()
+            fetchRequest.predicate = NSPredicate(format: "userID = %@", "\(userID)")
+            if let foundUser = try? self.persistentContainer.viewContext.fetch(fetchRequest).first {
+                foundUser.setValue(userInfo.birthDate, forKey: "birthDate")
+                foundUser.setValue(userInfo.name, forKey: "name")
+                foundUser.setValue(userInfo.email, forKey: "email")
+                foundUser.setValue(userInfo.username, forKey: "userName")
+                foundUser.setValue(userInfo.avatarPath, forKey: "avatarPath")
+                
+            }
+            try context.save()
+        } catch {
+            print("Something wrong in updateUser \(error)")
+        }
+    }
+    
     
     func addFlyght(flyght: FlyghtViewModel) {
         self.persistentContainer.performBackgroundTask { context in

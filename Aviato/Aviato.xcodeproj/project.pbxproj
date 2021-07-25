@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3C263CFD26A7E78100F491EC /* EditUserProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C263CFC26A7E78100F491EC /* EditUserProfileViewController.swift */; };
+		3C263D0026A7E7B600F491EC /* EditUserProfilePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C263CFF26A7E7B600F491EC /* EditUserProfilePresenter.swift */; };
 		3C4C61FD26941E060086E4FE /* UserProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C4C61FC26941E060086E4FE /* UserProfileViewController.swift */; };
 		3C74DA102696F9FB00779D00 /* FoundFlyghtPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C74DA0F2696F9FB00779D00 /* FoundFlyghtPresenter.swift */; };
 		3C74DA18269711BD00779D00 /* FavoriteFlyghtsListPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C74DA17269711BD00779D00 /* FavoriteFlyghtsListPresenter.swift */; };
@@ -46,6 +48,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3C263CFC26A7E78100F491EC /* EditUserProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditUserProfileViewController.swift; sourceTree = "<group>"; };
+		3C263CFF26A7E7B600F491EC /* EditUserProfilePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditUserProfilePresenter.swift; sourceTree = "<group>"; };
 		3C4C61FC26941E060086E4FE /* UserProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileViewController.swift; sourceTree = "<group>"; };
 		3C74DA0F2696F9FB00779D00 /* FoundFlyghtPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoundFlyghtPresenter.swift; sourceTree = "<group>"; };
 		3C74DA17269711BD00779D00 /* FavoriteFlyghtsListPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteFlyghtsListPresenter.swift; sourceTree = "<group>"; };
@@ -261,7 +265,9 @@
 			isa = PBXGroup;
 			children = (
 				3C4C61FC26941E060086E4FE /* UserProfileViewController.swift */,
+				3C263CFC26A7E78100F491EC /* EditUserProfileViewController.swift */,
 				F55A4627269B31BD00A3B352 /* UserProfilePresenter.swift */,
+				3C263CFF26A7E7B600F491EC /* EditUserProfilePresenter.swift */,
 			);
 			path = UserProfile;
 			sourceTree = "<group>";
@@ -384,6 +390,7 @@
 				3C4C61FD26941E060086E4FE /* UserProfileViewController.swift in Sources */,
 				F5392EED2677364400866C8F /* AppDelegate.swift in Sources */,
 				F5346B6726A29E0400B04780 /* KeyChainManager.swift in Sources */,
+				3C263CFD26A7E78100F491EC /* EditUserProfileViewController.swift in Sources */,
 				3C88585E2695715200A134C7 /* LoginPresenter.swift in Sources */,
 				F5392F182677719B00866C8F /* FlyghtViewModel.swift in Sources */,
 				3CF97BD82692DECD0070CC9D /* RegistrationViewController.swift in Sources */,
@@ -392,6 +399,7 @@
 				F53912E72679235200EBC14F /* FavoriteViewController.swift in Sources */,
 				F539A4D6267A8AB000AF0BCB /* IFavoriteFlyghtViewController.swift in Sources */,
 				3C885862269571AA00A134C7 /* ILoginPresenter.swift in Sources */,
+				3C263D0026A7E7B600F491EC /* EditUserProfilePresenter.swift in Sources */,
 				F55A4628269B31BD00A3B352 /* UserProfilePresenter.swift in Sources */,
 				3C7F58DF2678973B001C1193 /* FoundFlyghtViewController.swift in Sources */,
 				3C74DA18269711BD00779D00 /* FavoriteFlyghtsListPresenter.swift in Sources */,

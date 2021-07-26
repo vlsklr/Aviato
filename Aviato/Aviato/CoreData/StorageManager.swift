@@ -52,7 +52,7 @@ class StorageManager: IStorageManager {
         let fetchRequest: NSFetchRequest<User> = User.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "\(#keyPath(User.userID)) = %@", "\(userID)")
         if let object = try? context.fetch(fetchRequest).first {
-            //Удаляет аватар, если он есть 
+            //Удаляет аватар, если он есть
             if FileManager.default.fileExists(atPath: object.avatarPath ?? "") {
                 // Delete file
                 try? FileManager.default.removeItem(atPath: object.avatarPath ?? "")

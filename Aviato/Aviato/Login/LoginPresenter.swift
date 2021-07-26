@@ -16,9 +16,10 @@ class LoginPresenter: ILoginPresenter {
     func authentificateUser(view: IAlert,username: String, password: String) {
         if username.isEmpty || password.isEmpty {
             view.showAlert(message: "Введите данные")
-        }else {
+        } else {
             let user = storageManager.loadUser(username: username, userID: nil)
-            if user?.username == username && user?.password == password && user?.userID != nil {
+            let hashedPassword = Crypto.getHash(inputString: username + password)
+            if user?.username == username && user?.password == hashedPassword && user?.userID != nil {
                 self.userID = user!.userID
                 KeyChainManager.saveSessionToKeyChain(userID: userID)
                 AppDelegate.shared.rootViewController.switchToMainScreen(userID: userID)
@@ -28,6 +29,7 @@ class LoginPresenter: ILoginPresenter {
             }
         }
     }
+    
     // Метод создает экземпляр ViewController экрана регистрации и говорит вызвавшему ViewController отобразить этот ViewController
     func registerUser(view: IloginViewController) {
         let registrationPresenter: IRegistrationPresenter = RegistrationPresenter()
@@ -37,11 +39,7 @@ class LoginPresenter: ILoginPresenter {
         }
     }
     
-
-    
     func logout() {
         AppDelegate.shared.rootViewController.showLoginScreen()
     }
-    
-    
 }

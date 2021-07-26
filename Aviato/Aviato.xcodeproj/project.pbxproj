@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3C1B706326AEAF0F00BC1DA3 /* Crypto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C1B706226AEAF0F00BC1DA3 /* Crypto.swift */; };
 		3C263CFD26A7E78100F491EC /* EditUserProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C263CFC26A7E78100F491EC /* EditUserProfileViewController.swift */; };
 		3C263D0026A7E7B600F491EC /* EditUserProfilePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C263CFF26A7E7B600F491EC /* EditUserProfilePresenter.swift */; };
 		3C4C61FD26941E060086E4FE /* UserProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C4C61FC26941E060086E4FE /* UserProfileViewController.swift */; };
@@ -48,6 +49,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3C1B706226AEAF0F00BC1DA3 /* Crypto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Crypto.swift; sourceTree = "<group>"; };
 		3C263CFC26A7E78100F491EC /* EditUserProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditUserProfileViewController.swift; sourceTree = "<group>"; };
 		3C263CFF26A7E7B600F491EC /* EditUserProfilePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditUserProfilePresenter.swift; sourceTree = "<group>"; };
 		3C4C61FC26941E060086E4FE /* UserProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileViewController.swift; sourceTree = "<group>"; };
@@ -218,6 +220,7 @@
 				F5392EEC2677364400866C8F /* AppDelegate.swift */,
 				3CEC5BA0267B3FB700059058 /* IAlert.swift */,
 				F5346B6626A29E0400B04780 /* KeyChainManager.swift */,
+				3C1B706226AEAF0F00BC1DA3 /* Crypto.swift */,
 			);
 			path = Supporting;
 			sourceTree = "<group>";
@@ -397,6 +400,7 @@
 				F53912E4267919BB00EBC14F /* FlyghtViewCell.swift in Sources */,
 				3C88586B2695786600A134C7 /* IRegistrationViewController.swift in Sources */,
 				F53912E72679235200EBC14F /* FavoriteViewController.swift in Sources */,
+				3C1B706326AEAF0F00BC1DA3 /* Crypto.swift in Sources */,
 				F539A4D6267A8AB000AF0BCB /* IFavoriteFlyghtViewController.swift in Sources */,
 				3C885862269571AA00A134C7 /* ILoginPresenter.swift in Sources */,
 				3C263D0026A7E7B600F491EC /* EditUserProfilePresenter.swift in Sources */,

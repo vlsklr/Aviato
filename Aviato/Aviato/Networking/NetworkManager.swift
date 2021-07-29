@@ -24,6 +24,11 @@ struct Airport: Decodable {
 
 struct Aircraft: Decodable {
     let model: String
+    let image: Image
+}
+
+struct Image: Decodable {
+    let url: String
 }
 
 struct Airline: Decodable {
@@ -51,7 +56,7 @@ class NetworkManager: INetworkManager {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
         let dateString = dateFormatter.string(from: Date())
-        guard let url = URL(string: "https://aerodatabox.p.rapidapi.com/flights/number/\(flyghtNumber))/\(dateString)?withAircraftImage=false&withLocation=false") else { return }
+        guard let url = URL(string: "https://aerodatabox.p.rapidapi.com/flights/number/\(flyghtNumber))/\(dateString)?withAircraftImage=true&withLocation=true") else { return }
         let request = NSMutableURLRequest(url: url, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 10.0)
         request.httpMethod = "GET"
         request.allHTTPHeaderFields = headers

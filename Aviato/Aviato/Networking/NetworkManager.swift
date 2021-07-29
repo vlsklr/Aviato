@@ -74,10 +74,6 @@ class NetworkManager: INetworkManager {
                         if let result: [FlyghtInfo] = try? JSONDecoder().decode([FlyghtInfo].self, from: data) {
                             if let flyghtInfo = result.last {
                                 flyght = flyghtInfo
-                                
-                                print(self.loadAircraftImage(url: flyghtInfo.aircraft.image.url))
-                                
-                                
                                 completion(.success(flyght!))
                                 print(flyghtInfo.departure.airport.name)
                             }
@@ -90,11 +86,10 @@ class NetworkManager: INetworkManager {
             }
         }).resume()
     }
-    func loadAircraftImage(url: String) -> UIImage {
+    func loadAircraftImage(url: String, completion: @escaping (Data) -> Void) {
         AF.request(url).response { response in
-            print(response.response)
+            completion(response.data ?? Data())
         }
-        return UIImage()
     }
 }
 

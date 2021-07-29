@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Alamofire
 
 struct Departure: Decodable {
     let scheduledTimeUtc: String
@@ -73,6 +74,10 @@ class NetworkManager: INetworkManager {
                         if let result: [FlyghtInfo] = try? JSONDecoder().decode([FlyghtInfo].self, from: data) {
                             if let flyghtInfo = result.last {
                                 flyght = flyghtInfo
+                                
+                                print(self.loadAircraftImage(url: flyghtInfo.aircraft.image.url))
+                                
+                                
                                 completion(.success(flyght!))
                                 print(flyghtInfo.departure.airport.name)
                             }
@@ -84,6 +89,12 @@ class NetworkManager: INetworkManager {
                 }
             }
         }).resume()
+    }
+    func loadAircraftImage(url: String) -> UIImage {
+        AF.request(url).response { response in
+            print(response.response)
+        }
+        return UIImage()
     }
 }
 

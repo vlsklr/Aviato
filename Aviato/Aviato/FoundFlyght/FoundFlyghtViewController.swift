@@ -11,10 +11,11 @@ import SnapKit
 class FoundFlyghtViewController: FavoriteViewController {
     
     let saveButton: UIButton = UIButton()
+    let aircraftImage: UIImageView = UIImageView()
     let presenter: IFoundFlyghtPresenter
     var saveButtonPressed: Bool = false
     
-    init(flyghtViewInfo: FlyghtViewModel, presenter: IFoundFlyghtPresenter) { //}, presenter: IPresenter) {
+    init(flyghtViewInfo: FlyghtViewModel, presenter: IFoundFlyghtPresenter) {
         self.presenter = presenter
         super.init(flyghtViewInfo: flyghtViewInfo)
     }
@@ -25,7 +26,9 @@ class FoundFlyghtViewController: FavoriteViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupAircraftImageView()
         setupButton()
+        
     }
     
     func setupButton() {
@@ -39,10 +42,34 @@ class FoundFlyghtViewController: FavoriteViewController {
         saveButton.addTarget(self, action: #selector(toggleAnimationButtonColor(button:)), for: .touchDown)
         saveButton.addTarget(self, action: #selector(addToFavorite), for: .touchUpInside)
         saveButton.snp.makeConstraints { (make) in
-            make.top.equalTo(aircraftLabel.snp.bottom).offset(35)
+//            if aircraftImage.snp.bottom != nil {
+            make.top.equalTo(aircraftImage.snp.bottom).offset(35)
+//            } else {
+//                make.top.equalTo(aircraftLabel.snp.bottom).offset(35)
+//            }
+//            make.bottom.equalToSuperview().offset(-25)
             make.leading.equalToSuperview().offset(43)
             make.height.equalTo(50)
         }
+    }
+    
+    func setupAircraftImageView() {
+        self.scrollViewContainer.addArrangedSubview(aircraftImage)
+        aircraftImage.backgroundColor = .white
+//        aircraftImage.layer.cornerRadius = 125
+        aircraftImage.layer.cornerRadius = 25
+             aircraftImage.layer.maskedCorners = [.layerMaxXMaxYCorner, .layerMinXMaxYCorner]
+        aircraftImage.clipsToBounds = true
+        aircraftImage.contentMode = .scaleAspectFit
+        aircraftImage.snp.makeConstraints { (make) in
+            make.top.equalTo(aircraftLabel.snp.bottom)
+            make.leading.equalToSuperview().offset(43)
+            make.width.equalTo(250)
+            make.height.equalTo(250)
+        }
+        //увеличиваем scrollView на высоту картинки
+        scrollView.contentSize = CGSize(width: view.bounds.width, height: view.bounds.height + 250)
+
     }
     
     @objc func addToFavorite() {
@@ -71,6 +98,13 @@ extension FoundFlyghtViewController: IAlert {
 }
 
 extension FoundFlyghtViewController: IFoundFlyghtViewController {
+    func showImage(imageData: Data) {
+        guard let image = UIImage(data: imageData) else {
+            return
+        }
+        aircraftImage.image = image
+    }
+    
     func dismissFoundView() {
         self.dismiss(animated: true)
     }

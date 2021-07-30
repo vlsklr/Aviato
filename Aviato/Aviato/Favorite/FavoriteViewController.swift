@@ -190,8 +190,8 @@ class FavoriteViewController: UIViewController {
         aircraftLabel.numberOfLines = 0
         aircraftLabel.clipsToBounds = true
         aircraftLabel.backgroundColor = .white
-        aircraftLabel.layer.cornerRadius = 25
-        aircraftLabel.layer.maskedCorners = [.layerMaxXMaxYCorner, .layerMinXMaxYCorner]
+//        aircraftLabel.layer.cornerRadius = 25
+//        aircraftLabel.layer.maskedCorners = [.layerMaxXMaxYCorner, .layerMinXMaxYCorner]
         aircraftLabel.textAlignment = .center
         aircraftLabel.snp.makeConstraints { (make) in
             make.top.equalTo(arrivalDateLocalLabel.snp.bottom)

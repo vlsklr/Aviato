@@ -7,6 +7,7 @@
 
 import Foundation
 import CoreData
+import UIKit
 
 class StorageManager: IStorageManager {
     
@@ -83,6 +84,28 @@ class StorageManager: IStorageManager {
         }
     }
     
+    func saveImage(image: UIImage, fileName: String) -> String {
+        if let data = image.pngData() {
+            let path = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+            let url = path.appendingPathComponent(fileName).appendingPathExtension("png")
+            do {
+                try data.write(to: url)
+            } catch {
+                print(error)
+            }
+            return "\(url)"
+        }
+        return ""
+    }
+    
+    func loadImage(path: String) -> UIImage? {
+        guard let path = URL(string: path), let imageData = try? Data(contentsOf: path) else {
+            return nil
+        }
+        let image = UIImage.init(data: imageData)
+        return image
+    }
+    
     
     func addFlyght(flyght: FlyghtViewModel) {
         self.persistentContainer.performBackgroundTask { context in
@@ -102,6 +125,7 @@ class StorageManager: IStorageManager {
                 object.departureAirport = flyght.departureAirport
                 object.user = user
                 object.lastModified = Date()
+                object.aircraftImage = flyght.aircraftImage
                 try context.save()
             } catch {
             }
@@ -115,7 +139,7 @@ class StorageManager: IStorageManager {
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm"
         dateFormatter.timeZone = TimeZone.current
         
-        let flyghts = try? self.persistentContainer.viewContext.fetch(fetchRequest).compactMap { FlyghtViewModel(holder: userID, flyghtID: $0.flyghtID ?? UUID(), flyghtNumber: $0.flyghtNumber ?? "", departureAirport: $0.departureAirport ?? "", arrivalAirport: $0.arrivalAirport ?? "", departureDate: $0.departureTime ?? Date(), arrivalDate: $0.arrivalTime ?? Date(), aircraft: $0.aircraft ?? "", airline: $0.airline ?? "", status: $0.status ?? "", departureDateLocal: dateFormatter.string(from: $0.departureTime ?? Date()) , arrivalDateLocal: dateFormatter.string(from: $0.arrivalTime ?? Date()))
+        let flyghts = try? self.persistentContainer.viewContext.fetch(fetchRequest).compactMap { FlyghtViewModel(holder: userID, flyghtID: $0.flyghtID ?? UUID(), flyghtNumber: $0.flyghtNumber ?? "", departureAirport: $0.departureAirport ?? "", arrivalAirport: $0.arrivalAirport ?? "", departureDate: $0.departureTime ?? Date(), arrivalDate: $0.arrivalTime ?? Date(), aircraft: $0.aircraft ?? "", airline: $0.airline ?? "", status: $0.status ?? "", departureDateLocal: dateFormatter.string(from: $0.departureTime ?? Date()) , arrivalDateLocal: dateFormatter.string(from: $0.arrivalTime ?? Date()), aircraftImage: $0.aircraftImage)
         }
         return flyghts
     }
@@ -134,7 +158,7 @@ class StorageManager: IStorageManager {
         dateFormatter.timeZone = TimeZone.current
         fetchRequest.predicate = NSPredicate(format: "flyghtID = %@", "\(flyghtID)")
         if let flyghts = try? self.persistentContainer.viewContext.fetch(fetchRequest).first {
-            let flyghtViewModel = FlyghtViewModel(holder: UUID(), flyghtID: flyghtID, flyghtNumber: (flyghts.flyghtNumber!), departureAirport: flyghts.departureAirport!, arrivalAirport: flyghts.arrivalAirport!, departureDate: flyghts.departureTime!, arrivalDate: flyghts.arrivalTime!, aircraft: flyghts.aircraft!, airline: flyghts.airline!, status: flyghts.status!, departureDateLocal: dateFormatter.string(from: flyghts.departureTime!), arrivalDateLocal: dateFormatter.string(from: flyghts.arrivalTime!))
+            let flyghtViewModel = FlyghtViewModel(holder: UUID(), flyghtID: flyghtID, flyghtNumber: (flyghts.flyghtNumber!), departureAirport: flyghts.departureAirport!, arrivalAirport: flyghts.arrivalAirport!, departureDate: flyghts.departureTime!, arrivalDate: flyghts.arrivalTime!, aircraft: flyghts.aircraft!, airline: flyghts.airline!, status: flyghts.status!, departureDateLocal: dateFormatter.string(from: flyghts.departureTime!), arrivalDateLocal: dateFormatter.string(from: flyghts.arrivalTime!), aircraftImage: flyghts.aircraftImage)
             return flyghtViewModel
         }
         return nil
@@ -153,6 +177,7 @@ class StorageManager: IStorageManager {
                 foundFlyght.setValue(flyght.departureAirport, forKey: "departureAirport")
                 foundFlyght.setValue(flyght.departureDate, forKey: "departureTime")
                 foundFlyght.setValue(flyght.status, forKey: "status")
+                foundFlyght.setValue(flyght.aircraftImage, forKey: "aircraftImage")
                 foundFlyght.lastModified = Date()
             }
             try context.save()

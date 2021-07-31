@@ -19,21 +19,28 @@ class FavoriteViewController: UIViewController {
     let arrivalDateLabel: UILabel = UILabel()
     let arrivalDateLocalLabel: UILabel = UILabel()
     let aircraftLabel: UILabel = UILabel()
+    let aircraftImage: UIImageView = UIImageView()
     var flyghtViewInfo: FlyghtViewModel
     var scrollView: UIScrollView = UIScrollView()
     
     let scrollViewContainer: UIStackView = {
-           let view = UIStackView()
-
-           view.axis = .vertical
-           view.spacing = 10
-
-           view.translatesAutoresizingMaskIntoConstraints = false
-           return view
-       }()
+        let view = UIStackView()
+        
+        view.axis = .vertical
+        view.spacing = 10
+        
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
     
     init(flyghtViewInfo: FlyghtViewModel) {
         self.flyghtViewInfo = flyghtViewInfo
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    init(flyghtViewInfo: FlyghtViewModel, aircraftImage: UIImage) {
+        self.flyghtViewInfo = flyghtViewInfo
+        self.aircraftImage.image = aircraftImage
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -55,6 +62,7 @@ class FavoriteViewController: UIViewController {
         setupArrivalDateLabel()
         setupArrivalDateLocalLabel()
         setupAircraftLabel()
+        setupAircraftImageView()
     }
     
     func setupScrollView() {
@@ -67,7 +75,7 @@ class FavoriteViewController: UIViewController {
             make.leading.equalToSuperview()
             make.trailing.equalToSuperview()
             make.bottom.equalToSuperview()
-
+            
         }
         scrollViewContainer.snp.makeConstraints { (make) in
             make.width.equalToSuperview().offset(-43)
@@ -83,7 +91,7 @@ class FavoriteViewController: UIViewController {
         flyghtNumberLabel.clipsToBounds = true
         flyghtNumberLabel.textAlignment = .center
         flyghtNumberLabel.numberOfLines = 0
-
+        
         flyghtNumberLabel.snp.makeConstraints { (make) in
             make.top.equalToSuperview().offset(50)
             make.leading.equalToSuperview().offset(43)
@@ -104,7 +112,7 @@ class FavoriteViewController: UIViewController {
             make.height.equalTo(75)
         }
     }
-
+    
     
     func setupDepartureAirportLabel() {
         self.scrollViewContainer.addArrangedSubview(departureAirportLabel)
@@ -190,13 +198,33 @@ class FavoriteViewController: UIViewController {
         aircraftLabel.numberOfLines = 0
         aircraftLabel.clipsToBounds = true
         aircraftLabel.backgroundColor = .white
-//        aircraftLabel.layer.cornerRadius = 25
-//        aircraftLabel.layer.maskedCorners = [.layerMaxXMaxYCorner, .layerMinXMaxYCorner]
+        //        aircraftLabel.layer.cornerRadius = 25
+        //        aircraftLabel.layer.maskedCorners = [.layerMaxXMaxYCorner, .layerMinXMaxYCorner]
         aircraftLabel.textAlignment = .center
         aircraftLabel.snp.makeConstraints { (make) in
             make.top.equalTo(arrivalDateLocalLabel.snp.bottom)
             make.leading.equalToSuperview().offset(43)
             make.height.equalTo(75)
         }
+    }
+    
+    func setupAircraftImageView() {
+        self.scrollViewContainer.addArrangedSubview(aircraftImage)
+        aircraftImage.backgroundColor = .white
+        //        aircraftImage.layer.cornerRadius = 125
+        aircraftImage.layer.cornerRadius = 25
+        aircraftImage.layer.maskedCorners = [.layerMaxXMaxYCorner, .layerMinXMaxYCorner]
+        aircraftImage.clipsToBounds = true
+        aircraftImage.contentMode = .scaleAspectFit
+        aircraftImage.snp.makeConstraints { (make) in
+            make.top.equalTo(aircraftLabel.snp.bottom)
+            make.leading.equalToSuperview().offset(43)
+            make.width.equalTo(250)
+            make.height.equalTo(250)
+        }
+        //увеличиваем scrollView на высоту картинки
+        scrollView.contentSize = CGSize(width: view.bounds.width, height: view.bounds.height + 250)
+//        if let image = 
+        
     }
 }

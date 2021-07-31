@@ -14,6 +14,7 @@ protocol IEditUserProfilePresenter {
     func removeUser()
     func updateUserInfo(view: IEditUserProfileViewController, userInfo: UserViewModel, userAvatar: UIImage?) -> Bool
     func getUser(userEditingViewController: IEditUserProfileViewController)
+    func getImage(path: String) -> UIImage?
 }
 
 class EditUserProfilePresenter: UserProfilePresenter, IEditUserProfilePresenter {
@@ -22,7 +23,7 @@ class EditUserProfilePresenter: UserProfilePresenter, IEditUserProfilePresenter 
         var user = userInfo
         if validateUserData(userInfo: userInfo) {
             if let image = userAvatar {
-                let savedPath = saveImage(image: image, fileName: "\(userID)")
+                let savedPath = storageManager.saveImage(image: image, fileName: "\(userID)")
                 user.avatarPath = savedPath
             }
             storageManager.updateUser(userID: userID, userInfo: user)
@@ -43,19 +44,6 @@ class EditUserProfilePresenter: UserProfilePresenter, IEditUserProfilePresenter 
         }
     }
     
-    private func saveImage(image: UIImage, fileName: String) -> String {
-        if let data = image.pngData() {
-            let path = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
-            let url = path.appendingPathComponent(fileName).appendingPathExtension("png")
-            do {
-                try data.write(to: url)
-            } catch {
-                print(error)
-            }
-            return "\(url)"
-        }
-        return ""
-    }
     
     func removeUser() {
         storageManager.deleteUser(userID: self.userID)
@@ -66,5 +54,4 @@ class EditUserProfilePresenter: UserProfilePresenter, IEditUserProfilePresenter 
         let user = storageManager.loadUser(username: nil, userID: userID)
         userEditingViewController.showUserInfo(userInfo: user ?? UserViewModel(userID: UUID(), username: "", password: "", birthDate: Date(), email: "", name: "", avatarPath: ""))
     }
-    
 }

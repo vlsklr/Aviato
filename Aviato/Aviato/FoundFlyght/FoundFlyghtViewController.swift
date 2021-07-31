@@ -11,7 +11,6 @@ import SnapKit
 class FoundFlyghtViewController: FavoriteViewController {
     
     let saveButton: UIButton = UIButton()
-    let aircraftImage: UIImageView = UIImageView()
     let presenter: IFoundFlyghtPresenter
     var saveButtonPressed: Bool = false
     
@@ -26,7 +25,6 @@ class FoundFlyghtViewController: FavoriteViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupAircraftImageView()
         setupButton()
         
     }
@@ -42,39 +40,17 @@ class FoundFlyghtViewController: FavoriteViewController {
         saveButton.addTarget(self, action: #selector(toggleAnimationButtonColor(button:)), for: .touchDown)
         saveButton.addTarget(self, action: #selector(addToFavorite), for: .touchUpInside)
         saveButton.snp.makeConstraints { (make) in
-//            if aircraftImage.snp.bottom != nil {
             make.top.equalTo(aircraftImage.snp.bottom).offset(35)
-//            } else {
-//                make.top.equalTo(aircraftLabel.snp.bottom).offset(35)
-//            }
-//            make.bottom.equalToSuperview().offset(-25)
             make.leading.equalToSuperview().offset(43)
             make.height.equalTo(50)
         }
     }
     
-    func setupAircraftImageView() {
-        self.scrollViewContainer.addArrangedSubview(aircraftImage)
-        aircraftImage.backgroundColor = .white
-//        aircraftImage.layer.cornerRadius = 125
-        aircraftImage.layer.cornerRadius = 25
-             aircraftImage.layer.maskedCorners = [.layerMaxXMaxYCorner, .layerMinXMaxYCorner]
-        aircraftImage.clipsToBounds = true
-        aircraftImage.contentMode = .scaleAspectFit
-        aircraftImage.snp.makeConstraints { (make) in
-            make.top.equalTo(aircraftLabel.snp.bottom)
-            make.leading.equalToSuperview().offset(43)
-            make.width.equalTo(250)
-            make.height.equalTo(250)
-        }
-        //увеличиваем scrollView на высоту картинки
-        scrollView.contentSize = CGSize(width: view.bounds.width, height: view.bounds.height + 250)
-
-    }
+   
     
     @objc func addToFavorite() {
         toggleAnimationButtonColor(button: self.saveButton)
-        presenter.addToFavorite(view: self, flyght: self.flyghtViewInfo)
+        presenter.addToFavorite(view: self, flyght: self.flyghtViewInfo, image: aircraftImage.image)
     }
         
     @objc func toggleAnimationButtonColor(button: UIButton) {

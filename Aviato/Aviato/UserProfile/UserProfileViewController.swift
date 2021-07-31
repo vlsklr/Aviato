@@ -196,12 +196,10 @@ extension UserProfileViewController: IUserProfileViewController {
         dateFormatter.dateStyle = .medium
         dateFormatter.timeStyle = .none
         birthDate.text = "Дата рождения: " + dateFormatter.string(from: userInfo.birthDate)
-        guard let path = URL(string: userInfo.avatarPath), let img = try? Data(contentsOf: path) else {
+        guard let image = presenter.getImage(path: userInfo.avatarPath) else {
             return
         }
-        userPhoto.image = UIImage.init(data: img)
-
-        
+        userPhoto.image = image
     }
     
     

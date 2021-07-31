@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 protocol IStorageManager {
     func loadUser(username: String?, userID: UUID?) -> UserViewModel?
@@ -19,5 +20,7 @@ protocol IStorageManager {
     func getFlyght(flyghtID: UUID) -> FlyghtViewModel?
     func flyghtsCount(userID: UUID) -> Int
     func contains(userID: UUID, flyghtNumber: String) -> Bool
+    func loadImage(path: String) -> UIImage?
+    func saveImage(image: UIImage, fileName: String) -> String
 
 }

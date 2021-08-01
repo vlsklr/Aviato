@@ -57,7 +57,7 @@ class NetworkManager: INetworkManager {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
         let dateString = dateFormatter.string(from: Date())
-        guard let url = URL(string: "https://aerodatabox.p.rapidapi.com/flights/number/\(flyghtNumber))/\(dateString)?withAircraftImage=true&withLocation=true") else { return }
+        guard let url = URL(string: "https://aerodatabox.p.rapidapi.com/flights/number/\(flyghtNumber)/\(dateString)?withAircraftImage=true&withLocation=true") else { return }
         let request = NSMutableURLRequest(url: url, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 10.0)
         request.httpMethod = "GET"
         request.allHTTPHeaderFields = headers
@@ -70,15 +70,11 @@ class NetworkManager: INetworkManager {
             } else {
                 let httpResponse = response as? HTTPURLResponse
                 if let data = data {
-                    if httpResponse?.statusCode == 200 {
+                    if httpResponse?.statusCode == 200, let result: [FlyghtInfo] = try? JSONDecoder().decode([FlyghtInfo].self, from: data), let flyghtInfo = result.last {
                         print("ДВЕСТИ!!!11")
-                        if let result: [FlyghtInfo] = try? JSONDecoder().decode([FlyghtInfo].self, from: data) {
-                            if let flyghtInfo = result.last {
-                                flyght = flyghtInfo
-                                completion(.success(flyght!))
-                                print(flyghtInfo.departure.airport.name)
-                            }
-                        }
+                        flyght = flyghtInfo
+                        completion(.success(flyght!))
+                        print(flyghtInfo.departure.airport.name)
                     }
                     else {
                         completion(.failure(FlyghtErrors.wrongFlyght))

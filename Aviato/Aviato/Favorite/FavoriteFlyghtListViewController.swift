@@ -63,7 +63,6 @@ class FavoriteFlyghtListViewController: UIViewController {
     
     func initTableView() {
         view.addSubview(tableView)
-        
         if let airportImage = UIImage(named: "airport_bgc") {
             self.view.backgroundColor = UIColor(patternImage: airportImage)
         }
@@ -127,5 +126,13 @@ extension FavoriteFlyghtListViewController: UITableViewDataSource {
 extension FavoriteFlyghtListViewController: IFavoriteListFlyghtViewController {
     func showFavoriteFlyght(flyghtViewController: FavoriteViewController) {
         self.present(flyghtViewController, animated: true, completion: nil)
+    }
+}
+
+extension FavoriteFlyghtListViewController: IAlert {
+    func showAlert(message: String) {
+        let alert = UIAlertController(title: "Ошибка", message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "ОК", style: .default))
+        self.present(alert, animated: true)
     }
 }

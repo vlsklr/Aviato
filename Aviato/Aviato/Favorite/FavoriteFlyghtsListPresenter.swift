@@ -57,8 +57,6 @@ class FavoriteFlyghtListPresenter: IFavoriteFlyghtListPresenter {
      */
     func updateFlyghtInfo(view: FavoriteFlyghtListViewController) {
         DispatchQueue.main.async {
-            
-            
             let totalSections = view.tableView.numberOfSections
             var upatingCounter = 0
             view.toggleActivityIndicator()
@@ -74,6 +72,7 @@ class FavoriteFlyghtListPresenter: IFavoriteFlyghtListPresenter {
                         switch result {
                         case .failure(let error):
                             print(error)
+                            view.showAlert(message: "Во время обновления информации о рейсе \(flyghtNumber) что-то пошло не так")
                             view.toggleActivityIndicator()
                         case .success(let info):
                             print(info)

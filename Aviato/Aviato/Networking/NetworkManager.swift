@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Alamofire
 
 struct Departure: Decodable {
     let scheduledTimeUtc: String
@@ -24,6 +25,11 @@ struct Airport: Decodable {
 
 struct Aircraft: Decodable {
     let model: String
+    let image: Image
+}
+
+struct Image: Decodable {
+    let url: String
 }
 
 struct Airline: Decodable {
@@ -51,11 +57,12 @@ class NetworkManager: INetworkManager {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
         let dateString = dateFormatter.string(from: Date())
-        guard let url = URL(string: "https://aerodatabox.p.rapidapi.com/flights/number/\(flyghtNumber))/\(dateString)?withAircraftImage=false&withLocation=false") else { return }
+        guard let url = URL(string: "https://aerodatabox.p.rapidapi.com/flights/number/\(flyghtNumber)/\(dateString)?withAircraftImage=true&withLocation=true") else { return }
         let request = NSMutableURLRequest(url: url, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 10.0)
         request.httpMethod = "GET"
         request.allHTTPHeaderFields = headers
         let session = URLSession.shared
+        request.timeoutInterval = 50
         var flyght: FlyghtInfo? = nil
         session.dataTask(with: request as URLRequest, completionHandler: { (data, response, error) -> Void in
             if (error != nil) {
@@ -63,15 +70,11 @@ class NetworkManager: INetworkManager {
             } else {
                 let httpResponse = response as? HTTPURLResponse
                 if let data = data {
-                    if httpResponse?.statusCode == 200 {
+                    if httpResponse?.statusCode == 200, let result: [FlyghtInfo] = try? JSONDecoder().decode([FlyghtInfo].self, from: data), let flyghtInfo = result.last {
                         print("ДВЕСТИ!!!11")
-                        if let result: [FlyghtInfo] = try? JSONDecoder().decode([FlyghtInfo].self, from: data) {
-                            if let flyghtInfo = result.last {
-                                flyght = flyghtInfo
-                                completion(.success(flyght!))
-                                print(flyghtInfo.departure.airport.name)
-                            }
-                        }
+                        flyght = flyghtInfo
+                        completion(.success(flyght!))
+                        print(flyghtInfo.departure.airport.name)
                     }
                     else {
                         completion(.failure(FlyghtErrors.wrongFlyght))
@@ -79,6 +82,11 @@ class NetworkManager: INetworkManager {
                 }
             }
         }).resume()
+    }
+    func loadAircraftImage(url: String, completion: @escaping (Data) -> Void) {
+        AF.request(url).response { response in
+            completion(response.data ?? Data())
+        }
     }
 }
 

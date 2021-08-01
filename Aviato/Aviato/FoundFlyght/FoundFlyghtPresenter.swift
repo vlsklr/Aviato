@@ -6,9 +6,10 @@
 //
 
 import Foundation
+import UIKit
 
 protocol IFoundFlyghtPresenter {
-    func addToFavorite(view: IFoundFlyghtViewController, flyght: FlyghtViewModel)    
+    func addToFavorite(view: IFoundFlyghtViewController, flyght: FlyghtViewModel, image: UIImage?)
 }
 
 class FoundFlyghtPresenter: IFoundFlyghtPresenter {
@@ -19,13 +20,17 @@ class FoundFlyghtPresenter: IFoundFlyghtPresenter {
         self.userID = userID
     }
     
-    func addToFavorite(view: IFoundFlyghtViewController, flyght: FlyghtViewModel) {
+    func addToFavorite(view: IFoundFlyghtViewController, flyght: FlyghtViewModel, image: UIImage?) {
         if storageManager.contains(userID: userID, flyghtNumber: flyght.flyghtNumber){
             DispatchQueue.main.async {
                 view.showAlert(message: "Данный рейс уже сохранен в избранном")
             }
-        }else{
-            storageManager.addFlyght(flyght: flyght)
+        } else {
+            var flyghtInfo = flyght
+            if let img = image {
+            flyghtInfo.aircraftImage = storageManager.saveImage(image: img, fileName: "\(flyght.flyghtID)")
+            }
+            storageManager.addFlyght(flyght: flyghtInfo)
             DispatchQueue.main.async {
                 view.dismissFoundView()
             }

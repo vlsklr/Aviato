@@ -14,7 +14,7 @@ class FoundFlyghtViewController: FavoriteViewController {
     let presenter: IFoundFlyghtPresenter
     var saveButtonPressed: Bool = false
     
-    init(flyghtViewInfo: FlyghtViewModel, presenter: IFoundFlyghtPresenter) { //}, presenter: IPresenter) {
+    init(flyghtViewInfo: FlyghtViewModel, presenter: IFoundFlyghtPresenter) {
         self.presenter = presenter
         super.init(flyghtViewInfo: flyghtViewInfo)
     }
@@ -26,6 +26,7 @@ class FoundFlyghtViewController: FavoriteViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupButton()
+        
     }
     
     func setupButton() {
@@ -39,15 +40,17 @@ class FoundFlyghtViewController: FavoriteViewController {
         saveButton.addTarget(self, action: #selector(toggleAnimationButtonColor(button:)), for: .touchDown)
         saveButton.addTarget(self, action: #selector(addToFavorite), for: .touchUpInside)
         saveButton.snp.makeConstraints { (make) in
-            make.top.equalTo(aircraftLabel.snp.bottom).offset(35)
+            make.top.equalTo(aircraftImage.snp.bottom).offset(35)
             make.leading.equalToSuperview().offset(43)
             make.height.equalTo(50)
         }
     }
     
+   
+    
     @objc func addToFavorite() {
         toggleAnimationButtonColor(button: self.saveButton)
-        presenter.addToFavorite(view: self, flyght: self.flyghtViewInfo)
+        presenter.addToFavorite(view: self, flyght: self.flyghtViewInfo, image: aircraftImage.image)
     }
         
     @objc func toggleAnimationButtonColor(button: UIButton) {
@@ -71,6 +74,13 @@ extension FoundFlyghtViewController: IAlert {
 }
 
 extension FoundFlyghtViewController: IFoundFlyghtViewController {
+    func showImage(imageData: Data) {
+        guard let image = UIImage(data: imageData) else {
+            return
+        }
+        aircraftImage.image = image
+    }
+    
     func dismissFoundView() {
         self.dismiss(animated: true)
     }

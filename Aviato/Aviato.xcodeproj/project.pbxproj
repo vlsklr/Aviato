@@ -185,14 +185,14 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
-		F53912DA2678FA4C00EBC14F /* CoreData */ = {
+		F53912DA2678FA4C00EBC14F /* Storage */ = {
 			isa = PBXGroup;
 			children = (
 				F5392EF52677364400866C8F /* Aviato.xcdatamodeld */,
 				F5392F1D2677747500866C8F /* IStorageManager.swift */,
 				F5392F0826774CA100866C8F /* StorageManager.swift */,
 			);
-			path = CoreData;
+			path = Storage;
 			sourceTree = "<group>";
 		};
 		F53912DC2678FA8200EBC14F /* Routing */ = {
@@ -255,7 +255,7 @@
 				F53912E12678FAFC00EBC14F /* Supporting */,
 				F53912DE2678FAB100EBC14F /* Networking */,
 				F53912DC2678FA8200EBC14F /* Routing */,
-				F53912DA2678FA4C00EBC14F /* CoreData */,
+				F53912DA2678FA4C00EBC14F /* Storage */,
 				F53912D82678FA2800EBC14F /* Models */,
 				F5392EF82677364700866C8F /* Assets.xcassets */,
 				F5392EFA2677364700866C8F /* LaunchScreen.storyboard */,

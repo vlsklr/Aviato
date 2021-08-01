@@ -296,10 +296,10 @@ extension EditUserProfileViewController: IEditUserProfileViewController {
         dateFormatter.dateStyle = .medium
         dateFormatter.timeStyle = .none
         self.birthDateTextField.text = dateFormatter.string(from: userInfo.birthDate)
-        guard let path = URL(string: userInfo.avatarPath), let img = try? Data(contentsOf: path) else {
+        guard let image = editProfilePresenter.getImage(path: userInfo.avatarPath) else {
             return
         }
-        userPhoto.image = UIImage.init(data: img)
+        userPhoto.image = image
     }
 }
 

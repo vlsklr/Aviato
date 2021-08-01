@@ -20,7 +20,7 @@ struct FlyghtViewModel {
     var status: String
     var departureDateLocal: String
     var arrivalDateLocal: String
-    
+    var aircraftImage: String?
 }
 
 

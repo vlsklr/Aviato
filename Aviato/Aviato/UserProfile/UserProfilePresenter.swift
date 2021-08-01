@@ -6,11 +6,13 @@
 //
 
 import Foundation
+import UIKit
 
 protocol IUserProfilePresenter {
     func logout()
     func getUser(userViewController: IUserProfileViewController)
     func editUser(view: IUserProfileViewController)
+    func getImage(path: String) -> UIImage?
     
 }
 
@@ -39,6 +41,10 @@ class UserProfilePresenter: IUserProfilePresenter {
         let presenter: IEditUserProfilePresenter = EditUserProfilePresenter(userID: self.userID)
         let viewController: EditUserProfileViewController = EditUserProfileViewController(editPresenter: presenter)
         view.showEditUserProfileScreen(view: viewController)
+    }
+    
+    func getImage(path: String) -> UIImage? {
+        return storageManager.loadImage(path: path)
     }
     
 }

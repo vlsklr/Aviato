@@ -296,6 +296,7 @@ extension EditUserProfileViewController: IEditUserProfileViewController {
         dateFormatter.dateStyle = .medium
         dateFormatter.timeStyle = .none
         self.birthDateTextField.text = dateFormatter.string(from: userInfo.birthDate)
+        self.datePicker.date = userInfo.birthDate
         guard let image = editProfilePresenter.getImage(path: userInfo.avatarPath) else {
             return
         }

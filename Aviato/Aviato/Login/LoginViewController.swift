@@ -57,10 +57,13 @@ class LoginViewController: UIViewController {
     func setupUsernameField() {
         self.view.addSubview(userNameField)
         userNameField.backgroundColor = .white
-        userNameField.placeholder = "Имя пользователя"
+//        userNameField.placeholder = "Имя пользователя"
         userNameField.layer.cornerRadius = 25
         userNameField.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
         userNameField.textAlignment = .center
+        userNameField.textColor = .black
+        userNameField.attributedPlaceholder = NSAttributedString(string: "Имя пользователя", attributes: [NSAttributedString.Key.foregroundColor : UIColor.darkGray])
+
         userNameField.snp.makeConstraints({ (make) in
             make.leading.equalToSuperview().offset(43)
             make.trailing.equalToSuperview().offset(-43)
@@ -75,7 +78,9 @@ class LoginViewController: UIViewController {
         passwordField.layer.cornerRadius = 25
         passwordField.layer.maskedCorners = [.layerMaxXMaxYCorner, .layerMinXMaxYCorner]
         passwordField.textAlignment = .center
-        passwordField.placeholder = "Пароль"
+        passwordField.textColor = .black
+//        passwordField.placeholder = "Пароль"
+        passwordField.attributedPlaceholder = NSAttributedString(string: "Пароль", attributes: [NSAttributedString.Key.foregroundColor : UIColor.darkGray])
         self.view.addSubview(passwordField)
         passwordField.snp.makeConstraints({ (make) in
             make.top.equalTo(userNameField.snp.bottom)

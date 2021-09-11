@@ -27,6 +27,9 @@ class EditUserProfileViewController: UIViewController {
     var buttonPressed: Bool = false
     var imageChanged: Bool = false
     
+    let textFieldsColor: UIColor = .black
+    let textFieldsPlaceholderColor: UIColor = .darkGray
+    
     init(editPresenter: IEditUserProfilePresenter) {
         self.editProfilePresenter = editPresenter
         super.init(nibName: nil, bundle: nil)
@@ -102,9 +105,11 @@ class EditUserProfileViewController: UIViewController {
         usernameField.addTarget(self, action: #selector(textFieldsChanged), for: .editingChanged)
         usernameField.inputAccessoryView = setupDoneToolbar(tag: 0)
         usernameField.backgroundColor = .white
+        usernameField.textColor = textFieldsColor
         usernameField.layer.cornerRadius = 25
-        usernameField.placeholder = "Имя пользователя"
+//        usernameField.placeholder = "Имя пользователя"
         usernameField.textAlignment = .center
+        usernameField.attributedPlaceholder = NSAttributedString(string: "Имя пользователя", attributes: [NSAttributedString.Key.foregroundColor : textFieldsPlaceholderColor])
         usernameField.snp.makeConstraints { (make) in
             make.leading.equalToSuperview().offset(43)
             make.trailing.equalToSuperview().offset(-43)
@@ -119,8 +124,10 @@ class EditUserProfileViewController: UIViewController {
         emailField.addTarget(self, action: #selector(validateEmailField), for: .editingChanged)
         emailField.inputAccessoryView = setupDoneToolbar(tag: 0)
         emailField.backgroundColor = .white
+        emailField.textColor = textFieldsColor
         emailField.layer.cornerRadius = 25
-        emailField.placeholder = "Email"
+        emailField.attributedPlaceholder = NSAttributedString(string: "Email", attributes: [NSAttributedString.Key.foregroundColor : textFieldsPlaceholderColor])
+//        emailField.placeholder = "Email"
         emailField.textAlignment = .center
         emailField.snp.makeConstraints { (make) in
             make.leading.equalToSuperview().offset(43)
@@ -134,9 +141,11 @@ class EditUserProfileViewController: UIViewController {
         self.view.addSubview(nameField)
         nameField.addTarget(self, action: #selector(textFieldsChanged), for: .editingChanged)
         nameField.backgroundColor = .white
+        nameField.textColor = textFieldsColor
         nameField.layer.cornerRadius = 25
-        nameField.placeholder = "Имя"
+//        nameField.placeholder = "Имя"
         nameField.textAlignment = .center
+        nameField.attributedPlaceholder = NSAttributedString(string: "Имя", attributes: [NSAttributedString.Key.foregroundColor : textFieldsPlaceholderColor])
         nameField.inputAccessoryView = setupDoneToolbar(tag: 0)
         nameField.snp.makeConstraints { (make) in
             make.leading.equalToSuperview().offset(43)
@@ -160,8 +169,10 @@ class EditUserProfileViewController: UIViewController {
         birthDateTextField.inputAccessoryView = setupDoneToolbar(tag: 1)
         birthDateTextField.backgroundColor = .white
         birthDateTextField.layer.cornerRadius = 25
-        birthDateTextField.placeholder = "Дата рождения"
+        birthDateTextField.textColor = textFieldsColor
+//        birthDateTextField.placeholder = "Дата рождения"
         birthDateTextField.textAlignment = .center
+        birthDateTextField.attributedPlaceholder = NSAttributedString(string: "Дата рождения", attributes: [NSAttributedString.Key.foregroundColor : textFieldsPlaceholderColor])
         birthDateTextField.snp.makeConstraints { (make) in
             make.leading.equalToSuperview().offset(43)
             make.trailing.equalToSuperview().offset(-43)

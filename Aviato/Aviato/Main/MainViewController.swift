@@ -84,6 +84,14 @@ class MainViewController: UIViewController {
         searchBar.layer.cornerRadius = 25
         searchBar.layer.borderColor = #colorLiteral(red: 0.243, green: 0.776, blue: 1, alpha: 1)
         searchBar.layer.borderWidth = 3
+        if #available(iOS 13.0, *) {
+            searchBar.searchTextField.backgroundColor = .white
+            searchBar.barTintColor = .white
+            searchBar.searchTextField.textColor = .black
+        } else {
+            // Fallback on earlier versions
+        }
+//        searchBar.attributedPlaceholder = NSAttributedString(string: "Дата рождения", attributes: [NSAttributedString.Key.foregroundColor : .darkGray])
         searchBar.snp.makeConstraints { contsraint in
             contsraint.top.equalTo(view).offset(250)
             contsraint.centerX.equalToSuperview()

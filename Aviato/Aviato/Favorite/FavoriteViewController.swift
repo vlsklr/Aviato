@@ -23,6 +23,8 @@ class FavoriteViewController: UIViewController {
     var flyghtViewInfo: FlyghtViewModel
     var scrollView: UIScrollView = UIScrollView()
     
+    
+    
     let scrollViewContainer: UIStackView = {
         let view = UIStackView()
         

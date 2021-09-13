@@ -46,7 +46,6 @@ struct FlyghtInfo: Decodable {
     let airline: Airline
 }
 
-
 class NetworkManager: INetworkManager {
     let headers = [
         "x-rapidapi-key": "",

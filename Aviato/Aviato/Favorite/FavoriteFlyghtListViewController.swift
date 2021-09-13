@@ -70,6 +70,7 @@ class FavoriteFlyghtListViewController: UIViewController {
         tableView.dataSource = self
         tableView.register(FlyghtViewCell.self, forCellReuseIdentifier: "cell")
         tableView.layer.cornerRadius = 25
+        tableView.backgroundColor = .white
         tableView.snp.makeConstraints { constraint in
             constraint.top.equalToSuperview().offset(50)
             constraint.leading.equalToSuperview().offset(16)

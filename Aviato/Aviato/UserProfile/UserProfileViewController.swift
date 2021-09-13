@@ -25,6 +25,8 @@ class UserProfileViewController: UIViewController {
     let logoutButton: UIButton = UIButton()
     var buttonPressed: Bool = false
     
+    let labelsTextColor: UIColor = .black
+    
     init(presenter: IUserProfilePresenter) {
         self.presenter = presenter
         super.init(nibName: nil, bundle: nil)
@@ -70,6 +72,7 @@ class UserProfileViewController: UIViewController {
         self.view.addSubview(usernameLabel)
         usernameLabel.text = "123456"
         usernameLabel.backgroundColor = .white
+        usernameLabel.textColor = labelsTextColor
         usernameLabel.layer.cornerRadius = 25
         usernameLabel.clipsToBounds = true
         usernameLabel.textAlignment = .center
@@ -87,6 +90,7 @@ class UserProfileViewController: UIViewController {
         self.view.addSubview(emailLabel)
         emailLabel.text = "123456"
         emailLabel.backgroundColor = .white
+        emailLabel.textColor = labelsTextColor
         emailLabel.layer.cornerRadius = 25
         emailLabel.clipsToBounds = true
         emailLabel.textAlignment = .center
@@ -103,6 +107,7 @@ class UserProfileViewController: UIViewController {
         self.view.addSubview(nameLabel)
         nameLabel.text = "123456"
         nameLabel.backgroundColor = .white
+        nameLabel.textColor = labelsTextColor
         nameLabel.layer.cornerRadius = 25
         nameLabel.clipsToBounds = true
         nameLabel.textAlignment = .center
@@ -119,6 +124,7 @@ class UserProfileViewController: UIViewController {
         self.view.addSubview(birthDate)
         birthDate.text = "123456"
         birthDate.backgroundColor = .white
+        birthDate.textColor = labelsTextColor
         birthDate.layer.cornerRadius = 25
         birthDate.clipsToBounds = true
         birthDate.textAlignment = .center

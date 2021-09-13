@@ -23,6 +23,9 @@ class FlyghtViewCell: UITableViewCell {
     }
     
     func setupCell(id: UUID) {
+        self.contentView.backgroundColor = .white
+        flyghtNumberLabel.textColor = .black
+        departireTimeLabel.textColor = .black
         entityID = id
         contentView.addSubview(flyghtNumberLabel)
         flyghtNumberLabel.snp.makeConstraints { make in

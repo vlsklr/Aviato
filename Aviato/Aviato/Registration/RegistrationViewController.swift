@@ -20,6 +20,7 @@ class RegistrationViewController: UIViewController {
     var registerButtonPressed: Bool = false
     
     let placeholdersColor: UIColor = .darkGray
+    let textColor: UIColor = .black
     
     init(presenter: IRegistrationPresenter) {
         self.presenter = presenter
@@ -46,8 +47,8 @@ class RegistrationViewController: UIViewController {
         self.view.addSubview(usernameField)
         usernameField.addTarget(self, action: #selector(textFieldsChanged), for: .editingChanged)
         usernameField.backgroundColor = .white
+        usernameField.textColor = textColor
         usernameField.layer.cornerRadius = 25
-//        usernameField.placeholder = "Имя пользователя"
         usernameField.textAlignment = .center
         usernameField.attributedPlaceholder = NSAttributedString(string: "Имя пользователя", attributes: [NSAttributedString.Key.foregroundColor : placeholdersColor])
         usernameField.snp.makeConstraints { (make) in
@@ -62,10 +63,10 @@ class RegistrationViewController: UIViewController {
         self.view.addSubview(passwordField)
         passwordField.addTarget(self, action: #selector(textFieldsChanged), for: .editingChanged)
         passwordField.layer.cornerRadius = 25
-//        passwordField.placeholder = "Пароль"
         passwordField.textAlignment = .center
         passwordField.isSecureTextEntry = true
         passwordField.backgroundColor = .white
+        passwordField.textColor = textColor
         passwordField.attributedPlaceholder = NSAttributedString(string: "Пароль", attributes: [NSAttributedString.Key.foregroundColor : placeholdersColor])
         passwordField.snp.makeConstraints { (make) in
             make.leading.equalToSuperview().offset(43)
@@ -80,8 +81,8 @@ class RegistrationViewController: UIViewController {
         emailField.addTarget(self, action: #selector(textFieldsChanged), for: .editingChanged)
         emailField.addTarget(self, action: #selector(validateEmailField), for: .editingChanged)
         emailField.backgroundColor = .white
+        emailField.textColor = textColor
         emailField.layer.cornerRadius = 25
-//        emailField.placeholder = "Email"
         emailField.textAlignment = .center
         emailField.attributedPlaceholder = NSAttributedString(string: "Email", attributes: [NSAttributedString.Key.foregroundColor : placeholdersColor])
         emailField.snp.makeConstraints { (make) in
@@ -96,8 +97,8 @@ class RegistrationViewController: UIViewController {
         self.view.addSubview(nameField)
         nameField.addTarget(self, action: #selector(textFieldsChanged), for: .editingChanged)
         nameField.backgroundColor = .white
+        nameField.textColor = textColor
         nameField.layer.cornerRadius = 25
-//        nameField.placeholder = "Имя"
         nameField.textAlignment = .center
         nameField.attributedPlaceholder = NSAttributedString(string: "Имя", attributes: [NSAttributedString.Key.foregroundColor : placeholdersColor])
         nameField.snp.makeConstraints { (make) in
@@ -126,8 +127,8 @@ class RegistrationViewController: UIViewController {
         
         birthDateTextField.inputAccessoryView = toolbar
         birthDateTextField.backgroundColor = .white
+        birthDateTextField.textColor = textColor
         birthDateTextField.layer.cornerRadius = 25
-//        birthDateTextField.placeholder = "Дата рождения"
         birthDateTextField.textAlignment = .center
         birthDateTextField.attributedPlaceholder = NSAttributedString(string: "Дата рождения", attributes: [NSAttributedString.Key.foregroundColor : placeholdersColor])
         birthDateTextField.snp.makeConstraints { (make) in

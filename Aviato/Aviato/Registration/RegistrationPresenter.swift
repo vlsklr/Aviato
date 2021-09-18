@@ -21,23 +21,28 @@ class RegistrationPresenter: IRegistrationPresenter {
     func registerUser(view: IRegistrationViewController, username: String, password: String, birthDate: Date, email: String, name: String) {
         if username.isEmpty || password.isEmpty {
             view.showAlert(message: "Введите данные")
-        } else if let user = storageManager.loadUser(username: username, userID: nil) {
-            view.showAlert(message: "Пользователь \(user.username) уже существует")
-        }
-        else {
+        } else {
             let hashedPassword = Crypto.getHash(inputString: username + password)
-            let user = UserViewModel(userID: UUID(), username: username, password: hashedPassword, birthDate: birthDate, email: email, name: name, avatarPath: "")
-            storageManager.addUser(user: user)
-            Auth.auth().createUser(withEmail: email, password: password) { (result, error) in
-                        if let _eror = error {
-                            //something bad happning
-                            print(_eror.localizedDescription )
-                        }else{
-                            //user registered successfully
-                            print(result)
-                        }
-                     }
-            view.dismissView()
+            let registerResponse = FirebaseManager.registerUser(email: email, password: hashedPassword)
+            if registerResponse.0 {
+                let user = UserViewModel(userID: UUID(uuidString: registerResponse.1) ?? UUID(), username: username, password: hashedPassword, birthDate: birthDate, email: email, name: name, avatarPath: "")
+                storageManager.addUser(user: user)
+                view.dismissView()
+            } else if !registerResponse.0 && registerResponse.1.contains("The email address is already in use by another account."){
+                view.showAlert(message: "Пользователь уже существует")
+            }
+            
         }
+        
+        //        else if let user = storageManager.loadUser(username: username, userID: nil) {
+        //            view.showAlert(message: "Пользователь \(user.username) уже существует")
+        //        }
+        //        else {
+        //            let hashedPassword = Crypto.getHash(inputString: username + password)
+        //            let user = UserViewModel(userID: UUID(), username: username, password: hashedPassword, birthDate: birthDate, email: email, name: name, avatarPath: "")
+        //            storageManager.addUser(user: user)
+        //
+        //            view.dismissView()
+        //        }
     }
 }

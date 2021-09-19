@@ -62,7 +62,7 @@ class LoginViewController: UIViewController {
         userNameField.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
         userNameField.textAlignment = .center
         userNameField.textColor = .black
-        userNameField.attributedPlaceholder = NSAttributedString(string: "Имя пользователя", attributes: [NSAttributedString.Key.foregroundColor : UIColor.darkGray])
+        userNameField.attributedPlaceholder = NSAttributedString(string: "Email", attributes: [NSAttributedString.Key.foregroundColor : UIColor.darkGray])
 
         userNameField.snp.makeConstraints({ (make) in
             make.leading.equalToSuperview().offset(43)

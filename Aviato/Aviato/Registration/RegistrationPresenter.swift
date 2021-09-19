@@ -22,27 +22,42 @@ class RegistrationPresenter: IRegistrationPresenter {
         if username.isEmpty || password.isEmpty {
             view.showAlert(message: "Введите данные")
         } else {
-            let hashedPassword = Crypto.getHash(inputString: username + password)
-            let registerResponse = FirebaseManager.registerUser(email: email, password: hashedPassword)
-            if registerResponse.0 {
-                let user = UserViewModel(userID: UUID(uuidString: registerResponse.1) ?? UUID(), username: username, password: hashedPassword, birthDate: birthDate, email: email, name: name, avatarPath: "")
-                storageManager.addUser(user: user)
-                view.dismissView()
-            } else if !registerResponse.0 && registerResponse.1.contains("The email address is already in use by another account."){
-                view.showAlert(message: "Пользователь уже существует")
+            let hashedPassword = Crypto.getHash(inputString: email + password)
+            Auth.auth().createUser(withEmail: email, password: hashedPassword) { (result, error) in
+                if let _eror = error as? NSError{
+                    switch AuthErrorCode(rawValue: _eror.code) {
+                    case .emailAlreadyInUse:
+                        view.showAlert(message: "Пользователь уже существует")
+                    case .weakPassword:
+                        view.showAlert(message: "Пароль должен содержать более 6 символов")
+                    default:
+                        view.showAlert(message: "Что-то пошло не так - попробуйте позже")
+                    }
+                    print(_eror.localizedDescription)
+                    
+                }else{
+                    print(result?.user.uid)
+                    guard let userIDString = result?.user.uid else {return}
+                    let user = UserViewModel(userID: UUID(uuidString: userIDString) ?? UUID(), username: username, password: hashedPassword, birthDate: birthDate, email: email, name: name, avatarPath: "")
+                    self.storageManager.addUser(user: user)
+                    view.dismissView()
+                    
+                }
             }
             
         }
         
-        //        else if let user = storageManager.loadUser(username: username, userID: nil) {
-        //            view.showAlert(message: "Пользователь \(user.username) уже существует")
-        //        }
-        //        else {
-        //            let hashedPassword = Crypto.getHash(inputString: username + password)
-        //            let user = UserViewModel(userID: UUID(), username: username, password: hashedPassword, birthDate: birthDate, email: email, name: name, avatarPath: "")
-        //            storageManager.addUser(user: user)
-        //
-        //            view.dismissView()
-        //        }
     }
+    
+    //        else if let user = storageManager.loadUser(username: username, userID: nil) {
+    //            view.showAlert(message: "Пользователь \(user.username) уже существует")
+    //        }
+    //        else {
+    //            let hashedPassword = Crypto.getHash(inputString: username + password)
+    //            let user = UserViewModel(userID: UUID(), username: username, password: hashedPassword, birthDate: birthDate, email: email, name: name, avatarPath: "")
+    //            storageManager.addUser(user: user)
+    //
+    //            view.dismissView()
+    //        }
+    
 }

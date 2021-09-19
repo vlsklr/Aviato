@@ -6,7 +6,7 @@
 //
 
 import Foundation
-
+import FirebaseAuth
 
 class LoginPresenter: ILoginPresenter {
     
@@ -17,16 +17,37 @@ class LoginPresenter: ILoginPresenter {
         if username.isEmpty || password.isEmpty {
             view.showAlert(message: "Введите данные")
         } else {
-            let user = storageManager.loadUser(username: username, userID: nil)
             let hashedPassword = Crypto.getHash(inputString: username + password)
-            if user?.username == username && user?.password == hashedPassword && user?.userID != nil {
-                self.userID = user!.userID
-                KeyChainManager.saveSessionToKeyChain(userID: userID)
-                AppDelegate.shared.rootViewController.switchToMainScreen(userID: userID)
+            Auth.auth().signIn(withEmail: username, password: hashedPassword) { result, error in
+                if let error = error as? NSError {
+                    switch AuthErrorCode(rawValue: error.code) {
+                    case .invalidEmail, .wrongPassword:
+                        view.showAlert(message: "Данные неверны или такого пользователя не существует")
+                        print("Error: \(error.localizedDescription)")
+                    default:
+                        view.showAlert(message: "Что-то пошло не так, попробуйте позже")
+                    }
+                } else {
+                    let userInfo = Auth.auth().currentUser
+                    let email = userInfo?.email
+                    guard let userIDStr = userInfo?.uid else { return }
+                    self.userID = UUID(uuidString: userIDStr) ?? UUID()
+                    KeyChainManager.saveSessionToKeyChain(userID: self.userID)
+                    AppDelegate.shared.rootViewController.switchToMainScreen(userID: self.userID)
+                }
             }
-            else {
-                view.showAlert(message: "Данные неверны или такого пользователя не существует")
-            }
+            
+            
+//            let user = storageManager.loadUser(username: username, userID: nil)
+//            let hashedPassword = Crypto.getHash(inputString: username + password)
+//            if user?.username == username && user?.password == hashedPassword && user?.userID != nil {
+//                self.userID = user!.userID
+//                KeyChainManager.saveSessionToKeyChain(userID: userID)
+//                AppDelegate.shared.rootViewController.switchToMainScreen(userID: userID)
+//            }
+//            else {
+//                view.showAlert(message: "Данные неверны или такого пользователя не существует")
+//            }
         }
     }
     

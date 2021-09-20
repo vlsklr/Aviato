@@ -13,12 +13,12 @@ class LoginPresenter: ILoginPresenter {
     let storageManager: IStorageManager = StorageManager()
     var userID: UUID = UUID()
     
-    func authentificateUser(view: IAlert,username: String, password: String) {
-        if username.isEmpty || password.isEmpty {
+    func authentificateUser(view: IAlert,email: String, password: String) {
+        if email.isEmpty || password.isEmpty {
             view.showAlert(message: "Введите данные")
         } else {
-            let hashedPassword = Crypto.getHash(inputString: username + password)
-            Auth.auth().signIn(withEmail: username, password: hashedPassword) { result, error in
+            let hashedPassword = Crypto.getHash(inputString: email + password)
+            Auth.auth().signIn(withEmail: email, password: hashedPassword) { result, error in
                 if let error = error as? NSError {
                     switch AuthErrorCode(rawValue: error.code) {
                     case .invalidEmail, .wrongPassword:
@@ -29,7 +29,7 @@ class LoginPresenter: ILoginPresenter {
                     }
                 } else {
                     let userInfo = Auth.auth().currentUser
-                    let email = userInfo?.email
+                    //let email = userInfo?.email
                     guard let userIDStr = userInfo?.uid else { return }
                     self.userID = UUID(uuidString: userIDStr) ?? UUID()
                     KeyChainManager.saveSessionToKeyChain(userID: self.userID)

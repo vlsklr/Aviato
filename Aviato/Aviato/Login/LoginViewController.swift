@@ -14,7 +14,7 @@ protocol IloginViewController {
 
 class LoginViewController: UIViewController {
     
-    let userNameField: UITextField = UITextField()
+    let emailField: UITextField = UITextField()
     let passwordField: UITextField = UITextField()
     let authButton: UIButton = UIButton()
     let registerButton: UIButton = UIButton()
@@ -55,16 +55,16 @@ class LoginViewController: UIViewController {
     }
     
     func setupUsernameField() {
-        self.view.addSubview(userNameField)
-        userNameField.backgroundColor = .white
+        self.view.addSubview(emailField)
+        emailField.backgroundColor = .white
 //        userNameField.placeholder = "Имя пользователя"
-        userNameField.layer.cornerRadius = 25
-        userNameField.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
-        userNameField.textAlignment = .center
-        userNameField.textColor = .black
-        userNameField.attributedPlaceholder = NSAttributedString(string: "Email", attributes: [NSAttributedString.Key.foregroundColor : UIColor.darkGray])
+        emailField.layer.cornerRadius = 25
+        emailField.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
+        emailField.textAlignment = .center
+        emailField.textColor = .black
+        emailField.attributedPlaceholder = NSAttributedString(string: "Email", attributes: [NSAttributedString.Key.foregroundColor : UIColor.darkGray])
 
-        userNameField.snp.makeConstraints({ (make) in
+        emailField.snp.makeConstraints({ (make) in
             make.leading.equalToSuperview().offset(43)
             make.trailing.equalToSuperview().offset(-43)
             make.top.equalTo(logoView.snp.bottom).offset(75)
@@ -83,7 +83,7 @@ class LoginViewController: UIViewController {
         passwordField.attributedPlaceholder = NSAttributedString(string: "Пароль", attributes: [NSAttributedString.Key.foregroundColor : UIColor.darkGray])
         self.view.addSubview(passwordField)
         passwordField.snp.makeConstraints({ (make) in
-            make.top.equalTo(userNameField.snp.bottom)
+            make.top.equalTo(emailField.snp.bottom)
             make.leading.equalToSuperview().offset(43)
             make.trailing.equalToSuperview().offset(-43)
             make.height.equalTo(50)
@@ -151,8 +151,8 @@ class LoginViewController: UIViewController {
     
     @objc func authAction() {
         toggleAnimationButtonColor(button: self.authButton)
-        guard let username = userNameField.text, let password = passwordField.text else{return}
-        presenter.authentificateUser(view: self, username: username, password: password)
+        guard let email = emailField.text, let password = passwordField.text else{return}
+        presenter.authentificateUser(view: self, email: email.lowercased(), password: password)
     }
     
     @objc func hideKeyboardOnSwipeDown() {

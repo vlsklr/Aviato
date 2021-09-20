@@ -19,7 +19,7 @@ class RegistrationPresenter: IRegistrationPresenter {
     private let storageManager: IStorageManager = StorageManager()
     
     func registerUser(view: IRegistrationViewController, username: String, password: String, birthDate: Date, email: String, name: String) {
-        if username.isEmpty || password.isEmpty {
+        if email.isEmpty || password.isEmpty {
             view.showAlert(message: "Введите данные")
         } else {
             let hashedPassword = Crypto.getHash(inputString: email + password)
@@ -35,7 +35,7 @@ class RegistrationPresenter: IRegistrationPresenter {
                     }
                     print(_eror.localizedDescription)
                     
-                }else{
+                } else {
                     print(result?.user.uid)
                     guard let userIDString = result?.user.uid else {return}
                     let user = UserViewModel(userID: UUID(uuidString: userIDString) ?? UUID(), username: username, password: hashedPassword, birthDate: birthDate, email: email, name: name, avatarPath: "")
@@ -44,9 +44,7 @@ class RegistrationPresenter: IRegistrationPresenter {
                     
                 }
             }
-            
         }
-        
     }
     
     //        else if let user = storageManager.loadUser(username: username, userID: nil) {

@@ -13,10 +13,10 @@ protocol IFoundFlyghtPresenter {
 }
 
 class FoundFlyghtPresenter: IFoundFlyghtPresenter {
-    let userID: UUID
+    let userID: String
     let storageManager: IStorageManager = StorageManager()
     
-    init(userID: UUID) {
+    init(userID: String) {
         self.userID = userID
     }
     

@@ -19,11 +19,11 @@ class MainRouter {
     private let userProfileViewController: UserProfileViewController
     private let userProfileNavigationController: UINavigationController
     private let userProfilePresenter: IUserProfilePresenter
-    private let userID: UUID
+    private let userID: String
     
     
-    init(userID: UUID) {
-        self.userID = UUID()
+    init(userID: String) {
+        self.userID = userID
         self.tabBar = UITabBarController()
         tabBar.tabBar.barTintColor =  UIColor(red: 0.243, green: 0.776, blue: 1, alpha: 1)
         self.mainPresenter = MainPresenter(userID: userID)

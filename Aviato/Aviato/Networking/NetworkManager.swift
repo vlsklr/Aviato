@@ -48,7 +48,7 @@ struct FlyghtInfo: Decodable {
 
 class NetworkManager: INetworkManager {
     let headers = [
-        "x-rapidapi-key": "",
+        "x-rapidapi-key": "70a607d589msh88f1ca71d373f94p1f8c7ajsn073208dac2df",
         "x-rapidapi-host": "aerodatabox.p.rapidapi.com"
     ]
     
@@ -57,11 +57,12 @@ class NetworkManager: INetworkManager {
         dateFormatter.dateFormat = "yyyy-MM-dd"
         let dateString = dateFormatter.string(from: Date())
         guard let url = URL(string: "https://aerodatabox.p.rapidapi.com/flights/number/\(flyghtNumber)/\(dateString)?withAircraftImage=true&withLocation=true") else { return }
+        print(url)
         let request = NSMutableURLRequest(url: url, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 10.0)
         request.httpMethod = "GET"
         request.allHTTPHeaderFields = headers
         let session = URLSession.shared
-        request.timeoutInterval = 50
+        request.timeoutInterval = 20
         var flyght: FlyghtInfo? = nil
         session.dataTask(with: request as URLRequest, completionHandler: { (data, response, error) -> Void in
             if (error != nil) {

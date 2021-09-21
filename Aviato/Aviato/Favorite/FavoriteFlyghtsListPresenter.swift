@@ -19,10 +19,10 @@ protocol IFavoriteFlyghtListPresenter {
 class FavoriteFlyghtListPresenter: IFavoriteFlyghtListPresenter {
     let storageManager: IStorageManager = StorageManager()
     let networkManager = NetworkManager()
-    let userID: UUID
+    let userID: String
     
     
-    init(userID: UUID) {
+    init(userID: String) {
         self.userID = userID
     }
     

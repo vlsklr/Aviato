@@ -34,7 +34,7 @@ class RootViewController: UIViewController {
         currentViewController = loginViewController
     }
     
-    func showMainScreen(userID: UUID) {
+    func showMainScreen(userID: String) {
         let router = MainRouter(userID: userID)
         let mainViewController = router.getTabBar()
         addChild(mainViewController)
@@ -47,7 +47,7 @@ class RootViewController: UIViewController {
         currentViewController = mainViewController
     }
     
-    func switchToMainScreen(userID: UUID) {
+    func switchToMainScreen(userID: String) {
         let router = MainRouter(userID: userID)
         let mainViewController = router.getTabBar()
         animateFadeTransition(to: mainViewController)

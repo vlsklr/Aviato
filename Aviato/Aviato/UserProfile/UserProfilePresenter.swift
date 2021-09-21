@@ -18,16 +18,16 @@ protocol IUserProfilePresenter {
 
 class UserProfilePresenter: IUserProfilePresenter {
 
-    let userID: UUID
+    let userID: String
     let storageManager = StorageManager()
     
-    init(userID: UUID) {
+    init(userID: String) {
         self.userID = userID
     }
     
     func getUser(userViewController: IUserProfileViewController) {
         let user = storageManager.loadUser(username: nil, userID: userID)
-        userViewController.showUserInfo(userInfo: user ?? UserViewModel(userID: UUID(), username: "", password: "", birthDate: Date(), email: "", name: "", avatarPath: ""))
+        userViewController.showUserInfo(userInfo: user ?? UserViewModel(userID: "", username: "", password: "", birthDate: Date(), email: "", name: "", avatarPath: ""))
         
     }
     

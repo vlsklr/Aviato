@@ -11,8 +11,7 @@ import FirebaseAuth
 class LoginPresenter: ILoginPresenter {
     
     let storageManager: IStorageManager = StorageManager()
-    var userID: UUID = UUID()
-    
+//    var userID: String = ""
     func authentificateUser(view: IAlert,email: String, password: String) {
         if email.isEmpty || password.isEmpty {
             view.showAlert(message: "Введите данные")
@@ -30,10 +29,10 @@ class LoginPresenter: ILoginPresenter {
                 } else {
                     let userInfo = Auth.auth().currentUser
                     //let email = userInfo?.email
-                    guard let userIDStr = userInfo?.uid else { return }
-                    self.userID = UUID(uuidString: userIDStr) ?? UUID()
-                    KeyChainManager.saveSessionToKeyChain(userID: self.userID)
-                    AppDelegate.shared.rootViewController.switchToMainScreen(userID: self.userID)
+                    guard let userID = userInfo?.uid else { return }
+//                    self.userID = UUID(uuidString: userIDStr) ?? UUID()
+                    KeyChainManager.saveSessionToKeyChain(userID: userID)
+                    AppDelegate.shared.rootViewController.switchToMainScreen(userID: userID)
                 }
             }
             

@@ -8,7 +8,7 @@
 import Foundation
 
 struct FlyghtViewModel {
-    let holder: UUID
+    let holder: String
     let flyghtID: UUID
     var flyghtNumber: String
     var departureAirport: String

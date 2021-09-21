@@ -265,7 +265,7 @@ class EditUserProfileViewController: UIViewController {
         guard let username = usernameField.text, let email = emailField.text, let name = nameField.text else {
             return
         }
-        let userInfo: UserViewModel = UserViewModel(userID: UUID(), username: username, password: "String", birthDate: datePicker.date, email: email, name: name, avatarPath: "")
+        let userInfo: UserViewModel = UserViewModel(userID: "", username: username, password: "String", birthDate: datePicker.date, email: email, name: name, avatarPath: "")
         if editProfilePresenter.updateUserInfo(view: self, userInfo: userInfo, userAvatar: userPhoto.image) {
             dismiss(animated: true)
         }

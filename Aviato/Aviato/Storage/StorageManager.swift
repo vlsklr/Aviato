@@ -21,7 +21,7 @@ class StorageManager: IStorageManager {
         return container
     }()
     
-    func loadUser(username: String?, userID: UUID?) -> UserViewModel? {
+    func loadUser(username: String?, userID: String?) -> UserViewModel? {
         let fetchRequest: NSFetchRequest<User> = User.fetchRequest()
         if let userName = username {
             fetchRequest.predicate = NSPredicate(format: "\(#keyPath(User.userName)) = %@", userName)
@@ -29,7 +29,7 @@ class StorageManager: IStorageManager {
             fetchRequest.predicate = NSPredicate(format: "\(#keyPath(User.userID)) = %@", "\(userID)")
         }
         guard let object = try? self.persistentContainer.viewContext.fetch(fetchRequest).first else { return nil }
-        let user: UserViewModel = UserViewModel(userID: object.userID ?? UUID(), username: object.userName ?? "empty" , password: object.password ?? "empty", birthDate: object.birthDate ?? Date(), email: object.email ?? "empty", name: object.name ?? "empty", avatarPath: object.avatarPath ?? "")
+        let user: UserViewModel = UserViewModel(userID: object.userID ?? "", username: object.userName ?? "empty" , password: object.password ?? "empty", birthDate: object.birthDate ?? Date(), email: object.email ?? "empty", name: object.name ?? "empty", avatarPath: object.avatarPath ?? "")
         return user
     }
     
@@ -48,7 +48,7 @@ class StorageManager: IStorageManager {
         }
     }
     
-    func deleteUser(userID: UUID) {
+    func deleteUser(userID: String) {
         let context = persistentContainer.viewContext
         let fetchRequest: NSFetchRequest<User> = User.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "\(#keyPath(User.userID)) = %@", "\(userID)")
@@ -61,7 +61,7 @@ class StorageManager: IStorageManager {
         try? context.save()
     }
     
-    func updateUser(userID: UUID, userInfo: UserViewModel) {
+    func updateUser(userID: String, userInfo: UserViewModel) {
         let context = persistentContainer.viewContext
         do {
             let fetchRequest: NSFetchRequest<User> = User.fetchRequest()
@@ -136,7 +136,7 @@ class StorageManager: IStorageManager {
         }
     }
     
-    func getFlyghts(userID: UUID) -> [FlyghtViewModel]? {
+    func getFlyghts(userID: String) -> [FlyghtViewModel]? {
         let fetchRequest: NSFetchRequest<Flyght> = Flyght.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "ANY user.userID = %@", "\(userID)")
         let dateFormatter = DateFormatter()
@@ -148,7 +148,7 @@ class StorageManager: IStorageManager {
         return flyghts
     }
     
-    func flyghtsCount(userID: UUID) -> Int {
+    func flyghtsCount(userID: String) -> Int {
         let fetchRequest: NSFetchRequest<Flyght> = Flyght.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "ANY user.userID = %@", "\(userID)")
         let flyghtsCount = try? self.persistentContainer.viewContext.fetch(fetchRequest).count
@@ -162,7 +162,7 @@ class StorageManager: IStorageManager {
         dateFormatter.timeZone = TimeZone.current
         fetchRequest.predicate = NSPredicate(format: "flyghtID = %@", "\(flyghtID)")
         if let flyghts = try? self.persistentContainer.viewContext.fetch(fetchRequest).first {
-            let flyghtViewModel = FlyghtViewModel(holder: UUID(), flyghtID: flyghtID, flyghtNumber: (flyghts.flyghtNumber!), departureAirport: flyghts.departureAirport!, arrivalAirport: flyghts.arrivalAirport!, departureDate: flyghts.departureTime!, arrivalDate: flyghts.arrivalTime!, aircraft: flyghts.aircraft!, airline: flyghts.airline!, status: flyghts.status!, departureDateLocal: dateFormatter.string(from: flyghts.departureTime!), arrivalDateLocal: dateFormatter.string(from: flyghts.arrivalTime!), aircraftImage: flyghts.aircraftImage)
+            let flyghtViewModel = FlyghtViewModel(holder: "", flyghtID: flyghtID, flyghtNumber: (flyghts.flyghtNumber!), departureAirport: flyghts.departureAirport!, arrivalAirport: flyghts.arrivalAirport!, departureDate: flyghts.departureTime!, arrivalDate: flyghts.arrivalTime!, aircraft: flyghts.aircraft!, airline: flyghts.airline!, status: flyghts.status!, departureDateLocal: dateFormatter.string(from: flyghts.departureTime!), arrivalDateLocal: dateFormatter.string(from: flyghts.arrivalTime!), aircraftImage: flyghts.aircraftImage)
             return flyghtViewModel
         }
         return nil
@@ -203,7 +203,7 @@ class StorageManager: IStorageManager {
         try? context.save()
     }
     
-    func contains(userID: UUID, flyghtNumber: String) -> Bool {
+    func contains(userID: String, flyghtNumber: String) -> Bool {
         let fetchRequest: NSFetchRequest<Flyght> = Flyght.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "user.userID = %@ AND flyghtNumber = %@", argumentArray: [userID, flyghtNumber])
         if (try? self.persistentContainer.viewContext.fetch(fetchRequest).first) != nil {

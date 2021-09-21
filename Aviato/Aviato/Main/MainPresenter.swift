@@ -10,9 +10,9 @@ import Foundation
 class MainPresenter: IMainPresenter {
     
     let networkManager: INetworkManager = NetworkManager()
-    var userID: UUID
+    var userID: String
     
-    init(userID: UUID) {
+    init(userID: String) {
         self.userID = userID
     }
     

@@ -37,8 +37,8 @@ class RegistrationPresenter: IRegistrationPresenter {
                     
                 } else {
                     print(result?.user.uid)
-                    guard let userIDString = result?.user.uid else {return}
-                    let user = UserViewModel(userID: UUID(uuidString: userIDString) ?? UUID(), username: username, password: hashedPassword, birthDate: birthDate, email: email, name: name, avatarPath: "")
+                    guard let userID = result?.user.uid else {return}
+                    let user = UserViewModel(userID: userID, username: username, password: hashedPassword, birthDate: birthDate, email: email, name: name, avatarPath: "")
                     self.storageManager.addUser(user: user)
                     view.dismissView()
                     

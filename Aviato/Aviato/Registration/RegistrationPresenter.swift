@@ -8,6 +8,7 @@
 import Foundation
 
 import FirebaseAuth
+import Firebase
 
 
 protocol IRegistrationPresenter {
@@ -40,6 +41,32 @@ class RegistrationPresenter: IRegistrationPresenter {
                     guard let userID = result?.user.uid else {return}
                     let user = UserViewModel(userID: userID, username: username, password: hashedPassword, birthDate: birthDate, email: email, name: name, avatarPath: "")
                     self.storageManager.addUser(user: user)
+                    let db = Firestore.firestore()
+                    var ref: DocumentReference? = nil
+                    ref = db.collection("users").addDocument(data: [
+                        "userID": userID,
+                        "name": name,
+                        "email": email
+                    ]) { err in
+                        if let err = err {
+                            print("Error adding document: \(err)")
+                        } else {
+                            print("Document added with ID: \(ref!.documentID)")
+                        }
+                    }
+                    
+                    let currentUser = db.collection("users").whereField("userID", isEqualTo: userID)
+                    
+                    db.collection("users").getDocuments() { (querySnapshot, err) in
+                        if let err = err {
+                            print("Error getting documents: \(err)")
+                        } else {
+                            for document in querySnapshot!.documents {
+                                print("\(document.documentID) => \(document.data())")
+                            }
+                        }
+                    }
+                    
                     view.dismissView()
                     
                 }

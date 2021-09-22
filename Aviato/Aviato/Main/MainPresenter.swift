@@ -20,7 +20,7 @@ class MainPresenter: IMainPresenter {
         DispatchQueue.main.async {
             view.toggleActivityIndicator()
         }
-        self.networkManager.loadFlyghtInfo(flyghtNumber: flyghtNumber, completion: {[weak self] result in
+        self.networkManager.loadFlyghtInfo(flyghtNumber: flyghtNumber.replacingOccurrences(of: " ", with: ""), completion: {[weak self] result in
             switch result {
             case .failure(let error):
                 print(error)

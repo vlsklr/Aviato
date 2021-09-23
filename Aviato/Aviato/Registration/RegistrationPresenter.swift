@@ -55,15 +55,12 @@ class RegistrationPresenter: IRegistrationPresenter {
                         }
                     }
                     
-                    let currentUser = db.collection("users").whereField("userID", isEqualTo: userID)
-                    
-                    db.collection("users").getDocuments() { (querySnapshot, err) in
-                        if let err = err {
-                            print("Error getting documents: \(err)")
+                    db.collection("users").whereField("userID", isEqualTo: userID).getDocuments { QuerySnapshot, error in
+                        if let _error = error {
+                            print("SomethingWrong")
                         } else {
-                            for document in querySnapshot!.documents {
-                                print("\(document.documentID) => \(document.data())")
-                            }
+                            let user = QuerySnapshot!.documents.first
+                            print(user)
                         }
                     }
                     

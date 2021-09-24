@@ -6,10 +6,7 @@
 //
 
 import Foundation
-
 import FirebaseAuth
-import Firebase
-
 
 protocol IRegistrationPresenter {
     func registerUser(view: IRegistrationViewController, username: String, password: String, birthDate: Date, email: String, name: String)
@@ -18,15 +15,17 @@ protocol IRegistrationPresenter {
 
 class RegistrationPresenter: IRegistrationPresenter {
     private let storageManager: IStorageManager = StorageManager()
-    
+    let firebaseManager = FirebaseManager()
     func registerUser(view: IRegistrationViewController, username: String, password: String, birthDate: Date, email: String, name: String) {
         if email.isEmpty || password.isEmpty {
             view.showAlert(message: "Введите данные")
         } else {
             let hashedPassword = Crypto.getHash(inputString: email + password)
-            Auth.auth().createUser(withEmail: email, password: hashedPassword) { (result, error) in
-                if let _eror = error as? NSError{
-                    switch AuthErrorCode(rawValue: _eror.code) {
+            firebaseManager.createUser(email: email, password: hashedPassword) {[weak self] result in
+                switch result {
+                case .failure(let error):
+                    print(error)
+                    switch AuthErrorCode(rawValue: error.code) {
                     case .emailAlreadyInUse:
                         view.showAlert(message: "Пользователь уже существует")
                     case .weakPassword:
@@ -34,52 +33,32 @@ class RegistrationPresenter: IRegistrationPresenter {
                     default:
                         view.showAlert(message: "Что-то пошло не так - попробуйте позже")
                     }
-                    print(_eror.localizedDescription)
-                    
-                } else {
-                    print(result?.user.uid)
-                    guard let userID = result?.user.uid else {return}
+                case .success(let userID):
+                    print(userID)
                     let user = UserViewModel(userID: userID, username: username, password: hashedPassword, birthDate: birthDate, email: email, name: name, avatarPath: "")
-                    self.storageManager.addUser(user: user)
-                    let db = Firestore.firestore()
-                    var ref: DocumentReference? = nil
-                    ref = db.collection("users").addDocument(data: [
-                        "userID": userID,
-                        "name": name,
-                        "email": email
-                    ]) { err in
-                        if let err = err {
-                            print("Error adding document: \(err)")
-                        } else {
-                            print("Document added with ID: \(ref!.documentID)")
-                        }
+                    guard let savingProfileResult = self?.firebaseManager.createUserProfile(userProfile: user) else {
+                        return
                     }
-                    
-                    db.collection("users").whereField("userID", isEqualTo: userID).getDocuments { QuerySnapshot, error in
-                        if let _error = error {
-                            print("SomethingWrong")
-                        } else {
-                            let user = QuerySnapshot!.documents.first
-                            print(user)
-                        }
+                    if savingProfileResult {
+                        self?.storageManager.addUser(user: user)
+                        view.dismissView()
+                    } else {
+                        view.showAlert(message: "Что-то пошло не так - попробуйте позже")
                     }
-                    
-                    view.dismissView()
                     
                 }
             }
+            
+            //                    db.collection("users").whereField("userID", isEqualTo: userID).getDocuments { QuerySnapshot, error in
+            //                        if let _error = error {
+            //                            print("SomethingWrong")
+            //                        } else {
+            //                            let user = QuerySnapshot!.documents.first
+            //                            print(user)
+            //                        }
+            //                    }
+            
+            
         }
     }
-    
-    //        else if let user = storageManager.loadUser(username: username, userID: nil) {
-    //            view.showAlert(message: "Пользователь \(user.username) уже существует")
-    //        }
-    //        else {
-    //            let hashedPassword = Crypto.getHash(inputString: username + password)
-    //            let user = UserViewModel(userID: UUID(), username: username, password: hashedPassword, birthDate: birthDate, email: email, name: name, avatarPath: "")
-    //            storageManager.addUser(user: user)
-    //
-    //            view.dismissView()
-    //        }
-    
 }

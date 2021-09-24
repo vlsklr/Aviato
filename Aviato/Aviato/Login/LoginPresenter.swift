@@ -17,25 +17,25 @@ class LoginPresenter: ILoginPresenter {
             view.showAlert(message: "Введите данные")
         } else {
             let hashedPassword = Crypto.getHash(inputString: email + password)
-            Auth.auth().signIn(withEmail: email, password: hashedPassword) { result, error in
-                if let error = error as? NSError {
-                    switch AuthErrorCode(rawValue: error.code) {
-                    case .invalidEmail, .wrongPassword:
-                        view.showAlert(message: "Данные неверны или такого пользователя не существует")
-                        print("Error: \(error.localizedDescription)")
-                    default:
-                        view.showAlert(message: "Что-то пошло не так, попробуйте позже")
+            FirebaseManager.authenticateUser(email: email, password: hashedPassword) {[weak self] result in
+                switch result {
+                case .failure(let error):
+                    if let _error = error as? FirebaseErrors {
+                        switch _error {
+                        case .invalidEmail, .wrongPassword:
+                            view.showAlert(message: "Email или пароль неправильный")
+                        default:
+                            view.showAlert(message: "Что-то пошло не так - попробуйте позже")
+                        }
                     }
-                } else {
-                    let userInfo = Auth.auth().currentUser
-                    //let email = userInfo?.email
-                    guard let userID = userInfo?.uid else { return }
-//                    self.userID = UUID(uuidString: userIDStr) ?? UUID()
+                    
+                case .success(let userID):
                     KeyChainManager.saveSessionToKeyChain(userID: userID)
                     AppDelegate.shared.rootViewController.switchToMainScreen(userID: userID)
                 }
             }
-            
+
+
             
 //            let user = storageManager.loadUser(username: username, userID: nil)
 //            let hashedPassword = Crypto.getHash(inputString: username + password)

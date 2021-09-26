@@ -7,16 +7,23 @@
 
 import UIKit
 
+
 class RootViewController: UIViewController {
     private var currentViewController: UIViewController = UIViewController()
-    
+    private let firebase = FirebaseManager()
     override func viewDidLoad() {
         super.viewDidLoad()
-        guard let userID = KeyChainManager.readUserSession() else {
+        guard let userID = KeyChainManager.readUserSession(), let firebaseUserID = FirebaseManager.getCurrentUserID() else {
             showLoginScreen()
             return
         }
-        showMainScreen(userID: userID)
+        if userID == firebaseUserID {
+            showMainScreen(userID: userID)
+        } else {
+            KeyChainManager.deleteUserSession()
+            FirebaseManager.logout()
+            showLoginScreen()
+        }
 
 
     }

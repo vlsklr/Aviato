@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import FirebaseAuth
 
 protocol IRegistrationPresenter {
     func registerUser(view: IRegistrationViewController, username: String, password: String, birthDate: Date, email: String, name: String)
@@ -24,14 +23,18 @@ class RegistrationPresenter: IRegistrationPresenter {
             firebaseManager.createUser(email: email, password: hashedPassword) {[weak self] result in
                 switch result {
                 case .failure(let error):
-                    print(error)
-                    switch AuthErrorCode(rawValue: error.code) {
-                    case .emailAlreadyInUse:
-                        view.showAlert(message: "Пользователь уже существует")
-                    case .weakPassword:
-                        view.showAlert(message: "Пароль должен содержать более 6 символов")
-                    default:
-                        view.showAlert(message: "Что-то пошло не так - попробуйте позже")
+                    if let _error = error as? FirebaseErrors {
+                        print(error)
+                        switch _error {
+                        case .emailAlreadyInUse:
+                            view.showAlert(message: "Пользователь уже существует")
+                        case .weakPassword:
+                            view.showAlert(message: "Пароль должен содержать более 6 символов")
+                        case .other:
+                            view.showAlert(message: "Что-то пошло не так - попробуйте позже")
+                        default:
+                            view.showAlert(message: "Что-то пошло не так - попробуйте позже")
+                        }
                     }
                 case .success(let userID):
                     print(userID)

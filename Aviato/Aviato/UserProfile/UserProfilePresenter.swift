@@ -32,6 +32,8 @@ class UserProfilePresenter: IUserProfilePresenter {
     }
     
     func logout() {
+        storageManager.deleteUser(userID: userID)
+        FirebaseManager.logout()
         KeyChainManager.deleteUserSession()
         AppDelegate.shared.rootViewController.switchToLogout()
     }

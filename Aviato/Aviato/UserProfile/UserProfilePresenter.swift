@@ -27,6 +27,7 @@ class UserProfilePresenter: IUserProfilePresenter {
     
     func getUser(userViewController: IUserProfileViewController) {
         let user = storageManager.loadUser(username: nil, userID: userID)
+        FirebaseManager.loadUserInfo(userID: userID)
         userViewController.showUserInfo(userInfo: user ?? UserViewModel(userID: "", username: "", password: "", birthDate: Date(), email: "", name: "", avatarPath: ""))
         
     }

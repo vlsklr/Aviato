@@ -9,9 +9,16 @@ import Foundation
 import FirebaseAuth
 import Firebase
 
+
+struct FirebaseUser: Decodable {
+    let name: String
+    let userID: String
+    let email: String
+}
+
 final class FirebaseManager {
-    private let db = Firestore.firestore()
-    private var ref: DocumentReference? = nil
+    private static let db = Firestore.firestore()
+    private static var ref: DocumentReference? = nil
     
     static func authenticateUser(email: String, password: String, completion: @escaping(Result<String, Error>) -> Void) {
         Auth.auth().signIn(withEmail: email, password: password) { result, error in
@@ -56,7 +63,7 @@ final class FirebaseManager {
         }
     }
     
-    func createUserProfile(userProfile: UserViewModel) -> Bool {
+    static func createUserProfile(userProfile: UserViewModel) -> Bool {
         ref = db.collection("users").addDocument(data: [
             "userID": userProfile.userID,
             "name": userProfile.name,
@@ -81,14 +88,20 @@ final class FirebaseManager {
         return Auth.auth().currentUser?.uid
     }
     
-    func loadUserInfo(userID: String) {
+   static func loadUserInfo(userID: String) {
+        
         db.collection("users").whereField("userID", isEqualTo: userID).getDocuments { QuerySnapshot, error in
             if let _error = error {
                 print("SomethingWrong")
             } else {
                 let user = QuerySnapshot!.documents.first
-  
-                print(user?.data().keys)
+                let dataDes = user?.data().map(String.init(describing: ))
+                for elem in user!.data() {
+                    print(elem)
+                }
+                //                user?.data().
+//                let result: [FirebaseUser] = try! JSONDecoder().decode([FirebaseUser].self, from: user)
+                print(user?.data())
             }
         }
     }

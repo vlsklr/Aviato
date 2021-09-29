@@ -39,15 +39,14 @@ class RegistrationPresenter: IRegistrationPresenter {
                 case .success(let userID):
                     print(userID)
                     let user = UserViewModel(userID: userID, username: username, password: hashedPassword, birthDate: birthDate, email: email, name: name, avatarPath: "")
-                    guard let savingProfileResult = self?.firebaseManager.createUserProfile(userProfile: user) else {
-                        return
-                    }
-                    if savingProfileResult {
+                    if FirebaseManager.createUserProfile(userProfile: user){
                         self?.storageManager.addUser(user: user)
                         view.dismissView()
                     } else {
                         view.showAlert(message: "Что-то пошло не так - попробуйте позже")
+
                     }
+                 
                     
                 }
             }

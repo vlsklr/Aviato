@@ -94,14 +94,29 @@ final class FirebaseManager {
             if let _error = error {
                 print("SomethingWrong")
             } else {
-                let user = QuerySnapshot!.documents.first
-                let dataDes = user?.data().map(String.init(describing: ))
-                for elem in user!.data() {
-                    print(elem)
+                guard let user = QuerySnapshot?.documents.first else {return}
+//                let dataDes = user?.data().map(String.init(describing: ))
+                for element in user.data() {
+                    switch element.key {
+                    case "email":
+                        print("EMAIL: \(element.value)")
+                    case "name":
+                        print("NAME: \(element.value)")
+                    case "birthDate":
+                        print("BIRTHDATE: \(element.value)")
+                        let birthTimeStamp = element.value as? Timestamp
+                        let birthDate = birthTimeStamp?.dateValue()
+                        let dateFormatter = DateFormatter()
+                        dateFormatter.dateFormat = "yyyy-MM-dd HH:mmZ"
+                        dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
+                        print(dateFormatter.string(from: birthDate ?? Date()))
+                    default:
+                        print("OTHER DATA \(element.value)")
+                    }
                 }
                 //                user?.data().
 //                let result: [FirebaseUser] = try! JSONDecoder().decode([FirebaseUser].self, from: user)
-                print(user?.data())
+//                print(user?.data())
             }
         }
     }

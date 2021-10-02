@@ -88,37 +88,40 @@ final class FirebaseManager {
         return Auth.auth().currentUser?.uid
     }
     
-   static func loadUserInfo(userID: String) {
-        
+   static func loadUserInfo(userID: String, completion: @escaping (Result<UserViewModel, Error>) -> Void) {
+    let userID: String = userID
+    var birthDate: Date?
+    var email: String?
+    var name: String?
+//    var avatarPath: String
+    
         db.collection("users").whereField("userID", isEqualTo: userID).getDocuments { QuerySnapshot, error in
             if let _error = error {
+                completion(.failure(_error))
                 print("SomethingWrong")
             } else {
-                guard let user = QuerySnapshot?.documents.first else {return}
-//                let dataDes = user?.data().map(String.init(describing: ))
-                for element in user.data() {
+                guard let userInfo = QuerySnapshot?.documents.first else {return}
+                for element in userInfo.data() {
                     switch element.key {
                     case "email":
                         print("EMAIL: \(element.value)")
+                        email = element.value as? String
                     case "name":
                         print("NAME: \(element.value)")
+                        name = element.value as? String
                     case "birthDate":
                         print("BIRTHDATE: \(element.value)")
                         let birthTimeStamp = element.value as? Timestamp
-                        let birthDate = birthTimeStamp?.dateValue()
-                        let dateFormatter = DateFormatter()
-                        dateFormatter.dateFormat = "yyyy-MM-dd HH:mmZ"
-                        dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
-                        print(dateFormatter.string(from: birthDate ?? Date()))
+                        birthDate = birthTimeStamp?.dateValue()
                     default:
                         print("OTHER DATA \(element.value)")
                     }
                 }
-                //                user?.data().
-//                let result: [FirebaseUser] = try! JSONDecoder().decode([FirebaseUser].self, from: user)
-//                print(user?.data())
+                let user = UserViewModel(userID: userID, password: "", birthDate: birthDate ?? Date(), email: email ?? "WrongData", name: name ?? "WrongData", avatarPath: "")
+                completion(.success(user))
             }
         }
+ 
     }
 }
 

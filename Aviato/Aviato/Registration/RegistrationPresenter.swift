@@ -8,14 +8,14 @@
 import Foundation
 
 protocol IRegistrationPresenter {
-    func registerUser(view: IRegistrationViewController, username: String, password: String, birthDate: Date, email: String, name: String)
+    func registerUser(view: IRegistrationViewController, password: String, birthDate: Date, email: String, name: String)
     
 }
 
 class RegistrationPresenter: IRegistrationPresenter {
     private let storageManager: IStorageManager = StorageManager()
     let firebaseManager = FirebaseManager()
-    func registerUser(view: IRegistrationViewController, username: String, password: String, birthDate: Date, email: String, name: String) {
+    func registerUser(view: IRegistrationViewController, password: String, birthDate: Date, email: String, name: String) {
         if email.isEmpty || password.isEmpty {
             view.showAlert(message: "Введите данные")
         } else {
@@ -38,7 +38,7 @@ class RegistrationPresenter: IRegistrationPresenter {
                     }
                 case .success(let userID):
                     print(userID)
-                    let user = UserViewModel(userID: userID, username: username, password: hashedPassword, birthDate: birthDate, email: email, name: name, avatarPath: "")
+                    let user = UserViewModel(userID: userID, password: hashedPassword, birthDate: birthDate, email: email, name: name, avatarPath: "")
                     if FirebaseManager.createUserProfile(userProfile: user){
                         self?.storageManager.addUser(user: user)
                         view.dismissView()

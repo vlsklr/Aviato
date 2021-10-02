@@ -9,7 +9,6 @@ import Foundation
 
 struct UserViewModel {
     let userID: String
-    var username: String
     var password: String
     var birthDate: Date
     var email: String

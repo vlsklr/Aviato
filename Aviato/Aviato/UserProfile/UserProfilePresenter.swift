@@ -17,7 +17,7 @@ protocol IUserProfilePresenter {
 }
 
 class UserProfilePresenter: IUserProfilePresenter {
-
+    
     let userID: String
     let storageManager = StorageManager()
     
@@ -26,10 +26,21 @@ class UserProfilePresenter: IUserProfilePresenter {
     }
     
     func getUser(userViewController: IUserProfileViewController) {
-        let user = storageManager.loadUser(username: nil, userID: userID)
-        FirebaseManager.loadUserInfo(userID: userID)
-        userViewController.showUserInfo(userInfo: user ?? UserViewModel(userID: "", username: "", password: "", birthDate: Date(), email: "", name: "", avatarPath: ""))
-        
+        if let user = storageManager.loadUser(email: nil, userID: userID) {
+            userViewController.showUserInfo(userInfo: user)
+        } else {
+            FirebaseManager.loadUserInfo(userID: userID){ [weak self] result in
+                switch result {
+                case .success(let user):
+                    self?.storageManager.addUser(user: user)
+                    userViewController.showUserInfo(userInfo: user)
+                case .failure(let error):
+                    print("При загрузке данных что-то пошло не так \(error)")
+                }
+            }
+            
+        }
+
     }
     
     func logout() {

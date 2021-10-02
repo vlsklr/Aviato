@@ -17,7 +17,6 @@ class UserProfileViewController: UIViewController {
     
     let presenter: IUserProfilePresenter
     let userPhoto: UIImageView = UIImageView()
-    let usernameLabel: UILabel = UILabel()
     let emailLabel: UILabel = UILabel()
     let nameLabel: UILabel = UILabel()
     let birthDate: UILabel = UILabel()
@@ -42,7 +41,6 @@ class UserProfileViewController: UIViewController {
         self.view.backgroundColor = UIColor(red: 0.243, green: 0.776, blue: 1, alpha: 1)
         navigationController?.setNavigationBarHidden(true, animated: false)
         setupUserImage()
-        setupUsernameLabel()
         setupEmailLabel()
         setupNameLabel()
         setupBirthDateLabel()
@@ -67,28 +65,10 @@ class UserProfileViewController: UIViewController {
             make.height.equalTo(250)
         }
     }
-    
-    func setupUsernameLabel() {
-        self.view.addSubview(usernameLabel)
-        usernameLabel.text = "123456"
-        usernameLabel.backgroundColor = .white
-        usernameLabel.textColor = labelsTextColor
-        usernameLabel.layer.cornerRadius = 25
-        usernameLabel.clipsToBounds = true
-        usernameLabel.textAlignment = .center
-        usernameLabel.numberOfLines = 0
-        usernameLabel.snp.makeConstraints { (make) in
-            //            make.top.equalToSuperview().offset(100)
-            make.top.equalTo(userPhoto.snp.bottom).offset(10)
-            make.leading.equalToSuperview().offset(16)
-            make.trailing.equalToSuperview().offset(-16)
-            make.height.equalTo(50)
-        }
-    }
-    
+        
     func setupEmailLabel() {
         self.view.addSubview(emailLabel)
-        emailLabel.text = "123456"
+        emailLabel.text = ""
         emailLabel.backgroundColor = .white
         emailLabel.textColor = labelsTextColor
         emailLabel.layer.cornerRadius = 25
@@ -96,7 +76,7 @@ class UserProfileViewController: UIViewController {
         emailLabel.textAlignment = .center
         emailLabel.numberOfLines = 0
         emailLabel.snp.makeConstraints { (make) in
-            make.top.equalTo(usernameLabel.snp.bottom).offset(10)
+            make.top.equalTo(userPhoto.snp.bottom).offset(10)
             make.leading.equalToSuperview().offset(16)
             make.trailing.equalToSuperview().offset(-16)
             make.height.equalTo(50)
@@ -105,7 +85,7 @@ class UserProfileViewController: UIViewController {
     
     func setupNameLabel() {
         self.view.addSubview(nameLabel)
-        nameLabel.text = "123456"
+        nameLabel.text = ""
         nameLabel.backgroundColor = .white
         nameLabel.textColor = labelsTextColor
         nameLabel.layer.cornerRadius = 25
@@ -122,7 +102,7 @@ class UserProfileViewController: UIViewController {
     
     func setupBirthDateLabel() {
         self.view.addSubview(birthDate)
-        birthDate.text = "123456"
+        birthDate.text = ""
         birthDate.backgroundColor = .white
         birthDate.textColor = labelsTextColor
         birthDate.layer.cornerRadius = 25
@@ -195,7 +175,7 @@ class UserProfileViewController: UIViewController {
 
 extension UserProfileViewController: IUserProfileViewController {
     func showUserInfo(userInfo: UserViewModel) {
-        usernameLabel.text = "Имя пользователя: " + userInfo.username
+//        usernameLabel.text = "Имя пользователя: " + userInfo.username
         emailLabel.text = "Email: " + userInfo.email
         nameLabel.text = "Имя: " + userInfo.name
         let dateFormatter = DateFormatter()

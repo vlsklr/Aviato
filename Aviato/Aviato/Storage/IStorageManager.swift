@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 
 protocol IStorageManager {
-    func loadUser(username: String?, userID: String?) -> UserViewModel?
+    func loadUser(email: String?, userID: String?) -> UserViewModel?
     func addUser(user: UserViewModel) //, completion: @escaping () -> Void)
     func deleteUser(userID: String)
     func updateUser(userID: String, userInfo: UserViewModel)

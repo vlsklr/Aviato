@@ -36,7 +36,7 @@ class EditUserProfilePresenter: UserProfilePresenter, IEditUserProfilePresenter 
     
     //Возвращает true, если имя пользователя не занято или не изменяется
     private func validateUserData(userInfo: UserViewModel) -> Bool {
-        guard let user = storageManager.loadUser(username: userInfo.username, userID: nil) else { return true }
+        guard let user = storageManager.loadUser(email: userInfo.email, userID: nil) else { return true }
         if user.userID == userID {
             return true
         } else {
@@ -51,7 +51,7 @@ class EditUserProfilePresenter: UserProfilePresenter, IEditUserProfilePresenter 
     }
     
     func getUser(userEditingViewController: IEditUserProfileViewController) {
-        let user = storageManager.loadUser(username: nil, userID: userID)
-        userEditingViewController.showUserInfo(userInfo: user ?? UserViewModel(userID: "", username: "", password: "", birthDate: Date(), email: "", name: "", avatarPath: ""))
+        let user = storageManager.loadUser(email: nil, userID: userID)
+        userEditingViewController.showUserInfo(userInfo: user ?? UserViewModel(userID: "", password: "", birthDate: Date(), email: "", name: "", avatarPath: ""))
     }
 }

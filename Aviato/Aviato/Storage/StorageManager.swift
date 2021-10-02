@@ -21,15 +21,15 @@ class StorageManager: IStorageManager {
         return container
     }()
     
-    func loadUser(username: String?, userID: String?) -> UserViewModel? {
+    func loadUser(email: String?, userID: String?) -> UserViewModel? {
         let fetchRequest: NSFetchRequest<User> = User.fetchRequest()
-        if let userName = username {
-            fetchRequest.predicate = NSPredicate(format: "\(#keyPath(User.userName)) = %@", userName)
+        if let email = email {
+            fetchRequest.predicate = NSPredicate(format: "\(#keyPath(User.email)) = %@", email)
         } else if let userID = userID {
             fetchRequest.predicate = NSPredicate(format: "\(#keyPath(User.userID)) = %@", "\(userID)")
         }
         guard let object = try? self.persistentContainer.viewContext.fetch(fetchRequest).first else { return nil }
-        let user: UserViewModel = UserViewModel(userID: object.userID ?? "", username: object.userName ?? "empty" , password: object.password ?? "empty", birthDate: object.birthDate ?? Date(), email: object.email ?? "empty", name: object.name ?? "empty", avatarPath: object.avatarPath ?? "")
+        let user: UserViewModel = UserViewModel(userID: object.userID ?? "", password: object.password ?? "empty", birthDate: object.birthDate ?? Date(), email: object.email ?? "empty", name: object.name ?? "empty", avatarPath: object.avatarPath ?? "")
         return user
     }
     
@@ -37,7 +37,6 @@ class StorageManager: IStorageManager {
         self.persistentContainer.performBackgroundTask { context in
             let object = User(context: context)
             object.userID = user.userID
-            object.userName = user.username
             object.password = user.password
             object.email = user.email
             object.birthDate = user.birthDate
@@ -70,7 +69,6 @@ class StorageManager: IStorageManager {
                 foundUser.setValue(userInfo.birthDate, forKey: "birthDate")
                 foundUser.setValue(userInfo.name, forKey: "name")
                 foundUser.setValue(userInfo.email, forKey: "email")
-                foundUser.setValue(userInfo.username, forKey: "userName")
                 foundUser.setValue(userInfo.avatarPath, forKey: "avatarPath")
             }
             try context.save()

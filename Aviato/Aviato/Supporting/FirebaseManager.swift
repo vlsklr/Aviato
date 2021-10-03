@@ -124,8 +124,17 @@ final class FirebaseManager {
     
     static func updateUserInfo(userInfo: UserViewModel) {
                                //, completion: @escaping (Result<UserViewModel, Error>) -> Void) {
-        let entityReference = db.collection("users").document(userInfo.userID)
-        entityReference.updateData(["name" : userInfo.name])
+        
+        db.collection("users").whereField("userID", isEqualTo: userInfo.userID).getDocuments { snapshot, error in
+            if let error = error {
+                print(error)
+            } else {
+                let document = snapshot?.documents.first
+                document?.reference.updateData(["name" : userInfo.name, "birthDate" : userInfo.birthDate])
+            }
+        }
+        
+//        entityReference.updateData(["name" : userInfo.name])
         
     }
     

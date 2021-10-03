@@ -94,7 +94,6 @@ final class FirebaseManager {
     var email: String?
     var name: String?
 //    var avatarPath: String
-    
         db.collection("users").whereField("userID", isEqualTo: userID).getDocuments { QuerySnapshot, error in
             if let _error = error {
                 completion(.failure(_error))
@@ -121,8 +120,15 @@ final class FirebaseManager {
                 completion(.success(user))
             }
         }
- 
     }
+    
+    static func updateUserInfo(userInfo: UserViewModel) {
+                               //, completion: @escaping (Result<UserViewModel, Error>) -> Void) {
+        let entityReference = db.collection("users").document(userInfo.userID)
+        entityReference.updateData(["name" : userInfo.name])
+        
+    }
+    
 }
 
 

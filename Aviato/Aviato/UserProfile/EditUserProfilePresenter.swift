@@ -20,13 +20,15 @@ protocol IEditUserProfilePresenter {
 class EditUserProfilePresenter: UserProfilePresenter, IEditUserProfilePresenter {
     
     func updateUserInfo(view: IEditUserProfileViewController, userInfo: UserViewModel, userAvatar: UIImage?) -> Bool {
-        var user = userInfo
+        var user = UserViewModel(userID: userID, password: "", birthDate: userInfo.birthDate, email: userInfo.email, name: userInfo.name, avatarPath: userInfo.avatarPath)
         if validateUserData(userInfo: userInfo) {
             if let image = userAvatar {
                 let savedPath = storageManager.saveImage(image: image, fileName: "\(userID)")
                 user.avatarPath = savedPath
             }
             storageManager.updateUser(userID: userID, userInfo: user)
+            FirebaseManager.updateUserInfo(userInfo: user)
+//            FirebaseManager.up
             return true
         } else {
             view.showAlert(message: "Такой пользователь уже существует")

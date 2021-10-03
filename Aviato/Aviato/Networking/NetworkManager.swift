@@ -62,7 +62,7 @@ class NetworkManager: INetworkManager {
         request.httpMethod = "GET"
         request.allHTTPHeaderFields = headers
         let session = URLSession.shared
-        request.timeoutInterval = 20
+        request.timeoutInterval = 25
         var flyght: FlyghtInfo? = nil
         session.dataTask(with: request as URLRequest, completionHandler: { (data, response, error) -> Void in
             if (error != nil) {

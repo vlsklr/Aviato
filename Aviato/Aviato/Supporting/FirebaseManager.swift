@@ -32,20 +32,16 @@ final class FirebaseManager {
                 default:
                     completion(.failure(FirebaseErrors.other))
                     break
-                //                    view.showAlert(message: "Что-то пошло не так, попробуйте позже")
                 }
             } else {
                 let userInfo = Auth.auth().currentUser
                 guard let userID = userInfo?.uid else { return }
                 completion(.success(userID))
-                
-                //                KeyChainManager.saveSessionToKeyChain(userID: userID)
-                //                AppDelegate.shared.rootViewController.switchToMainScreen(userID: userID)
             }
         }
     }
     
-     func createUser(email: String, password: String, completion: @escaping (Result<String, Error>) -> Void) {
+    func createUser(email: String, password: String, completion: @escaping (Result<String, Error>) -> Void) {
         Auth.auth().createUser(withEmail: email, password: password) { (result, error) in
             if let _error = error as NSError? {
                 switch AuthErrorCode(rawValue: _error.code) {
@@ -88,12 +84,12 @@ final class FirebaseManager {
         return Auth.auth().currentUser?.uid
     }
     
-   static func loadUserInfo(userID: String, completion: @escaping (Result<UserViewModel, Error>) -> Void) {
-    let userID: String = userID
-    var birthDate: Date?
-    var email: String?
-    var name: String?
-//    var avatarPath: String
+    static func loadUserInfo(userID: String, completion: @escaping (Result<UserViewModel, Error>) -> Void) {
+        let userID: String = userID
+        var birthDate: Date?
+        var email: String?
+        var name: String?
+        //    var avatarPath: String
         db.collection("users").whereField("userID", isEqualTo: userID).getDocuments { QuerySnapshot, error in
             if let _error = error {
                 completion(.failure(_error))
@@ -123,32 +119,29 @@ final class FirebaseManager {
     }
     
     static func updateUserInfo(userInfo: UserViewModel) {
-                               //, completion: @escaping (Result<UserViewModel, Error>) -> Void) {
-        
         db.collection("users").whereField("userID", isEqualTo: userInfo.userID).getDocuments { snapshot, error in
             if let error = error {
                 print(error)
             } else {
                 let document = snapshot?.documents.first
-                document?.reference.updateData(["name" : userInfo.name, "birthDate" : userInfo.birthDate])
+                document?.reference.updateData(["name" : userInfo.name, "birthDate" : userInfo.birthDate, "email" : userInfo.email])
+                Auth.auth().currentUser?.updateEmail(to: userInfo.email) { error in
+                }
             }
         }
-        
-//        entityReference.updateData(["name" : userInfo.name])
-        
     }
     
+    static func removeUser(userID: String) {
+        Auth.auth().currentUser?.delete(completion: { error in
+            if let error = error {
+                print("Что-то пошло не так при удалении аккаунта \(error)")
+            } else {
+                print("Аккаунт успешно удален")
+                db.collection("users").whereField("userID", isEqualTo: userID).getDocuments { snapshot, error in
+                    snapshot?.documents.first?.reference.delete()
+                }
+            }
+        })
+        
+    }
 }
-
-
-
-
-
-//        db.collection("users").whereField("userID", isEqualTo: userID).getDocuments { QuerySnapshot, error in
-//            if let _error = error {
-//                print("SomethingWrong")
-//            } else {
-//                let user = QuerySnapshot!.documents.first
-//                print(user)
-//            }
-//        }

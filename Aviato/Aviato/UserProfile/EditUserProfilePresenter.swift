@@ -49,6 +49,7 @@ class EditUserProfilePresenter: UserProfilePresenter, IEditUserProfilePresenter 
     
     func removeUser() {
         storageManager.deleteUser(userID: self.userID)
+        FirebaseManager.removeUser(userID: self.userID)
         logout()
     }
     

@@ -8,6 +8,7 @@
 import Foundation
 import FirebaseAuth
 import Firebase
+import FirebaseStorage
 
 
 struct FirebaseUser: Decodable {
@@ -17,8 +18,10 @@ struct FirebaseUser: Decodable {
 }
 
 final class FirebaseManager {
-    private static let db = Firestore.firestore()
-    private static var ref: DocumentReference? = nil
+    private static let firestoreDatabase = Firestore.firestore()
+    private static var databaseReference: DocumentReference? = nil
+    private static let storage = Storage.storage()
+    private static var storageReference: StorageReference? = nil
     
     static func authenticateUser(email: String, password: String, completion: @escaping(Result<String, Error>) -> Void) {
         Auth.auth().signIn(withEmail: email, password: password) { result, error in
@@ -59,14 +62,25 @@ final class FirebaseManager {
         }
     }
     
+    static func saveImage(fireStoragePath: String, imagePathLocal: String) {
+        guard let localPath = URL(string: imagePathLocal) else {return}
+        storageReference = storage.reference()
+        let imageReference = storageReference?.child(fireStoragePath)
+        let uploadTask = imageReference?.putFile(from: localPath, metadata: nil, completion: { metadata, error in
+            guard let metadata = metadata else { return }
+            print(metadata.size)
+        })
+        
+    }
+    
     static func createUserProfile(userProfile: UserViewModel) -> Bool {
-        ref = db.collection("users").addDocument(data: [
+        databaseReference = firestoreDatabase.collection("users").addDocument(data: [
             "userID": userProfile.userID,
             "name": userProfile.name,
             "email": userProfile.email,
             "birthDate": userProfile.birthDate
         ])
-        if ref?.documentID != nil {
+        if databaseReference?.documentID != nil {
             return true
         }
         return false
@@ -90,7 +104,7 @@ final class FirebaseManager {
         var email: String?
         var name: String?
         //    var avatarPath: String
-        db.collection("users").whereField("userID", isEqualTo: userID).getDocuments { QuerySnapshot, error in
+        firestoreDatabase.collection("users").whereField("userID", isEqualTo: userID).getDocuments { QuerySnapshot, error in
             if let _error = error {
                 completion(.failure(_error))
                 print("SomethingWrong")
@@ -119,7 +133,7 @@ final class FirebaseManager {
     }
     
     static func updateUserInfo(userInfo: UserViewModel) {
-        db.collection("users").whereField("userID", isEqualTo: userInfo.userID).getDocuments { snapshot, error in
+        firestoreDatabase.collection("users").whereField("userID", isEqualTo: userInfo.userID).getDocuments { snapshot, error in
             if let error = error {
                 print(error)
             } else {
@@ -137,7 +151,7 @@ final class FirebaseManager {
                 print("Что-то пошло не так при удалении аккаунта \(error)")
             } else {
                 print("Аккаунт успешно удален")
-                db.collection("users").whereField("userID", isEqualTo: userID).getDocuments { snapshot, error in
+                firestoreDatabase.collection("users").whereField("userID", isEqualTo: userID).getDocuments { snapshot, error in
                     snapshot?.documents.first?.reference.delete()
                 }
             }

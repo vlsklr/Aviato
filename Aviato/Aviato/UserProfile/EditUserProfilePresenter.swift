@@ -24,6 +24,7 @@ class EditUserProfilePresenter: UserProfilePresenter, IEditUserProfilePresenter 
         if validateUserData(userInfo: userInfo) {
             if let image = userAvatar {
                 let savedPath = storageManager.saveImage(image: image, fileName: "\(userID)")
+                FirebaseManager.saveImage(fireStoragePath: "images/\(user.userID)/avatar.jpg", imagePathLocal: savedPath)
                 user.avatarPath = savedPath
             }
             storageManager.updateUser(userID: userID, userInfo: user)

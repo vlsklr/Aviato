@@ -189,7 +189,7 @@ class RegistrationViewController: UIViewController {
     
     @objc func registerUser() {
         toggleAnimationButtonColor(button: self.registerButton)
-        guard let password = passwordField.text, let name = nameField.text, let email = emailField.text else {
+        guard let password = passwordField.text, let name = nameField.text, let email = emailField.text?.lowercased() else {
             return
         }
         //При случае спросить нормально ли делать так, что сама View себя закрывает, по результату работы метода презентера или команду на закрытие должен отдать сам презентер

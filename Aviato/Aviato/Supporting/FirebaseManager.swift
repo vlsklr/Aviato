@@ -73,6 +73,18 @@ final class FirebaseManager {
         
     }
     
+    static func loadImage(filestoragePath: String, completion: @escaping (Result<Data?, Error>) -> Void) {
+        storageReference = storage.reference()
+        let pictureReference = storageReference?.child(filestoragePath)
+        pictureReference?.getData(maxSize: 20 * 1024 * 1024, completion: { (data, error) in
+            if let error = error {
+                completion(.failure(error))
+            } else {
+                completion(.success(data))
+            }
+        })
+    }
+    
     static func createUserProfile(userProfile: UserViewModel) -> Bool {
         databaseReference = firestoreDatabase.collection("users").addDocument(data: [
             "userID": userProfile.userID,

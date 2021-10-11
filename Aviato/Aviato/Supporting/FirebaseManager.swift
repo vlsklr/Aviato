@@ -85,6 +85,16 @@ final class FirebaseManager {
         })
     }
     
+    static func deleteImage(filestoragePath: String) {
+        storageReference = storage.reference()
+        let userFolderReference = storageReference?.child(filestoragePath)
+        userFolderReference?.delete(completion: { error in
+            if let error = error {
+                print(error)
+            }
+        })
+    }
+    
     static func createUserProfile(userProfile: UserViewModel) -> Bool {
         databaseReference = firestoreDatabase.collection("users").addDocument(data: [
             "userID": userProfile.userID,

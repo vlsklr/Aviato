@@ -51,6 +51,7 @@ class EditUserProfilePresenter: UserProfilePresenter, IEditUserProfilePresenter 
     func removeUser() {
         storageManager.deleteUser(userID: self.userID)
         FirebaseManager.removeUser(userID: self.userID)
+        FirebaseManager.deleteImage(filestoragePath: "images/\(self.userID)/avatar.jpg")
         logout()
     }
     

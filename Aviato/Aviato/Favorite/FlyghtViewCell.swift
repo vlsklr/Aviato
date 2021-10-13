@@ -11,7 +11,7 @@ import SnapKit
 class FlyghtViewCell: UITableViewCell {
     let flyghtNumberLabel: UILabel = UILabel()
     let departireTimeLabel: UILabel = UILabel()
-    var entityID: UUID?
+    var entityID: String?
     
     
     override func awakeFromNib() {
@@ -22,7 +22,7 @@ class FlyghtViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
     }
     
-    func setupCell(id: UUID) {
+    func setupCell(id: String) {
         self.contentView.backgroundColor = .white
         flyghtNumberLabel.textColor = .black
         departireTimeLabel.textColor = .black

@@ -14,10 +14,10 @@ protocol IStorageManager {
     func deleteUser(userID: String)
     func updateUser(userID: String, userInfo: UserViewModel)
     func addFlyght(flyght: FlyghtViewModel)
-    func removeFlyght(flyghtID: UUID)
-    func updateFlyght(flyghtID: UUID, flyght: FlyghtViewModel)
+    func removeFlyght(flyghtID: String)
+    func updateFlyght(flyghtID: String, flyght: FlyghtViewModel)
     func getFlyghts(userID: String) -> [FlyghtViewModel]?
-    func getFlyght(flyghtID: UUID) -> FlyghtViewModel?
+    func getFlyght(flyghtID: String) -> FlyghtViewModel?
     func flyghtsCount(userID: String) -> Int
     func contains(userID: String, flyghtNumber: String) -> Bool
     func loadImage(path: String) -> UIImage?

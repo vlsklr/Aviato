@@ -108,6 +108,24 @@ final class FirebaseManager {
         return false
     }
     
+    static func saveFlyght(flyghtInfo: FlyghtViewModel) -> String?{
+        databaseReference = firestoreDatabase.collection(flyghtInfo.holder).addDocument(data: [
+            "flyghtNumber" : flyghtInfo.flyghtNumber,
+            "departureAirport" : flyghtInfo.departureAirport,
+            "arrivalAirport" : flyghtInfo.arrivalAirport,
+            "departureDate" : flyghtInfo.departureDate,
+            "arrivalDate" : flyghtInfo.arrivalDate,
+            "aircraft" : flyghtInfo.aircraft,
+            "airline" : flyghtInfo.airline,
+            "status" : flyghtInfo.status
+        ])
+        
+        if let flyghtID = databaseReference?.documentID {
+            return flyghtID
+        }
+        return nil
+    }
+    
     static func logout() {
         do {
             try Auth.auth().signOut()

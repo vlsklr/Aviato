@@ -141,7 +141,7 @@ class StorageManager: IStorageManager {
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm"
         dateFormatter.timeZone = TimeZone.current
         
-        let flyghts = try? self.persistentContainer.viewContext.fetch(fetchRequest).compactMap { FlyghtViewModel(holder: userID, flyghtID: $0.flyghtID ?? UUID(), flyghtNumber: $0.flyghtNumber ?? "", departureAirport: $0.departureAirport ?? "", arrivalAirport: $0.arrivalAirport ?? "", departureDate: $0.departureTime ?? Date(), arrivalDate: $0.arrivalTime ?? Date(), aircraft: $0.aircraft ?? "", airline: $0.airline ?? "", status: $0.status ?? "", departureDateLocal: dateFormatter.string(from: $0.departureTime ?? Date()) , arrivalDateLocal: dateFormatter.string(from: $0.arrivalTime ?? Date()), aircraftImage: $0.aircraftImage)
+        let flyghts = try? self.persistentContainer.viewContext.fetch(fetchRequest).compactMap { FlyghtViewModel(holder: userID, flyghtID: $0.flyghtID ?? "", flyghtNumber: $0.flyghtNumber ?? "", departureAirport: $0.departureAirport ?? "", arrivalAirport: $0.arrivalAirport ?? "", departureDate: $0.departureTime ?? Date(), arrivalDate: $0.arrivalTime ?? Date(), aircraft: $0.aircraft ?? "", airline: $0.airline ?? "", status: $0.status ?? "", departureDateLocal: dateFormatter.string(from: $0.departureTime ?? Date()) , arrivalDateLocal: dateFormatter.string(from: $0.arrivalTime ?? Date()), aircraftImage: $0.aircraftImage)
         }
         return flyghts
     }
@@ -153,7 +153,7 @@ class StorageManager: IStorageManager {
         return flyghtsCount ?? 0
     }
     
-    func getFlyght(flyghtID: UUID) -> FlyghtViewModel? {
+    func getFlyght(flyghtID: String) -> FlyghtViewModel? {
         let fetchRequest: NSFetchRequest<Flyght> = Flyght.fetchRequest()
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm"
@@ -166,7 +166,7 @@ class StorageManager: IStorageManager {
         return nil
     }
     
-    func updateFlyght(flyghtID: UUID, flyght: FlyghtViewModel) {
+    func updateFlyght(flyghtID: String, flyght: FlyghtViewModel) {
         let context = persistentContainer.viewContext
         do {
             let fetchRequest: NSFetchRequest<Flyght> = Flyght.fetchRequest()
@@ -188,7 +188,7 @@ class StorageManager: IStorageManager {
         }
     }
     
-    func removeFlyght(flyghtID: UUID) {
+    func removeFlyght(flyghtID: String) {
         let context = persistentContainer.viewContext
         let fetchRequest: NSFetchRequest<Flyght> = Flyght.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "\(#keyPath(Flyght.flyghtID)) = %@", "\(flyghtID)")

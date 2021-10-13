@@ -11,9 +11,9 @@ import UIKit
 protocol IFavoriteFlyghtListPresenter {
     func getFlyghtsCount() -> Int
     func getFlyghts() -> [FlyghtViewModel]?
-    func getFavorite(view: IFavoriteListFlyghtViewController, flyghtID: UUID)
+    func getFavorite(view: IFavoriteListFlyghtViewController, flyghtID: String)
     func updateFlyghtInfo(view: FavoriteFlyghtListViewController)
-    func removeFlyght(flyghtID: UUID)
+    func removeFlyght(flyghtID: String)
 }
 
 class FavoriteFlyghtListPresenter: IFavoriteFlyghtListPresenter {
@@ -36,7 +36,7 @@ class FavoriteFlyghtListPresenter: IFavoriteFlyghtListPresenter {
         return savedFlyghts
     }
     
-    func getFavorite(view: IFavoriteListFlyghtViewController, flyghtID: UUID) {
+    func getFavorite(view: IFavoriteListFlyghtViewController, flyghtID: String) {
         guard let flyght = storageManager.getFlyght(flyghtID: flyghtID) else {
             return
         }
@@ -99,7 +99,7 @@ class FavoriteFlyghtListPresenter: IFavoriteFlyghtListPresenter {
         }
     }
     
-    func removeFlyght(flyghtID: UUID) {
+    func removeFlyght(flyghtID: String) {
         storageManager.removeFlyght(flyghtID: flyghtID)
     }
     

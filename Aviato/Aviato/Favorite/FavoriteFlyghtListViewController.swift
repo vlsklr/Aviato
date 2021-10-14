@@ -38,7 +38,6 @@ class FavoriteFlyghtListViewController: UIViewController {
         navigationController?.setNavigationBarHidden(true, animated: false)
         tableView.refreshControl = refreshControll
         initActivityIndicator()
-        
     }
     
     @objc func refreshFlyghts(sender: UIRefreshControl) {

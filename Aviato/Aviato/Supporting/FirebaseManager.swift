@@ -138,6 +138,29 @@ final class FirebaseManager {
         return Auth.auth().currentUser?.uid
     }
     
+    static func loadFlyghts(userID: String, completion: @escaping (Result<[FlyghtViewModel], Error>) -> Void) {
+        firestoreDatabase.collection(userID).getDocuments { snapshot, error in
+            if let error = error {
+                completion(.failure(error))
+            } else {
+                guard let snapshotDocuments = snapshot?.documents else {
+                    completion(.failure(FirebaseErrors.other))
+                    return
+                }
+                var flyghts = [FlyghtViewModel]()
+                
+                for flyghtDocument in snapshotDocuments {
+                    let flyght = FlyghtViewModel(holder: userID, flyghtID: flyghtDocument.documentID, flyghtNumber: "", departureAirport: "", arrivalAirport: "", departureDate: Date(), arrivalDate: Date(), aircraft: "", airline: "", status: "", departureDateLocal: "", arrivalDateLocal: "", aircraftImage: "")
+                    
+                    for element in flyghtDocument.data() {
+                    }
+                    
+                }
+            }
+        }
+        
+    }
+    
     static func loadUserInfo(userID: String, completion: @escaping (Result<UserViewModel, Error>) -> Void) {
         let userID: String = userID
         var birthDate: Date?

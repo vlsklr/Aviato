@@ -52,7 +52,6 @@ class FavoriteViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor(red: 0.243, green: 0.776, blue: 1, alpha: 1)

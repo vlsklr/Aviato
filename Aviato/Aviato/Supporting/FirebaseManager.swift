@@ -150,12 +150,33 @@ final class FirebaseManager {
                 var flyghts = [FlyghtViewModel]()
                 
                 for flyghtDocument in snapshotDocuments {
-                    let flyght = FlyghtViewModel(holder: userID, flyghtID: flyghtDocument.documentID, flyghtNumber: "", departureAirport: "", arrivalAirport: "", departureDate: Date(), arrivalDate: Date(), aircraft: "", airline: "", status: "", departureDateLocal: "", arrivalDateLocal: "", aircraftImage: "")
+                    var flyght = FlyghtViewModel(holder: userID, flyghtID: flyghtDocument.documentID, flyghtNumber: "", departureAirport: "", arrivalAirport: "", departureDate: Date(), arrivalDate: Date(), aircraft: "", airline: "", status: "", departureDateLocal: "", arrivalDateLocal: "", aircraftImage: "")
                     
                     for element in flyghtDocument.data() {
+                        switch element.key {
+                        case "aircraft":
+                            flyght.aircraft = element.value as? String ?? ""
+                        case "flyghtNumber":
+                            flyght.flyghtNumber = element.value as? String ?? ""
+                        case "departureAirport":
+                            flyght.departureAirport = element.value as? String ?? ""
+                        case "arrivalAirport":
+                            flyght.arrivalAirport = element.value as? String ?? ""
+                        case "departureDate":
+                            flyght.departureDate = element.value as? Date ?? Date()
+                        case "arrivalDate":
+                            flyght.arrivalDate = element.value as? Date ?? Date()
+                        case "airline":
+                            flyght.airline = element.value as? String ?? ""
+                        case "status":
+                            flyght.status = element.value as? String ?? ""
+                        default:
+                            print("Something other data \(element.value as? String)")
+                        }
                     }
-                    
+                    flyghts.append(flyght)
                 }
+                completion(.success(flyghts))
             }
         }
         

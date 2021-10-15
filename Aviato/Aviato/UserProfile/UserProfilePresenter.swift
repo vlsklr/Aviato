@@ -29,32 +29,31 @@ class UserProfilePresenter: IUserProfilePresenter {
         if let user = storageManager.loadUser(email: nil, userID: userID) {
             userViewController.showUserInfo(userInfo: user)
         } else {
-            FirebaseManager.loadUserInfo(userID: userID){ [weak self] result in
-                switch result {
-                case .success(var user):
-                    let userID = user.userID
-                    FirebaseManager.loadImage(filestoragePath: "images/\(userID)/avatar.jpg"){ [weak self] result in
-                        switch result {
-                        case .failure(let error):
-                            print(error)
-                        case .success(let data):
-                            guard let data = data, let image = UIImage(data: data) else {
-                                return
-                            }
-                            if let imagePath = self?.storageManager.saveImage(image: image, fileName: "\(user.userID)") {
-                                user.avatarPath = imagePath
-                                self?.storageManager.updateUser(userID: user.userID, userInfo: user)
-                                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "refresh"), object:nil, userInfo: nil)
-                            }
-                            
-                        }
-                    }
-                    self?.storageManager.addUser(user: user)
-                    userViewController.showUserInfo(userInfo: user)
-                case .failure(let error):
-                    print("При загрузке данных что-то пошло не так \(error)")
-                }
-            }
+//            FirebaseManager.loadUserInfo(userID: userID){ [weak self] result in
+//                switch result {
+//                case .success(var user):
+//                    let userID = user.userID
+//                    FirebaseManager.loadImage(filestoragePath: "images/\(userID)/avatar.jpg"){ [weak self] result in
+//                        switch result {
+//                        case .failure(let error):
+//                            print(error)
+//                        case .success(let data):
+//                            guard let data = data, let image = UIImage(data: data) else {
+//                                return
+//                            }
+//                            if let imagePath = self?.storageManager.saveImage(image: image, fileName: "\(user.userID)") {
+//                                user.avatarPath = imagePath
+//                                self?.storageManager.updateUser(userID: user.userID, userInfo: user)
+//                                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "refresh"), object:nil, userInfo: nil)
+//                            }
+//                        }
+//                    }
+//                    self?.storageManager.addUser(user: user)
+//                    userViewController.showUserInfo(userInfo: user)
+//                case .failure(let error):
+//                    print("При загрузке данных что-то пошло не так \(error)")
+//                }
+//            }
             
         }
         

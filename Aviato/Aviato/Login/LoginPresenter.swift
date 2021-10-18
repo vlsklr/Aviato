@@ -48,14 +48,14 @@ class LoginPresenter: ILoginPresenter {
                                     if let imagePath = self?.storageManager.saveImage(image: image, fileName: "\(user.userID)") {
                                         user.avatarPath = imagePath
                                         self?.storageManager.updateUser(userID: user.userID, userInfo: user)
-//                                        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "refresh"), object:nil, userInfo: nil)
-
+                                        //                                        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "refresh"), object:nil, userInfo: nil)
+                                        
                                     }
                                 }
                             }
                             self?.storageManager.addUser(user: user)
                             AppDelegate.shared.rootViewController.switchToMainScreen(userID: userID)
-	
+                            
                             
                             FirebaseManager.loadFlyghts(userID: userID) { [self] result in
                                 switch result {

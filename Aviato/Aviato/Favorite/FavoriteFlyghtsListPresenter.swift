@@ -72,8 +72,11 @@ class FavoriteFlyghtListPresenter: IFavoriteFlyghtListPresenter {
                         switch result {
                         case .failure(let error):
                             print(error)
-                            view.showAlert(message: "Во время обновления информации о рейсе \(flyghtNumber) что-то пошло не так")
-                            view.toggleActivityIndicator()
+                            DispatchQueue.main.async {
+                                view.showAlert(message: "Во время обновления информации о рейсе \(flyghtNumber) что-то пошло не так")
+                                view.toggleActivityIndicator()
+                            }
+                            
                         case .success(let info):
                             print(info)
                             let dateFormatter = DateFormatter()

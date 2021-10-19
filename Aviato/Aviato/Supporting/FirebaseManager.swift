@@ -247,6 +247,8 @@ final class FirebaseManager {
         guard let userID = Auth.auth().currentUser?.uid else {
             return
         }
+        deleteImage(filestoragePath: "images/\(userID)/\(flyghtID).jpg")
         firestoreDatabase.collection(userID).document(flyghtID).delete()
+        
     }
 }

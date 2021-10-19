@@ -37,15 +37,30 @@ class FavoriteFlyghtListPresenter: IFavoriteFlyghtListPresenter {
     }
     
     func getFavorite(view: IFavoriteListFlyghtViewController, flyghtID: String) {
-        guard let flyght = storageManager.getFlyght(flyghtID: flyghtID) else {
+        guard var flyght = storageManager.getFlyght(flyghtID: flyghtID) else {
             return
         }
         if let path = flyght.aircraftImage, let airCraftImage = storageManager.loadImage(path: path) {
             let favoiteViewController = FavoriteViewController(flyghtViewInfo: flyght, aircraftImage: airCraftImage)
             view.showFavoriteFlyght(flyghtViewController: favoiteViewController)
         } else {
-            let favoiteViewController = FavoriteViewController(flyghtViewInfo: flyght)
-            view.showFavoriteFlyght(flyghtViewController: favoiteViewController)
+            FirebaseManager.loadImage(filestoragePath: "images/\(userID)/\(flyghtID).jpg"){ [weak self] result in
+                switch result {
+                case .failure(let error):
+                    print(error)
+                    let favoiteViewController = FavoriteViewController(flyghtViewInfo: flyght)
+                    view.showFavoriteFlyght(flyghtViewController: favoiteViewController)
+                case .success(let data):
+                    guard let data = data, let image = UIImage(data: data) else {
+                        return
+                    }
+                    let imagePath = self?.storageManager.saveImage(image: image, fileName: "\(flyghtID).jpg")
+                    flyght.aircraftImage = imagePath
+                    self?.storageManager.updateFlyght(flyghtID: flyghtID, flyght: flyght)
+                    let favoiteViewController = FavoriteViewController(flyghtViewInfo: flyght, aircraftImage: image)
+                    view.showFavoriteFlyght(flyghtViewController: favoiteViewController)
+                }
+            }
         }
     }
     /*
@@ -104,6 +119,7 @@ class FavoriteFlyghtListPresenter: IFavoriteFlyghtListPresenter {
     
     func removeFlyght(flyghtID: String) {
         storageManager.removeFlyght(flyghtID: flyghtID)
+        FirebaseManager.removeFlyght(flyghtID: flyghtID)
     }
     
 }

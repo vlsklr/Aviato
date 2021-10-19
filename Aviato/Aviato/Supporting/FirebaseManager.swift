@@ -242,4 +242,11 @@ final class FirebaseManager {
         })
         
     }
+    
+    static func removeFlyght(flyghtID: String) {
+        guard let userID = Auth.auth().currentUser?.uid else {
+            return
+        }
+        firestoreDatabase.collection(userID).document(flyghtID).delete()
+    }
 }

@@ -238,6 +238,10 @@ final class FirebaseManager {
                 firestoreDatabase.collection("users").whereField("userID", isEqualTo: userID).getDocuments { snapshot, error in
                     snapshot?.documents.first?.reference.delete()
                 }
+                firestoreDatabase.collection(userID).getDocuments { snapshot, error in
+                    //Реализовать удаление полетов, фото полетов
+                }
+                //Реализовать удаление полетов из
             }
         })
         
@@ -249,6 +253,18 @@ final class FirebaseManager {
         }
         deleteImage(filestoragePath: "images/\(userID)/\(flyghtID).jpg")
         firestoreDatabase.collection(userID).document(flyghtID).delete()
-        
+    }
+    
+    static func updateFlyghtInfo(flyght: FlyghtViewModel) {
+        firestoreDatabase.collection(flyght.holder).document(flyght.flyghtID).updateData(
+            [
+             "departureAirport" : flyght.departureAirport,
+             "arrivalAirport" : flyght.arrivalAirport,
+             "departureDate" : flyght.departureDate,
+             "arrivalDate" : flyght.arrivalDate,
+             "aircraft" : flyght.aircraft,
+             "status" : flyght.status
+            ]
+        )
     }
 }

@@ -103,6 +103,7 @@ class FavoriteFlyghtListPresenter: IFavoriteFlyghtListPresenter {
                             //В departureDateLocal и arrivalDateLocal ничего не подставляется, так как эти данные в CoreData не сохраняются, при обновлении tableView все равно сгенерируются при загрузке из CoreData
                             let viewInfo: FlyghtViewModel = FlyghtViewModel(holder: self!.userID, flyghtID: flyghtID, flyghtNumber: info.number, departureAirport: "\(info.departure.airport.countryCode)  \(info.departure.airport.name)", arrivalAirport: "\(info.arrival.airport.countryCode)  \(info.arrival.airport.name)", departureDate: departureDateUTC, arrivalDate: arrivalDateUTC, aircraft: info.aircraft.model, airline: info.airline.name, status: info.status, departureDateLocal: "", arrivalDateLocal: "")
                             self?.storageManager.updateFlyght(flyghtID: flyghtID, flyght: viewInfo)
+                            FirebaseManager.updateFlyghtInfo(flyght: viewInfo)
                             upatingCounter += 1
                             DispatchQueue.main.async {
                                 if upatingCounter == totalRowsInSection {

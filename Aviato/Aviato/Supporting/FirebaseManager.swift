@@ -238,10 +238,6 @@ final class FirebaseManager {
                 firestoreDatabase.collection("users").whereField("userID", isEqualTo: userID).getDocuments { snapshot, error in
                     snapshot?.documents.first?.reference.delete()
                 }
-                firestoreDatabase.collection(userID).getDocuments { snapshot, error in
-                    //Реализовать удаление полетов, фото полетов
-                }
-                //Реализовать удаление полетов из
             }
         })
         

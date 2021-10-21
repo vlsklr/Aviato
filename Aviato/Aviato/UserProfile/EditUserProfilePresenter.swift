@@ -49,6 +49,13 @@ class EditUserProfilePresenter: UserProfilePresenter, IEditUserProfilePresenter 
     
     
     func removeUser() {
+        if let flyghts = storageManager.getFlyghts(userID: userID) {
+            for flyght in flyghts {
+                FirebaseManager.removeFlyght(flyghtID: flyght.flyghtID)
+//                FirebaseManager.deleteImage(filestoragePath: "images/\(userID)/\(flyght.flyghtID).jpg")
+                storageManager.removeFlyght(flyghtID: flyght.flyghtID)
+            }
+        }
         storageManager.deleteUser(userID: self.userID)
         FirebaseManager.removeUser(userID: self.userID)
         FirebaseManager.deleteImage(filestoragePath: "images/\(self.userID)/avatar.jpg")

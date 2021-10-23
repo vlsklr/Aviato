@@ -8,7 +8,7 @@
 import Foundation
 
 protocol ILoginPresenter {
-    func authentificateUser(view: IAlert, username: String, password: String)
+    func authentificateUser(view: IAlert, email: String, password: String)
     func registerUser(view: IloginViewController)
     func logout()
 }

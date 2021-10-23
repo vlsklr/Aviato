@@ -57,11 +57,12 @@ class NetworkManager: INetworkManager {
         dateFormatter.dateFormat = "yyyy-MM-dd"
         let dateString = dateFormatter.string(from: Date())
         guard let url = URL(string: "https://aerodatabox.p.rapidapi.com/flights/number/\(flyghtNumber)/\(dateString)?withAircraftImage=true&withLocation=true") else { return }
+        print(url)
         let request = NSMutableURLRequest(url: url, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 10.0)
         request.httpMethod = "GET"
         request.allHTTPHeaderFields = headers
         let session = URLSession.shared
-        request.timeoutInterval = 50
+        request.timeoutInterval = 25
         var flyght: FlyghtInfo? = nil
         session.dataTask(with: request as URLRequest, completionHandler: { (data, response, error) -> Void in
             if (error != nil) {

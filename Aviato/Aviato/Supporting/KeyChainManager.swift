@@ -9,7 +9,7 @@ import Foundation
 
 class KeyChainManager {
     
-    static func saveSessionToKeyChain(userID: UUID) {
+    static func saveSessionToKeyChain(userID: String) {
         let id = Data("\(userID)".utf8)
         let query: [String: AnyObject] = [
             // kSecAttrService,  kSecAttrAccount, and kSecClass
@@ -31,7 +31,7 @@ class KeyChainManager {
         print(status)
     }
     
-    static func readUserSession() -> UUID? {
+    static func readUserSession() -> String? {
         let query: [String: AnyObject] = [
             // kSecAttrService,  kSecAttrAccount, and kSecClass
             //Сервис, к которому относится запись keyChain, в данном случае сервис = приложение
@@ -58,11 +58,10 @@ class KeyChainManager {
             &itemCopy
         )
         print(status)
-        guard let session = itemCopy as? Data,  let uuidString = String(data: session, encoding: .utf8) else {
+        guard let session = itemCopy as? Data,  let userID = String(data: session, encoding: .utf8) else {
             return nil
         }
         
-        let userID = UUID(uuidString: uuidString)
         return userID
     }
     

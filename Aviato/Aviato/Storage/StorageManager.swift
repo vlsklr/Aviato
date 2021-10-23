@@ -80,7 +80,8 @@ class StorageManager: IStorageManager {
     func saveImage(image: UIImage, fileName: String) -> String {
         if let data = image.pngData() {
             let path = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
-            let url = path.appendingPathComponent(fileName).appendingPathExtension("png")
+//            let url = path.appendingPathComponent(fileName).appendingPathExtension("png")
+            let url = path.appendingPathComponent(fileName)
             do {
                 try data.write(to: url)
             } catch {
@@ -100,10 +101,11 @@ class StorageManager: IStorageManager {
     }
     
     func removeImage(path: String) {
-        //Удаляет аватар, если он есть
+        //Удаляет изображение, если он есть
         if FileManager.default.fileExists(atPath: path) {
             // Delete file
             try? FileManager.default.removeItem(atPath: path)
+
         } else {
             print("File does not exist")
         }
@@ -202,7 +204,7 @@ class StorageManager: IStorageManager {
                 foundFlyght.setValue(flyght.departureAirport, forKey: "departureAirport")
                 foundFlyght.setValue(flyght.departureDate, forKey: "departureTime")
                 foundFlyght.setValue(flyght.status, forKey: "status")
-//                foundFlyght.setValue(flyght.aircraftImage, forKey: "aircraftImage")
+                foundFlyght.setValue(flyght.aircraftImage, forKey: "aircraftImage")
                 foundFlyght.lastModified = Date()
             }
             try context.save()

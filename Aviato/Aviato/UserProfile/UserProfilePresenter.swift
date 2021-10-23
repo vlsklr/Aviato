@@ -60,6 +60,11 @@ class UserProfilePresenter: IUserProfilePresenter {
     }
     
     func logout() {
+        if let flyghts = storageManager.getFlyghts(userID: userID) {
+            for flyght in flyghts {
+                storageManager.removeFlyght(flyghtID: flyght.flyghtID)
+            }
+        }
         storageManager.deleteUser(userID: userID)
         FirebaseManager.logout()
         KeyChainManager.deleteUserSession()

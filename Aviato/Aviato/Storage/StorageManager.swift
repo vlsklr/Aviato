@@ -10,6 +10,8 @@ import CoreData
 import UIKit
 
 class StorageManager: IStorageManager {
+
+    
     
     lazy var persistentContainer: NSPersistentContainer = {
         let container = NSPersistentContainer(name: "Aviato")
@@ -29,7 +31,7 @@ class StorageManager: IStorageManager {
             fetchRequest.predicate = NSPredicate(format: "\(#keyPath(User.userID)) = %@", "\(userID)")
         }
         guard let object = try? self.persistentContainer.viewContext.fetch(fetchRequest).first else { return nil }
-        let user: UserViewModel = UserViewModel(userID: object.userID ?? "", password: object.password ?? "empty", birthDate: object.birthDate ?? Date(), email: object.email ?? "empty", name: object.name ?? "empty", avatarPath: object.avatarPath ?? "")
+        let user: UserViewModel = UserViewModel(userID: object.userID ?? "", password: object.password ?? "empty", birthDate: object.birthDate ?? Date(), email: object.email ?? "empty", name: object.name ?? "empty")
         return user
     }
     
@@ -41,7 +43,6 @@ class StorageManager: IStorageManager {
             object.email = user.email
             object.birthDate = user.birthDate
             object.name = user.name
-            object.avatarPath = user.avatarPath
             try? context.save()
             //            DispatchQueue.main.asyncAfter(deadline: .now(), execute: { completion() })
         }
@@ -52,9 +53,8 @@ class StorageManager: IStorageManager {
         let fetchRequest: NSFetchRequest<User> = User.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "\(#keyPath(User.userID)) = %@", "\(userID)")
         if let object = try? context.fetch(fetchRequest).first {
-            if let path = object.avatarPath {
-                removeImage(path: path)
-            }
+            removeImage(fileName: userID)
+            
             context.delete(object)
         }
         try? context.save()
@@ -69,7 +69,6 @@ class StorageManager: IStorageManager {
                 foundUser.setValue(userInfo.birthDate, forKey: "birthDate")
                 foundUser.setValue(userInfo.name, forKey: "name")
                 foundUser.setValue(userInfo.email, forKey: "email")
-                foundUser.setValue(userInfo.avatarPath, forKey: "avatarPath")
             }
             try context.save()
         } catch {
@@ -77,38 +76,44 @@ class StorageManager: IStorageManager {
         }
     }
     
-    func saveImage(image: UIImage, fileName: String) -> String {
+    func saveImage(image: UIImage, fileName: String) -> String{
         if let data = image.pngData() {
-            let path = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
-//            let url = path.appendingPathComponent(fileName).appendingPathExtension("png")
-            let url = path.appendingPathComponent(fileName)
+            let path = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first!
+            let url = path.appendingPathComponent(fileName).appendingPathExtension("png")
             do {
                 try data.write(to: url)
+                return "\(url)"
             } catch {
                 print(error)
             }
-            return "\(url)"
         }
         return ""
     }
     
-    func loadImage(path: String) -> UIImage? {
-        guard let path = URL(string: path), let imageData = try? Data(contentsOf: path) else {
-            return nil
-        }
+    func loadImage(fileName: String) -> UIImage? {
+        let path = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first!
+        let url = path.appendingPathComponent(fileName).appendingPathExtension("png")
+                guard let imageData = try? Data(contentsOf: url) else {
+                    return nil
+                }
         let image = UIImage.init(data: imageData)
         return image
     }
     
-    func removeImage(path: String) {
-        //Удаляет изображение, если он есть
-        if FileManager.default.fileExists(atPath: path) {
-            // Delete file
-            try? FileManager.default.removeItem(atPath: path)
-
-        } else {
-            print("File does not exist")
+    func removeImage(fileName: String) {
+       
+        
+        let path = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first!
+        let url = path.appendingPathComponent(fileName).appendingPathExtension("png")
+        do {
+            let result = try FileManager.default.removeItem(at: url)
+            print(result)
+        } catch {
+            print(error)
         }
+        
+            
+        
     }
     
     func addFlyght(flyght: FlyghtViewModel) {
@@ -152,7 +157,6 @@ class StorageManager: IStorageManager {
             object.departureAirport = flyght.departureAirport
             object.user = user
             object.lastModified = Date()
-            object.aircraftImage = flyght.aircraftImage
             try context.save()
         } catch {
         }
@@ -166,7 +170,7 @@ class StorageManager: IStorageManager {
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm"
         dateFormatter.timeZone = TimeZone.current
         
-        let flyghts = try? self.persistentContainer.viewContext.fetch(fetchRequest).compactMap { FlyghtViewModel(holder: userID, flyghtID: $0.flyghtID ?? "", flyghtNumber: $0.flyghtNumber ?? "", departureAirport: $0.departureAirport ?? "", arrivalAirport: $0.arrivalAirport ?? "", departureDate: $0.departureTime ?? Date(), arrivalDate: $0.arrivalTime ?? Date(), aircraft: $0.aircraft ?? "", airline: $0.airline ?? "", status: $0.status ?? "", departureDateLocal: dateFormatter.string(from: $0.departureTime ?? Date()) , arrivalDateLocal: dateFormatter.string(from: $0.arrivalTime ?? Date()), aircraftImage: $0.aircraftImage)
+        let flyghts = try? self.persistentContainer.viewContext.fetch(fetchRequest).compactMap { FlyghtViewModel(holder: userID, flyghtID: $0.flyghtID ?? "", flyghtNumber: $0.flyghtNumber ?? "", departureAirport: $0.departureAirport ?? "", arrivalAirport: $0.arrivalAirport ?? "", departureDate: $0.departureTime ?? Date(), arrivalDate: $0.arrivalTime ?? Date(), aircraft: $0.aircraft ?? "", airline: $0.airline ?? "", status: $0.status ?? "", departureDateLocal: dateFormatter.string(from: $0.departureTime ?? Date()) , arrivalDateLocal: dateFormatter.string(from: $0.arrivalTime ?? Date()))
         }
         return flyghts
     }
@@ -185,7 +189,7 @@ class StorageManager: IStorageManager {
         dateFormatter.timeZone = TimeZone.current
         fetchRequest.predicate = NSPredicate(format: "flyghtID = %@", "\(flyghtID)")
         if let flyghts = try? self.persistentContainer.viewContext.fetch(fetchRequest).first {
-            let flyghtViewModel = FlyghtViewModel(holder: "", flyghtID: flyghtID, flyghtNumber: (flyghts.flyghtNumber!), departureAirport: flyghts.departureAirport!, arrivalAirport: flyghts.arrivalAirport!, departureDate: flyghts.departureTime!, arrivalDate: flyghts.arrivalTime!, aircraft: flyghts.aircraft!, airline: flyghts.airline!, status: flyghts.status!, departureDateLocal: dateFormatter.string(from: flyghts.departureTime!), arrivalDateLocal: dateFormatter.string(from: flyghts.arrivalTime!), aircraftImage: flyghts.aircraftImage)
+            let flyghtViewModel = FlyghtViewModel(holder: "", flyghtID: flyghtID, flyghtNumber: (flyghts.flyghtNumber!), departureAirport: flyghts.departureAirport!, arrivalAirport: flyghts.arrivalAirport!, departureDate: flyghts.departureTime!, arrivalDate: flyghts.arrivalTime!, aircraft: flyghts.aircraft!, airline: flyghts.airline!, status: flyghts.status!, departureDateLocal: dateFormatter.string(from: flyghts.departureTime!), arrivalDateLocal: dateFormatter.string(from: flyghts.arrivalTime!))
             return flyghtViewModel
         }
         return nil
@@ -204,7 +208,6 @@ class StorageManager: IStorageManager {
                 foundFlyght.setValue(flyght.departureAirport, forKey: "departureAirport")
                 foundFlyght.setValue(flyght.departureDate, forKey: "departureTime")
                 foundFlyght.setValue(flyght.status, forKey: "status")
-                foundFlyght.setValue(flyght.aircraftImage, forKey: "aircraftImage")
                 foundFlyght.lastModified = Date()
             }
             try context.save()
@@ -218,9 +221,7 @@ class StorageManager: IStorageManager {
         let fetchRequest: NSFetchRequest<Flyght> = Flyght.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "\(#keyPath(Flyght.flyghtID)) = %@", "\(flyghtID)")
         if let object = try? context.fetch(fetchRequest).first {
-            if let path = object.aircraftImage {
-                removeImage(path: path)
-            }
+            removeImage(fileName: flyghtID)
             context.delete(object)
         }
         try? context.save()

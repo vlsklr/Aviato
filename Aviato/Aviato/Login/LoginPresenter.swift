@@ -35,9 +35,9 @@ class LoginPresenter: ILoginPresenter {
                     KeyChainManager.saveSessionToKeyChain(userID: userID)
                     FirebaseManager.loadUserInfo(userID: userID){ [weak self] result in
                         switch result {
-                        case .success(var user):
+                        case .success(let user):
                             let userID = user.userID
-                            FirebaseManager.loadImage(filestoragePath: "images/\(userID)/avatar.jpg"){ [self] result in
+                            FirebaseManager.loadImage(filestoragePath: "images/\(userID)/avatar.png"){ [self] result in
                                 switch result {
                                 case .failure(let error):
                                     print(error)
@@ -45,18 +45,11 @@ class LoginPresenter: ILoginPresenter {
                                     guard let data = data, let image = UIImage(data: data) else {
                                         return
                                     }
-                                    if let imagePath = self?.storageManager.saveImage(image: image, fileName: "\(user.userID)") {
-                                        user.avatarPath = imagePath
-                                        self?.storageManager.updateUser(userID: user.userID, userInfo: user)
-                                        //                                        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "refresh"), object:nil, userInfo: nil)
-                                        
-                                    }
+                                    self?.storageManager.saveImage(image: image, fileName: "\(user.userID)")
                                 }
                             }
                             self?.storageManager.addUser(user: user)
                             AppDelegate.shared.rootViewController.switchToMainScreen(userID: userID)
-                            
-                            
                             FirebaseManager.loadFlyghts(userID: userID) { [self] result in
                                 switch result {
                                 case .failure(let error):

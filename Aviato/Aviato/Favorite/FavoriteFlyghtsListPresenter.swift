@@ -40,11 +40,11 @@ class FavoriteFlyghtListPresenter: IFavoriteFlyghtListPresenter {
         guard var flyght = storageManager.getFlyght(flyghtID: flyghtID) else {
             return
         }
-        if let path = flyght.aircraftImage, let airCraftImage = storageManager.loadImage(path: path) {
+        if let airCraftImage = storageManager.loadImage(fileName: flyghtID) {
             let favoiteViewController = FavoriteViewController(flyghtViewInfo: flyght, aircraftImage: airCraftImage)
             view.showFavoriteFlyght(flyghtViewController: favoiteViewController)
         } else {
-            FirebaseManager.loadImage(filestoragePath: "images/\(userID)/\(flyghtID).jpg"){ [weak self] result in
+            FirebaseManager.loadImage(filestoragePath: "images/\(userID)/\(flyghtID).png"){ [weak self] result in
                 switch result {
                 case .failure(let error):
                     print(error)
@@ -54,9 +54,7 @@ class FavoriteFlyghtListPresenter: IFavoriteFlyghtListPresenter {
                     guard let data = data, let image = UIImage(data: data) else {
                         return
                     }
-                    let imagePath = self?.storageManager.saveImage(image: image, fileName: "\(flyghtID).jpg")
-                    flyght.aircraftImage = imagePath
-                    self?.storageManager.updateFlyght(flyghtID: flyghtID, flyght: flyght)
+                    self?.storageManager.saveImage(image: image, fileName: "\(flyghtID).png")
                     let favoiteViewController = FavoriteViewController(flyghtViewInfo: flyght, aircraftImage: image)
                     view.showFavoriteFlyght(flyghtViewController: favoiteViewController)
                 }

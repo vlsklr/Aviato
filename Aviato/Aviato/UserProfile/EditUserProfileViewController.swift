@@ -265,7 +265,7 @@ class EditUserProfileViewController: UIViewController {
         guard let email = emailField.text, let name = nameField.text else {
             return
         }
-        let userInfo: UserViewModel = UserViewModel(userID: "", password: "String", birthDate: datePicker.date, email: email, name: name, avatarPath: "")
+        let userInfo: UserViewModel = UserViewModel(userID: "", password: "String", birthDate: datePicker.date, email: email, name: name)
         if editProfilePresenter.updateUserInfo(view: self, userInfo: userInfo, userAvatar: userPhoto.image) {
             dismiss(animated: true)
         }
@@ -307,7 +307,7 @@ extension EditUserProfileViewController: IEditUserProfileViewController {
         dateFormatter.timeStyle = .none
         self.birthDateTextField.text = dateFormatter.string(from: userInfo.birthDate)
         self.datePicker.date = userInfo.birthDate
-        guard let image = editProfilePresenter.getImage(path: userInfo.avatarPath) else {
+        guard let image = editProfilePresenter.getImage(fileName: userInfo.userID) else {
             return
         }
         userPhoto.image = image

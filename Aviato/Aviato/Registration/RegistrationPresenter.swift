@@ -38,7 +38,7 @@ class RegistrationPresenter: IRegistrationPresenter {
                     }
                 case .success(let userID):
                     print(userID)
-                    let user = UserViewModel(userID: userID, password: hashedPassword, birthDate: birthDate, email: email, name: name, avatarPath: "")
+                    let user = UserViewModel(userID: userID, password: hashedPassword, birthDate: birthDate, email: email, name: name)
                     if FirebaseManager.createUserProfile(userProfile: user){
                         self?.storageManager.addUser(user: user)
                         view.dismissView()

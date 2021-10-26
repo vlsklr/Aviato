@@ -12,7 +12,7 @@ protocol IUserProfilePresenter {
     func logout()
     func getUser(userViewController: IUserProfileViewController)
     func editUser(view: IUserProfileViewController)
-    func getImage(path: String) -> UIImage?
+    func getImage(fileName: String) -> UIImage?
     
 }
 
@@ -78,8 +78,8 @@ class UserProfilePresenter: IUserProfilePresenter {
         view.showEditUserProfileScreen(view: viewController)
     }
     
-    func getImage(path: String) -> UIImage? {
-        return storageManager.loadImage(path: path)
+    func getImage(fileName: String) -> UIImage? {
+        return storageManager.loadImage(fileName: fileName)
     }
     
 }

@@ -20,7 +20,8 @@ protocol IStorageManager {
     func getFlyght(flyghtID: String) -> FlyghtViewModel?
     func flyghtsCount(userID: String) -> Int
     func contains(userID: String, flyghtNumber: String) -> Bool
-    func loadImage(path: String) -> UIImage?
+    func loadImage(fileName: String) -> UIImage?
     func saveImage(image: UIImage, fileName: String) -> String
+    func removeImage(fileName: String)
 
 }

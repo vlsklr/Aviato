@@ -176,14 +176,13 @@ class UserProfileViewController: UIViewController {
 
 extension UserProfileViewController: IUserProfileViewController {
     func showUserInfo(userInfo: UserViewModel) {
-//        usernameLabel.text = "Имя пользователя: " + userInfo.username
         emailLabel.text = "Email: " + userInfo.email
         nameLabel.text = "Имя: " + userInfo.name
         let dateFormatter = DateFormatter()
         dateFormatter.dateStyle = .medium
         dateFormatter.timeStyle = .none
         birthDate.text = "Дата рождения: " + dateFormatter.string(from: userInfo.birthDate)
-        guard let image = presenter.getImage(path: userInfo.avatarPath) else {
+        guard let image = presenter.getImage(fileName: userInfo.userID) else {
             return
         }
         userPhoto.image = image

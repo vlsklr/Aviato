@@ -150,7 +150,7 @@ final class FirebaseManager {
                 var flyghts = [FlyghtViewModel]()
                 
                 for flyghtDocument in snapshotDocuments {
-                    var flyght = FlyghtViewModel(holder: userID, flyghtID: flyghtDocument.documentID, flyghtNumber: "", departureAirport: "", arrivalAirport: "", departureDate: Date(), arrivalDate: Date(), aircraft: "", airline: "", status: "", departureDateLocal: "", arrivalDateLocal: "", aircraftImage: "")
+                    var flyght = FlyghtViewModel(holder: userID, flyghtID: flyghtDocument.documentID, flyghtNumber: "", departureAirport: "", arrivalAirport: "", departureDate: Date(), arrivalDate: Date(), aircraft: "", airline: "", status: "", departureDateLocal: "", arrivalDateLocal: "")
                     
                     for element in flyghtDocument.data() {
                         switch element.key {
@@ -210,7 +210,7 @@ final class FirebaseManager {
                         print("OTHER DATA \(element.value)")
                     }
                 }
-                let user = UserViewModel(userID: userID, password: "", birthDate: birthDate ?? Date(), email: email ?? "WrongData", name: name ?? "WrongData", avatarPath: "")
+                let user = UserViewModel(userID: userID, password: "", birthDate: birthDate ?? Date(), email: email ?? "WrongData", name: name ?? "WrongData")
                 completion(.success(user))
             }
         }

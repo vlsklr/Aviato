@@ -9,10 +9,24 @@ import Foundation
 import CoreData
 import UIKit
 
-class StorageManager: IStorageManager {
+protocol IStorageManager {
+    func loadUser(email: String?, userID: String?) -> UserViewModel?
+    func addUser(user: UserViewModel) //, completion: @escaping () -> Void)
+    func deleteUser(userID: String)
+    func updateUser(userID: String, userInfo: UserViewModel)
+    func addFlyght(flyght: FlyghtViewModel)
+    func removeFlyght(flyghtID: String)
+    func updateFlyght(flyghtID: String, flyght: FlyghtViewModel)
+    func getFlyghts(userID: String) -> [FlyghtViewModel]?
+    func getFlyght(flyghtID: String) -> FlyghtViewModel?
+    func flyghtsCount(userID: String) -> Int
+    func contains(userID: String, flyghtNumber: String) -> Bool
+    func loadImage(fileName: String) -> UIImage?
+    func saveImage(image: UIImage, fileName: String) -> String
+    func removeImage(fileName: String)
+}
 
-    
-    
+class StorageManager: IStorageManager {
     lazy var persistentContainer: NSPersistentContainer = {
         let container = NSPersistentContainer(name: "Aviato")
         container.loadPersistentStores(completionHandler: { (storeDescription, error) in
@@ -35,7 +49,7 @@ class StorageManager: IStorageManager {
         return user
     }
     
-    func addUser(user: UserViewModel) {//, completion: @escaping () -> Void) {
+    func addUser(user: UserViewModel) {
         self.persistentContainer.performBackgroundTask { context in
             let object = User(context: context)
             object.userID = user.userID
@@ -44,7 +58,6 @@ class StorageManager: IStorageManager {
             object.birthDate = user.birthDate
             object.name = user.name
             try? context.save()
-            //            DispatchQueue.main.asyncAfter(deadline: .now(), execute: { completion() })
         }
     }
     
@@ -101,8 +114,6 @@ class StorageManager: IStorageManager {
     }
     
     func removeImage(fileName: String) {
-       
-        
         let path = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first!
         let url = path.appendingPathComponent(fileName).appendingPathExtension("png")
         do {
@@ -111,9 +122,6 @@ class StorageManager: IStorageManager {
         } catch {
             print(error)
         }
-        
-            
-        
     }
     
     func addFlyght(flyght: FlyghtViewModel) {
@@ -159,8 +167,8 @@ class StorageManager: IStorageManager {
             object.lastModified = Date()
             try context.save()
         } catch {
+            print(error)
         }
-        
     }
     
     func getFlyghts(userID: String) -> [FlyghtViewModel]? {

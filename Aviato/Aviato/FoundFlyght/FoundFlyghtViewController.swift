@@ -73,6 +73,11 @@ extension FoundFlyghtViewController: IAlert {
     }
 }
 
+protocol IFoundFlyghtViewController: IAlert {
+    func dismissFoundView()
+    func showImage(imageData: Data)
+}
+
 extension FoundFlyghtViewController: IFoundFlyghtViewController {
     func showImage(imageData: Data) {
         guard let image = UIImage(data: imageData) else {

@@ -160,6 +160,11 @@ extension MainViewController: UIGestureRecognizerDelegate {
     }
 }
 
+protocol IMainViewController: IAlert {
+    func toggleActivityIndicator()
+    func showFoundFlyght(foundFlyghtViewController: FoundFlyghtViewController)
+}
+
 extension MainViewController: IAlert {
     func showAlert(message: String) {
         let alert = UIAlertController(title: "Ошибка", message: message, preferredStyle: .alert)

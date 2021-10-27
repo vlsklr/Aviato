@@ -8,6 +8,12 @@
 import Foundation
 import UIKit
 
+protocol ILoginPresenter {
+    func authentificateUser(view: IAlert, email: String, password: String)
+    func registerUser(view: IloginViewController)
+    func logout()
+}
+
 class LoginPresenter: ILoginPresenter {
     
     let storageManager: IStorageManager = StorageManager()

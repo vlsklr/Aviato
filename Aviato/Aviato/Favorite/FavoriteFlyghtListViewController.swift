@@ -123,6 +123,10 @@ extension FavoriteFlyghtListViewController: UITableViewDataSource {
     }
 }
 
+protocol IFavoriteListFlyghtViewController {
+    func showFavoriteFlyght(flyghtViewController: FavoriteViewController)
+}
+
 extension FavoriteFlyghtListViewController: IFavoriteListFlyghtViewController {
     func showFavoriteFlyght(flyghtViewController: FavoriteViewController) {
         self.present(flyghtViewController, animated: true, completion: nil)

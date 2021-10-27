@@ -8,8 +8,12 @@
 import UIKit
 import SnapKit
 
+protocol IRegistrationViewController: IAlert {
+    func dismissView()
+    func presentSelf()
+}
+
 class RegistrationViewController: UIViewController {
-//    let usernameField: UITextField = UITextField()
     let passwordField: UITextField = UITextField()
     let emailField: UITextField = UITextField()
     let nameField: UITextField = UITextField()
@@ -34,7 +38,6 @@ class RegistrationViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor(red: 0.243, green: 0.776, blue: 1, alpha: 1)
-//        setupUsernameField()
         setupEmailField()
         setupPasswordField()
         setupNameField()
@@ -42,22 +45,6 @@ class RegistrationViewController: UIViewController {
         setupRegisterButton()
         
     }
-//
-//    func setupUsernameField() {
-//        self.view.addSubview(usernameField)
-//        usernameField.addTarget(self, action: #selector(textFieldsChanged), for: .editingChanged)
-//        usernameField.backgroundColor = .white
-//        usernameField.textColor = textColor
-//        usernameField.layer.cornerRadius = 25
-//        usernameField.textAlignment = .center
-//        usernameField.attributedPlaceholder = NSAttributedString(string: "Имя пользователя", attributes: [NSAttributedString.Key.foregroundColor : placeholdersColor])
-//        usernameField.snp.makeConstraints { (make) in
-//            make.leading.equalToSuperview().offset(43)
-//            make.trailing.equalToSuperview().offset(-43)
-//            make.top.equalToSuperview().offset(50)
-//            make.height.equalTo(50)
-//        }
-//    }
     
     func setupEmailField() {
         self.view.addSubview(emailField)
@@ -93,8 +80,6 @@ class RegistrationViewController: UIViewController {
         }
     }
     
-  
-    
     func setupNameField() {
         self.view.addSubview(nameField)
         nameField.addTarget(self, action: #selector(textFieldsChanged), for: .editingChanged)
@@ -119,9 +104,7 @@ class RegistrationViewController: UIViewController {
         datePicker.locale = Locale(identifier: Locale.preferredLanguages.first!)
         if #available(iOS 13.4, *) {
             datePicker.preferredDatePickerStyle = .wheels
-        } else {
-            // Fallback on earlier versions
-        }
+        } 
         let toolbar = UIToolbar()
         toolbar.sizeToFit()
         let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(donePressed))

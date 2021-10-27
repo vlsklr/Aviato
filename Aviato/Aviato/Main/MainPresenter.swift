@@ -7,6 +7,10 @@
 
 import Foundation
 
+protocol IMainPresenter {
+    func findFlyghtInfo(view: IMainViewController, flyghtNumber: String)
+}
+
 class MainPresenter: IMainPresenter {
     
     let networkManager: INetworkManager = NetworkManager()

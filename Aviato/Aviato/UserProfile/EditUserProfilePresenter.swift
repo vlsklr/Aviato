@@ -56,7 +56,7 @@ class EditUserProfilePresenter: UserProfilePresenter, IEditUserProfilePresenter 
         }
         storageManager.deleteUser(userID: self.userID)
         FirebaseManager.removeUser(userID: self.userID)
-        FirebaseManager.deleteImage(filestoragePath: "images/\(self.userID)/avatar.jpg")
+        FirebaseManager.deleteImage(filestoragePath: "images/\(self.userID)/avatar.png")
         logout()
     }
     

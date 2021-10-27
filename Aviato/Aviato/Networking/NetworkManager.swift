@@ -46,6 +46,11 @@ struct FlyghtInfo: Decodable {
     let airline: Airline
 }
 
+protocol INetworkManager {
+    func loadFlyghtInfo(flyghtNumber: String, completion: @escaping (Result<FlyghtInfo, Error>) -> Void)
+    func loadAircraftImage(url: String, completion: @escaping (Data) -> Void)
+}
+
 class NetworkManager: INetworkManager {
     let headers = [
         "x-rapidapi-key": "",

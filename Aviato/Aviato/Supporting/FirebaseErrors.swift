@@ -10,7 +10,7 @@ import Foundation
 enum FirebaseErrors: Error {
     case emailAlreadyInUse
     case weakPassword
-    case invalidEmail
+    case userNotFound
     case wrongPassword
     case other
 }

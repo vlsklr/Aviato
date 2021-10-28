@@ -27,8 +27,8 @@ final class FirebaseManager {
         Auth.auth().signIn(withEmail: email, password: password) { result, error in
             if let error = error as NSError? {
                 switch AuthErrorCode(rawValue: error.code) {
-                case .invalidEmail:
-                    completion(.failure(FirebaseErrors.invalidEmail))
+                case .userNotFound:
+                    completion(.failure(FirebaseErrors.userNotFound))
                 case .wrongPassword:
                     completion(.failure(FirebaseErrors.wrongPassword))
                     print("Error: \(error.localizedDescription)")

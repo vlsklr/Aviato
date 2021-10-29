@@ -28,7 +28,7 @@ class LoginPresenter: ILoginPresenter {
                 case .failure(let error):
                     if let _error = error as? FirebaseErrors {
                         switch _error {
-                        case .invalidEmail, .wrongPassword:
+                        case .userNotFound, .wrongPassword:
                             view.showAlert(message: "Email или пароль неправильный")
                         case .other:
                             view.showAlert(message: "Что-то пошло не так - попробуйте позже")

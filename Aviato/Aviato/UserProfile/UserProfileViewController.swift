@@ -49,7 +49,6 @@ class UserProfileViewController: UIViewController {
         setupData()
         //Для обновления информации во ViewController после редактирования в EditUserProfileViewController
         NotificationCenter.default.addObserver(self, selector: #selector(UserProfileViewController.setupData), name: NSNotification.Name(rawValue: "refresh"), object: nil)
-//        NotificationCenter.default.addObserver(self, selector: #selector(UserProfilePresenter.getUser(userViewController:)), name: NSNotification.Name(rawValue: "refresh"), object: nil)
 
     }
     

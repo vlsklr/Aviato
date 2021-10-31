@@ -8,8 +8,12 @@
 import UIKit
 import SnapKit
 
+protocol IRegistrationViewController: IAlert {
+    func dismissView()
+    func presentSelf()
+}
+
 class RegistrationViewController: UIViewController {
-    let usernameField: UITextField = UITextField()
     let passwordField: UITextField = UITextField()
     let emailField: UITextField = UITextField()
     let nameField: UITextField = UITextField()
@@ -34,24 +38,24 @@ class RegistrationViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor(red: 0.243, green: 0.776, blue: 1, alpha: 1)
-        setupUsernameField()
-        setupPasswordField()
         setupEmailField()
+        setupPasswordField()
         setupNameField()
         setupDateField()
         setupRegisterButton()
         
     }
     
-    func setupUsernameField() {
-        self.view.addSubview(usernameField)
-        usernameField.addTarget(self, action: #selector(textFieldsChanged), for: .editingChanged)
-        usernameField.backgroundColor = .white
-        usernameField.textColor = textColor
-        usernameField.layer.cornerRadius = 25
-        usernameField.textAlignment = .center
-        usernameField.attributedPlaceholder = NSAttributedString(string: "Имя пользователя", attributes: [NSAttributedString.Key.foregroundColor : placeholdersColor])
-        usernameField.snp.makeConstraints { (make) in
+    func setupEmailField() {
+        self.view.addSubview(emailField)
+        emailField.addTarget(self, action: #selector(textFieldsChanged), for: .editingChanged)
+        emailField.addTarget(self, action: #selector(validateEmailField), for: .editingChanged)
+        emailField.backgroundColor = .white
+        emailField.textColor = textColor
+        emailField.layer.cornerRadius = 25
+        emailField.textAlignment = .center
+        emailField.attributedPlaceholder = NSAttributedString(string: "Email", attributes: [NSAttributedString.Key.foregroundColor : placeholdersColor])
+        emailField.snp.makeConstraints { (make) in
             make.leading.equalToSuperview().offset(43)
             make.trailing.equalToSuperview().offset(-43)
             make.top.equalToSuperview().offset(50)
@@ -71,24 +75,7 @@ class RegistrationViewController: UIViewController {
         passwordField.snp.makeConstraints { (make) in
             make.leading.equalToSuperview().offset(43)
             make.trailing.equalToSuperview().offset(-43)
-            make.top.equalTo(usernameField.snp.bottom).offset(10)
-            make.height.equalTo(50)
-        }
-    }
-    
-    func setupEmailField() {
-        self.view.addSubview(emailField)
-        emailField.addTarget(self, action: #selector(textFieldsChanged), for: .editingChanged)
-        emailField.addTarget(self, action: #selector(validateEmailField), for: .editingChanged)
-        emailField.backgroundColor = .white
-        emailField.textColor = textColor
-        emailField.layer.cornerRadius = 25
-        emailField.textAlignment = .center
-        emailField.attributedPlaceholder = NSAttributedString(string: "Email", attributes: [NSAttributedString.Key.foregroundColor : placeholdersColor])
-        emailField.snp.makeConstraints { (make) in
-            make.leading.equalToSuperview().offset(43)
-            make.trailing.equalToSuperview().offset(-43)
-            make.top.equalTo(passwordField.snp.bottom).offset(10)
+            make.top.equalTo(emailField.snp.bottom).offset(10)
             make.height.equalTo(50)
         }
     }
@@ -104,7 +91,7 @@ class RegistrationViewController: UIViewController {
         nameField.snp.makeConstraints { (make) in
             make.leading.equalToSuperview().offset(43)
             make.trailing.equalToSuperview().offset(-43)
-            make.top.equalTo(emailField.snp.bottom).offset(10)
+            make.top.equalTo(passwordField.snp.bottom).offset(10)
             make.height.equalTo(50)
         }
     }
@@ -117,9 +104,7 @@ class RegistrationViewController: UIViewController {
         datePicker.locale = Locale(identifier: Locale.preferredLanguages.first!)
         if #available(iOS 13.4, *) {
             datePicker.preferredDatePickerStyle = .wheels
-        } else {
-            // Fallback on earlier versions
-        }
+        } 
         let toolbar = UIToolbar()
         toolbar.sizeToFit()
         let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(donePressed))
@@ -187,15 +172,15 @@ class RegistrationViewController: UIViewController {
     
     @objc func registerUser() {
         toggleAnimationButtonColor(button: self.registerButton)
-        guard let username = usernameField.text, let password = passwordField.text, let name = nameField.text, let email = emailField.text else {
+        guard let password = passwordField.text, let name = nameField.text, let email = emailField.text?.lowercased() else {
             return
         }
         //При случае спросить нормально ли делать так, что сама View себя закрывает, по результату работы метода презентера или команду на закрытие должен отдать сам презентер
-        presenter.registerUser(view: self, username: username, password: password, birthDate: datePicker.date, email: email, name: name)
+        presenter.registerUser(view: self, password: password, birthDate: datePicker.date, email: email, name: name)
     }
     
     @objc func textFieldsChanged() {
-        if usernameField.hasText && passwordField.hasText && nameField.hasText && emailField.hasText && birthDateTextField.hasText {
+        if passwordField.hasText && nameField.hasText && emailField.hasText && birthDateTextField.hasText {
             if isValidEmail(email: emailField.text!) {
                 registerButton.layer.borderColor = UIColor.white.cgColor
                 registerButton.isEnabled = true

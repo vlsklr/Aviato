@@ -38,7 +38,6 @@ class FavoriteFlyghtListViewController: UIViewController {
         navigationController?.setNavigationBarHidden(true, animated: false)
         tableView.refreshControl = refreshControll
         initActivityIndicator()
-        
     }
     
     @objc func refreshFlyghts(sender: UIRefreshControl) {
@@ -122,6 +121,10 @@ extension FavoriteFlyghtListViewController: UITableViewDataSource {
         }
         return cell
     }
+}
+
+protocol IFavoriteListFlyghtViewController {
+    func showFavoriteFlyght(flyghtViewController: FavoriteViewController)
 }
 
 extension FavoriteFlyghtListViewController: IFavoriteListFlyghtViewController {

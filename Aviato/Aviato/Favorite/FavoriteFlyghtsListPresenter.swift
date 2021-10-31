@@ -11,18 +11,18 @@ import UIKit
 protocol IFavoriteFlyghtListPresenter {
     func getFlyghtsCount() -> Int
     func getFlyghts() -> [FlyghtViewModel]?
-    func getFavorite(view: IFavoriteListFlyghtViewController, flyghtID: UUID)
+    func getFavorite(view: IFavoriteListFlyghtViewController, flyghtID: String)
     func updateFlyghtInfo(view: FavoriteFlyghtListViewController)
-    func removeFlyght(flyghtID: UUID)
+    func removeFlyght(flyghtID: String)
 }
 
 class FavoriteFlyghtListPresenter: IFavoriteFlyghtListPresenter {
     let storageManager: IStorageManager = StorageManager()
     let networkManager = NetworkManager()
-    let userID: UUID
+    let userID: String
     
     
-    init(userID: UUID) {
+    init(userID: String) {
         self.userID = userID
     }
     
@@ -36,16 +36,29 @@ class FavoriteFlyghtListPresenter: IFavoriteFlyghtListPresenter {
         return savedFlyghts
     }
     
-    func getFavorite(view: IFavoriteListFlyghtViewController, flyghtID: UUID) {
+    func getFavorite(view: IFavoriteListFlyghtViewController, flyghtID: String) {
         guard let flyght = storageManager.getFlyght(flyghtID: flyghtID) else {
             return
         }
-        if let path = flyght.aircraftImage, let airCraftImage = storageManager.loadImage(path: path) {
+        if let airCraftImage = storageManager.loadImage(fileName: flyghtID) {
             let favoiteViewController = FavoriteViewController(flyghtViewInfo: flyght, aircraftImage: airCraftImage)
             view.showFavoriteFlyght(flyghtViewController: favoiteViewController)
         } else {
-            let favoiteViewController = FavoriteViewController(flyghtViewInfo: flyght)
-            view.showFavoriteFlyght(flyghtViewController: favoiteViewController)
+            FirebaseManager.loadImage(filestoragePath: "images/\(userID)/\(flyghtID).png"){ [weak self] result in
+                switch result {
+                case .failure(let error):
+                    print(error)
+                    let favoiteViewController = FavoriteViewController(flyghtViewInfo: flyght)
+                    view.showFavoriteFlyght(flyghtViewController: favoiteViewController)
+                case .success(let data):
+                    guard let data = data, let image = UIImage(data: data) else {
+                        return
+                    }
+                    self?.storageManager.saveImage(image: image, fileName: "\(flyghtID)")
+                    let favoiteViewController = FavoriteViewController(flyghtViewInfo: flyght, aircraftImage: image)
+                    view.showFavoriteFlyght(flyghtViewController: favoiteViewController)
+                }
+            }
         }
     }
     /*
@@ -72,8 +85,11 @@ class FavoriteFlyghtListPresenter: IFavoriteFlyghtListPresenter {
                         switch result {
                         case .failure(let error):
                             print(error)
-                            view.showAlert(message: "Во время обновления информации о рейсе \(flyghtNumber) что-то пошло не так")
-                            view.toggleActivityIndicator()
+                            DispatchQueue.main.async {
+                                view.showAlert(message: "Во время обновления информации о рейсе \(flyghtNumber) что-то пошло не так")
+                                view.toggleActivityIndicator()
+                            }
+                            
                         case .success(let info):
                             print(info)
                             let dateFormatter = DateFormatter()
@@ -85,6 +101,7 @@ class FavoriteFlyghtListPresenter: IFavoriteFlyghtListPresenter {
                             //В departureDateLocal и arrivalDateLocal ничего не подставляется, так как эти данные в CoreData не сохраняются, при обновлении tableView все равно сгенерируются при загрузке из CoreData
                             let viewInfo: FlyghtViewModel = FlyghtViewModel(holder: self!.userID, flyghtID: flyghtID, flyghtNumber: info.number, departureAirport: "\(info.departure.airport.countryCode)  \(info.departure.airport.name)", arrivalAirport: "\(info.arrival.airport.countryCode)  \(info.arrival.airport.name)", departureDate: departureDateUTC, arrivalDate: arrivalDateUTC, aircraft: info.aircraft.model, airline: info.airline.name, status: info.status, departureDateLocal: "", arrivalDateLocal: "")
                             self?.storageManager.updateFlyght(flyghtID: flyghtID, flyght: viewInfo)
+                            FirebaseManager.updateFlyghtInfo(flyght: viewInfo)
                             upatingCounter += 1
                             DispatchQueue.main.async {
                                 if upatingCounter == totalRowsInSection {
@@ -99,8 +116,9 @@ class FavoriteFlyghtListPresenter: IFavoriteFlyghtListPresenter {
         }
     }
     
-    func removeFlyght(flyghtID: UUID) {
+    func removeFlyght(flyghtID: String) {
         storageManager.removeFlyght(flyghtID: flyghtID)
+        FirebaseManager.removeFlyght(flyghtID: flyghtID)
     }
     
 }

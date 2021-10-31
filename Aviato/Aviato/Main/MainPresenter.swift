@@ -7,12 +7,16 @@
 
 import Foundation
 
+protocol IMainPresenter {
+    func findFlyghtInfo(view: IMainViewController, flyghtNumber: String)
+}
+
 class MainPresenter: IMainPresenter {
     
     let networkManager: INetworkManager = NetworkManager()
-    var userID: UUID
+    var userID: String
     
-    init(userID: UUID) {
+    init(userID: String) {
         self.userID = userID
     }
     
@@ -40,7 +44,7 @@ class MainPresenter: IMainPresenter {
                 let departureDateLocal = dateFormatter.string(from: departureDateUTC)
                 let arrivalDateLocal  = dateFormatter.string(from: arrivalDateUTC)
                 var airCraftImageData: Data?
-                let viewInfo: FlyghtViewModel = FlyghtViewModel(holder: self!.userID, flyghtID: UUID(), flyghtNumber: info.number, departureAirport: "\(info.departure.airport.countryCode)  \(info.departure.airport.name)", arrivalAirport: "\(info.arrival.airport.countryCode)  \(info.arrival.airport.name)", departureDate: departureDateUTC, arrivalDate: arrivalDateUTC, aircraft: info.aircraft.model, airline: info.airline.name, status: info.status, departureDateLocal: departureDateLocal, arrivalDateLocal: arrivalDateLocal)
+                let viewInfo: FlyghtViewModel = FlyghtViewModel(holder: self!.userID, flyghtID: "", flyghtNumber: info.number, departureAirport: "\(info.departure.airport.countryCode)  \(info.departure.airport.name)", arrivalAirport: "\(info.arrival.airport.countryCode)  \(info.arrival.airport.name)", departureDate: departureDateUTC, arrivalDate: arrivalDateUTC, aircraft: info.aircraft.model, airline: info.airline.name, status: info.status, departureDateLocal: departureDateLocal, arrivalDateLocal: arrivalDateLocal)
                 let foundFlyghtPresenter = FoundFlyghtPresenter(userID: self!.userID)
                 let foundFlyghtViewController = FoundFlyghtViewController(flyghtViewInfo: viewInfo, presenter: foundFlyghtPresenter)
                 self?.networkManager.loadAircraftImage(url: info.aircraft.image.url) { (imageData) in

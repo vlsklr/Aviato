@@ -13,7 +13,7 @@ protocol IEditUserProfileViewController: IAlert {
 
 class EditUserProfileViewController: UIViewController {
     
-    let usernameField: UITextField = UITextField()
+//    let usernameField: UITextField = UITextField()
     let passwordField: UITextField = UITextField()
     let emailField: UITextField = UITextField()
     let nameField: UITextField = UITextField()
@@ -49,7 +49,7 @@ class EditUserProfileViewController: UIViewController {
         setupUserImage()
         setupCancelButton()
         setupSaveButton()
-        setupUsernameField()
+//        setupUsernameField()
         setupEmailField()
         setupNameField()
         setupDateField()
@@ -100,23 +100,23 @@ class EditUserProfileViewController: UIViewController {
         }
     }
     
-    func setupUsernameField() {
-        self.view.addSubview(usernameField)
-        usernameField.addTarget(self, action: #selector(textFieldsChanged), for: .editingChanged)
-        usernameField.inputAccessoryView = setupDoneToolbar(tag: 0)
-        usernameField.backgroundColor = .white
-        usernameField.textColor = textFieldsColor
-        usernameField.layer.cornerRadius = 25
-//        usernameField.placeholder = "Имя пользователя"
-        usernameField.textAlignment = .center
-        usernameField.attributedPlaceholder = NSAttributedString(string: "Имя пользователя", attributes: [NSAttributedString.Key.foregroundColor : textFieldsPlaceholderColor])
-        usernameField.snp.makeConstraints { (make) in
-            make.leading.equalToSuperview().offset(43)
-            make.trailing.equalToSuperview().offset(-43)
-            make.top.equalTo(userPhoto.snp.bottom).offset(10)
-            make.height.equalTo(50)
-        }
-    }
+//    func setupUsernameField() {
+//        self.view.addSubview(usernameField)
+//        usernameField.addTarget(self, action: #selector(textFieldsChanged), for: .editingChanged)
+//        usernameField.inputAccessoryView = setupDoneToolbar(tag: 0)
+//        usernameField.backgroundColor = .white
+//        usernameField.textColor = textFieldsColor
+//        usernameField.layer.cornerRadius = 25
+////        usernameField.placeholder = "Имя пользователя"
+//        usernameField.textAlignment = .center
+//        usernameField.attributedPlaceholder = NSAttributedString(string: "Имя пользователя", attributes: [NSAttributedString.Key.foregroundColor : textFieldsPlaceholderColor])
+//        usernameField.snp.makeConstraints { (make) in
+//            make.leading.equalToSuperview().offset(43)
+//            make.trailing.equalToSuperview().offset(-43)
+//            make.top.equalTo(userPhoto.snp.bottom).offset(10)
+//            make.height.equalTo(50)
+//        }
+//    }
     
     func setupEmailField() {
         self.view.addSubview(emailField)
@@ -132,7 +132,7 @@ class EditUserProfileViewController: UIViewController {
         emailField.snp.makeConstraints { (make) in
             make.leading.equalToSuperview().offset(43)
             make.trailing.equalToSuperview().offset(-43)
-            make.top.equalTo(usernameField.snp.bottom).offset(10)
+            make.top.equalTo(userPhoto.snp.bottom).offset(10)
             make.height.equalTo(50)
         }
     }
@@ -262,17 +262,17 @@ class EditUserProfileViewController: UIViewController {
     }
     
     @objc func saveAction() {
-        guard let username = usernameField.text, let email = emailField.text, let name = nameField.text else {
+        guard let email = emailField.text, let name = nameField.text else {
             return
         }
-        let userInfo: UserViewModel = UserViewModel(userID: UUID(), username: username, password: "String", birthDate: datePicker.date, email: email, name: name, avatarPath: "")
+        let userInfo: UserViewModel = UserViewModel(userID: "", password: "String", birthDate: datePicker.date, email: email, name: name)
         if editProfilePresenter.updateUserInfo(view: self, userInfo: userInfo, userAvatar: userPhoto.image) {
             dismiss(animated: true)
         }
     }
     
     @objc func textFieldsChanged() {
-        if usernameField.hasText && (passwordField.hasText || nameField.hasText || emailField.hasText || birthDateTextField.hasText || imageChanged) {
+        if emailField.hasText && (passwordField.hasText || nameField.hasText || birthDateTextField.hasText || imageChanged) {
             if isValidEmail(email: emailField.text!) {
                 saveButton.setTitleColor(.white, for: .normal)
                 saveButton.isEnabled = true
@@ -300,7 +300,6 @@ class EditUserProfileViewController: UIViewController {
 
 extension EditUserProfileViewController: IEditUserProfileViewController {
     func showUserInfo(userInfo: UserViewModel) {
-        usernameField.text = userInfo.username
         nameField.text = userInfo.name
         emailField.text = userInfo.email
         let dateFormatter = DateFormatter()
@@ -308,7 +307,7 @@ extension EditUserProfileViewController: IEditUserProfileViewController {
         dateFormatter.timeStyle = .none
         self.birthDateTextField.text = dateFormatter.string(from: userInfo.birthDate)
         self.datePicker.date = userInfo.birthDate
-        guard let image = editProfilePresenter.getImage(path: userInfo.avatarPath) else {
+        guard let image = editProfilePresenter.getImage(fileName: userInfo.userID) else {
             return
         }
         userPhoto.image = image

@@ -37,7 +37,7 @@ class FavoriteFlyghtListPresenter: IFavoriteFlyghtListPresenter {
     }
     
     func getFavorite(view: IFavoriteListFlyghtViewController, flyghtID: String) {
-        guard var flyght = storageManager.getFlyght(flyghtID: flyghtID) else {
+        guard let flyght = storageManager.getFlyght(flyghtID: flyghtID) else {
             return
         }
         if let airCraftImage = storageManager.loadImage(fileName: flyghtID) {
@@ -54,7 +54,7 @@ class FavoriteFlyghtListPresenter: IFavoriteFlyghtListPresenter {
                     guard let data = data, let image = UIImage(data: data) else {
                         return
                     }
-                    self?.storageManager.saveImage(image: image, fileName: "\(flyghtID).png")
+                    self?.storageManager.saveImage(image: image, fileName: "\(flyghtID)")
                     let favoiteViewController = FavoriteViewController(flyghtViewInfo: flyght, aircraftImage: image)
                     view.showFavoriteFlyght(flyghtViewController: favoiteViewController)
                 }

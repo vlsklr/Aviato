@@ -66,7 +66,7 @@ final class FirebaseManager {
         guard let localPath = URL(string: imagePathLocal) else {return}
         storageReference = storage.reference()
         let imageReference = storageReference?.child(fireStoragePath)
-        let uploadTask = imageReference?.putFile(from: localPath, metadata: nil, completion: { metadata, error in
+        imageReference?.putFile(from: localPath, metadata: nil, completion: { metadata, error in
             guard let metadata = metadata else { return }
             print(metadata.size)
         })

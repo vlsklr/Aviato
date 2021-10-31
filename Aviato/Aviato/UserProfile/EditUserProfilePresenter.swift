@@ -20,7 +20,7 @@ protocol IEditUserProfilePresenter {
 class EditUserProfilePresenter: UserProfilePresenter, IEditUserProfilePresenter {
     
     func updateUserInfo(view: IEditUserProfileViewController, userInfo: UserViewModel, userAvatar: UIImage?) -> Bool {
-        var user = UserViewModel(userID: userID, password: "", birthDate: userInfo.birthDate, email: userInfo.email, name: userInfo.name)
+        let user = UserViewModel(userID: userID, password: "", birthDate: userInfo.birthDate, email: userInfo.email, name: userInfo.name)
         if validateUserData(userInfo: userInfo) {
             if let image = userAvatar {
                 let savedPath = storageManager.saveImage(image: image, fileName: "\(userID)")

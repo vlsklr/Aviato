@@ -11,7 +11,7 @@ import UIKit
 
 protocol IStorageManager {
     func loadUser(email: String?, userID: String?) -> UserViewModel?
-    func addUser(user: UserViewModel) //, completion: @escaping () -> Void)
+    func addUser(user: UserViewModel)
     func deleteUser(userID: String)
     func updateUser(userID: String, userInfo: UserViewModel)
     func addFlyght(flyght: FlyghtViewModel)
@@ -89,7 +89,7 @@ class StorageManager: IStorageManager {
         }
     }
     
-    func saveImage(image: UIImage, fileName: String) -> String{
+    @discardableResult func saveImage(image: UIImage, fileName: String) -> String{
         if let data = image.pngData() {
             let path = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first!
             let url = path.appendingPathComponent(fileName).appendingPathExtension("png")
@@ -106,9 +106,9 @@ class StorageManager: IStorageManager {
     func loadImage(fileName: String) -> UIImage? {
         let path = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first!
         let url = path.appendingPathComponent(fileName).appendingPathExtension("png")
-                guard let imageData = try? Data(contentsOf: url) else {
-                    return nil
-                }
+        guard let imageData = try? Data(contentsOf: url) else {
+            return nil
+        }
         let image = UIImage.init(data: imageData)
         return image
     }
@@ -117,38 +117,37 @@ class StorageManager: IStorageManager {
         let path = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first!
         let url = path.appendingPathComponent(fileName).appendingPathExtension("png")
         do {
-            let result = try FileManager.default.removeItem(at: url)
-            print(result)
+            try FileManager.default.removeItem(at: url)
         } catch {
             print(error)
         }
     }
     
     func addFlyght(flyght: FlyghtViewModel) {
-//        self.persistentContainer.performBackgroundTask { context in
-//            do {
-//                let fetchRequest: NSFetchRequest<User> = User.fetchRequest()
-//                fetchRequest.predicate = NSPredicate(format: "\(#keyPath(User.userID)) = '\(flyght.holder)'")
-//                guard let user = try context.fetch(fetchRequest).first else { return }
-//                let object = Flyght(context: context)
-//                object.flyghtID = flyght.flyghtID
-//                object.flyghtNumber = flyght.flyghtNumber
-//                object.status = flyght.status
-//                object.aircraft = flyght.aircraft
-//                object.airline = flyght.airline
-//                object.arrivalAirport = flyght.arrivalAirport
-//                object.arrivalTime = flyght.arrivalDate
-//                object.departureTime = flyght.departureDate
-//                object.departureAirport = flyght.departureAirport
-//                object.user = user
-//                object.lastModified = Date()
-//                object.aircraftImage = flyght.aircraftImage
-//                try context.save()
-//            } catch {
-//            }
-//        }
+        //        self.persistentContainer.performBackgroundTask { context in
+        //            do {
+        //                let fetchRequest: NSFetchRequest<User> = User.fetchRequest()
+        //                fetchRequest.predicate = NSPredicate(format: "\(#keyPath(User.userID)) = '\(flyght.holder)'")
+        //                guard let user = try context.fetch(fetchRequest).first else { return }
+        //                let object = Flyght(context: context)
+        //                object.flyghtID = flyght.flyghtID
+        //                object.flyghtNumber = flyght.flyghtNumber
+        //                object.status = flyght.status
+        //                object.aircraft = flyght.aircraft
+        //                object.airline = flyght.airline
+        //                object.arrivalAirport = flyght.arrivalAirport
+        //                object.arrivalTime = flyght.arrivalDate
+        //                object.departureTime = flyght.departureDate
+        //                object.departureAirport = flyght.departureAirport
+        //                object.user = user
+        //                object.lastModified = Date()
+        //                object.aircraftImage = flyght.aircraftImage
+        //                try context.save()
+        //            } catch {
+        //            }
+        //        }
         
-       let context = self.persistentContainer.viewContext
+        let context = self.persistentContainer.viewContext
         do {
             let fetchRequest: NSFetchRequest<User> = User.fetchRequest()
             fetchRequest.predicate = NSPredicate(format: "\(#keyPath(User.userID)) = '\(flyght.holder)'")

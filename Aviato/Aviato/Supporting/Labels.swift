@@ -8,12 +8,13 @@
 import Foundation
 
 
-struct Labels {
+struct Labels: Decodable {
     let emailField: String
     let passwordField: String
     let loginButton: String
     let createAccountButton: String
     let userNameField: String
+    let registerButton: String
     let birthDateField: String
     let searchBarPlaceholder: String
     let findFlyghtButton: String

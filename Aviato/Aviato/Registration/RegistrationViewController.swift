@@ -54,7 +54,7 @@ class RegistrationViewController: UIViewController {
         emailField.textColor = textColor
         emailField.layer.cornerRadius = 25
         emailField.textAlignment = .center
-        emailField.attributedPlaceholder = NSAttributedString(string: "Email", attributes: [NSAttributedString.Key.foregroundColor : placeholdersColor])
+        emailField.attributedPlaceholder = NSAttributedString(string: RootViewController.labels!.emailField, attributes: [NSAttributedString.Key.foregroundColor : placeholdersColor])
         emailField.snp.makeConstraints { (make) in
             make.leading.equalToSuperview().offset(43)
             make.trailing.equalToSuperview().offset(-43)
@@ -71,7 +71,7 @@ class RegistrationViewController: UIViewController {
         passwordField.isSecureTextEntry = true
         passwordField.backgroundColor = .white
         passwordField.textColor = textColor
-        passwordField.attributedPlaceholder = NSAttributedString(string: "Пароль", attributes: [NSAttributedString.Key.foregroundColor : placeholdersColor])
+        passwordField.attributedPlaceholder = NSAttributedString(string: RootViewController.labels!.passwordField, attributes: [NSAttributedString.Key.foregroundColor : placeholdersColor])
         passwordField.snp.makeConstraints { (make) in
             make.leading.equalToSuperview().offset(43)
             make.trailing.equalToSuperview().offset(-43)
@@ -87,7 +87,7 @@ class RegistrationViewController: UIViewController {
         nameField.textColor = textColor
         nameField.layer.cornerRadius = 25
         nameField.textAlignment = .center
-        nameField.attributedPlaceholder = NSAttributedString(string: "Имя", attributes: [NSAttributedString.Key.foregroundColor : placeholdersColor])
+        nameField.attributedPlaceholder = NSAttributedString(string: RootViewController.labels!.userNameField, attributes: [NSAttributedString.Key.foregroundColor : placeholdersColor])
         nameField.snp.makeConstraints { (make) in
             make.leading.equalToSuperview().offset(43)
             make.trailing.equalToSuperview().offset(-43)
@@ -115,7 +115,7 @@ class RegistrationViewController: UIViewController {
         birthDateTextField.textColor = textColor
         birthDateTextField.layer.cornerRadius = 25
         birthDateTextField.textAlignment = .center
-        birthDateTextField.attributedPlaceholder = NSAttributedString(string: "Дата рождения", attributes: [NSAttributedString.Key.foregroundColor : placeholdersColor])
+        birthDateTextField.attributedPlaceholder = NSAttributedString(string: RootViewController.labels!.birthDateField, attributes: [NSAttributedString.Key.foregroundColor : placeholdersColor])
         birthDateTextField.snp.makeConstraints { (make) in
             make.leading.equalToSuperview().offset(43)
             make.trailing.equalToSuperview().offset(-43)
@@ -129,7 +129,7 @@ class RegistrationViewController: UIViewController {
         self.view.addSubview(registerButton)
         registerButton.isEnabled = false
         registerButton.addTarget(self, action: #selector(registerUser), for: .touchUpInside)
-        registerButton.setTitle("Зарегистрироваться", for: .normal)
+        registerButton.setTitle(RootViewController.labels!.registerButton, for: .normal)
         registerButton.layer.cornerRadius = 25
         registerButton.backgroundColor = UIColor(red: 0.243, green: 0.776, blue: 1, alpha: 1)
         registerButton.layer.borderColor = UIColor.gray.cgColor
@@ -208,7 +208,7 @@ class RegistrationViewController: UIViewController {
 
 extension RegistrationViewController: IAlert {
     func showAlert(message: String) {
-        let alert = UIAlertController(title: "Ошибка", message: message, preferredStyle: .alert)
+        let alert = UIAlertController(title: RootViewController.labels!.error, message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "ОК", style: .default))
         self.present(alert, animated: true)
     }

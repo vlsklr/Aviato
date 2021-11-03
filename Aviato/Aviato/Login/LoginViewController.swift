@@ -62,7 +62,7 @@ class LoginViewController: UIViewController {
         emailField.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
         emailField.textAlignment = .center
         emailField.textColor = .black
-        emailField.attributedPlaceholder = NSAttributedString(string: "Email", attributes: [NSAttributedString.Key.foregroundColor : UIColor.darkGray])
+        emailField.attributedPlaceholder = NSAttributedString(string: RootViewController.labels!.emailField, attributes: [NSAttributedString.Key.foregroundColor : UIColor.darkGray])
 
         emailField.snp.makeConstraints({ (make) in
             make.leading.equalToSuperview().offset(43)
@@ -80,7 +80,7 @@ class LoginViewController: UIViewController {
         passwordField.textAlignment = .center
         passwordField.textColor = .black
 //        passwordField.placeholder = "Пароль"
-        passwordField.attributedPlaceholder = NSAttributedString(string: "Пароль", attributes: [NSAttributedString.Key.foregroundColor : UIColor.darkGray])
+        passwordField.attributedPlaceholder = NSAttributedString(string: RootViewController.labels!.passwordField, attributes: [NSAttributedString.Key.foregroundColor : UIColor.darkGray])
         self.view.addSubview(passwordField)
         passwordField.snp.makeConstraints({ (make) in
             make.top.equalTo(emailField.snp.bottom)
@@ -94,7 +94,7 @@ class LoginViewController: UIViewController {
         self.view.addSubview(authButton)
         authButton.addTarget(self, action: #selector(authAction), for: .touchUpInside)
         authButton.addTarget(self, action: #selector(toggleAnimationButtonColor(button:)), for: .touchDown)
-        authButton.setTitle("Войти", for: .normal)
+        authButton.setTitle(RootViewController.labels!.loginButton, for: .normal)
         authButton.layer.cornerRadius = 25
         authButton.backgroundColor = UIColor(red: 0.243, green: 0.776, blue: 1, alpha: 1)
         authButton.layer.borderColor = UIColor.white.cgColor
@@ -115,7 +115,7 @@ class LoginViewController: UIViewController {
             .underlineStyle: NSUnderlineStyle.single.rawValue
         ]
         let attributeString = NSMutableAttributedString(
-            string: "Все еще нет аккаунта?",
+            string: RootViewController.labels!.createAccountButton,
             attributes: yourAttributes
         )
         registerButton.setAttributedTitle(attributeString, for: .normal)

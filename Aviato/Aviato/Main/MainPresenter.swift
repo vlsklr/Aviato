@@ -30,7 +30,7 @@ class MainPresenter: IMainPresenter {
                 print(error)
                 DispatchQueue.main.async {
                     view.toggleActivityIndicator()
-                    view.showAlert(message: "Информация о данном рейсе отсутствует" )
+                    view.showAlert(message: RootViewController.labels!.flyghtNotFound)
                 }
             case .success(let info):
                 print(info)

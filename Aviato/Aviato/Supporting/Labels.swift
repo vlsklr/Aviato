@@ -27,6 +27,7 @@ struct Labels: Decodable {
     let saveButton: String
     let deleteUserButton: String
     
+    let addToFavorite: String
     let flyghtNumber: String
     let flyghtStatus: String
     let departureAirport: String
@@ -50,4 +51,8 @@ struct Labels: Decodable {
     let flyghtNotFound: String
     
     let shortPasswordError: String
+    
+    let tabBarFind: String
+    let tabBarFavorite: String
+    let tabBarProfile: String
 }

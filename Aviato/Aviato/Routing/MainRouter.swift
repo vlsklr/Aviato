@@ -29,17 +29,17 @@ class MainRouter {
         self.mainPresenter = MainPresenter(userID: userID)
         self.mainViewController = MainViewController(presenter: self.mainPresenter)
         self.mainNavigationController = UINavigationController(rootViewController: self.mainViewController)
-        self.mainNavigationController.tabBarItem.title = "Найти"
+        self.mainNavigationController.tabBarItem.title = RootViewController.labels!.tabBarFind
         
         self.flyghtsListPresenter = FavoriteFlyghtListPresenter(userID: userID)
         self.flyghtListViewController = FavoriteFlyghtListViewController(presenter: self.flyghtsListPresenter)
         self.flyghtListNavigationController = UINavigationController(rootViewController: self.flyghtListViewController)
-        self.flyghtListNavigationController.tabBarItem.title = "Избранное"
+        self.flyghtListNavigationController.tabBarItem.title = RootViewController.labels!.tabBarFavorite
         
         self.userProfilePresenter = UserProfilePresenter(userID: userID)
         self.userProfileViewController = UserProfileViewController(presenter: self.userProfilePresenter)
         self.userProfileNavigationController = UINavigationController(rootViewController: self.userProfileViewController)
-        self.userProfileNavigationController.tabBarItem.title = "Профиль"
+        self.userProfileNavigationController.tabBarItem.title = RootViewController.labels!.tabBarProfile
         
         
         

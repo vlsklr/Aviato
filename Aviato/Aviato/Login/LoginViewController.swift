@@ -166,7 +166,7 @@ class LoginViewController: UIViewController {
 
 extension LoginViewController: IAlert {
     func showAlert(message: String) {
-        let alert = UIAlertController(title: "Ошибка", message: message, preferredStyle: .alert)
+        let alert = UIAlertController(title: RootViewController.labels!.error, message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "ОК", style: .default))
         self.present(alert, animated: true)
     }

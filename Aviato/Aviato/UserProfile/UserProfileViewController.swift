@@ -49,7 +49,6 @@ class UserProfileViewController: UIViewController {
         setupData()
         //Для обновления информации во ViewController после редактирования в EditUserProfileViewController
         NotificationCenter.default.addObserver(self, selector: #selector(UserProfileViewController.setupData), name: NSNotification.Name(rawValue: "refresh"), object: nil)
-//        NotificationCenter.default.addObserver(self, selector: #selector(UserProfilePresenter.getUser(userViewController:)), name: NSNotification.Name(rawValue: "refresh"), object: nil)
 
     }
     
@@ -120,7 +119,7 @@ class UserProfileViewController: UIViewController {
     
     func setupEditButton() {
         self.view.addSubview(editProfileButton)
-        editProfileButton.setTitle("Редактировать", for: .normal)
+        editProfileButton.setTitle(RootViewController.labels?.editUserProfileButton, for: .normal)
         editProfileButton.backgroundColor = .clear
         editProfileButton.addTarget(self, action: #selector(editProfile), for: .touchUpInside)
         editProfileButton.snp.makeConstraints { (make) in
@@ -133,7 +132,7 @@ class UserProfileViewController: UIViewController {
     
     func setupLogoutButton() {
         self.view.addSubview(logoutButton)
-        logoutButton.setTitle("Выйти", for: .normal)
+        logoutButton.setTitle(RootViewController.labels!.logoutButton, for: .normal)
         logoutButton.backgroundColor = .clear
         logoutButton.setTitleColor(.red, for: .normal)
         logoutButton.addTarget(self, action: #selector(logout), for: .touchUpInside)
@@ -176,12 +175,12 @@ class UserProfileViewController: UIViewController {
 
 extension UserProfileViewController: IUserProfileViewController {
     func showUserInfo(userInfo: UserViewModel) {
-        emailLabel.text = "Email: " + userInfo.email
-        nameLabel.text = "Имя: " + userInfo.name
+        emailLabel.text = "\(RootViewController.labels!.emailField): " + userInfo.email
+        nameLabel.text = "\(RootViewController.labels!.userNameField): " + userInfo.name
         let dateFormatter = DateFormatter()
         dateFormatter.dateStyle = .medium
         dateFormatter.timeStyle = .none
-        birthDate.text = "Дата рождения: " + dateFormatter.string(from: userInfo.birthDate)
+        birthDate.text = "\(RootViewController.labels!.birthDateField): " + dateFormatter.string(from: userInfo.birthDate)
         guard let image = presenter.getImage(fileName: userInfo.userID) else {
             return
         }

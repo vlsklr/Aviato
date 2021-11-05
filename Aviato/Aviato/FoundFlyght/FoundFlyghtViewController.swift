@@ -31,7 +31,7 @@ class FoundFlyghtViewController: FavoriteViewController {
     
     func setupButton() {
         self.scrollViewContainer.addArrangedSubview(saveButton)
-        saveButton.setTitle("Добавить в избранное", for: .normal)
+        saveButton.setTitle(RootViewController.labels!.addToFavorite, for: .normal)
         saveButton.setTitleColor(.white, for: .normal)
         saveButton.layer.cornerRadius = 25
         saveButton.backgroundColor = UIColor(red: 0.243, green: 0.776, blue: 1, alpha: 1)
@@ -67,7 +67,7 @@ class FoundFlyghtViewController: FavoriteViewController {
 
 extension FoundFlyghtViewController: IAlert {
     func showAlert(message: String) {
-        let alert = UIAlertController(title: "Ошибка", message: message, preferredStyle: .alert)
+        let alert = UIAlertController(title: RootViewController.labels!.error, message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "ОК", style: .default))
         self.present(alert, animated: true)
     }

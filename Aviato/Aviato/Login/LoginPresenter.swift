@@ -20,7 +20,7 @@ class LoginPresenter: ILoginPresenter {
     //    var userID: String = ""
     func authentificateUser(view: IAlert,email: String, password: String) {
         if email.isEmpty || password.isEmpty {
-            view.showAlert(message: "Введите данные")
+            view.showAlert(message: RootViewController.labels!.emptyDataError)
         } else {
             let hashedPassword = Crypto.getHash(inputString: email + password)
             FirebaseManager.authenticateUser(email: email, password: hashedPassword) { result in
@@ -29,11 +29,11 @@ class LoginPresenter: ILoginPresenter {
                     if let _error = error as? FirebaseErrors {
                         switch _error {
                         case .userNotFound, .wrongPassword:
-                            view.showAlert(message: "Email или пароль неправильный")
+                            view.showAlert(message: RootViewController.labels!.invalidEmailOrPasswordError)
                         case .other:
-                            view.showAlert(message: "Что-то пошло не так - попробуйте позже")
+                            view.showAlert(message: RootViewController.labels!.otherLoginError)
                         default:
-                            view.showAlert(message: "Что-то пошло не так - попробуйте позже")
+                            view.showAlert(message: RootViewController.labels!.otherLoginError)
                         }
                     }
                     

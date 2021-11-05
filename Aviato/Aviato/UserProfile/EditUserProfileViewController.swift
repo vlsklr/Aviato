@@ -59,7 +59,7 @@ class EditUserProfileViewController: UIViewController {
     
     func setupCancelButton() {
         self.view.addSubview(cancelButton)
-        cancelButton.setTitle("Отмена", for: .normal)
+        cancelButton.setTitle(RootViewController.labels!.calncelButton, for: .normal)
         cancelButton.addTarget(self, action: #selector(cancelAction), for: .touchUpInside)
         cancelButton.snp.makeConstraints { (make) in
             make.leading.equalToSuperview().offset(16)
@@ -74,7 +74,7 @@ class EditUserProfileViewController: UIViewController {
         saveButton.isEnabled = false
         saveButton.setTitleColor(.gray, for: .normal)
         saveButton.addTarget(self, action: #selector(saveAction), for: .touchUpInside)
-        saveButton.setTitle("Сохранить", for: .normal)
+        saveButton.setTitle(RootViewController.labels!.saveButton, for: .normal)
         saveButton.snp.makeConstraints { (make) in
             make.trailing.equalToSuperview().offset(-16)
             make.top.equalToSuperview().offset(10)
@@ -126,8 +126,7 @@ class EditUserProfileViewController: UIViewController {
         emailField.backgroundColor = .white
         emailField.textColor = textFieldsColor
         emailField.layer.cornerRadius = 25
-        emailField.attributedPlaceholder = NSAttributedString(string: "Email", attributes: [NSAttributedString.Key.foregroundColor : textFieldsPlaceholderColor])
-//        emailField.placeholder = "Email"
+        emailField.attributedPlaceholder = NSAttributedString(string: RootViewController.labels!.emailField, attributes: [NSAttributedString.Key.foregroundColor : textFieldsPlaceholderColor])
         emailField.textAlignment = .center
         emailField.snp.makeConstraints { (make) in
             make.leading.equalToSuperview().offset(43)
@@ -143,9 +142,8 @@ class EditUserProfileViewController: UIViewController {
         nameField.backgroundColor = .white
         nameField.textColor = textFieldsColor
         nameField.layer.cornerRadius = 25
-//        nameField.placeholder = "Имя"
         nameField.textAlignment = .center
-        nameField.attributedPlaceholder = NSAttributedString(string: "Имя", attributes: [NSAttributedString.Key.foregroundColor : textFieldsPlaceholderColor])
+        nameField.attributedPlaceholder = NSAttributedString(string: RootViewController.labels!.userNameField, attributes: [NSAttributedString.Key.foregroundColor : textFieldsPlaceholderColor])
         nameField.inputAccessoryView = setupDoneToolbar(tag: 0)
         nameField.snp.makeConstraints { (make) in
             make.leading.equalToSuperview().offset(43)
@@ -170,9 +168,8 @@ class EditUserProfileViewController: UIViewController {
         birthDateTextField.backgroundColor = .white
         birthDateTextField.layer.cornerRadius = 25
         birthDateTextField.textColor = textFieldsColor
-//        birthDateTextField.placeholder = "Дата рождения"
         birthDateTextField.textAlignment = .center
-        birthDateTextField.attributedPlaceholder = NSAttributedString(string: "Дата рождения", attributes: [NSAttributedString.Key.foregroundColor : textFieldsPlaceholderColor])
+        birthDateTextField.attributedPlaceholder = NSAttributedString(string: RootViewController.labels!.birthDateField, attributes: [NSAttributedString.Key.foregroundColor : textFieldsPlaceholderColor])
         birthDateTextField.snp.makeConstraints { (make) in
             make.leading.equalToSuperview().offset(43)
             make.trailing.equalToSuperview().offset(-43)
@@ -183,7 +180,7 @@ class EditUserProfileViewController: UIViewController {
     
     func setupRemoveUserButton() {
         self.view.addSubview(removeUserButton)
-        removeUserButton.setTitle("Удалить пользователя", for: .normal)
+        removeUserButton.setTitle(RootViewController.labels!.deleteUserButton, for: .normal)
         removeUserButton.layer.cornerRadius = 25
         removeUserButton.backgroundColor = .red
         removeUserButton.layer.borderColor = UIColor.white.cgColor
@@ -243,13 +240,13 @@ class EditUserProfileViewController: UIViewController {
     
     @objc func showActionSheet() {
         let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        let camera = UIAlertAction(title: "Камера", style: .default) { (_) in
+        let camera = UIAlertAction(title: RootViewController.labels!.camera, style: .default) { (_) in
             self.chooseImagePicker(source: .camera)
         }
-        let photo = UIAlertAction(title: "Галерея", style: .default) { (_) in
+        let photo = UIAlertAction(title: RootViewController.labels!.gallery, style: .default) { (_) in
             self.chooseImagePicker(source: .photoLibrary)
         }
-        let cancel = UIAlertAction(title: "Отмена", style: .cancel)
+        let cancel = UIAlertAction(title: RootViewController.labels!.calncelButton, style: .cancel)
         actionSheet.addAction(camera)
         actionSheet.addAction(photo)
         actionSheet.addAction(cancel)

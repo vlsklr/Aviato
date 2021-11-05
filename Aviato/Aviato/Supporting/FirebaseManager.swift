@@ -254,13 +254,33 @@ final class FirebaseManager {
     static func updateFlyghtInfo(flyght: FlyghtViewModel) {
         firestoreDatabase.collection(flyght.holder).document(flyght.flyghtID).updateData(
             [
-             "departureAirport" : flyght.departureAirport,
-             "arrivalAirport" : flyght.arrivalAirport,
-             "departureDate" : flyght.departureDate,
-             "arrivalDate" : flyght.arrivalDate,
-             "aircraft" : flyght.aircraft,
-             "status" : flyght.status
+                "departureAirport" : flyght.departureAirport,
+                "arrivalAirport" : flyght.arrivalAirport,
+                "departureDate" : flyght.departureDate,
+                "arrivalDate" : flyght.arrivalDate,
+                "aircraft" : flyght.aircraft,
+                "status" : flyght.status
             ]
         )
+    }
+    
+    static func loadLabels(completion: @escaping (Result<Labels, Error>) -> Void) {
+        let locale = NSLocale.preferredLanguages.first
+        let countryCode = locale?.contains("ru") ?? false ? "RU" : "EN"
+        firestoreDatabase.collection("labels").document(countryCode).getDocument { snaphot, error in
+            guard let snapshotData = snaphot?.data(), JSONSerialization.isValidJSONObject(snapshotData) else {
+                completion(.failure(FirebaseErrors.other))
+                return
+            }
+            do {
+                let data = try JSONSerialization.data(withJSONObject: snapshotData)
+                let labels = try JSONDecoder().decode(Labels.self, from: data)
+                completion(.success(labels))
+                print(labels)
+            } catch let error {
+                print(error)
+                completion(.failure(error))
+            }
+        }
     }
 }

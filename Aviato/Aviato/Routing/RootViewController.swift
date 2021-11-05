@@ -10,21 +10,34 @@ import UIKit
 
 class RootViewController: UIViewController {
     private var currentViewController: UIViewController = UIViewController()
-    private let firebase = FirebaseManager()
+    static var labels: Labels?
+    //    private let firebase = FirebaseManager()
+    
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        guard let userID = KeyChainManager.readUserSession(), let firebaseUserID = FirebaseManager.getCurrentUserID() else {
-            showLoginScreen()
-            return
+        
+        FirebaseManager.loadLabels { result in
+            switch result {
+            case .success(let loadedLabels):
+                RootViewController.labels = loadedLabels
+                guard let userID = KeyChainManager.readUserSession(), let firebaseUserID = FirebaseManager.getCurrentUserID() else {
+                    self.showLoginScreen()
+                    return
+                }
+                if userID == firebaseUserID {
+                    self.showMainScreen(userID: userID)
+                } else {
+                    KeyChainManager.deleteUserSession()
+                    FirebaseManager.logout()
+                    self.showLoginScreen()
+                }
+            case .failure(let error):
+                print(error)
+            }
         }
-        if userID == firebaseUserID {
-            showMainScreen(userID: userID)
-        } else {
-            KeyChainManager.deleteUserSession()
-            FirebaseManager.logout()
-            showLoginScreen()
-        }
-
+        
 
     }
     

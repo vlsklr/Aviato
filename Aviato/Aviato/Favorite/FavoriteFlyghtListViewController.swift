@@ -81,7 +81,7 @@ class FavoriteFlyghtListViewController: UIViewController {
 
 extension FavoriteFlyghtListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let deleteAction = UIContextualAction(style: .destructive, title: "Delete") { _, _, complete in
+        let deleteAction = UIContextualAction(style: .destructive, title: RootViewController.labels?.deleteFlyghtButton) { _, _, complete in
             let cell = tableView.cellForRow(at: indexPath) as! FlyghtViewCell
             if let flyghtID = cell.entityID {
                 self.presenter.removeFlyght(flyghtID: flyghtID)
@@ -115,8 +115,8 @@ extension FavoriteFlyghtListViewController: UITableViewDataSource {
         if let getter:[FlyghtViewModel] = presenter.getFlyghts() {
             if indexPath.row < getter.count {
                 cell.setupCell(id: getter[indexPath.row].flyghtID)
-                cell.flyghtNumberLabel.text = "Рейс \(getter[indexPath.row].flyghtNumber)"
-                cell.departireTimeLabel.text = "Отбывает(местное)  \(getter[indexPath.row].departureDateLocal)"
+                cell.flyghtNumberLabel.text = "\(RootViewController.labels!.favoriteCellFlyghtNumber)  \(getter[indexPath.row].flyghtNumber)"
+                cell.departireTimeLabel.text = "\(RootViewController.labels!.favoriteCellDepartureDate)  \(getter[indexPath.row].departureDateLocal)"
             }
         }
         return cell
@@ -135,7 +135,7 @@ extension FavoriteFlyghtListViewController: IFavoriteListFlyghtViewController {
 
 extension FavoriteFlyghtListViewController: IAlert {
     func showAlert(message: String) {
-        let alert = UIAlertController(title: "Ошибка", message: message, preferredStyle: .alert)
+        let alert = UIAlertController(title: RootViewController.labels!.error, message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "ОК", style: .default))
         self.present(alert, animated: true)
     }

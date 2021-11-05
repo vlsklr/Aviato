@@ -15,6 +15,7 @@ protocol IRegistrationPresenter {
 class RegistrationPresenter: IRegistrationPresenter {
     private let storageManager: IStorageManager = StorageManager()
     let firebaseManager = FirebaseManager()
+    
     func registerUser(view: IRegistrationViewController, password: String, birthDate: Date, email: String, name: String) {
         if email.isEmpty || password.isEmpty {
             view.showAlert(message: "Введите данные")

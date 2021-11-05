@@ -265,7 +265,9 @@ final class FirebaseManager {
     }
     
     static func loadLabels(completion: @escaping (Result<Labels, Error>) -> Void) {
-        firestoreDatabase.collection("labels").document("RU").getDocument { snaphot, error in
+        let locale = NSLocale.preferredLanguages.first
+        let countryCode = locale?.contains("ru") ?? false ? "RU" : "EN"
+        firestoreDatabase.collection("labels").document(countryCode).getDocument { snaphot, error in
             guard let snapshotData = snaphot?.data(), JSONSerialization.isValidJSONObject(snapshotData) else {
                 completion(.failure(FirebaseErrors.other))
                 return

@@ -55,7 +55,7 @@ class MainViewController: UIViewController {
         searchButton.backgroundColor = .white
         searchButton.layer.borderColor = #colorLiteral(red: 0.243, green: 0.776, blue: 1, alpha: 1)
         searchButton.layer.borderWidth = 3
-        searchButton.setTitle("Искать", for: .normal)
+        searchButton.setTitle(RootViewController.labels!.findFlyghtButton, for: .normal)
         searchButton.setTitleColor(UIColor(red: 0.243, green: 0.776, blue: 1, alpha: 1), for: .normal)
         searchButton.layer.cornerRadius = 25
         searchButton.addTarget(self, action: #selector(search), for: .touchUpInside)
@@ -79,7 +79,7 @@ class MainViewController: UIViewController {
     func setupSearchbar() {
         view.addSubview(searchBar)
         searchBar.delegate = self
-        searchBar.placeholder = "Найти рейс"
+        searchBar.placeholder = RootViewController.labels!.searchBarPlaceholder
         searchBar.clipsToBounds = true
         searchBar.layer.cornerRadius = 25
         searchBar.layer.borderColor = #colorLiteral(red: 0.243, green: 0.776, blue: 1, alpha: 1)
@@ -167,7 +167,7 @@ protocol IMainViewController: IAlert {
 
 extension MainViewController: IAlert {
     func showAlert(message: String) {
-        let alert = UIAlertController(title: "Ошибка", message: message, preferredStyle: .alert)
+        let alert = UIAlertController(title: RootViewController.labels!.error, message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "ОК", style: .default))
         self.present(alert, animated: true)
     }

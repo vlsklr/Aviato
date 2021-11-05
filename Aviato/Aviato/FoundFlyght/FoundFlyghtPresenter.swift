@@ -23,10 +23,9 @@ class FoundFlyghtPresenter: IFoundFlyghtPresenter {
     func addToFavorite(view: IFoundFlyghtViewController, flyght: FlyghtViewModel, image: UIImage?) {
         if storageManager.contains(userID: userID, flyghtNumber: flyght.flyghtNumber){
             DispatchQueue.main.async {
-                view.showAlert(message: "Данный рейс уже сохранен в избранном")
+                view.showAlert(message: RootViewController.labels!.flyghtAlreadyExists)
             }
         } else {
-            //var flyghtInfo = flyght
             var imagePath: String? = nil
             
             guard let flyghtID = FirebaseManager.saveFlyght(flyghtInfo: flyght) else {return}

@@ -30,7 +30,7 @@ class EditUserProfilePresenter: UserProfilePresenter, IEditUserProfilePresenter 
             FirebaseManager.updateUserInfo(userInfo: user)
             return true
         } else {
-            view.showAlert(message: "Такой пользователь уже существует")
+            view.showAlert(message: RootViewController.labels!.userExistsError)
             return false
         }
     }

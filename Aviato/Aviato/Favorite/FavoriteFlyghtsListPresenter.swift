@@ -86,7 +86,7 @@ class FavoriteFlyghtListPresenter: IFavoriteFlyghtListPresenter {
                         case .failure(let error):
                             print(error)
                             DispatchQueue.main.async {
-                                view.showAlert(message: "Во время обновления информации о рейсе \(flyghtNumber) что-то пошло не так")
+                                view.showAlert(message: "\(RootViewController.labels!.errorDuringUpdateFlyghtInfo) \(flyghtNumber)")
                                 view.toggleActivityIndicator()
                             }
                             

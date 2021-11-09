@@ -42,8 +42,10 @@ class RootViewController: UIViewController {
     }
     
     func showLoginScreen() {
-        let loginPresenter: ILoginPresenter = LoginPresenter()
-        let loginViewController = LoginViewController(presenter: loginPresenter)
+        
+//        let loginPresenter: ILoginPresenter = LoginPresenter()
+//        let loginViewController = LoginViewController(presenter: loginPresenter)
+        let loginViewController = LoginAssembly().build()
         addChild(loginViewController)
         loginViewController.view.frame = view.bounds
         view.addSubview(loginViewController.view)
@@ -74,8 +76,9 @@ class RootViewController: UIViewController {
     }
     
     func switchToLogout() {
-        let loginPresenter: ILoginPresenter = LoginPresenter()
-        let loginViewController = LoginViewController(presenter: loginPresenter)
+//        let loginPresenter: ILoginPresenter = LoginPresenter()
+//        let loginViewController = LoginViewController(presenter: loginPresenter)
+        let loginViewController = LoginAssembly().build()
         let logoutScreen = UINavigationController(rootViewController: loginViewController)
         animateDismissTransition(to: logoutScreen)
     }

@@ -9,18 +9,25 @@ import Foundation
 import UIKit
 
 protocol ILoginPresenter {
-    func authentificateUser(view: IAlert, email: String, password: String)
+//    func authentificateUser(view: IAlert, email: String, password: String)
+    func authentificateUser(email: String, password: String)
     func registerUser(view: IloginViewController)
-    func logout()
+//    func logout()
 }
 
 class LoginPresenter: ILoginPresenter {
     
     let storageManager: IStorageManager = StorageManager()
+    let loginRouter: LoginRouter
+    weak var view: LoginViewController?
+    
+    init(router: LoginRouter) {
+        loginRouter = router
+    }
     //    var userID: String = ""
-    func authentificateUser(view: IAlert,email: String, password: String) {
+    func authentificateUser(email: String, password: String) {
         if email.isEmpty || password.isEmpty {
-            view.showAlert(message: RootViewController.labels!.emptyDataError)
+            self.view?.showAlert(message: RootViewController.labels!.emptyDataError)
         } else {
             let hashedPassword = Crypto.getHash(inputString: email + password)
             FirebaseManager.authenticateUser(email: email, password: hashedPassword) { result in
@@ -29,11 +36,11 @@ class LoginPresenter: ILoginPresenter {
                     if let _error = error as? FirebaseErrors {
                         switch _error {
                         case .userNotFound, .wrongPassword:
-                            view.showAlert(message: RootViewController.labels!.invalidEmailOrPasswordError)
+                            self.view?.showAlert(message: RootViewController.labels!.invalidEmailOrPasswordError)
                         case .other:
-                            view.showAlert(message: RootViewController.labels!.otherLoginError)
+                            self.view?.showAlert(message: RootViewController.labels!.otherLoginError)
                         default:
-                            view.showAlert(message: RootViewController.labels!.otherLoginError)
+                            self.view?.showAlert(message: RootViewController.labels!.otherLoginError)
                         }
                     }
                     
@@ -55,7 +62,8 @@ class LoginPresenter: ILoginPresenter {
                                 }
                             }
                             self?.storageManager.addUser(user: user)
-                            AppDelegate.shared.rootViewController.switchToMainScreen(userID: userID)
+                            self?.loginRouter.switchToMainScreen(userID: userID)
+//                            AppDelegate.shared.rootViewController.switchToMainScreen(userID: userID)
                             FirebaseManager.loadFlyghts(userID: userID) { [self] result in
                                 switch result {
                                 case .failure(let error):
@@ -99,7 +107,7 @@ class LoginPresenter: ILoginPresenter {
         }
     }
     
-    func logout() {
-        AppDelegate.shared.rootViewController.showLoginScreen()
-    }
+//    func logout() {
+//        AppDelegate.shared.rootViewController.showLoginScreen()
+//    }
 }

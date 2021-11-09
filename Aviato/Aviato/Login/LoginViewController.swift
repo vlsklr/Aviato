@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-protocol IloginViewController {
+protocol IloginViewController: IAlert {
     func presentRegisterViewController(view: RegistrationViewController)
 }
 
@@ -152,7 +152,7 @@ class LoginViewController: UIViewController {
     @objc func authAction() {
         toggleAnimationButtonColor(button: self.authButton)
         guard let email = emailField.text, let password = passwordField.text else{return}
-        presenter.authentificateUser(view: self, email: email.lowercased(), password: password)
+        presenter.authentificateUser(email: email.lowercased(), password: password)
     }
     
     @objc func hideKeyboardOnSwipeDown() {

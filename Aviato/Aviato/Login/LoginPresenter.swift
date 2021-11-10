@@ -9,14 +9,11 @@ import Foundation
 import UIKit
 
 protocol ILoginPresenter {
-//    func authentificateUser(view: IAlert, email: String, password: String)
     func authentificateUser(email: String, password: String)
-    func registerUser(view: IloginViewController)
-//    func logout()
+    func registerUser()
 }
 
 class LoginPresenter: ILoginPresenter {
-    
     let storageManager: IStorageManager = StorageManager()
     let loginRouter: LoginRouter
     weak var view: LoginViewController?
@@ -24,7 +21,6 @@ class LoginPresenter: ILoginPresenter {
     init(router: LoginRouter) {
         loginRouter = router
     }
-    //    var userID: String = ""
     func authentificateUser(email: String, password: String) {
         if email.isEmpty || password.isEmpty {
             self.view?.showAlert(message: RootViewController.labels!.emptyDataError)
@@ -63,7 +59,6 @@ class LoginPresenter: ILoginPresenter {
                             }
                             self?.storageManager.addUser(user: user)
                             self?.loginRouter.switchToMainScreen(userID: userID)
-//                            AppDelegate.shared.rootViewController.switchToMainScreen(userID: userID)
                             FirebaseManager.loadFlyghts(userID: userID) { [self] result in
                                 switch result {
                                 case .failure(let error):
@@ -98,16 +93,7 @@ class LoginPresenter: ILoginPresenter {
         }
     }
     
-    // Метод создает экземпляр ViewController экрана регистрации и говорит вызвавшему ViewController отобразить этот ViewController
-    func registerUser(view: IloginViewController) {
-        let registrationPresenter: IRegistrationPresenter = RegistrationPresenter()
-        let registrationViewController = RegistrationViewController(presenter: registrationPresenter)
-        DispatchQueue.main.async {
-            view.presentRegisterViewController(view: registrationViewController)
-        }
+    func registerUser() {
+        loginRouter.showRegisterScreen()
     }
-    
-//    func logout() {
-//        AppDelegate.shared.rootViewController.showLoginScreen()
-//    }
 }

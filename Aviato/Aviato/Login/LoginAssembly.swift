@@ -14,7 +14,7 @@ final class LoginAssembly {
         let presenter = LoginPresenter(router: loginRouter)
         let viewController = LoginViewController(presenter: presenter)
         presenter.view = viewController
-        
+        loginRouter.view = viewController
         return viewController
         
     }

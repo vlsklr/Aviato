@@ -7,11 +7,11 @@
 
 import Foundation
 
-protocol IMainPresenter {
+protocol ISearchScreenPresenter {
     func findFlyghtInfo(view: IMainViewController, flyghtNumber: String)
 }
 
-class MainPresenter: IMainPresenter {
+class SearchScreenPresenter: ISearchScreenPresenter {
     
     let networkManager: INetworkManager = NetworkManager()
     var userID: String

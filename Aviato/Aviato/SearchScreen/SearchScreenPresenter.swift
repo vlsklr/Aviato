@@ -8,29 +8,32 @@
 import Foundation
 
 protocol ISearchScreenPresenter {
-    func findFlyghtInfo(view: IMainViewController, flyghtNumber: String)
+    func findFlyghtInfo(flyghtNumber: String)
 }
 
 class SearchScreenPresenter: ISearchScreenPresenter {
     
     let networkManager: INetworkManager = NetworkManager()
     var userID: String
+    let router: SearchScreenRouter
+    weak var view: SearchScreenViewController?
     
-    init(userID: String) {
+    init(userID: String, router: SearchScreenRouter) {
         self.userID = userID
+        self.router = router
     }
     
-    func findFlyghtInfo(view: IMainViewController, flyghtNumber: String) {
+    func findFlyghtInfo(flyghtNumber: String) {
         DispatchQueue.main.async {
-            view.toggleActivityIndicator()
+            self.view?.toggleActivityIndicator()
         }
         self.networkManager.loadFlyghtInfo(flyghtNumber: flyghtNumber.replacingOccurrences(of: " ", with: ""), completion: {[weak self] result in
             switch result {
             case .failure(let error):
                 print(error)
                 DispatchQueue.main.async {
-                    view.toggleActivityIndicator()
-                    view.showAlert(message: RootViewController.labels!.flyghtNotFound)
+                    self?.view?.toggleActivityIndicator()
+                    self?.view?.showAlert(message: RootViewController.labels!.flyghtNotFound)
                 }
             case .success(let info):
                 print(info)
@@ -55,8 +58,8 @@ class SearchScreenPresenter: ISearchScreenPresenter {
                     }
                 }
                 DispatchQueue.main.async {
-                    view.toggleActivityIndicator()
-                    view.showFoundFlyght(foundFlyghtViewController: foundFlyghtViewController)
+                    self?.view?.toggleActivityIndicator()
+                    self?.view?.showFoundFlyght(foundFlyghtViewController: foundFlyghtViewController)
                 }
             }
         })

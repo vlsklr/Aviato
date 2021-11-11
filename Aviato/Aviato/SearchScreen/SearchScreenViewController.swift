@@ -105,7 +105,7 @@ class SearchScreenViewController: UIViewController {
         toggleAnimationButtonColor(button: self.searchButton)
         guard let searchBarText = searchBar.text else { return }
         print(searchBarText)
-        presenter.findFlyghtInfo(view: self, flyghtNumber: searchBarText)
+        presenter.findFlyghtInfo(flyghtNumber: searchBarText)
     }
     
     @objc func hideKeyboardOnSwipeDown() {
@@ -144,7 +144,7 @@ extension SearchScreenViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         guard let searchBarText = searchBar.text else { return }
         print(searchBarText)
-        presenter.findFlyghtInfo(view: self, flyghtNumber: searchBarText)
+        presenter.findFlyghtInfo(flyghtNumber: searchBarText)
     }
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
     }

@@ -21,6 +21,9 @@
 		3CF97BD82692DECD0070CC9D /* RegistrationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CF97BD72692DECD0070CC9D /* RegistrationViewController.swift */; };
 		841F3D2226F5F16D002CC642 /* FirebaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 841F3D2126F5F16D002CC642 /* FirebaseManager.swift */; };
 		84444AD4272E75860059BA76 /* Labels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84444AD3272E75860059BA76 /* Labels.swift */; };
+		844F1902273CDE5D00C7EFF8 /* SearchScreenRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844F1901273CDE5D00C7EFF8 /* SearchScreenRouter.swift */; };
+		844F1904273CDE7200C7EFF8 /* SearchScreenAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844F1903273CDE7200C7EFF8 /* SearchScreenAssembly.swift */; };
+		844F1906273CE6D600C7EFF8 /* FoundFlyghtAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844F1905273CE6D600C7EFF8 /* FoundFlyghtAssembly.swift */; };
 		8453F39F26FE136F00E5F108 /* FirebaseErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8453F39E26FE136F00E5F108 /* FirebaseErrors.swift */; };
 		84CE389C26F5C7C800857D27 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 84CE389B26F5C7C800857D27 /* GoogleService-Info.plist */; };
 		84D9EE36273B8D66004CA32C /* RegistrationRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D9EE35273B8D66004CA32C /* RegistrationRouter.swift */; };
@@ -63,6 +66,9 @@
 		3CF97BD72692DECD0070CC9D /* RegistrationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationViewController.swift; sourceTree = "<group>"; };
 		841F3D2126F5F16D002CC642 /* FirebaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseManager.swift; sourceTree = "<group>"; };
 		84444AD3272E75860059BA76 /* Labels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Labels.swift; sourceTree = "<group>"; };
+		844F1901273CDE5D00C7EFF8 /* SearchScreenRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchScreenRouter.swift; sourceTree = "<group>"; };
+		844F1903273CDE7200C7EFF8 /* SearchScreenAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchScreenAssembly.swift; sourceTree = "<group>"; };
+		844F1905273CE6D600C7EFF8 /* FoundFlyghtAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoundFlyghtAssembly.swift; sourceTree = "<group>"; };
 		8453F39E26FE136F00E5F108 /* FirebaseErrors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseErrors.swift; sourceTree = "<group>"; };
 		84CE389B26F5C7C800857D27 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		84D9EE35273B8D66004CA32C /* RegistrationRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationRouter.swift; sourceTree = "<group>"; };
@@ -113,6 +119,7 @@
 			children = (
 				3C7F58DE2678973B001C1193 /* FoundFlyghtViewController.swift */,
 				3C74DA0F2696F9FB00779D00 /* FoundFlyghtPresenter.swift */,
+				844F1905273CE6D600C7EFF8 /* FoundFlyghtAssembly.swift */,
 			);
 			path = FoundFlyght;
 			sourceTree = "<group>";
@@ -172,6 +179,8 @@
 			children = (
 				F5392F0E2677571E00866C8F /* SearchScreenViewController.swift */,
 				F53171D12695EA3C00911C89 /* SearchScreenPresenter.swift */,
+				844F1901273CDE5D00C7EFF8 /* SearchScreenRouter.swift */,
+				844F1903273CDE7200C7EFF8 /* SearchScreenAssembly.swift */,
 			);
 			path = SearchScreen;
 			sourceTree = "<group>";
@@ -398,8 +407,11 @@
 				F5392EED2677364400866C8F /* AppDelegate.swift in Sources */,
 				F5346B6726A29E0400B04780 /* KeyChainManager.swift in Sources */,
 				3C263CFD26A7E78100F491EC /* EditUserProfileViewController.swift in Sources */,
+				844F1902273CDE5D00C7EFF8 /* SearchScreenRouter.swift in Sources */,
 				84FA0AD9273A451200E2D42C /* LoginRouter.swift in Sources */,
 				3C88585E2695715200A134C7 /* LoginPresenter.swift in Sources */,
+				844F1904273CDE7200C7EFF8 /* SearchScreenAssembly.swift in Sources */,
+				844F1906273CE6D600C7EFF8 /* FoundFlyghtAssembly.swift in Sources */,
 				F5392F182677719B00866C8F /* FlyghtViewModel.swift in Sources */,
 				3CF97BD82692DECD0070CC9D /* RegistrationViewController.swift in Sources */,
 				84FA0ADB273A456D00E2D42C /* LoginAssembly.swift in Sources */,

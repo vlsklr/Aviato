@@ -161,7 +161,7 @@ extension SearchScreenViewController: UIGestureRecognizerDelegate {
 
 protocol IMainViewController: IAlert {
     func toggleActivityIndicator()
-    func showFoundFlyght(foundFlyghtViewController: FoundFlyghtViewController)
+//    func showFoundFlyght(foundFlyghtViewController: FoundFlyghtViewController)
 }
 
 extension SearchScreenViewController: IAlert {
@@ -173,9 +173,9 @@ extension SearchScreenViewController: IAlert {
 }
 
 extension SearchScreenViewController: IMainViewController {
-    func showFoundFlyght(foundFlyghtViewController: FoundFlyghtViewController) {
-        self.present(foundFlyghtViewController, animated: true, completion: nil)
-    }
+//    func showFoundFlyght(foundFlyghtViewController: FoundFlyghtViewController) {
+//        self.present(foundFlyghtViewController, animated: true, completion: nil)
+//    }
     
     func toggleActivityIndicator() {
         activityIndicator.isAnimating ? activityIndicator.stopAnimating() : activityIndicator.startAnimating()

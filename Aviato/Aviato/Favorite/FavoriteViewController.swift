@@ -20,7 +20,7 @@ class FavoriteViewController: UIViewController {
     let arrivalDateLocalLabel: UILabel = UILabel()
     let aircraftLabel: UILabel = UILabel()
     let aircraftImage: UIImageView = UIImageView()
-    var flyghtViewInfo: FlyghtViewModel
+//    var flyghtViewInfo: FlyghtViewModel
     var scrollView: UIScrollView = UIScrollView()
     
     let textColor: UIColor = .black
@@ -37,13 +37,12 @@ class FavoriteViewController: UIViewController {
         return view
     }()
     
-    init(flyghtViewInfo: FlyghtViewModel) {
-        self.flyghtViewInfo = flyghtViewInfo
+    init() {
+//        self.flyghtViewInfo = flyghtViewInfo
         super.init(nibName: nil, bundle: nil)
     }
     
-    init(flyghtViewInfo: FlyghtViewModel, aircraftImage: UIImage) {
-        self.flyghtViewInfo = flyghtViewInfo
+    init(aircraftImage: UIImage) {
         self.aircraftImage.image = aircraftImage
         super.init(nibName: nil, bundle: nil)
     }
@@ -87,7 +86,6 @@ class FavoriteViewController: UIViewController {
     
     func setupFlyghtNumberLabel() {
         self.scrollViewContainer.addArrangedSubview(flyghtNumberLabel)
-        flyghtNumberLabel.text = "\(RootViewController.labels!.flyghtNumber) \(flyghtViewInfo.airline) \(flyghtViewInfo.flyghtNumber)"
         flyghtNumberLabel.backgroundColor = labelBackgroundColor
         flyghtNumberLabel.textColor = textColor
         flyghtNumberLabel.layer.cornerRadius = 25
@@ -105,7 +103,6 @@ class FavoriteViewController: UIViewController {
     
     func setupFlyghtStatusLabel() {
         self.scrollViewContainer.addArrangedSubview(flyghtStatusLabel)
-        flyghtStatusLabel.text = "\(RootViewController.labels!.flyghtStatus) \(flyghtViewInfo.status)"
         flyghtStatusLabel.backgroundColor = labelBackgroundColor
         flyghtStatusLabel.textColor = textColor
         flyghtStatusLabel.numberOfLines = 0
@@ -121,7 +118,6 @@ class FavoriteViewController: UIViewController {
     
     func setupDepartureAirportLabel() {
         self.scrollViewContainer.addArrangedSubview(departureAirportLabel)
-        departureAirportLabel.text = "\(RootViewController.labels!.departureAirport)  \(flyghtViewInfo.departureAirport)"
         departureAirportLabel.numberOfLines = 0
         departureAirportLabel.backgroundColor = labelBackgroundColor
         departureAirportLabel.textColor = textColor
@@ -135,7 +131,6 @@ class FavoriteViewController: UIViewController {
     
     func setupDepartureDateLabel() {
         self.scrollViewContainer.addArrangedSubview(departureDateLabel)
-        departureDateLabel.text = "\(RootViewController.labels!.departureTimeUTC)  \(flyghtViewInfo.departureDate)"
         departureDateLabel.numberOfLines = 0
         departureDateLabel.backgroundColor = labelBackgroundColor
         departureDateLabel.textColor = textColor
@@ -149,7 +144,6 @@ class FavoriteViewController: UIViewController {
     
     func setupDeartureDateLocalLabel() {
         self.scrollViewContainer.addArrangedSubview(departureDateLocalLabel)
-        departureDateLocalLabel.text = "\(RootViewController.labels!.departureTimeLocal)  \(RootViewController.labels!.departureTimeLocal) \(flyghtViewInfo.departureDateLocal)"
         departureDateLocalLabel.numberOfLines = 0
         departureDateLocalLabel.backgroundColor = labelBackgroundColor
         departureDateLocalLabel.textColor = textColor
@@ -163,7 +157,6 @@ class FavoriteViewController: UIViewController {
     
     func setupArrivalAirportLabel() {
         self.scrollViewContainer.addArrangedSubview(arrivalAirportLabel)
-        arrivalAirportLabel.text = "\(RootViewController.labels!.arriveAirport) \(flyghtViewInfo.arrivalAirport)"
         arrivalAirportLabel.numberOfLines = 0
         arrivalAirportLabel.backgroundColor = labelBackgroundColor
         arrivalAirportLabel.textColor = textColor
@@ -177,7 +170,6 @@ class FavoriteViewController: UIViewController {
     
     func setupArrivalDateLabel() {
         self.scrollViewContainer.addArrangedSubview(arrivalDateLabel)
-        arrivalDateLabel.text = "\(RootViewController.labels!.arriveTimeUTC) \(flyghtViewInfo.arrivalDate)"
         arrivalDateLabel.numberOfLines = 0
         arrivalDateLabel.backgroundColor = labelBackgroundColor
         arrivalDateLabel.textColor = textColor
@@ -191,7 +183,6 @@ class FavoriteViewController: UIViewController {
     
     func setupArrivalDateLocalLabel() {
         self.scrollViewContainer.addArrangedSubview(arrivalDateLocalLabel)
-        arrivalDateLocalLabel.text = "\(RootViewController.labels!.arriveTimeLocal)  \(flyghtViewInfo.arrivalDateLocal)"
         arrivalDateLocalLabel.numberOfLines = 0
         arrivalDateLocalLabel.backgroundColor = labelBackgroundColor
         arrivalDateLocalLabel.textColor = textColor
@@ -205,7 +196,6 @@ class FavoriteViewController: UIViewController {
     
     func setupAircraftLabel() {
         self.scrollViewContainer.addArrangedSubview(aircraftLabel)
-        aircraftLabel.text = "\(RootViewController.labels!.aircraft) \(flyghtViewInfo.aircraft)"
         aircraftLabel.numberOfLines = 0
         aircraftLabel.clipsToBounds = true
         aircraftLabel.backgroundColor = labelBackgroundColor
@@ -218,6 +208,19 @@ class FavoriteViewController: UIViewController {
             make.leading.equalToSuperview().offset(43)
             make.height.equalTo(75)
         }
+    }
+    
+    func setupLabelsText(flyghtViewInfo: FlyghtViewModel) {
+        flyghtNumberLabel.text = "\(RootViewController.labels!.flyghtNumber) \(flyghtViewInfo.airline) \(flyghtViewInfo.flyghtNumber)"
+        arrivalDateLocalLabel.text = "\(RootViewController.labels!.arriveTimeLocal)  \(flyghtViewInfo.arrivalDateLocal)"
+        arrivalAirportLabel.text = "\(RootViewController.labels!.arriveAirport) \(flyghtViewInfo.arrivalAirport)"
+        departureDateLocalLabel.text = "\(RootViewController.labels!.departureTimeLocal)  \(RootViewController.labels!.departureTimeLocal) \(flyghtViewInfo.departureDateLocal)"
+        flyghtStatusLabel.text = "\(RootViewController.labels!.flyghtStatus) \(flyghtViewInfo.status)"
+        departureAirportLabel.text = "\(RootViewController.labels!.departureAirport)  \(flyghtViewInfo.departureAirport)"
+        departureDateLabel.text = "\(RootViewController.labels!.departureTimeUTC)  \(flyghtViewInfo.departureDate)"
+        arrivalDateLabel.text = "\(RootViewController.labels!.arriveTimeUTC) \(flyghtViewInfo.arrivalDate)"
+        aircraftLabel.text = "\(RootViewController.labels!.aircraft) \(flyghtViewInfo.aircraft)"
+        
     }
     
     func setupAircraftImageView() {

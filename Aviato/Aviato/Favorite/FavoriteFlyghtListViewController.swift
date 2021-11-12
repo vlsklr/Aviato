@@ -98,7 +98,7 @@ extension FavoriteFlyghtListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let cell = tableView.cellForRow(at: indexPath) as! FlyghtViewCell
         if let entityID = cell.entityID {
-            presenter.getFavorite(view: self, flyghtID: entityID)
+            presenter.getFavorite(flyghtID: entityID)
             
         }
     }

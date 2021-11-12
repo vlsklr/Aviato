@@ -11,7 +11,7 @@ import UIKit
 protocol IFavoriteFlyghtListPresenter {
     func getFlyghtsCount() -> Int
     func getFlyghts() -> [FlyghtViewModel]?
-    func getFavorite(view: IFavoriteListFlyghtViewController, flyghtID: String)
+    func getFavorite(flyghtID: String)
     func updateFlyghtInfo(view: FavoriteFlyghtListViewController)
     func removeFlyght(flyghtID: String)
 }
@@ -20,43 +20,49 @@ class FavoriteFlyghtListPresenter: IFavoriteFlyghtListPresenter {
     let storageManager: IStorageManager = StorageManager()
     let networkManager = NetworkManager()
     let userID: String
+    let router: FavoriteListRouter
+    weak var view: FavoriteFlyghtListViewController?
+
     
     
-    init(userID: String) {
+    init(userID: String, router: FavoriteListRouter) {
         self.userID = userID
+        self.router = router
     }
     
     
     func getFlyghtsCount() -> Int {
         return storageManager.flyghtsCount(userID: userID)
-        
     }
     func getFlyghts() -> [FlyghtViewModel]? {
         let savedFlyghts = storageManager.getFlyghts(userID: userID)
         return savedFlyghts
     }
     
-    func getFavorite(view: IFavoriteListFlyghtViewController, flyghtID: String) {
+    func getFavorite(flyghtID: String) {
         guard let flyght = storageManager.getFlyght(flyghtID: flyghtID) else {
             return
         }
         if let airCraftImage = storageManager.loadImage(fileName: flyghtID) {
-            let favoiteViewController = FavoriteViewController(flyghtViewInfo: flyght, aircraftImage: airCraftImage)
-            view.showFavoriteFlyght(flyghtViewController: favoiteViewController)
+            router.showFavoriteFlyght(flyght: flyght, aircraftImage: airCraftImage)
+//            let favoiteViewController = FavoriteViewController(flyghtViewInfo: flyght, aircraftImage: airCraftImage)
+//            view.showFavoriteFlyght(flyghtViewController: favoiteViewController)
         } else {
             FirebaseManager.loadImage(filestoragePath: "images/\(userID)/\(flyghtID).png"){ [weak self] result in
                 switch result {
                 case .failure(let error):
                     print(error)
-                    let favoiteViewController = FavoriteViewController(flyghtViewInfo: flyght)
-                    view.showFavoriteFlyght(flyghtViewController: favoiteViewController)
+                    self?.router.showFavoriteFlyght(flyght: flyght, aircraftImage: nil)
+//                    let favoiteViewController = FavoriteViewController(flyghtViewInfo: flyght)
+//                    view.showFavoriteFlyght(flyghtViewController: favoiteViewController)
                 case .success(let data):
                     guard let data = data, let image = UIImage(data: data) else {
                         return
                     }
                     self?.storageManager.saveImage(image: image, fileName: "\(flyghtID)")
-                    let favoiteViewController = FavoriteViewController(flyghtViewInfo: flyght, aircraftImage: image)
-                    view.showFavoriteFlyght(flyghtViewController: favoiteViewController)
+                    self?.router.showFavoriteFlyght(flyght: flyght, aircraftImage: image)
+//                    let favoiteViewController = FavoriteViewController(flyghtViewInfo: flyght, aircraftImage: image)
+//                    view.showFavoriteFlyght(flyghtViewController: favoiteViewController)
                 }
             }
         }

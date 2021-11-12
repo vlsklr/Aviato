@@ -13,10 +13,17 @@ class FoundFlyghtViewController: FavoriteViewController {
     let saveButton: UIButton = UIButton()
     let presenter: IFoundFlyghtPresenter
     var saveButtonPressed: Bool = false
+    var aircraftPicture: UIImage?
     
     init(flyghtViewInfo: FlyghtViewModel, presenter: IFoundFlyghtPresenter) {
         self.presenter = presenter
-        super.init(flyghtViewInfo: flyghtViewInfo)
+        super.init()
+    }
+    
+    init(flyghtViewInfo: FlyghtViewModel, presenter: IFoundFlyghtPresenter, aircraftPicture: UIImage) {
+        self.aircraftPicture = aircraftPicture
+        self.presenter = presenter
+        super.init()
     }
     
     required init?(coder: NSCoder) {
@@ -26,7 +33,9 @@ class FoundFlyghtViewController: FavoriteViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupButton()
-        
+        if aircraftPicture != nil {
+            aircraftImage.image = aircraftPicture
+        }
     }
     
     func setupButton() {
@@ -46,13 +55,11 @@ class FoundFlyghtViewController: FavoriteViewController {
         }
     }
     
-   
-    
     @objc func addToFavorite() {
         toggleAnimationButtonColor(button: self.saveButton)
-        presenter.addToFavorite(view: self, flyght: self.flyghtViewInfo, image: aircraftImage.image)
+        presenter.addToFavorite(image: aircraftImage.image)
     }
-        
+    
     @objc func toggleAnimationButtonColor(button: UIButton) {
         var animator = UIViewPropertyAnimator()
         animator = UIViewPropertyAnimator(duration: 0.2, curve: .easeOut, animations: {
@@ -73,20 +80,3 @@ extension FoundFlyghtViewController: IAlert {
     }
 }
 
-protocol IFoundFlyghtViewController: IAlert {
-    func dismissFoundView()
-    func showImage(imageData: Data)
-}
-
-extension FoundFlyghtViewController: IFoundFlyghtViewController {
-    func showImage(imageData: Data) {
-        guard let image = UIImage(data: imageData) else {
-            return
-        }
-        aircraftImage.image = image
-    }
-    
-    func dismissFoundView() {
-        self.dismiss(animated: true)
-    }
-}

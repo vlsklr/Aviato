@@ -13,7 +13,6 @@ class FlyghtViewCell: UITableViewCell {
     let departireTimeLabel: UILabel = UILabel()
     var entityID: String?
     
-    
     override func awakeFromNib() {
         super.awakeFromNib()
     }

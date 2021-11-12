@@ -20,7 +20,6 @@ class FavoriteViewController: UIViewController {
     let arrivalDateLocalLabel: UILabel = UILabel()
     let aircraftLabel: UILabel = UILabel()
     let aircraftImage: UIImageView = UIImageView()
-//    var flyghtViewInfo: FlyghtViewModel
     var scrollView: UIScrollView = UIScrollView()
     
     let textColor: UIColor = .black
@@ -29,16 +28,13 @@ class FavoriteViewController: UIViewController {
     
     let scrollViewContainer: UIStackView = {
         let view = UIStackView()
-        
         view.axis = .vertical
         view.spacing = 10
-        
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     
     init() {
-//        self.flyghtViewInfo = flyghtViewInfo
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -93,7 +89,6 @@ class FavoriteViewController: UIViewController {
         flyghtNumberLabel.clipsToBounds = true
         flyghtNumberLabel.textAlignment = .center
         flyghtNumberLabel.numberOfLines = 0
-        
         flyghtNumberLabel.snp.makeConstraints { (make) in
             make.top.equalToSuperview().offset(50)
             make.leading.equalToSuperview().offset(43)
@@ -114,7 +109,6 @@ class FavoriteViewController: UIViewController {
             make.height.equalTo(75)
         }
     }
-    
     
     func setupDepartureAirportLabel() {
         self.scrollViewContainer.addArrangedSubview(departureAirportLabel)
@@ -200,8 +194,6 @@ class FavoriteViewController: UIViewController {
         aircraftLabel.clipsToBounds = true
         aircraftLabel.backgroundColor = labelBackgroundColor
         aircraftLabel.textColor = textColor
-        //        aircraftLabel.layer.cornerRadius = 25
-        //        aircraftLabel.layer.maskedCorners = [.layerMaxXMaxYCorner, .layerMinXMaxYCorner]
         aircraftLabel.textAlignment = .center
         aircraftLabel.snp.makeConstraints { (make) in
             make.top.equalTo(arrivalDateLocalLabel.snp.bottom)
@@ -238,8 +230,6 @@ class FavoriteViewController: UIViewController {
             make.height.equalTo(250)
         }
         //увеличиваем scrollView на высоту картинки
-        scrollView.contentSize = CGSize(width: view.bounds.width, height: view.bounds.height + 250)
-//        if let image = 
-        
+        scrollView.contentSize = CGSize(width: view.bounds.width, height: view.bounds.height + 250)        
     }
 }

@@ -23,6 +23,7 @@ class FavoriteAssembly {
             let view = FavoriteViewController()
             router.view = view
             presenter.view = view
+            view.setupLabelsText(flyghtViewInfo: flyght)
             return view
         }
     }

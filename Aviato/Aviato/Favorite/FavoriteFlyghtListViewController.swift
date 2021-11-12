@@ -9,7 +9,6 @@ import UIKit
 import SnapKit
 
 class FavoriteFlyghtListViewController: UIViewController {
-    
     let tableView: UITableView = UITableView()
     private let activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
     private let presenter: IFavoriteFlyghtListPresenter
@@ -41,7 +40,7 @@ class FavoriteFlyghtListViewController: UIViewController {
     }
     
     @objc func refreshFlyghts(sender: UIRefreshControl) {
-        presenter.updateFlyghtInfo(view: self)
+        presenter.updateFlyghtInfo()
         sender.endRefreshing()
     }
     
@@ -120,16 +119,6 @@ extension FavoriteFlyghtListViewController: UITableViewDataSource {
             }
         }
         return cell
-    }
-}
-
-protocol IFavoriteListFlyghtViewController {
-    func showFavoriteFlyght(flyghtViewController: FavoriteViewController)
-}
-
-extension FavoriteFlyghtListViewController: IFavoriteListFlyghtViewController {
-    func showFavoriteFlyght(flyghtViewController: FavoriteViewController) {
-        self.present(flyghtViewController, animated: true, completion: nil)
     }
 }
 

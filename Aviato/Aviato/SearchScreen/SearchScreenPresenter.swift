@@ -24,17 +24,13 @@ class SearchScreenPresenter: ISearchScreenPresenter {
     }
     
     func findFlyghtInfo(flyghtNumber: String) {
-        DispatchQueue.main.async {
-            self.view?.toggleActivityIndicator()
-        }
+        self.view?.toggleActivityIndicator()
         self.networkManager.loadFlyghtInfo(flyghtNumber: flyghtNumber.replacingOccurrences(of: " ", with: ""), completion: {[weak self] result in
             switch result {
             case .failure(let error):
                 print(error)
-                DispatchQueue.main.async {
-                    self?.view?.toggleActivityIndicator()
-                    self?.view?.showAlert(message: RootViewController.labels!.flyghtNotFound)
-                }
+                self?.view?.toggleActivityIndicator()
+                self?.view?.showAlert(message: RootViewController.labels!.flyghtNotFound)
             case .success(let info):
                 print(info)
                 let dateFormatter = DateFormatter()
@@ -49,39 +45,18 @@ class SearchScreenPresenter: ISearchScreenPresenter {
                 var airCraftImageData: Data?
                 let viewInfo: FlyghtViewModel = FlyghtViewModel(holder: self!.userID, flyghtID: "", flyghtNumber: info.number, departureAirport: "\(info.departure.airport.countryCode)  \(info.departure.airport.name)", arrivalAirport: "\(info.arrival.airport.countryCode)  \(info.arrival.airport.name)", departureDate: departureDateUTC, arrivalDate: arrivalDateUTC, aircraft: info.aircraft.model, airline: info.airline.name, status: info.status, departureDateLocal: departureDateLocal, arrivalDateLocal: arrivalDateLocal)
                 
-                
-//                let foundFlyghtPresenter = FoundFlyghtPresenter(userID: self!.userID, flyght: viewInfo)
-//                let foundFlyghtViewController = FoundFlyghtViewController(flyghtViewInfo: viewInfo, presenter: foundFlyghtPresenter)
-                
-                
-//                self?.networkManager.loadAircraftImage(url: info.aircraft.image.url) { (imageData) in
-//                    print(imageData)
-//                    airCraftImageData = imageData
-//                    if let imageData = airCraftImageData {
-//                        foundFlyghtViewController.showImage(imageData: imageData)
-//                    }
-//                }
-                
                 self?.networkManager.loadAircraftImage(url: info.aircraft.image.url, completion: { result in
                     switch result {
                     case .failure(let error):
                         print(error)
+                        self?.view?.toggleActivityIndicator()
                         self?.router.showFoundFlyght(userID: viewInfo.holder, flyght: viewInfo, aircraftImageData: nil)
                     case .success(let data):
                         airCraftImageData = data
+                        self?.view?.toggleActivityIndicator()
                         self?.router.showFoundFlyght(userID:viewInfo.holder, flyght: viewInfo, aircraftImageData: airCraftImageData)
-
-                        //                    if let imageData = airCraftImageData {
-                        //                        foundFlyghtViewController.showImage(imageData: imageData)
-                        //                    }
                     }
                 })
-                
-                
-                DispatchQueue.main.async {
-                    self?.view?.toggleActivityIndicator()
-//                    self?.view?.showFoundFlyght(foundFlyghtViewController: foundFlyghtViewController)
-                }
             }
         })
     }

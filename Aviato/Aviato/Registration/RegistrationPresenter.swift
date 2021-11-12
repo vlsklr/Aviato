@@ -9,7 +9,6 @@ import Foundation
 
 protocol IRegistrationPresenter {
     func registerUser(password: String, birthDate: Date, email: String, name: String)
-    
 }
 
 class RegistrationPresenter: IRegistrationPresenter {
@@ -51,10 +50,7 @@ class RegistrationPresenter: IRegistrationPresenter {
                         self?.router.returnToLoginScreen()
                     } else {
                         self?.view?.showAlert(message: "Что-то пошло не так - попробуйте позже")
-                        
                     }
-                    
-                    
                 }
             }
         }

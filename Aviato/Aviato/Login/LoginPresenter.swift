@@ -77,19 +77,6 @@ class LoginPresenter: ILoginPresenter {
                     
                 }
             }
-            
-            
-            
-            //            let user = storageManager.loadUser(username: username, userID: nil)
-            //            let hashedPassword = Crypto.getHash(inputString: username + password)
-            //            if user?.username == username && user?.password == hashedPassword && user?.userID != nil {
-            //                self.userID = user!.userID
-            //                KeyChainManager.saveSessionToKeyChain(userID: userID)
-            //                AppDelegate.shared.rootViewController.switchToMainScreen(userID: userID)
-            //            }
-            //            else {
-            //                view.showAlert(message: "Данные неверны или такого пользователя не существует")
-            //            }
         }
     }
     

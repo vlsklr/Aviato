@@ -12,14 +12,25 @@ import UIKit
 
 protocol IEditUserProfilePresenter {
     func removeUser()
-    func updateUserInfo(view: IEditUserProfileViewController, userInfo: UserViewModel, userAvatar: UIImage?) -> Bool
-    func getUser(userEditingViewController: IEditUserProfileViewController)
+    func updateUserInfo(userInfo: UserViewModel, userAvatar: UIImage?) -> Bool
+    func getUser()
     func getImage(fileName: String) -> UIImage?
 }
 
-class EditUserProfilePresenter: UserProfilePresenter, IEditUserProfilePresenter {
+class EditUserProfilePresenter: IEditUserProfilePresenter {
+
     
-    func updateUserInfo(view: IEditUserProfileViewController, userInfo: UserViewModel, userAvatar: UIImage?) -> Bool {
+    let storageManager = StorageManager()
+    let userID: String
+    let router: EditUserProfileRouter
+    weak var view: EditUserProfileViewController?
+    
+    init(userID: String, router: EditUserProfileRouter) {
+        self.router = router
+        self.userID = userID
+    }
+    
+    func updateUserInfo(userInfo: UserViewModel, userAvatar: UIImage?) -> Bool {
         let user = UserViewModel(userID: userID, password: "", birthDate: userInfo.birthDate, email: userInfo.email, name: userInfo.name)
         if validateUserData(userInfo: userInfo) {
             if let image = userAvatar {
@@ -28,9 +39,10 @@ class EditUserProfilePresenter: UserProfilePresenter, IEditUserProfilePresenter 
             }
             storageManager.updateUser(userID: userID, userInfo: user)
             FirebaseManager.updateUserInfo(userInfo: user)
+            router.closeView()
             return true
         } else {
-            view.showAlert(message: RootViewController.labels!.userExistsError)
+            view?.showAlert(message: RootViewController.labels!.userExistsError)
             return false
         }
     }
@@ -45,23 +57,26 @@ class EditUserProfilePresenter: UserProfilePresenter, IEditUserProfilePresenter 
         }
     }
     
+    func getImage(fileName: String) -> UIImage? {
+        return storageManager.loadImage(fileName: fileName)
+    }
     
     func removeUser() {
         if let flyghts = storageManager.getFlyghts(userID: userID) {
             for flyght in flyghts {
                 FirebaseManager.removeFlyght(flyghtID: flyght.flyghtID)
-//                FirebaseManager.deleteImage(filestoragePath: "images/\(userID)/\(flyght.flyghtID).jpg")
                 storageManager.removeFlyght(flyghtID: flyght.flyghtID)
             }
         }
         storageManager.deleteUser(userID: self.userID)
         FirebaseManager.removeUser(userID: self.userID)
         FirebaseManager.deleteImage(filestoragePath: "images/\(self.userID)/avatar.png")
-        logout()
+        KeyChainManager.deleteUserSession()
+        router.logout()
     }
-    
-    func getUser(userEditingViewController: IEditUserProfileViewController) {
+        
+    func getUser() {
         let user = storageManager.loadUser(email: nil, userID: userID)
-        userEditingViewController.showUserInfo(userInfo: user ?? UserViewModel(userID: "", password: "", birthDate: Date(), email: "", name: ""))
+        view?.showUserInfo(userInfo: user ?? UserViewModel(userID: "", password: "", birthDate: Date(), email: "", name: ""))
     }
 }

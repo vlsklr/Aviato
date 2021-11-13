@@ -16,7 +16,6 @@ class MainRouter {
     private let flyghtListViewController: FavoriteFlyghtListViewController
     private let userProfileViewController: UserProfileViewController
     private let userProfileNavigationController: UINavigationController
-    private let userProfilePresenter: IUserProfilePresenter
     private let userID: String
     
     
@@ -33,8 +32,7 @@ class MainRouter {
         self.flyghtListNavigationController = UINavigationController(rootViewController: self.flyghtListViewController)
         self.flyghtListNavigationController.tabBarItem.title = RootViewController.labels!.tabBarFavorite
         
-        self.userProfilePresenter = UserProfilePresenter(userID: userID)
-        self.userProfileViewController = UserProfileViewController(presenter: self.userProfilePresenter)
+        self.userProfileViewController = UserProfileAssembly().build(userID: userID)
         self.userProfileNavigationController = UINavigationController(rootViewController: self.userProfileViewController)
         self.userProfileNavigationController.tabBarItem.title = RootViewController.labels!.tabBarProfile
         

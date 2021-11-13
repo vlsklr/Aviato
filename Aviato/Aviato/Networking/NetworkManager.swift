@@ -48,7 +48,8 @@ struct FlyghtInfo: Decodable {
 
 protocol INetworkManager {
     func loadFlyghtInfo(flyghtNumber: String, completion: @escaping (Result<FlyghtInfo, Error>) -> Void)
-    func loadAircraftImage(url: String, completion: @escaping (Data) -> Void)
+    func loadAircraftImage(url: String, completion: @escaping (Result<Data?, Error>) -> Void)
+    
 }
 
 class NetworkManager: INetworkManager {
@@ -88,9 +89,17 @@ class NetworkManager: INetworkManager {
             }
         }).resume()
     }
-    func loadAircraftImage(url: String, completion: @escaping (Data) -> Void) {
-        AF.request(url).response { response in
-            completion(response.data ?? Data())
+    func loadAircraftImage(url: String, completion: @escaping (Result<Data?, Error>) -> Void) {
+//        AF.request(url).response { response in
+//            completion(response.data ?? Data())
+//        }
+        AF.request(url).response { result in
+            switch result.result {
+            case .failure(let error):
+                completion(.failure(error))
+            case .success(let data):
+                completion(.success(data))
+            }
         }
     }
 }

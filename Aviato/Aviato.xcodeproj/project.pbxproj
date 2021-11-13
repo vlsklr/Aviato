@@ -19,6 +19,10 @@
 		3CEC5BA1267B3FB700059058 /* IAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CEC5BA0267B3FB700059058 /* IAlert.swift */; };
 		3CEC5BA4267B56C100059058 /* FlyghtErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CEC5BA3267B56C100059058 /* FlyghtErrors.swift */; };
 		3CF97BD82692DECD0070CC9D /* RegistrationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CF97BD72692DECD0070CC9D /* RegistrationViewController.swift */; };
+		841071F1273F896900ECD07B /* UserProfileAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 841071F0273F896900ECD07B /* UserProfileAssembly.swift */; };
+		841071F3273F897A00ECD07B /* UserProfileRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 841071F2273F897A00ECD07B /* UserProfileRouter.swift */; };
+		841071F7273FA2D100ECD07B /* EditUserProfileAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 841071F6273FA2D100ECD07B /* EditUserProfileAssembly.swift */; };
+		841071F9273FA2E200ECD07B /* EditUserProfileRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 841071F8273FA2E200ECD07B /* EditUserProfileRouter.swift */; };
 		841F3D2226F5F16D002CC642 /* FirebaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 841F3D2126F5F16D002CC642 /* FirebaseManager.swift */; };
 		84444AD4272E75860059BA76 /* Labels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84444AD3272E75860059BA76 /* Labels.swift */; };
 		844F1902273CDE5D00C7EFF8 /* SearchScreenRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844F1901273CDE5D00C7EFF8 /* SearchScreenRouter.swift */; };
@@ -70,6 +74,10 @@
 		3CEC5BA0267B3FB700059058 /* IAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IAlert.swift; sourceTree = "<group>"; };
 		3CEC5BA3267B56C100059058 /* FlyghtErrors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlyghtErrors.swift; sourceTree = "<group>"; };
 		3CF97BD72692DECD0070CC9D /* RegistrationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationViewController.swift; sourceTree = "<group>"; };
+		841071F0273F896900ECD07B /* UserProfileAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UserProfileAssembly.swift; path = ../../../../../../UserProfileAssembly.swift; sourceTree = "<group>"; };
+		841071F2273F897A00ECD07B /* UserProfileRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileRouter.swift; sourceTree = "<group>"; };
+		841071F6273FA2D100ECD07B /* EditUserProfileAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditUserProfileAssembly.swift; sourceTree = "<group>"; };
+		841071F8273FA2E200ECD07B /* EditUserProfileRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditUserProfileRouter.swift; sourceTree = "<group>"; };
 		841F3D2126F5F16D002CC642 /* FirebaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseManager.swift; sourceTree = "<group>"; };
 		84444AD3272E75860059BA76 /* Labels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Labels.swift; sourceTree = "<group>"; };
 		844F1901273CDE5D00C7EFF8 /* SearchScreenRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchScreenRouter.swift; sourceTree = "<group>"; };
@@ -140,15 +148,8 @@
 		3C74DA132697116A00779D00 /* Favorite */ = {
 			isa = PBXGroup;
 			children = (
-				F53912E62679235200EBC14F /* FavoriteViewController.swift */,
-				F53251B62677C0F800CA57B6 /* FavoriteFlyghtListViewController.swift */,
-				844F1909273D065A00C7EFF8 /* FavoriteAssembly.swift */,
-				844F1907273D064200C7EFF8 /* FavoriteRouter.swift */,
-				844F190B273D089D00C7EFF8 /* FavoriteListRouter.swift */,
-				844F190D273D08B200C7EFF8 /* FavoriteListAssembly.swift */,
-				844F190F273D08F100C7EFF8 /* FavoriteFlyghtPresenter.swift */,
-				3C74DA17269711BD00779D00 /* FavoriteFlyghtsListPresenter.swift */,
-				F53912E3267919BB00EBC14F /* FlyghtViewCell.swift */,
+				841071F5273F97CB00ECD07B /* FavoriteFlightScreen */,
+				841071F4273F979100ECD07B /* FavoriteFlightsListScreen */,
 			);
 			path = Favorite;
 			sourceTree = "<group>";
@@ -181,6 +182,40 @@
 				D1F596971E5D46456BEB480A /* Pods_Aviato.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		841071F4273F979100ECD07B /* FavoriteFlightsListScreen */ = {
+			isa = PBXGroup;
+			children = (
+				F53912E3267919BB00EBC14F /* FlyghtViewCell.swift */,
+				3C74DA17269711BD00779D00 /* FavoriteFlyghtsListPresenter.swift */,
+				F53251B62677C0F800CA57B6 /* FavoriteFlyghtListViewController.swift */,
+				844F190B273D089D00C7EFF8 /* FavoriteListRouter.swift */,
+				844F190D273D08B200C7EFF8 /* FavoriteListAssembly.swift */,
+			);
+			path = FavoriteFlightsListScreen;
+			sourceTree = "<group>";
+		};
+		841071F5273F97CB00ECD07B /* FavoriteFlightScreen */ = {
+			isa = PBXGroup;
+			children = (
+				F53912E62679235200EBC14F /* FavoriteViewController.swift */,
+				844F1909273D065A00C7EFF8 /* FavoriteAssembly.swift */,
+				844F1907273D064200C7EFF8 /* FavoriteRouter.swift */,
+				844F190F273D08F100C7EFF8 /* FavoriteFlyghtPresenter.swift */,
+			);
+			path = FavoriteFlightScreen;
+			sourceTree = "<group>";
+		};
+		841071FA273FA2ED00ECD07B /* EditUserProfileScreen */ = {
+			isa = PBXGroup;
+			children = (
+				3C263CFF26A7E7B600F491EC /* EditUserProfilePresenter.swift */,
+				3C263CFC26A7E78100F491EC /* EditUserProfileViewController.swift */,
+				841071F8273FA2E200ECD07B /* EditUserProfileRouter.swift */,
+				841071F6273FA2D100ECD07B /* EditUserProfileAssembly.swift */,
+			);
+			path = EditUserProfileScreen;
 			sourceTree = "<group>";
 		};
 		C7DE001D94E4B0F0687F6FAA /* Pods */ = {
@@ -274,6 +309,7 @@
 		F5392EEB2677364400866C8F /* Aviato */ = {
 			isa = PBXGroup;
 			children = (
+				841071FA273FA2ED00ECD07B /* EditUserProfileScreen */,
 				F55A4626269B313000A3B352 /* UserProfile */,
 				3C74DA132697116A00779D00 /* Favorite */,
 				3C74DA0E2696F84E00779D00 /* FoundFlyght */,
@@ -297,9 +333,9 @@
 			isa = PBXGroup;
 			children = (
 				3C4C61FC26941E060086E4FE /* UserProfileViewController.swift */,
-				3C263CFC26A7E78100F491EC /* EditUserProfileViewController.swift */,
+				841071F0273F896900ECD07B /* UserProfileAssembly.swift */,
+				841071F2273F897A00ECD07B /* UserProfileRouter.swift */,
 				F55A4627269B31BD00A3B352 /* UserProfilePresenter.swift */,
-				3C263CFF26A7E7B600F491EC /* EditUserProfilePresenter.swift */,
 			);
 			path = UserProfile;
 			sourceTree = "<group>";
@@ -448,17 +484,21 @@
 				844F1910273D08F100C7EFF8 /* FavoriteFlyghtPresenter.swift in Sources */,
 				3C74DA18269711BD00779D00 /* FavoriteFlyghtsListPresenter.swift in Sources */,
 				84D9EE36273B8D66004CA32C /* RegistrationRouter.swift in Sources */,
+				841071F9273FA2E200ECD07B /* EditUserProfileRouter.swift in Sources */,
 				84D9EE38273B8D82004CA32C /* RegistrationAssembly.swift in Sources */,
 				F53251B72677C0F800CA57B6 /* FavoriteFlyghtListViewController.swift in Sources */,
 				F5392F0C26774CB100866C8F /* NetworkManager.swift in Sources */,
 				F5392F0926774CA100866C8F /* StorageManager.swift in Sources */,
+				841071F7273FA2D100ECD07B /* EditUserProfileAssembly.swift in Sources */,
 				3CEC5BA4267B56C100059058 /* FlyghtErrors.swift in Sources */,
 				F53251B42677BF0700CA57B6 /* MainRouter.swift in Sources */,
+				841071F3273F897A00ECD07B /* UserProfileRouter.swift in Sources */,
 				F5392F0626774C6700866C8F /* LoginViewController.swift in Sources */,
 				3C74DA102696F9FB00779D00 /* FoundFlyghtPresenter.swift in Sources */,
 				F5392EF72677364400866C8F /* Aviato.xcdatamodeld in Sources */,
 				841F3D2226F5F16D002CC642 /* FirebaseManager.swift in Sources */,
 				F5392F152677718C00866C8F /* UserViewModel.swift in Sources */,
+				841071F1273F896900ECD07B /* UserProfileAssembly.swift in Sources */,
 				3CEC5BA1267B3FB700059058 /* IAlert.swift in Sources */,
 				F53171D22695EA3C00911C89 /* SearchScreenPresenter.swift in Sources */,
 				F5392F0F2677571E00866C8F /* SearchScreenViewController.swift in Sources */,

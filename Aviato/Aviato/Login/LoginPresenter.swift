@@ -9,18 +9,21 @@ import Foundation
 import UIKit
 
 protocol ILoginPresenter {
-    func authentificateUser(view: IAlert, email: String, password: String)
-    func registerUser(view: IloginViewController)
-    func logout()
+    func authentificateUser(email: String, password: String)
+    func registerUser()
 }
 
 class LoginPresenter: ILoginPresenter {
-    
     let storageManager: IStorageManager = StorageManager()
-    //    var userID: String = ""
-    func authentificateUser(view: IAlert,email: String, password: String) {
+    let loginRouter: LoginRouter
+    weak var view: LoginViewController?
+    
+    init(router: LoginRouter) {
+        loginRouter = router
+    }
+    func authentificateUser(email: String, password: String) {
         if email.isEmpty || password.isEmpty {
-            view.showAlert(message: RootViewController.labels!.emptyDataError)
+            self.view?.showAlert(message: RootViewController.labels!.emptyDataError)
         } else {
             let hashedPassword = Crypto.getHash(inputString: email + password)
             FirebaseManager.authenticateUser(email: email, password: hashedPassword) { result in
@@ -29,11 +32,11 @@ class LoginPresenter: ILoginPresenter {
                     if let _error = error as? FirebaseErrors {
                         switch _error {
                         case .userNotFound, .wrongPassword:
-                            view.showAlert(message: RootViewController.labels!.invalidEmailOrPasswordError)
+                            self.view?.showAlert(message: RootViewController.labels!.invalidEmailOrPasswordError)
                         case .other:
-                            view.showAlert(message: RootViewController.labels!.otherLoginError)
+                            self.view?.showAlert(message: RootViewController.labels!.otherLoginError)
                         default:
-                            view.showAlert(message: RootViewController.labels!.otherLoginError)
+                            self.view?.showAlert(message: RootViewController.labels!.otherLoginError)
                         }
                     }
                     
@@ -55,7 +58,7 @@ class LoginPresenter: ILoginPresenter {
                                 }
                             }
                             self?.storageManager.addUser(user: user)
-                            AppDelegate.shared.rootViewController.switchToMainScreen(userID: userID)
+                            self?.loginRouter.switchToMainScreen(userID: userID)
                             FirebaseManager.loadFlyghts(userID: userID) { [self] result in
                                 switch result {
                                 case .failure(let error):
@@ -74,32 +77,10 @@ class LoginPresenter: ILoginPresenter {
                     
                 }
             }
-            
-            
-            
-            //            let user = storageManager.loadUser(username: username, userID: nil)
-            //            let hashedPassword = Crypto.getHash(inputString: username + password)
-            //            if user?.username == username && user?.password == hashedPassword && user?.userID != nil {
-            //                self.userID = user!.userID
-            //                KeyChainManager.saveSessionToKeyChain(userID: userID)
-            //                AppDelegate.shared.rootViewController.switchToMainScreen(userID: userID)
-            //            }
-            //            else {
-            //                view.showAlert(message: "Данные неверны или такого пользователя не существует")
-            //            }
         }
     }
     
-    // Метод создает экземпляр ViewController экрана регистрации и говорит вызвавшему ViewController отобразить этот ViewController
-    func registerUser(view: IloginViewController) {
-        let registrationPresenter: IRegistrationPresenter = RegistrationPresenter()
-        let registrationViewController = RegistrationViewController(presenter: registrationPresenter)
-        DispatchQueue.main.async {
-            view.presentRegisterViewController(view: registrationViewController)
-        }
-    }
-    
-    func logout() {
-        AppDelegate.shared.rootViewController.showLoginScreen()
+    func registerUser() {
+        loginRouter.showRegisterScreen()
     }
 }

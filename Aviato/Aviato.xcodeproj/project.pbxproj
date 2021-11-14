@@ -19,12 +19,29 @@
 		3CEC5BA1267B3FB700059058 /* IAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CEC5BA0267B3FB700059058 /* IAlert.swift */; };
 		3CEC5BA4267B56C100059058 /* FlyghtErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CEC5BA3267B56C100059058 /* FlyghtErrors.swift */; };
 		3CF97BD82692DECD0070CC9D /* RegistrationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CF97BD72692DECD0070CC9D /* RegistrationViewController.swift */; };
+		841071F1273F896900ECD07B /* UserProfileAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 841071F0273F896900ECD07B /* UserProfileAssembly.swift */; };
+		841071F3273F897A00ECD07B /* UserProfileRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 841071F2273F897A00ECD07B /* UserProfileRouter.swift */; };
+		841071F7273FA2D100ECD07B /* EditUserProfileAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 841071F6273FA2D100ECD07B /* EditUserProfileAssembly.swift */; };
+		841071F9273FA2E200ECD07B /* EditUserProfileRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 841071F8273FA2E200ECD07B /* EditUserProfileRouter.swift */; };
 		841F3D2226F5F16D002CC642 /* FirebaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 841F3D2126F5F16D002CC642 /* FirebaseManager.swift */; };
 		84444AD4272E75860059BA76 /* Labels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84444AD3272E75860059BA76 /* Labels.swift */; };
+		844F1902273CDE5D00C7EFF8 /* SearchScreenRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844F1901273CDE5D00C7EFF8 /* SearchScreenRouter.swift */; };
+		844F1904273CDE7200C7EFF8 /* SearchScreenAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844F1903273CDE7200C7EFF8 /* SearchScreenAssembly.swift */; };
+		844F1906273CE6D600C7EFF8 /* FoundFlyghtAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844F1905273CE6D600C7EFF8 /* FoundFlyghtAssembly.swift */; };
+		844F1908273D064200C7EFF8 /* FavoriteRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844F1907273D064200C7EFF8 /* FavoriteRouter.swift */; };
+		844F190A273D065A00C7EFF8 /* FavoriteAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844F1909273D065A00C7EFF8 /* FavoriteAssembly.swift */; };
+		844F190C273D089D00C7EFF8 /* FavoriteListRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844F190B273D089D00C7EFF8 /* FavoriteListRouter.swift */; };
+		844F190E273D08B200C7EFF8 /* FavoriteListAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844F190D273D08B200C7EFF8 /* FavoriteListAssembly.swift */; };
+		844F1910273D08F100C7EFF8 /* FavoriteFlyghtPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844F190F273D08F100C7EFF8 /* FavoriteFlyghtPresenter.swift */; };
 		8453F39F26FE136F00E5F108 /* FirebaseErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8453F39E26FE136F00E5F108 /* FirebaseErrors.swift */; };
 		84CE389C26F5C7C800857D27 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 84CE389B26F5C7C800857D27 /* GoogleService-Info.plist */; };
+		84D9EE36273B8D66004CA32C /* RegistrationRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D9EE35273B8D66004CA32C /* RegistrationRouter.swift */; };
+		84D9EE38273B8D82004CA32C /* RegistrationAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D9EE37273B8D82004CA32C /* RegistrationAssembly.swift */; };
+		84E77889273E3986001ED91A /* FoundFlyghtRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E77888273E3986001ED91A /* FoundFlyghtRouter.swift */; };
+		84FA0AD9273A451200E2D42C /* LoginRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84FA0AD8273A451200E2D42C /* LoginRouter.swift */; };
+		84FA0ADB273A456D00E2D42C /* LoginAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84FA0ADA273A456D00E2D42C /* LoginAssembly.swift */; };
 		9F717A38B4E8E8A63DCEFD64 /* Pods_Aviato.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D1F596971E5D46456BEB480A /* Pods_Aviato.framework */; };
-		F53171D22695EA3C00911C89 /* MainPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F53171D12695EA3C00911C89 /* MainPresenter.swift */; };
+		F53171D22695EA3C00911C89 /* SearchScreenPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F53171D12695EA3C00911C89 /* SearchScreenPresenter.swift */; };
 		F53251B42677BF0700CA57B6 /* MainRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F53251B32677BF0700CA57B6 /* MainRouter.swift */; };
 		F53251B72677C0F800CA57B6 /* FavoriteFlyghtListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F53251B62677C0F800CA57B6 /* FavoriteFlyghtListViewController.swift */; };
 		F5346B6726A29E0400B04780 /* KeyChainManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5346B6626A29E0400B04780 /* KeyChainManager.swift */; };
@@ -38,7 +55,7 @@
 		F5392F0626774C6700866C8F /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5392F0526774C6700866C8F /* LoginViewController.swift */; };
 		F5392F0926774CA100866C8F /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5392F0826774CA100866C8F /* StorageManager.swift */; };
 		F5392F0C26774CB100866C8F /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5392F0B26774CB100866C8F /* NetworkManager.swift */; };
-		F5392F0F2677571E00866C8F /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5392F0E2677571E00866C8F /* MainViewController.swift */; };
+		F5392F0F2677571E00866C8F /* SearchScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5392F0E2677571E00866C8F /* SearchScreenViewController.swift */; };
 		F5392F152677718C00866C8F /* UserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5392F142677718C00866C8F /* UserViewModel.swift */; };
 		F5392F182677719B00866C8F /* FlyghtViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5392F172677719B00866C8F /* FlyghtViewModel.swift */; };
 		F55A4628269B31BD00A3B352 /* UserProfilePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F55A4627269B31BD00A3B352 /* UserProfilePresenter.swift */; };
@@ -57,14 +74,31 @@
 		3CEC5BA0267B3FB700059058 /* IAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IAlert.swift; sourceTree = "<group>"; };
 		3CEC5BA3267B56C100059058 /* FlyghtErrors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlyghtErrors.swift; sourceTree = "<group>"; };
 		3CF97BD72692DECD0070CC9D /* RegistrationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationViewController.swift; sourceTree = "<group>"; };
+		841071F0273F896900ECD07B /* UserProfileAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UserProfileAssembly.swift; path = ../../../../../../UserProfileAssembly.swift; sourceTree = "<group>"; };
+		841071F2273F897A00ECD07B /* UserProfileRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileRouter.swift; sourceTree = "<group>"; };
+		841071F6273FA2D100ECD07B /* EditUserProfileAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditUserProfileAssembly.swift; sourceTree = "<group>"; };
+		841071F8273FA2E200ECD07B /* EditUserProfileRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditUserProfileRouter.swift; sourceTree = "<group>"; };
 		841F3D2126F5F16D002CC642 /* FirebaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseManager.swift; sourceTree = "<group>"; };
 		84444AD3272E75860059BA76 /* Labels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Labels.swift; sourceTree = "<group>"; };
+		844F1901273CDE5D00C7EFF8 /* SearchScreenRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchScreenRouter.swift; sourceTree = "<group>"; };
+		844F1903273CDE7200C7EFF8 /* SearchScreenAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchScreenAssembly.swift; sourceTree = "<group>"; };
+		844F1905273CE6D600C7EFF8 /* FoundFlyghtAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoundFlyghtAssembly.swift; sourceTree = "<group>"; };
+		844F1907273D064200C7EFF8 /* FavoriteRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteRouter.swift; sourceTree = "<group>"; };
+		844F1909273D065A00C7EFF8 /* FavoriteAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteAssembly.swift; sourceTree = "<group>"; };
+		844F190B273D089D00C7EFF8 /* FavoriteListRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteListRouter.swift; sourceTree = "<group>"; };
+		844F190D273D08B200C7EFF8 /* FavoriteListAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteListAssembly.swift; sourceTree = "<group>"; };
+		844F190F273D08F100C7EFF8 /* FavoriteFlyghtPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteFlyghtPresenter.swift; sourceTree = "<group>"; };
 		8453F39E26FE136F00E5F108 /* FirebaseErrors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseErrors.swift; sourceTree = "<group>"; };
 		84CE389B26F5C7C800857D27 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		84D9EE35273B8D66004CA32C /* RegistrationRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationRouter.swift; sourceTree = "<group>"; };
+		84D9EE37273B8D82004CA32C /* RegistrationAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationAssembly.swift; sourceTree = "<group>"; };
+		84E77888273E3986001ED91A /* FoundFlyghtRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoundFlyghtRouter.swift; sourceTree = "<group>"; };
+		84FA0AD8273A451200E2D42C /* LoginRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginRouter.swift; sourceTree = "<group>"; };
+		84FA0ADA273A456D00E2D42C /* LoginAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginAssembly.swift; sourceTree = "<group>"; };
 		C80B9156E75F6690218BBF02 /* Pods-Aviato.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Aviato.release.xcconfig"; path = "Target Support Files/Pods-Aviato/Pods-Aviato.release.xcconfig"; sourceTree = "<group>"; };
 		D1F596971E5D46456BEB480A /* Pods_Aviato.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Aviato.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D8466827EDC1A0EE70C1E815 /* Pods-Aviato.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Aviato.debug.xcconfig"; path = "Target Support Files/Pods-Aviato/Pods-Aviato.debug.xcconfig"; sourceTree = "<group>"; };
-		F53171D12695EA3C00911C89 /* MainPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainPresenter.swift; sourceTree = "<group>"; };
+		F53171D12695EA3C00911C89 /* SearchScreenPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchScreenPresenter.swift; sourceTree = "<group>"; };
 		F53251B32677BF0700CA57B6 /* MainRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainRouter.swift; sourceTree = "<group>"; };
 		F53251B62677C0F800CA57B6 /* FavoriteFlyghtListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteFlyghtListViewController.swift; sourceTree = "<group>"; };
 		F5346B6626A29E0400B04780 /* KeyChainManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyChainManager.swift; sourceTree = "<group>"; };
@@ -82,7 +116,7 @@
 		F5392F0526774C6700866C8F /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		F5392F0826774CA100866C8F /* StorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
 		F5392F0B26774CB100866C8F /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
-		F5392F0E2677571E00866C8F /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
+		F5392F0E2677571E00866C8F /* SearchScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchScreenViewController.swift; sourceTree = "<group>"; };
 		F5392F142677718C00866C8F /* UserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewModel.swift; sourceTree = "<group>"; };
 		F5392F172677719B00866C8F /* FlyghtViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlyghtViewModel.swift; sourceTree = "<group>"; };
 		F55A4627269B31BD00A3B352 /* UserProfilePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfilePresenter.swift; sourceTree = "<group>"; };
@@ -105,6 +139,8 @@
 			children = (
 				3C7F58DE2678973B001C1193 /* FoundFlyghtViewController.swift */,
 				3C74DA0F2696F9FB00779D00 /* FoundFlyghtPresenter.swift */,
+				84E77888273E3986001ED91A /* FoundFlyghtRouter.swift */,
+				844F1905273CE6D600C7EFF8 /* FoundFlyghtAssembly.swift */,
 			);
 			path = FoundFlyght;
 			sourceTree = "<group>";
@@ -112,10 +148,8 @@
 		3C74DA132697116A00779D00 /* Favorite */ = {
 			isa = PBXGroup;
 			children = (
-				F53912E62679235200EBC14F /* FavoriteViewController.swift */,
-				F53251B62677C0F800CA57B6 /* FavoriteFlyghtListViewController.swift */,
-				3C74DA17269711BD00779D00 /* FavoriteFlyghtsListPresenter.swift */,
-				F53912E3267919BB00EBC14F /* FlyghtViewCell.swift */,
+				841071F5273F97CB00ECD07B /* FavoriteFlightScreen */,
+				841071F4273F979100ECD07B /* FavoriteFlightsListScreen */,
 			);
 			path = Favorite;
 			sourceTree = "<group>";
@@ -125,6 +159,8 @@
 			children = (
 				3C88585D2695715200A134C7 /* LoginPresenter.swift */,
 				F5392F0526774C6700866C8F /* LoginViewController.swift */,
+				84FA0AD8273A451200E2D42C /* LoginRouter.swift */,
+				84FA0ADA273A456D00E2D42C /* LoginAssembly.swift */,
 			);
 			path = Login;
 			sourceTree = "<group>";
@@ -133,6 +169,8 @@
 			isa = PBXGroup;
 			children = (
 				3CF97BD72692DECD0070CC9D /* RegistrationViewController.swift */,
+				84D9EE35273B8D66004CA32C /* RegistrationRouter.swift */,
+				84D9EE37273B8D82004CA32C /* RegistrationAssembly.swift */,
 				3C8858662695766300A134C7 /* RegistrationPresenter.swift */,
 			);
 			path = Registration;
@@ -146,6 +184,40 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		841071F4273F979100ECD07B /* FavoriteFlightsListScreen */ = {
+			isa = PBXGroup;
+			children = (
+				F53912E3267919BB00EBC14F /* FlyghtViewCell.swift */,
+				3C74DA17269711BD00779D00 /* FavoriteFlyghtsListPresenter.swift */,
+				F53251B62677C0F800CA57B6 /* FavoriteFlyghtListViewController.swift */,
+				844F190B273D089D00C7EFF8 /* FavoriteListRouter.swift */,
+				844F190D273D08B200C7EFF8 /* FavoriteListAssembly.swift */,
+			);
+			path = FavoriteFlightsListScreen;
+			sourceTree = "<group>";
+		};
+		841071F5273F97CB00ECD07B /* FavoriteFlightScreen */ = {
+			isa = PBXGroup;
+			children = (
+				F53912E62679235200EBC14F /* FavoriteViewController.swift */,
+				844F1909273D065A00C7EFF8 /* FavoriteAssembly.swift */,
+				844F1907273D064200C7EFF8 /* FavoriteRouter.swift */,
+				844F190F273D08F100C7EFF8 /* FavoriteFlyghtPresenter.swift */,
+			);
+			path = FavoriteFlightScreen;
+			sourceTree = "<group>";
+		};
+		841071FA273FA2ED00ECD07B /* EditUserProfileScreen */ = {
+			isa = PBXGroup;
+			children = (
+				3C263CFF26A7E7B600F491EC /* EditUserProfilePresenter.swift */,
+				3C263CFC26A7E78100F491EC /* EditUserProfileViewController.swift */,
+				841071F8273FA2E200ECD07B /* EditUserProfileRouter.swift */,
+				841071F6273FA2D100ECD07B /* EditUserProfileAssembly.swift */,
+			);
+			path = EditUserProfileScreen;
+			sourceTree = "<group>";
+		};
 		C7DE001D94E4B0F0687F6FAA /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -155,13 +227,15 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
-		F53171D02695E9DA00911C89 /* Main */ = {
+		F53171D02695E9DA00911C89 /* SearchScreen */ = {
 			isa = PBXGroup;
 			children = (
-				F5392F0E2677571E00866C8F /* MainViewController.swift */,
-				F53171D12695EA3C00911C89 /* MainPresenter.swift */,
+				F5392F0E2677571E00866C8F /* SearchScreenViewController.swift */,
+				F53171D12695EA3C00911C89 /* SearchScreenPresenter.swift */,
+				844F1901273CDE5D00C7EFF8 /* SearchScreenRouter.swift */,
+				844F1903273CDE7200C7EFF8 /* SearchScreenAssembly.swift */,
 			);
-			path = Main;
+			path = SearchScreen;
 			sourceTree = "<group>";
 		};
 		F53912D82678FA2800EBC14F /* Models */ = {
@@ -235,10 +309,11 @@
 		F5392EEB2677364400866C8F /* Aviato */ = {
 			isa = PBXGroup;
 			children = (
+				841071FA273FA2ED00ECD07B /* EditUserProfileScreen */,
 				F55A4626269B313000A3B352 /* UserProfile */,
 				3C74DA132697116A00779D00 /* Favorite */,
 				3C74DA0E2696F84E00779D00 /* FoundFlyght */,
-				F53171D02695E9DA00911C89 /* Main */,
+				F53171D02695E9DA00911C89 /* SearchScreen */,
 				3C8858652695761400A134C7 /* Registration */,
 				3C88585C2695712400A134C7 /* Login */,
 				F53912E12678FAFC00EBC14F /* Supporting */,
@@ -258,9 +333,9 @@
 			isa = PBXGroup;
 			children = (
 				3C4C61FC26941E060086E4FE /* UserProfileViewController.swift */,
-				3C263CFC26A7E78100F491EC /* EditUserProfileViewController.swift */,
+				841071F0273F896900ECD07B /* UserProfileAssembly.swift */,
+				841071F2273F897A00ECD07B /* UserProfileRouter.swift */,
 				F55A4627269B31BD00A3B352 /* UserProfilePresenter.swift */,
-				3C263CFF26A7E7B600F491EC /* EditUserProfilePresenter.swift */,
 			);
 			path = UserProfile;
 			sourceTree = "<group>";
@@ -380,36 +455,53 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				844F190C273D089D00C7EFF8 /* FavoriteListRouter.swift in Sources */,
+				84E77889273E3986001ED91A /* FoundFlyghtRouter.swift in Sources */,
 				F5392EF12677364400866C8F /* RootViewController.swift in Sources */,
 				3C8858672695766300A134C7 /* RegistrationPresenter.swift in Sources */,
 				3C4C61FD26941E060086E4FE /* UserProfileViewController.swift in Sources */,
 				F5392EED2677364400866C8F /* AppDelegate.swift in Sources */,
 				F5346B6726A29E0400B04780 /* KeyChainManager.swift in Sources */,
 				3C263CFD26A7E78100F491EC /* EditUserProfileViewController.swift in Sources */,
+				844F1902273CDE5D00C7EFF8 /* SearchScreenRouter.swift in Sources */,
+				84FA0AD9273A451200E2D42C /* LoginRouter.swift in Sources */,
 				3C88585E2695715200A134C7 /* LoginPresenter.swift in Sources */,
+				844F1904273CDE7200C7EFF8 /* SearchScreenAssembly.swift in Sources */,
+				844F1906273CE6D600C7EFF8 /* FoundFlyghtAssembly.swift in Sources */,
 				F5392F182677719B00866C8F /* FlyghtViewModel.swift in Sources */,
 				3CF97BD82692DECD0070CC9D /* RegistrationViewController.swift in Sources */,
+				84FA0ADB273A456D00E2D42C /* LoginAssembly.swift in Sources */,
+				844F190E273D08B200C7EFF8 /* FavoriteListAssembly.swift in Sources */,
 				F53912E4267919BB00EBC14F /* FlyghtViewCell.swift in Sources */,
 				F53912E72679235200EBC14F /* FavoriteViewController.swift in Sources */,
 				3C1B706326AEAF0F00BC1DA3 /* Crypto.swift in Sources */,
+				844F190A273D065A00C7EFF8 /* FavoriteAssembly.swift in Sources */,
+				844F1908273D064200C7EFF8 /* FavoriteRouter.swift in Sources */,
 				84444AD4272E75860059BA76 /* Labels.swift in Sources */,
 				3C263D0026A7E7B600F491EC /* EditUserProfilePresenter.swift in Sources */,
 				F55A4628269B31BD00A3B352 /* UserProfilePresenter.swift in Sources */,
 				3C7F58DF2678973B001C1193 /* FoundFlyghtViewController.swift in Sources */,
+				844F1910273D08F100C7EFF8 /* FavoriteFlyghtPresenter.swift in Sources */,
 				3C74DA18269711BD00779D00 /* FavoriteFlyghtsListPresenter.swift in Sources */,
+				84D9EE36273B8D66004CA32C /* RegistrationRouter.swift in Sources */,
+				841071F9273FA2E200ECD07B /* EditUserProfileRouter.swift in Sources */,
+				84D9EE38273B8D82004CA32C /* RegistrationAssembly.swift in Sources */,
 				F53251B72677C0F800CA57B6 /* FavoriteFlyghtListViewController.swift in Sources */,
 				F5392F0C26774CB100866C8F /* NetworkManager.swift in Sources */,
 				F5392F0926774CA100866C8F /* StorageManager.swift in Sources */,
+				841071F7273FA2D100ECD07B /* EditUserProfileAssembly.swift in Sources */,
 				3CEC5BA4267B56C100059058 /* FlyghtErrors.swift in Sources */,
 				F53251B42677BF0700CA57B6 /* MainRouter.swift in Sources */,
+				841071F3273F897A00ECD07B /* UserProfileRouter.swift in Sources */,
 				F5392F0626774C6700866C8F /* LoginViewController.swift in Sources */,
 				3C74DA102696F9FB00779D00 /* FoundFlyghtPresenter.swift in Sources */,
 				F5392EF72677364400866C8F /* Aviato.xcdatamodeld in Sources */,
 				841F3D2226F5F16D002CC642 /* FirebaseManager.swift in Sources */,
 				F5392F152677718C00866C8F /* UserViewModel.swift in Sources */,
+				841071F1273F896900ECD07B /* UserProfileAssembly.swift in Sources */,
 				3CEC5BA1267B3FB700059058 /* IAlert.swift in Sources */,
-				F53171D22695EA3C00911C89 /* MainPresenter.swift in Sources */,
-				F5392F0F2677571E00866C8F /* MainViewController.swift in Sources */,
+				F53171D22695EA3C00911C89 /* SearchScreenPresenter.swift in Sources */,
+				F5392F0F2677571E00866C8F /* SearchScreenViewController.swift in Sources */,
 				8453F39F26FE136F00E5F108 /* FirebaseErrors.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

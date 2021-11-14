@@ -7,30 +7,31 @@
 
 import Foundation
 
-protocol IMainPresenter {
-    func findFlyghtInfo(view: IMainViewController, flyghtNumber: String)
+protocol ISearchScreenPresenter {
+    func findFlyghtInfo(flyghtNumber: String)
 }
 
-class MainPresenter: IMainPresenter {
+class SearchScreenPresenter: ISearchScreenPresenter {
     
     let networkManager: INetworkManager = NetworkManager()
     var userID: String
+    let router: SearchScreenRouter
+    weak var view: SearchScreenViewController?
     
-    init(userID: String) {
+    init(userID: String, router: SearchScreenRouter) {
         self.userID = userID
+        self.router = router
     }
     
-    func findFlyghtInfo(view: IMainViewController, flyghtNumber: String) {
-        DispatchQueue.main.async {
-            view.toggleActivityIndicator()
-        }
+    func findFlyghtInfo(flyghtNumber: String) {
+        self.view?.toggleActivityIndicator()
         self.networkManager.loadFlyghtInfo(flyghtNumber: flyghtNumber.replacingOccurrences(of: " ", with: ""), completion: {[weak self] result in
             switch result {
             case .failure(let error):
                 print(error)
                 DispatchQueue.main.async {
-                    view.toggleActivityIndicator()
-                    view.showAlert(message: RootViewController.labels!.flyghtNotFound)
+                    self?.view?.toggleActivityIndicator()
+                    self?.view?.showAlert(message: RootViewController.labels!.flyghtNotFound)
                 }
             case .success(let info):
                 print(info)
@@ -45,19 +46,19 @@ class MainPresenter: IMainPresenter {
                 let arrivalDateLocal  = dateFormatter.string(from: arrivalDateUTC)
                 var airCraftImageData: Data?
                 let viewInfo: FlyghtViewModel = FlyghtViewModel(holder: self!.userID, flyghtID: "", flyghtNumber: info.number, departureAirport: "\(info.departure.airport.countryCode)  \(info.departure.airport.name)", arrivalAirport: "\(info.arrival.airport.countryCode)  \(info.arrival.airport.name)", departureDate: departureDateUTC, arrivalDate: arrivalDateUTC, aircraft: info.aircraft.model, airline: info.airline.name, status: info.status, departureDateLocal: departureDateLocal, arrivalDateLocal: arrivalDateLocal)
-                let foundFlyghtPresenter = FoundFlyghtPresenter(userID: self!.userID)
-                let foundFlyghtViewController = FoundFlyghtViewController(flyghtViewInfo: viewInfo, presenter: foundFlyghtPresenter)
-                self?.networkManager.loadAircraftImage(url: info.aircraft.image.url) { (imageData) in
-                    print(imageData)
-                    airCraftImageData = imageData
-                    if let imageData = airCraftImageData {
-                        foundFlyghtViewController.showImage(imageData: imageData)
+                
+                self?.networkManager.loadAircraftImage(url: info.aircraft.image.url, completion: { result in
+                    switch result {
+                    case .failure(let error):
+                        print(error)
+                        self?.view?.toggleActivityIndicator()
+                        self?.router.showFoundFlyght(userID: viewInfo.holder, flyght: viewInfo, aircraftImageData: nil)
+                    case .success(let data):
+                        airCraftImageData = data
+                        self?.view?.toggleActivityIndicator()
+                        self?.router.showFoundFlyght(userID:viewInfo.holder, flyght: viewInfo, aircraftImageData: airCraftImageData)
                     }
-                }
-                DispatchQueue.main.async {
-                    view.toggleActivityIndicator()
-                    view.showFoundFlyght(foundFlyghtViewController: foundFlyghtViewController)
-                }
+                })
             }
         })
     }

@@ -8,11 +8,6 @@
 import UIKit
 import SnapKit
 
-protocol IUserProfileViewController {
-    func showUserInfo(userInfo: UserViewModel)
-    func showEditUserProfileScreen(view: EditUserProfileViewController)
-}
-
 class UserProfileViewController: UIViewController {
     
     let presenter: IUserProfilePresenter
@@ -144,8 +139,21 @@ class UserProfileViewController: UIViewController {
         }
     }
     
+    func showUserInfo(userInfo: UserViewModel) {
+        emailLabel.text = "\(RootViewController.labels!.emailField): " + userInfo.email
+        nameLabel.text = "\(RootViewController.labels!.userNameField): " + userInfo.name
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = .medium
+        dateFormatter.timeStyle = .none
+        birthDate.text = "\(RootViewController.labels!.birthDateField): " + dateFormatter.string(from: userInfo.birthDate)
+        guard let image = presenter.getImage(fileName: userInfo.userID) else {
+            return
+        }
+        userPhoto.image = image
+    }
+    
     @objc func editProfile() {
-        presenter.editUser(view: self)
+        presenter.editUser()
         
     }
     
@@ -167,30 +175,10 @@ class UserProfileViewController: UIViewController {
     
     
     @objc func setupData() {
-        presenter.getUser(userViewController: self)
+        presenter.getUser()
     }
     
     
-}
-
-extension UserProfileViewController: IUserProfileViewController {
-    func showUserInfo(userInfo: UserViewModel) {
-        emailLabel.text = "\(RootViewController.labels!.emailField): " + userInfo.email
-        nameLabel.text = "\(RootViewController.labels!.userNameField): " + userInfo.name
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateStyle = .medium
-        dateFormatter.timeStyle = .none
-        birthDate.text = "\(RootViewController.labels!.birthDateField): " + dateFormatter.string(from: userInfo.birthDate)
-        guard let image = presenter.getImage(fileName: userInfo.userID) else {
-            return
-        }
-        userPhoto.image = image
-    }
-    
-    
-    func showEditUserProfileScreen(view: EditUserProfileViewController) {
-        present(view, animated: true, completion: nil)
-    }
 }
 
 

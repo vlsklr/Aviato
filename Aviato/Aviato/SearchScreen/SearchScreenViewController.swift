@@ -8,16 +8,16 @@
 import UIKit
 import SnapKit
 
-class MainViewController: UIViewController {
+class SearchScreenViewController: UIViewController {
     
     let searchBar: UISearchBar = UISearchBar()
     let searchButton: UIButton = UIButton()
     private let activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
     let verticalMargins: CGFloat = 16.0
-    let presenter: IMainPresenter
+    let presenter: ISearchScreenPresenter
     var searchButtonPressed: Bool = false
     
-    init(presenter: IMainPresenter) {
+    init(presenter: ISearchScreenPresenter) {
         self.presenter = presenter
         super.init(nibName: nil, bundle: nil)
     }
@@ -91,7 +91,6 @@ class MainViewController: UIViewController {
         } else {
             // Fallback on earlier versions
         }
-//        searchBar.attributedPlaceholder = NSAttributedString(string: "Дата рождения", attributes: [NSAttributedString.Key.foregroundColor : .darkGray])
         searchBar.snp.makeConstraints { contsraint in
             contsraint.top.equalTo(view).offset(250)
             contsraint.centerX.equalToSuperview()
@@ -106,7 +105,7 @@ class MainViewController: UIViewController {
         toggleAnimationButtonColor(button: self.searchButton)
         guard let searchBarText = searchBar.text else { return }
         print(searchBarText)
-        presenter.findFlyghtInfo(view: self, flyghtNumber: searchBarText)
+        presenter.findFlyghtInfo(flyghtNumber: searchBarText)
     }
     
     @objc func hideKeyboardOnSwipeDown() {
@@ -141,11 +140,11 @@ extension UISearchBar {
 }
 
 
-extension MainViewController: UISearchBarDelegate {
+extension SearchScreenViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         guard let searchBarText = searchBar.text else { return }
         print(searchBarText)
-        presenter.findFlyghtInfo(view: self, flyghtNumber: searchBarText)
+        presenter.findFlyghtInfo(flyghtNumber: searchBarText)
     }
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
     }
@@ -154,7 +153,7 @@ extension MainViewController: UISearchBarDelegate {
     }
 }
 
-extension MainViewController: UIGestureRecognizerDelegate {
+extension SearchScreenViewController: UIGestureRecognizerDelegate {
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
         return true
     }
@@ -162,10 +161,9 @@ extension MainViewController: UIGestureRecognizerDelegate {
 
 protocol IMainViewController: IAlert {
     func toggleActivityIndicator()
-    func showFoundFlyght(foundFlyghtViewController: FoundFlyghtViewController)
 }
 
-extension MainViewController: IAlert {
+extension SearchScreenViewController: IAlert {
     func showAlert(message: String) {
         let alert = UIAlertController(title: RootViewController.labels!.error, message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "ОК", style: .default))
@@ -173,11 +171,7 @@ extension MainViewController: IAlert {
     }
 }
 
-extension MainViewController: IMainViewController {
-    func showFoundFlyght(foundFlyghtViewController: FoundFlyghtViewController) {
-        self.present(foundFlyghtViewController, animated: true, completion: nil)
-    }
-    
+extension SearchScreenViewController: IMainViewController {
     func toggleActivityIndicator() {
         activityIndicator.isAnimating ? activityIndicator.stopAnimating() : activityIndicator.startAnimating()
     }

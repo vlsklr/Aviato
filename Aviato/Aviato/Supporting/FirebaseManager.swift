@@ -182,6 +182,26 @@ final class FirebaseManager {
         
     }
     
+    static func validateUserProfileChanges(email: String, completion: @escaping (Bool) -> Void) {
+        let userID = getCurrentUserID()
+        firestoreDatabase.collection("users").whereField("email", isEqualTo: email).getDocuments { snapshot, error in
+            if let error = error {
+                completion(false)
+            }
+            guard let userInfo = snapshot?.documents.first else {
+                completion(true)
+                return
+            }
+            
+            let uid = userInfo.data()["userID"] as! String
+            if userID == uid {
+                completion(true)
+            } else {
+                completion(false)
+            }
+        }
+    }
+    
     static func loadUserInfo(userID: String, completion: @escaping (Result<UserViewModel, Error>) -> Void) {
         let userID: String = userID
         var birthDate: Date?

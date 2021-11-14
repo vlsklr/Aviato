@@ -8,10 +8,6 @@
 import UIKit
 import SnapKit
 
-protocol IRegistrationViewController: IAlert {
-    func dismissView()
-    func presentSelf()
-}
 
 class RegistrationViewController: UIViewController {
     let passwordField: UITextField = UITextField()
@@ -43,7 +39,6 @@ class RegistrationViewController: UIViewController {
         setupNameField()
         setupDateField()
         setupRegisterButton()
-        
     }
     
     func setupEmailField() {
@@ -109,7 +104,6 @@ class RegistrationViewController: UIViewController {
         toolbar.sizeToFit()
         let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(donePressed))
         toolbar.setItems([doneButton], animated: true)
-        
         birthDateTextField.inputAccessoryView = toolbar
         birthDateTextField.backgroundColor = .white
         birthDateTextField.textColor = textColor
@@ -122,7 +116,6 @@ class RegistrationViewController: UIViewController {
             make.top.equalTo(nameField.snp.bottom).offset(10)
             make.height.equalTo(50)
         }
-        
     }
     
     func setupRegisterButton() {
@@ -175,8 +168,7 @@ class RegistrationViewController: UIViewController {
         guard let password = passwordField.text, let name = nameField.text, let email = emailField.text?.lowercased() else {
             return
         }
-        //При случае спросить нормально ли делать так, что сама View себя закрывает, по результату работы метода презентера или команду на закрытие должен отдать сам презентер
-        presenter.registerUser(view: self, password: password, birthDate: datePicker.date, email: email, name: name)
+        presenter.registerUser(password: password, birthDate: datePicker.date, email: email, name: name)
     }
     
     @objc func textFieldsChanged() {
@@ -186,9 +178,7 @@ class RegistrationViewController: UIViewController {
                 registerButton.isEnabled = true
             } else {
                 registerButton.isEnabled = false
-
             }
-            
         } else {
             registerButton.layer.borderColor = UIColor.gray.cgColor
             registerButton.isEnabled = false
@@ -201,7 +191,6 @@ class RegistrationViewController: UIViewController {
         } else {
             emailField.layer.borderWidth = 3
             emailField.layer.borderColor = UIColor.red.cgColor
-            
         }
     }
 }
@@ -214,14 +203,3 @@ extension RegistrationViewController: IAlert {
     }
 }
 
-extension RegistrationViewController: IRegistrationViewController {
-    func presentSelf() {
-        self.present(self, animated: true, completion: nil)
-    }
-    
-    func dismissView() {
-        dismiss(animated: true)
-    }
-    
-    
-}

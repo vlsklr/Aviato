@@ -9,38 +9,37 @@ import Foundation
 import UIKit
 
 protocol IFoundFlyghtPresenter {
-    func addToFavorite(view: IFoundFlyghtViewController, flyght: FlyghtViewModel, image: UIImage?)
+    func addToFavorite(image: UIImage?)
 }
 
 class FoundFlyghtPresenter: IFoundFlyghtPresenter {
     let userID: String
     let storageManager: IStorageManager = StorageManager()
+    let flyghtInfo: FlyghtViewModel
+    weak var view: FoundFlyghtViewController?
+    let router: FoundFlyghtRouter
     
-    init(userID: String) {
+    init(userID: String, flyght: FlyghtViewModel, router: FoundFlyghtRouter) {
         self.userID = userID
+        flyghtInfo = flyght
+        self.router = router
     }
     
-    func addToFavorite(view: IFoundFlyghtViewController, flyght: FlyghtViewModel, image: UIImage?) {
-        if storageManager.contains(userID: userID, flyghtNumber: flyght.flyghtNumber){
-            DispatchQueue.main.async {
-                view.showAlert(message: RootViewController.labels!.flyghtAlreadyExists)
-            }
+    func addToFavorite(image: UIImage?) {
+        if storageManager.contains(userID: userID, flyghtNumber: flyghtInfo.flyghtNumber){
+                view?.showAlert(message: RootViewController.labels!.flyghtAlreadyExists)
         } else {
             var imagePath: String? = nil
-            
-            guard let flyghtID = FirebaseManager.saveFlyght(flyghtInfo: flyght) else {return}
+            guard let flyghtID = FirebaseManager.saveFlyght(flyghtInfo: flyghtInfo) else {return}
             if let img = image {
                 imagePath = storageManager.saveImage(image: img, fileName: "\(flyghtID)")
                 if imagePath != nil {
                     FirebaseManager.saveImage(fireStoragePath: "images/\(userID)/\(flyghtID).png", imagePathLocal: imagePath!)
                 }
             }
-            let savedFlyght = FlyghtViewModel(holder: userID, flyghtID: flyghtID, flyghtNumber: flyght.flyghtNumber, departureAirport: flyght.departureAirport, arrivalAirport: flyght.arrivalAirport, departureDate: flyght.departureDate, arrivalDate: flyght.arrivalDate, aircraft: flyght.aircraft, airline: flyght.airline, status: flyght.status, departureDateLocal: flyght.departureDateLocal, arrivalDateLocal: flyght.arrivalDateLocal)
+            let savedFlyght = FlyghtViewModel(holder: userID, flyghtID: flyghtID, flyghtNumber: flyghtInfo.flyghtNumber, departureAirport: flyghtInfo.departureAirport, arrivalAirport: flyghtInfo.arrivalAirport, departureDate: flyghtInfo.departureDate, arrivalDate: flyghtInfo.arrivalDate, aircraft: flyghtInfo.aircraft, airline: flyghtInfo.airline, status: flyghtInfo.status, departureDateLocal: flyghtInfo.departureDateLocal, arrivalDateLocal: flyghtInfo.arrivalDateLocal)
             storageManager.addFlyght(flyght: savedFlyght)
-            
-            DispatchQueue.main.async {
-                view.dismissFoundView()
-            }
+            router.closeViewController()
         }
     }
 }

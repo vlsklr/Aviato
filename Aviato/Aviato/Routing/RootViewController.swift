@@ -7,17 +7,12 @@
 
 import UIKit
 
-
 class RootViewController: UIViewController {
     private var currentViewController: UIViewController = UIViewController()
     static var labels: Labels?
-    //    private let firebase = FirebaseManager()
-    
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         FirebaseManager.loadLabels { result in
             switch result {
             case .success(let loadedLabels):
@@ -37,13 +32,10 @@ class RootViewController: UIViewController {
                 print(error)
             }
         }
-        
-
     }
     
     func showLoginScreen() {
-        let loginPresenter: ILoginPresenter = LoginPresenter()
-        let loginViewController = LoginViewController(presenter: loginPresenter)
+        let loginViewController = LoginAssembly().build()
         addChild(loginViewController)
         loginViewController.view.frame = view.bounds
         view.addSubview(loginViewController.view)
@@ -74,8 +66,7 @@ class RootViewController: UIViewController {
     }
     
     func switchToLogout() {
-        let loginPresenter: ILoginPresenter = LoginPresenter()
-        let loginViewController = LoginViewController(presenter: loginPresenter)
+        let loginViewController = LoginAssembly().build()
         let logoutScreen = UINavigationController(rootViewController: loginViewController)
         animateDismissTransition(to: logoutScreen)
     }
@@ -106,6 +97,5 @@ class RootViewController: UIViewController {
             completion?()
         }
     }
-    
 }
 

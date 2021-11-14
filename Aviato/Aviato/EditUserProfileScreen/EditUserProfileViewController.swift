@@ -7,9 +7,6 @@
 
 import UIKit
 
-protocol IEditUserProfileViewController: IAlert {
-    func showUserInfo(userInfo: UserViewModel)
-}
 
 class EditUserProfileViewController: UIViewController {
     
@@ -54,7 +51,7 @@ class EditUserProfileViewController: UIViewController {
         setupNameField()
         setupDateField()
         setupRemoveUserButton()
-        editProfilePresenter.getUser(userEditingViewController: self)
+        editProfilePresenter.getUser()
     }
     
     func setupCancelButton() {
@@ -211,10 +208,23 @@ class EditUserProfileViewController: UIViewController {
         return emailTest.evaluate(with: email)
     }
     
+    func showUserInfo(userInfo: UserViewModel) {
+        nameField.text = userInfo.name
+        emailField.text = userInfo.email
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = .medium
+        dateFormatter.timeStyle = .none
+        self.birthDateTextField.text = dateFormatter.string(from: userInfo.birthDate)
+        self.datePicker.date = userInfo.birthDate
+        guard let image = editProfilePresenter.getImage(fileName: userInfo.userID) else {
+            return
+        }
+        userPhoto.image = image
+    }
+    
     @objc func removeUser() {
         toggleAnimationButtonColor(button: self.removeUserButton)
         editProfilePresenter.removeUser()
-        dismiss(animated: true)
     }
     
     @objc func toggleAnimationButtonColor(button: UIButton) {
@@ -263,9 +273,7 @@ class EditUserProfileViewController: UIViewController {
             return
         }
         let userInfo: UserViewModel = UserViewModel(userID: "", password: "String", birthDate: datePicker.date, email: email, name: name)
-        if editProfilePresenter.updateUserInfo(view: self, userInfo: userInfo, userAvatar: userPhoto.image) {
-            dismiss(animated: true)
-        }
+        editProfilePresenter.updateUserInfo(userInfo: userInfo, userAvatar: userPhoto.image)
     }
     
     @objc func textFieldsChanged() {
@@ -292,22 +300,6 @@ class EditUserProfileViewController: UIViewController {
             emailField.layer.borderColor = UIColor.red.cgColor
             
         }
-    }
-}
-
-extension EditUserProfileViewController: IEditUserProfileViewController {
-    func showUserInfo(userInfo: UserViewModel) {
-        nameField.text = userInfo.name
-        emailField.text = userInfo.email
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateStyle = .medium
-        dateFormatter.timeStyle = .none
-        self.birthDateTextField.text = dateFormatter.string(from: userInfo.birthDate)
-        self.datePicker.date = userInfo.birthDate
-        guard let image = editProfilePresenter.getImage(fileName: userInfo.userID) else {
-            return
-        }
-        userPhoto.image = image
     }
 }
 

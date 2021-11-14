@@ -8,9 +8,6 @@
 import UIKit
 import SnapKit
 
-protocol IloginViewController {
-    func presentRegisterViewController(view: RegistrationViewController)
-}
 
 class LoginViewController: UIViewController {
     
@@ -57,7 +54,6 @@ class LoginViewController: UIViewController {
     func setupUsernameField() {
         self.view.addSubview(emailField)
         emailField.backgroundColor = .white
-//        userNameField.placeholder = "Имя пользователя"
         emailField.layer.cornerRadius = 25
         emailField.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
         emailField.textAlignment = .center
@@ -79,7 +75,6 @@ class LoginViewController: UIViewController {
         passwordField.layer.maskedCorners = [.layerMaxXMaxYCorner, .layerMinXMaxYCorner]
         passwordField.textAlignment = .center
         passwordField.textColor = .black
-//        passwordField.placeholder = "Пароль"
         passwordField.attributedPlaceholder = NSAttributedString(string: RootViewController.labels!.passwordField, attributes: [NSAttributedString.Key.foregroundColor : UIColor.darkGray])
         self.view.addSubview(passwordField)
         passwordField.snp.makeConstraints({ (make) in
@@ -135,9 +130,7 @@ class LoginViewController: UIViewController {
         swipeDown.direction =  UISwipeGestureRecognizer.Direction.down
         self.view.addGestureRecognizer(swipeDown)
     }
-    
-
-    
+        
     @objc func toggleAnimationButtonColor(button: UIButton) {
         var animator = UIViewPropertyAnimator()
         animator = UIViewPropertyAnimator(duration: 0.2, curve: .easeOut, animations: {
@@ -152,7 +145,7 @@ class LoginViewController: UIViewController {
     @objc func authAction() {
         toggleAnimationButtonColor(button: self.authButton)
         guard let email = emailField.text, let password = passwordField.text else{return}
-        presenter.authentificateUser(view: self, email: email.lowercased(), password: password)
+        presenter.authentificateUser(email: email.lowercased(), password: password)
     }
     
     @objc func hideKeyboardOnSwipeDown() {
@@ -160,7 +153,7 @@ class LoginViewController: UIViewController {
     }
     
     @objc func registerAction() {
-        presenter.registerUser(view: self)
+        presenter.registerUser()
     }
 }
 
@@ -178,9 +171,4 @@ extension LoginViewController: UIGestureRecognizerDelegate {
     }
 }
 
-extension LoginViewController: IloginViewController {
-    //Показывает созданный в LoginPresenter RegistrationViewController
-    func presentRegisterViewController(view: RegistrationViewController) {
-        present(view, animated: true, completion: nil)
-    }
-}
+

@@ -48,7 +48,8 @@ struct FlyghtInfo: Decodable {
 
 protocol INetworkManager {
     func loadFlyghtInfo(flyghtNumber: String, completion: @escaping (Result<FlyghtInfo, Error>) -> Void)
-    func loadAircraftImage(url: String, completion: @escaping (Data) -> Void)
+    func loadAircraftImage(url: String, completion: @escaping (Result<Data?, Error>) -> Void)
+    
 }
 
 class NetworkManager: INetworkManager {
@@ -62,13 +63,11 @@ class NetworkManager: INetworkManager {
         dateFormatter.dateFormat = "yyyy-MM-dd"
         let dateString = dateFormatter.string(from: Date())
         guard let url = URL(string: "https://aerodatabox.p.rapidapi.com/flights/number/\(flyghtNumber)/\(dateString)?withAircraftImage=true&withLocation=false") else { return }
-        print(url)
         let request = NSMutableURLRequest(url: url, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 10.0)
         request.httpMethod = "GET"
         request.allHTTPHeaderFields = headers
         let session = URLSession.shared
         request.timeoutInterval = 25
-        var flyght: FlyghtInfo? = nil
         session.dataTask(with: request as URLRequest, completionHandler: { (data, response, error) -> Void in
             if (error != nil) {
                 completion(.failure(FlyghtErrors.wrongFlyght))
@@ -76,10 +75,7 @@ class NetworkManager: INetworkManager {
                 let httpResponse = response as? HTTPURLResponse
                 if let data = data {
                     if httpResponse?.statusCode == 200, let result: [FlyghtInfo] = try? JSONDecoder().decode([FlyghtInfo].self, from: data), let flyghtInfo = result.last {
-                        print("ДВЕСТИ!!!11")
-                        flyght = flyghtInfo
-                        completion(.success(flyght!))
-                        print(flyghtInfo.departure.airport.name)
+                        completion(.success(flyghtInfo))
                     }
                     else {
                         completion(.failure(FlyghtErrors.wrongFlyght))
@@ -88,9 +84,15 @@ class NetworkManager: INetworkManager {
             }
         }).resume()
     }
-    func loadAircraftImage(url: String, completion: @escaping (Data) -> Void) {
-        AF.request(url).response { response in
-            completion(response.data ?? Data())
+    
+    func loadAircraftImage(url: String, completion: @escaping (Result<Data?, Error>) -> Void) {
+        AF.request(url).response { result in
+            switch result.result {
+            case .failure(let error):
+                completion(.failure(error))
+            case .success(let data):
+                completion(.success(data))
+            }
         }
     }
 }

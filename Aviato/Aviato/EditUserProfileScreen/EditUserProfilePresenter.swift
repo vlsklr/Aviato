@@ -12,7 +12,7 @@ import UIKit
 
 protocol IEditUserProfilePresenter {
     func removeUser()
-    func updateUserInfo(userInfo: UserViewModel, userAvatar: UIImage?) -> Bool
+    func updateUserInfo(userInfo: UserViewModel, userAvatar: UIImage?)
     func getUser()
     func getImage(fileName: String) -> UIImage?
 }
@@ -30,33 +30,23 @@ class EditUserProfilePresenter: IEditUserProfilePresenter {
         self.userID = userID
     }
     
-    func updateUserInfo(userInfo: UserViewModel, userAvatar: UIImage?) -> Bool {
+    func updateUserInfo(userInfo: UserViewModel, userAvatar: UIImage?) {
         let user = UserViewModel(userID: userID, password: "", birthDate: userInfo.birthDate, email: userInfo.email, name: userInfo.name)
-        if validateUserData(userInfo: userInfo) {
-            if let image = userAvatar {
-                let savedPath = storageManager.saveImage(image: image, fileName: "\(userID)")
-                FirebaseManager.saveImage(fireStoragePath: "images/\(user.userID)/avatar.png", imagePathLocal: savedPath)
+        FirebaseManager.validateUserProfileChanges(email: user.email) { result in
+            if result == true {
+                if let image = userAvatar {
+                    let savedPath = self.storageManager.saveImage(image: image, fileName: "\(self.userID)")
+                    FirebaseManager.saveImage(fireStoragePath: "images/\(user.userID)/avatar.png", imagePathLocal: savedPath)
+                }
+                self.storageManager.updateUser(userID: self.userID, userInfo: user)
+                FirebaseManager.updateUserInfo(userInfo: user)
+                self.router.closeView()
+            } else {
+                self.view?.showAlert(message: RootViewController.labels!.userExistsError)
             }
-            storageManager.updateUser(userID: userID, userInfo: user)
-            FirebaseManager.updateUserInfo(userInfo: user)
-            router.closeView()
-            return true
-        } else {
-            view?.showAlert(message: RootViewController.labels!.userExistsError)
-            return false
         }
     }
-    
-    //Возвращает true, если имя пользователя не занято или не изменяется
-    private func validateUserData(userInfo: UserViewModel) -> Bool {
-        guard let user = storageManager.loadUser(email: userInfo.email, userID: nil) else { return true }
-        if user.userID == userID {
-            return true
-        } else {
-            return false
-        }
-    }
-    
+        
     func getImage(fileName: String) -> UIImage? {
         return storageManager.loadImage(fileName: fileName)
     }

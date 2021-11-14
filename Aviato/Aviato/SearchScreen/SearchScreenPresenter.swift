@@ -29,8 +29,10 @@ class SearchScreenPresenter: ISearchScreenPresenter {
             switch result {
             case .failure(let error):
                 print(error)
-                self?.view?.toggleActivityIndicator()
-                self?.view?.showAlert(message: RootViewController.labels!.flyghtNotFound)
+                DispatchQueue.main.async {
+                    self?.view?.toggleActivityIndicator()
+                    self?.view?.showAlert(message: RootViewController.labels!.flyghtNotFound)
+                }
             case .success(let info):
                 print(info)
                 let dateFormatter = DateFormatter()

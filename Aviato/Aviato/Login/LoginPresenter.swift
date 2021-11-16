@@ -55,6 +55,7 @@ class LoginPresenter: ILoginPresenter {
                                         return
                                     }
                                     self?.storageManager.saveImage(image: image, fileName: "\(user.userID)")
+                                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "refresh"), object:nil, userInfo: nil)
                                 }
                             }
                             self?.storageManager.addUser(user: user)

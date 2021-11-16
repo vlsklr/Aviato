@@ -82,8 +82,10 @@ class FavoriteFlyghtListPresenter: IFavoriteFlyghtListPresenter {
                     switch result {
                     case .failure(let error):
                         print(error)
-                        self?.view?.showAlert(message: "\(RootViewController.labels!.errorDuringUpdateFlyghtInfo) \(flyghtNumber)")
-                        self?.view?.toggleActivityIndicator()
+                        DispatchQueue.main.async {
+                            self?.view?.showAlert(message: "\(RootViewController.labels!.errorDuringUpdateFlyghtInfo) \(flyghtNumber)")
+                            self?.view?.toggleActivityIndicator()
+                        }
                     case .success(let info):
                         print(info)
                         let dateFormatter = DateFormatter()

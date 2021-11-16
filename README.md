@@ -31,8 +31,18 @@ ___
 * Для локализации приложения используется Firestore Database. Там хранятся тексты для всех Labels для английской и русской версии.
 
 ## Демонстрация
-### Регистрация
-### Авторизация
-### Поиск рейса
+### Регистрация  
+![IMG_7370](https://user-images.githubusercontent.com/42057101/141930702-b762e26c-fe73-4854-b2ac-0984c711ccb1.gif)
+### Авторизация  
+![IMG_7371](https://user-images.githubusercontent.com/42057101/141930785-007b4985-839c-4958-bad2-39aab4734a98.gif)
+### Поиск рейса и сохранение рейса  
+![IMG_7372](https://user-images.githubusercontent.com/42057101/141930874-9f0ec9d5-fdd9-442e-8d3b-daefb1048d1a.gif)
+### Просмотр и обновление рейсов, сохраненных в избранное  
+![IMG_7373](https://user-images.githubusercontent.com/42057101/141931724-64644acd-449d-4778-8d3f-3dedc7444990.gif)
+### Редактирование профиля пользователя
+![IMG_7374](https://user-images.githubusercontent.com/42057101/141932281-0ec5310d-0f3a-4105-8d20-af0ad88e92b8.gif)
+### Логаут/Логин/Удаление профиля пользователя
+![IMG_7378](https://user-images.githubusercontent.com/42057101/141932469-2da4a6a7-2a6c-4e3a-877a-b113fea3bc72.gif)
+
 
 

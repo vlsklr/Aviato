@@ -124,29 +124,6 @@ class StorageManager: IStorageManager {
     }
     
     func addFlyght(flyght: FlyghtViewModel) {
-        //        self.persistentContainer.performBackgroundTask { context in
-        //            do {
-        //                let fetchRequest: NSFetchRequest<User> = User.fetchRequest()
-        //                fetchRequest.predicate = NSPredicate(format: "\(#keyPath(User.userID)) = '\(flyght.holder)'")
-        //                guard let user = try context.fetch(fetchRequest).first else { return }
-        //                let object = Flyght(context: context)
-        //                object.flyghtID = flyght.flyghtID
-        //                object.flyghtNumber = flyght.flyghtNumber
-        //                object.status = flyght.status
-        //                object.aircraft = flyght.aircraft
-        //                object.airline = flyght.airline
-        //                object.arrivalAirport = flyght.arrivalAirport
-        //                object.arrivalTime = flyght.arrivalDate
-        //                object.departureTime = flyght.departureDate
-        //                object.departureAirport = flyght.departureAirport
-        //                object.user = user
-        //                object.lastModified = Date()
-        //                object.aircraftImage = flyght.aircraftImage
-        //                try context.save()
-        //            } catch {
-        //            }
-        //        }
-        
         let context = self.persistentContainer.viewContext
         do {
             let fetchRequest: NSFetchRequest<User> = User.fetchRequest()

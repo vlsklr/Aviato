@@ -97,24 +97,6 @@ class EditUserProfileViewController: UIViewController {
         }
     }
     
-//    func setupUsernameField() {
-//        self.view.addSubview(usernameField)
-//        usernameField.addTarget(self, action: #selector(textFieldsChanged), for: .editingChanged)
-//        usernameField.inputAccessoryView = setupDoneToolbar(tag: 0)
-//        usernameField.backgroundColor = .white
-//        usernameField.textColor = textFieldsColor
-//        usernameField.layer.cornerRadius = 25
-////        usernameField.placeholder = "Имя пользователя"
-//        usernameField.textAlignment = .center
-//        usernameField.attributedPlaceholder = NSAttributedString(string: "Имя пользователя", attributes: [NSAttributedString.Key.foregroundColor : textFieldsPlaceholderColor])
-//        usernameField.snp.makeConstraints { (make) in
-//            make.leading.equalToSuperview().offset(43)
-//            make.trailing.equalToSuperview().offset(-43)
-//            make.top.equalTo(userPhoto.snp.bottom).offset(10)
-//            make.height.equalTo(50)
-//        }
-//    }
-    
     func setupEmailField() {
         self.view.addSubview(emailField)
         emailField.addTarget(self, action: #selector(textFieldsChanged), for: .editingChanged)

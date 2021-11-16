@@ -31,3 +31,7 @@ ___
 * Для локализации приложения используется Firestore Database. Там хранятся тексты для всех Labels для английской и русской версии.
 
 
+
+https://user-images.githubusercontent.com/42057101/141928342-67a50ba8-fe9d-4383-8cc1-2bd6c4b44d66.MP4
+
+

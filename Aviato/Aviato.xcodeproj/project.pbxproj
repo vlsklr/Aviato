@@ -19,7 +19,6 @@
 		3CEC5BA1267B3FB700059058 /* IAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CEC5BA0267B3FB700059058 /* IAlert.swift */; };
 		3CEC5BA4267B56C100059058 /* FlyghtErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CEC5BA3267B56C100059058 /* FlyghtErrors.swift */; };
 		3CF97BD82692DECD0070CC9D /* RegistrationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CF97BD72692DECD0070CC9D /* RegistrationViewController.swift */; };
-		841071F1273F896900ECD07B /* UserProfileAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 841071F0273F896900ECD07B /* UserProfileAssembly.swift */; };
 		841071F3273F897A00ECD07B /* UserProfileRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 841071F2273F897A00ECD07B /* UserProfileRouter.swift */; };
 		841071F7273FA2D100ECD07B /* EditUserProfileAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 841071F6273FA2D100ECD07B /* EditUserProfileAssembly.swift */; };
 		841071F9273FA2E200ECD07B /* EditUserProfileRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 841071F8273FA2E200ECD07B /* EditUserProfileRouter.swift */; };
@@ -59,6 +58,7 @@
 		F5392F152677718C00866C8F /* UserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5392F142677718C00866C8F /* UserViewModel.swift */; };
 		F5392F182677719B00866C8F /* FlyghtViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5392F172677719B00866C8F /* FlyghtViewModel.swift */; };
 		F55A4628269B31BD00A3B352 /* UserProfilePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F55A4627269B31BD00A3B352 /* UserProfilePresenter.swift */; };
+		F57453CB27492D390034C393 /* UserProfileAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = F57453CA27492D390034C393 /* UserProfileAssembly.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -74,7 +74,6 @@
 		3CEC5BA0267B3FB700059058 /* IAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IAlert.swift; sourceTree = "<group>"; };
 		3CEC5BA3267B56C100059058 /* FlyghtErrors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlyghtErrors.swift; sourceTree = "<group>"; };
 		3CF97BD72692DECD0070CC9D /* RegistrationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationViewController.swift; sourceTree = "<group>"; };
-		841071F0273F896900ECD07B /* UserProfileAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UserProfileAssembly.swift; path = ../../../../../../UserProfileAssembly.swift; sourceTree = "<group>"; };
 		841071F2273F897A00ECD07B /* UserProfileRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileRouter.swift; sourceTree = "<group>"; };
 		841071F6273FA2D100ECD07B /* EditUserProfileAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditUserProfileAssembly.swift; sourceTree = "<group>"; };
 		841071F8273FA2E200ECD07B /* EditUserProfileRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditUserProfileRouter.swift; sourceTree = "<group>"; };
@@ -120,6 +119,7 @@
 		F5392F142677718C00866C8F /* UserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewModel.swift; sourceTree = "<group>"; };
 		F5392F172677719B00866C8F /* FlyghtViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlyghtViewModel.swift; sourceTree = "<group>"; };
 		F55A4627269B31BD00A3B352 /* UserProfilePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfilePresenter.swift; sourceTree = "<group>"; };
+		F57453CA27492D390034C393 /* UserProfileAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileAssembly.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -333,9 +333,9 @@
 			isa = PBXGroup;
 			children = (
 				3C4C61FC26941E060086E4FE /* UserProfileViewController.swift */,
-				841071F0273F896900ECD07B /* UserProfileAssembly.swift */,
 				841071F2273F897A00ECD07B /* UserProfileRouter.swift */,
 				F55A4627269B31BD00A3B352 /* UserProfilePresenter.swift */,
+				F57453CA27492D390034C393 /* UserProfileAssembly.swift */,
 			);
 			path = UserProfile;
 			sourceTree = "<group>";
@@ -494,11 +494,11 @@
 				F53251B42677BF0700CA57B6 /* MainRouter.swift in Sources */,
 				841071F3273F897A00ECD07B /* UserProfileRouter.swift in Sources */,
 				F5392F0626774C6700866C8F /* LoginViewController.swift in Sources */,
+				F57453CB27492D390034C393 /* UserProfileAssembly.swift in Sources */,
 				3C74DA102696F9FB00779D00 /* FoundFlyghtPresenter.swift in Sources */,
 				F5392EF72677364400866C8F /* Aviato.xcdatamodeld in Sources */,
 				841F3D2226F5F16D002CC642 /* FirebaseManager.swift in Sources */,
 				F5392F152677718C00866C8F /* UserViewModel.swift in Sources */,
-				841071F1273F896900ECD07B /* UserProfileAssembly.swift in Sources */,
 				3CEC5BA1267B3FB700059058 /* IAlert.swift in Sources */,
 				F53171D22695EA3C00911C89 /* SearchScreenPresenter.swift in Sources */,
 				F5392F0F2677571E00866C8F /* SearchScreenViewController.swift in Sources */,
@@ -654,6 +654,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				OTHER_CODE_SIGN_FLAGS = "--generate-entitlement-der";
 				PRODUCT_BUNDLE_IDENTIFIER = "-.Aviato";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -675,6 +676,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				OTHER_CODE_SIGN_FLAGS = "--generate-entitlement-der";
 				PRODUCT_BUNDLE_IDENTIFIER = "-.Aviato";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;

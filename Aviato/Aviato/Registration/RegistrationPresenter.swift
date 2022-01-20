@@ -23,7 +23,7 @@ class RegistrationPresenter: IRegistrationPresenter {
     
     func registerUser(password: String, birthDate: Date, email: String, name: String) {
         if email.isEmpty || password.isEmpty {
-            self.view?.showAlert(message: "Введите данные")
+            self.view?.alertController.showAlert(message: "Введите данные")
         } else {
             let hashedPassword = Crypto.getHash(inputString: email + password)
             firebaseManager.createUser(email: email, password: hashedPassword) {[weak self] result in
@@ -33,13 +33,13 @@ class RegistrationPresenter: IRegistrationPresenter {
                         print(error)
                         switch _error {
                         case .emailAlreadyInUse:
-                            self?.view?.showAlert(message: "Пользователь уже существует")
+                            self?.view?.alertController.showAlert(message: "Пользователь уже существует")
                         case .weakPassword:
-                            self?.view?.showAlert(message: "Пароль должен содержать более 6 символов")
+                            self?.view?.alertController.showAlert(message: "Пароль должен содержать более 6 символов")
                         case .other:
-                            self?.view?.showAlert(message: "Что-то пошло не так - попробуйте позже")
+                            self?.view?.alertController.showAlert(message: "Что-то пошло не так - попробуйте позже")
                         default:
-                            self?.view?.showAlert(message: "Что-то пошло не так - попробуйте позже")
+                            self?.view?.alertController.showAlert(message: "Что-то пошло не так - попробуйте позже")
                         }
                     }
                 case .success(let userID):
@@ -49,7 +49,7 @@ class RegistrationPresenter: IRegistrationPresenter {
                         self?.storageManager.addUser(user: user)
                         self?.router.returnToLoginScreen()
                     } else {
-                        self?.view?.showAlert(message: "Что-то пошло не так - попробуйте позже")
+                        self?.view?.alertController.showAlert(message: "Что-то пошло не так - попробуйте позже")
                     }
                 }
             }

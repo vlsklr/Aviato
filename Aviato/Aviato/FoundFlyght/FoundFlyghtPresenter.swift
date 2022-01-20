@@ -27,7 +27,7 @@ class FoundFlyghtPresenter: IFoundFlyghtPresenter {
     
     func addToFavorite(image: UIImage?) {
         if storageManager.contains(userID: userID, flyghtNumber: flyghtInfo.flyghtNumber){
-                view?.showAlert(message: RootViewController.labels!.flyghtAlreadyExists)
+            view?.alertController.showAlert(message: RootViewController.labels!.flyghtAlreadyExists)
         } else {
             var imagePath: String? = nil
             guard let flyghtID = FirebaseManager.saveFlyght(flyghtInfo: flyghtInfo) else {return}

@@ -31,7 +31,7 @@ class SearchScreenPresenter: ISearchScreenPresenter {
                 print(error)
                 DispatchQueue.main.async {
                     self?.view?.toggleActivityIndicator()
-                    self?.view?.showAlert(message: RootViewController.labels!.flyghtNotFound)
+                    self?.view?.alertController.showAlert(message: RootViewController.labels!.flyghtNotFound)
                 }
             case .success(let info):
                 print(info)

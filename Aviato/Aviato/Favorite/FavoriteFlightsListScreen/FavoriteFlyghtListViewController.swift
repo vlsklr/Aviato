@@ -17,6 +17,7 @@ class FavoriteFlyghtListViewController: UIViewController {
         refresh.addTarget(self, action: #selector(refreshFlyghts(sender:)), for: .valueChanged)
         return refresh
     }()
+    let alertController = AlertController()
     
     init(presenter: IFavoriteFlyghtListPresenter) {
         self.presenter = presenter
@@ -34,6 +35,7 @@ class FavoriteFlyghtListViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        alertController.view = self
         navigationController?.setNavigationBarHidden(true, animated: false)
         tableView.refreshControl = refreshControll
         initActivityIndicator()
@@ -122,10 +124,3 @@ extension FavoriteFlyghtListViewController: UITableViewDataSource {
     }
 }
 
-extension FavoriteFlyghtListViewController: IAlert {
-    func showAlert(message: String) {
-        let alert = UIAlertController(title: RootViewController.labels!.error, message: message, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "ОК", style: .default))
-        self.present(alert, animated: true)
-    }
-}

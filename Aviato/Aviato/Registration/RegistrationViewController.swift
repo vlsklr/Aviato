@@ -18,7 +18,7 @@ class RegistrationViewController: UIViewController {
     let registerButton: UIButton = UIButton()
     let presenter: IRegistrationPresenter
     var registerButtonPressed: Bool = false
-    
+    let alertController = AlertController()
     let placeholdersColor: UIColor = .darkGray
     let textColor: UIColor = .black
     
@@ -33,6 +33,7 @@ class RegistrationViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        alertController.view = self
         view.backgroundColor = UIColor(red: 0.243, green: 0.776, blue: 1, alpha: 1)
         setupEmailField()
         setupPasswordField()
@@ -192,14 +193,6 @@ class RegistrationViewController: UIViewController {
             emailField.layer.borderWidth = 3
             emailField.layer.borderColor = UIColor.red.cgColor
         }
-    }
-}
-
-extension RegistrationViewController: IAlert {
-    func showAlert(message: String) {
-        let alert = UIAlertController(title: RootViewController.labels!.error, message: message, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "ОК", style: .default))
-        self.present(alert, animated: true)
     }
 }
 

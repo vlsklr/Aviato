@@ -16,7 +16,7 @@
 		3C7F58DF2678973B001C1193 /* FoundFlyghtViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7F58DE2678973B001C1193 /* FoundFlyghtViewController.swift */; };
 		3C88585E2695715200A134C7 /* LoginPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C88585D2695715200A134C7 /* LoginPresenter.swift */; };
 		3C8858672695766300A134C7 /* RegistrationPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C8858662695766300A134C7 /* RegistrationPresenter.swift */; };
-		3CEC5BA1267B3FB700059058 /* IAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CEC5BA0267B3FB700059058 /* IAlert.swift */; };
+		3CEC5BA1267B3FB700059058 /* AlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CEC5BA0267B3FB700059058 /* AlertController.swift */; };
 		3CEC5BA4267B56C100059058 /* FlyghtErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CEC5BA3267B56C100059058 /* FlyghtErrors.swift */; };
 		3CF97BD82692DECD0070CC9D /* RegistrationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CF97BD72692DECD0070CC9D /* RegistrationViewController.swift */; };
 		841071F3273F897A00ECD07B /* UserProfileRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 841071F2273F897A00ECD07B /* UserProfileRouter.swift */; };
@@ -71,7 +71,7 @@
 		3C7F58DE2678973B001C1193 /* FoundFlyghtViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoundFlyghtViewController.swift; sourceTree = "<group>"; };
 		3C88585D2695715200A134C7 /* LoginPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginPresenter.swift; sourceTree = "<group>"; };
 		3C8858662695766300A134C7 /* RegistrationPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationPresenter.swift; sourceTree = "<group>"; };
-		3CEC5BA0267B3FB700059058 /* IAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IAlert.swift; sourceTree = "<group>"; };
+		3CEC5BA0267B3FB700059058 /* AlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertController.swift; sourceTree = "<group>"; };
 		3CEC5BA3267B56C100059058 /* FlyghtErrors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlyghtErrors.swift; sourceTree = "<group>"; };
 		3CF97BD72692DECD0070CC9D /* RegistrationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationViewController.swift; sourceTree = "<group>"; };
 		841071F2273F897A00ECD07B /* UserProfileRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileRouter.swift; sourceTree = "<group>"; };
@@ -279,7 +279,7 @@
 			children = (
 				F5392EEC2677364400866C8F /* AppDelegate.swift */,
 				841F3D2126F5F16D002CC642 /* FirebaseManager.swift */,
-				3CEC5BA0267B3FB700059058 /* IAlert.swift */,
+				3CEC5BA0267B3FB700059058 /* AlertController.swift */,
 				F5346B6626A29E0400B04780 /* KeyChainManager.swift */,
 				3C1B706226AEAF0F00BC1DA3 /* Crypto.swift */,
 				8453F39E26FE136F00E5F108 /* FirebaseErrors.swift */,
@@ -499,7 +499,7 @@
 				F5392EF72677364400866C8F /* Aviato.xcdatamodeld in Sources */,
 				841F3D2226F5F16D002CC642 /* FirebaseManager.swift in Sources */,
 				F5392F152677718C00866C8F /* UserViewModel.swift in Sources */,
-				3CEC5BA1267B3FB700059058 /* IAlert.swift in Sources */,
+				3CEC5BA1267B3FB700059058 /* AlertController.swift in Sources */,
 				F53171D22695EA3C00911C89 /* SearchScreenPresenter.swift in Sources */,
 				F5392F0F2677571E00866C8F /* SearchScreenViewController.swift in Sources */,
 				8453F39F26FE136F00E5F108 /* FirebaseErrors.swift in Sources */,

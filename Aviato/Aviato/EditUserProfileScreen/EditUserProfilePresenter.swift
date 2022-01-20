@@ -42,7 +42,7 @@ class EditUserProfilePresenter: IEditUserProfilePresenter {
                 FirebaseManager.updateUserInfo(userInfo: user)
                 self.router.closeView()
             } else {
-                self.view?.showAlert(message: RootViewController.labels!.userExistsError)
+                self.view?.alertController.showAlert(message: RootViewController.labels!.userExistsError)
             }
         }
     }

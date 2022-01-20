@@ -23,7 +23,7 @@ class LoginPresenter: ILoginPresenter {
     }
     func authentificateUser(email: String, password: String) {
         if email.isEmpty || password.isEmpty {
-            self.view?.showAlert(message: RootViewController.labels!.emptyDataError)
+            self.view?.alertController.showAlert(message: RootViewController.labels!.emptyDataError)
         } else {
             let hashedPassword = Crypto.getHash(inputString: email + password)
             FirebaseManager.authenticateUser(email: email, password: hashedPassword) { result in
@@ -32,11 +32,11 @@ class LoginPresenter: ILoginPresenter {
                     if let _error = error as? FirebaseErrors {
                         switch _error {
                         case .userNotFound, .wrongPassword:
-                            self.view?.showAlert(message: RootViewController.labels!.invalidEmailOrPasswordError)
+                            self.view?.alertController.showAlert(message: RootViewController.labels!.invalidEmailOrPasswordError)
                         case .other:
-                            self.view?.showAlert(message: RootViewController.labels!.otherLoginError)
+                            self.view?.alertController.showAlert(message: RootViewController.labels!.otherLoginError)
                         default:
-                            self.view?.showAlert(message: RootViewController.labels!.otherLoginError)
+                            self.view?.alertController.showAlert(message: RootViewController.labels!.otherLoginError)
                         }
                     }
                     

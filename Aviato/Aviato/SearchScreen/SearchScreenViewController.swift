@@ -16,6 +16,7 @@ class SearchScreenViewController: UIViewController {
     let verticalMargins: CGFloat = 16.0
     let presenter: ISearchScreenPresenter
     var searchButtonPressed: Bool = false
+    let alertController = AlertController()
     
     init(presenter: ISearchScreenPresenter) {
         self.presenter = presenter
@@ -28,6 +29,7 @@ class SearchScreenViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        alertController.view = self
         self.navigationController?.navigationBar.backgroundColor = .systemBlue
         setupSearchbar()
         setupSearchButton()
@@ -159,16 +161,8 @@ extension SearchScreenViewController: UIGestureRecognizerDelegate {
     }
 }
 
-protocol IMainViewController: IAlert {
+protocol IMainViewController {
     func toggleActivityIndicator()
-}
-
-extension SearchScreenViewController: IAlert {
-    func showAlert(message: String) {
-        let alert = UIAlertController(title: RootViewController.labels!.error, message: message, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "ОК", style: .default))
-        self.present(alert, animated: true)
-    }
 }
 
 extension SearchScreenViewController: IMainViewController {

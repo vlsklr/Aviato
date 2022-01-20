@@ -21,7 +21,7 @@ class FavoriteViewController: UIViewController {
     let aircraftLabel: UILabel = UILabel()
     let aircraftImage: UIImageView = UIImageView()
     var scrollView: UIScrollView = UIScrollView()
-    
+    let alertController = AlertController()
     let textColor: UIColor = .black
     let labelBackgroundColor: UIColor = .white
     
@@ -50,6 +50,7 @@ class FavoriteViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor(red: 0.243, green: 0.776, blue: 1, alpha: 1)
+        alertController.view = self
         setupScrollView()
         setupFlyghtNumberLabel()
         setupFlyghtStatusLabel()

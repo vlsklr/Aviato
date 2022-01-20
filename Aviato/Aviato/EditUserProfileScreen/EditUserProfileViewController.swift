@@ -23,7 +23,7 @@ class EditUserProfileViewController: UIViewController {
     let editProfilePresenter: IEditUserProfilePresenter
     var buttonPressed: Bool = false
     var imageChanged: Bool = false
-    
+    let alertController = AlertController()
     let textFieldsColor: UIColor = .black
     let textFieldsPlaceholderColor: UIColor = .darkGray
     
@@ -42,6 +42,7 @@ class EditUserProfileViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        alertController.view = self
         self.view.backgroundColor = UIColor(red: 0.243, green: 0.776, blue: 1, alpha: 1)
         setupUserImage()
         setupCancelButton()
@@ -282,14 +283,6 @@ class EditUserProfileViewController: UIViewController {
             emailField.layer.borderColor = UIColor.red.cgColor
             
         }
-    }
-}
-
-extension EditUserProfileViewController: IAlert {
-    func showAlert(message: String) {
-        let alert = UIAlertController(title: "Ошибка", message: message, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "ОК", style: .default))
-        self.present(alert, animated: true)
     }
 }
 

@@ -18,6 +18,7 @@ class LoginViewController: UIViewController {
     let logoView: UIImageView = UIImageView()
     let presenter: ILoginPresenter
     var authButtonPressed: Bool = false
+    let alertController = AlertController()
     
     init(presenter: ILoginPresenter	) {
         self.presenter = presenter
@@ -31,6 +32,7 @@ class LoginViewController: UIViewController {
     override func viewDidLoad() {
         navigationController?.setNavigationBarHidden(true, animated: false)
         super.viewDidLoad()
+        alertController.view = self
         self.view.backgroundColor = UIColor(red: 0.243, green: 0.776, blue: 1, alpha: 1)
         setupSwipeDown()
         setupLogoView()
@@ -154,14 +156,6 @@ class LoginViewController: UIViewController {
     
     @objc func registerAction() {
         presenter.registerUser()
-    }
-}
-
-extension LoginViewController: IAlert {
-    func showAlert(message: String) {
-        let alert = UIAlertController(title: RootViewController.labels!.error, message: message, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "ОК", style: .default))
-        self.present(alert, animated: true)
     }
 }
 

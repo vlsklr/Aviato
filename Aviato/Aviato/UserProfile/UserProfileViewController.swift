@@ -117,6 +117,7 @@ class UserProfileViewController: UIViewController {
         editProfileButton.setTitle(RootViewController.labels?.editUserProfileButton, for: .normal)
         editProfileButton.backgroundColor = .clear
         editProfileButton.addTarget(self, action: #selector(editProfile), for: .touchUpInside)
+        editProfileButton.contentHorizontalAlignment = .left
         editProfileButton.snp.makeConstraints { (make) in
             make.leading.equalToSuperview().offset(16)
             make.top.equalToSuperview().offset(50)
@@ -131,6 +132,7 @@ class UserProfileViewController: UIViewController {
         logoutButton.backgroundColor = .clear
         logoutButton.setTitleColor(.red, for: .normal)
         logoutButton.addTarget(self, action: #selector(logout), for: .touchUpInside)
+        logoutButton.contentHorizontalAlignment = .right
         logoutButton.snp.makeConstraints { (make) in
             make.trailing.equalToSuperview().offset(-16)
             make.top.equalToSuperview().offset(50)

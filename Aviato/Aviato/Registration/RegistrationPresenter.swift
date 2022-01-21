@@ -23,7 +23,7 @@ class RegistrationPresenter: IRegistrationPresenter {
     
     func registerUser(password: String, birthDate: Date, email: String, name: String) {
         if email.isEmpty || password.isEmpty {
-            self.view?.alertController.showAlert(message: "Введите данные")
+            self.view?.alertController.showAlert(message: RootViewController.labels!.emptyDataError)
         } else {
             let hashedPassword = Crypto.getHash(inputString: email + password)
             firebaseManager.createUser(email: email, password: hashedPassword) {[weak self] result in
@@ -33,23 +33,23 @@ class RegistrationPresenter: IRegistrationPresenter {
                         print(error)
                         switch _error {
                         case .emailAlreadyInUse:
-                            self?.view?.alertController.showAlert(message: "Пользователь уже существует")
+                            self?.view?.alertController.showAlert(message: RootViewController.labels!.userExistsError)
                         case .weakPassword:
-                            self?.view?.alertController.showAlert(message: "Пароль должен содержать более 6 символов")
+                            self?.view?.alertController.showAlert(message: RootViewController.labels!.shortPasswordError)
                         case .other:
-                            self?.view?.alertController.showAlert(message: "Что-то пошло не так - попробуйте позже")
+                            self?.view?.alertController.showAlert(message: RootViewController.labels!.otherLoginError)
                         default:
-                            self?.view?.alertController.showAlert(message: "Что-то пошло не так - попробуйте позже")
+                            self?.view?.alertController.showAlert(message: RootViewController.labels!.otherLoginError)
                         }
                     }
                 case .success(let userID):
                     print(userID)
                     let user = UserViewModel(userID: userID, password: hashedPassword, birthDate: birthDate, email: email, name: name)
-                    if FirebaseManager.createUserProfile(userProfile: user){
+                    if FirebaseManager.createUserProfile(userProfile: user) {
                         self?.storageManager.addUser(user: user)
                         self?.router.returnToLoginScreen()
                     } else {
-                        self?.view?.alertController.showAlert(message: "Что-то пошло не так - попробуйте позже")
+                        self?.view?.alertController.showAlert(message: RootViewController.labels!.otherLoginError)
                     }
                 }
             }

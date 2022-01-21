@@ -47,7 +47,6 @@ class EditUserProfileViewController: UIViewController {
         setupUserImage()
         setupCancelButton()
         setupSaveButton()
-//        setupUsernameField()
         setupEmailField()
         setupNameField()
         setupDateField()
@@ -197,8 +196,8 @@ class EditUserProfileViewController: UIViewController {
         let dateFormatter = DateFormatter()
         dateFormatter.dateStyle = .medium
         dateFormatter.timeStyle = .none
-        self.birthDateTextField.text = dateFormatter.string(from: userInfo.birthDate)
-        self.datePicker.date = userInfo.birthDate
+        birthDateTextField.text = dateFormatter.string(from: userInfo.birthDate)
+        datePicker.date = userInfo.birthDate
         guard let image = editProfilePresenter.getImage(fileName: userInfo.userID) else {
             return
         }
@@ -213,6 +212,7 @@ class EditUserProfileViewController: UIViewController {
     @objc func toggleAnimationButtonColor(button: UIButton) {
         var animator = UIViewPropertyAnimator()
         animator = UIViewPropertyAnimator(duration: 0.2, curve: .easeOut, animations: {
+            [unowned self] in
             button.backgroundColor = self.buttonPressed ? .white : .red
             button.layer.borderColor = self.buttonPressed ? UIColor.red.cgColor : UIColor.white.cgColor
             button.setTitleColor(self.buttonPressed ? UIColor.red : UIColor.white, for: .highlighted)
@@ -233,10 +233,10 @@ class EditUserProfileViewController: UIViewController {
     
     @objc func showActionSheet() {
         let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        let camera = UIAlertAction(title: RootViewController.labels!.camera, style: .default) { (_) in
+        let camera = UIAlertAction(title: RootViewController.labels!.camera, style: .default) { [unowned self] _ in
             self.chooseImagePicker(source: .camera)
         }
-        let photo = UIAlertAction(title: RootViewController.labels!.gallery, style: .default) { (_) in
+        let photo = UIAlertAction(title: RootViewController.labels!.gallery, style: .default) { [unowned self] _ in
             self.chooseImagePicker(source: .photoLibrary)
         }
         let cancel = UIAlertAction(title: RootViewController.labels!.calncelButton, style: .cancel)

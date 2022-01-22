@@ -26,23 +26,23 @@ class LoginPresenter: ILoginPresenter {
             self.view?.alertController.showAlert(message: RootViewController.labels!.emptyDataError)
         } else {
             let hashedPassword = Crypto.getHash(inputString: email + password)
-            FirebaseManager.authenticateUser(email: email, password: hashedPassword) { result in
+            FirebaseManager.authenticateUser(email: email, password: hashedPassword) { [weak self] result in
                 switch result {
                 case .failure(let error):
                     if let _error = error as? FirebaseErrors {
                         switch _error {
                         case .userNotFound, .wrongPassword:
-                            self.view?.alertController.showAlert(message: RootViewController.labels!.invalidEmailOrPasswordError)
+                            self?.view?.alertController.showAlert(message: RootViewController.labels!.invalidEmailOrPasswordError)
                         case .other:
-                            self.view?.alertController.showAlert(message: RootViewController.labels!.otherLoginError)
+                            self?.view?.alertController.showAlert(message: RootViewController.labels!.otherLoginError)
                         default:
-                            self.view?.alertController.showAlert(message: RootViewController.labels!.otherLoginError)
+                            self?.view?.alertController.showAlert(message: RootViewController.labels!.otherLoginError)
                         }
                     }
                     
                 case .success(let userID):
                     KeyChainManager.saveSessionToKeyChain(userID: userID)
-                    FirebaseManager.loadUserInfo(userID: userID){ [weak self] result in
+                    FirebaseManager.loadUserInfo(userID: userID){ result in
                         switch result {
                         case .success(let user):
                             let userID = user.userID

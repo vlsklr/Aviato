@@ -82,7 +82,7 @@ class FavoriteFlyghtListViewController: UIViewController {
 
 extension FavoriteFlyghtListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let deleteAction = UIContextualAction(style: .destructive, title: RootViewController.labels?.deleteFlyghtButton) { _, _, complete in
+        let deleteAction = UIContextualAction(style: .destructive, title: RootViewController.labels?.deleteFlyghtButton) {[unowned self] _, _, complete in
             let cell = tableView.cellForRow(at: indexPath) as! FlyghtViewCell
             if let flyghtID = cell.entityID {
                 self.presenter.removeFlyght(flyghtID: flyghtID)
@@ -112,7 +112,6 @@ extension FavoriteFlyghtListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! FlyghtViewCell
         cell.backgroundColor = UIColor.clear
-        
         if let getter:[FlyghtViewModel] = presenter.getFlyghts() {
             if indexPath.row < getter.count {
                 cell.setupCell(id: getter[indexPath.row].flyghtID)

@@ -147,7 +147,7 @@ class RegistrationViewController: UIViewController {
     
     @objc func toggleAnimationButtonColor(button: UIButton) {
         var animator = UIViewPropertyAnimator()
-        animator = UIViewPropertyAnimator(duration: 0.2, curve: .easeOut, animations: {
+        animator = UIViewPropertyAnimator(duration: 0.2, curve: .easeOut, animations: { [unowned self] in
             button.backgroundColor = self.registerButtonPressed ? .white : UIColor(red: 0.243, green: 0.776, blue: 1, alpha: 1)
             button.layer.borderColor = self.registerButtonPressed ? UIColor(red: 0.243, green: 0.776, blue: 1, alpha: 1).cgColor : UIColor.white.cgColor
             button.setTitleColor(self.registerButtonPressed ? UIColor(red: 0.243, green: 0.776, blue: 1, alpha: 1) : UIColor.white, for: .highlighted)

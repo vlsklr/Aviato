@@ -13,7 +13,7 @@ class KeyChainManager {
         let id = Data("\(userID)".utf8)
         let query: [String: AnyObject] = [
             // kSecAttrService,  kSecAttrAccount, and kSecClass
-            // uniquely identify the item to save in Keychain
+            // уникальные идентификаторы для сохранения в KeyChain
             //Сервис, к которому относится запись keyChain, в данном случае сервис = приложение
             kSecAttrService as String: "Aviato" as AnyObject,
             //Учетная запись = ключ, по которому ищется запись, в нашем случае - сессия пользователя
@@ -27,7 +27,6 @@ class KeyChainManager {
             query as CFDictionary,
             nil
         )
-        
         print(status)
     }
     
@@ -68,7 +67,7 @@ class KeyChainManager {
     static func deleteUserSession() {
         let query: [String: AnyObject] = [
             // kSecAttrService,  kSecAttrAccount, and kSecClass
-            // uniquely identify the item to delete in Keychain
+            // уникальные идентификаторы для удаления из KeyChain
             //Сервис, к которому относится запись keyChain, в данном случае сервис = приложение
             kSecAttrService as String: "Aviato" as AnyObject,
             //Учетная запись = ключ, по которому ищется запись, в нашем случае - сессия пользователя

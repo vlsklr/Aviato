@@ -13,7 +13,7 @@ class RootViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        FirebaseManager.loadLabels { result in
+        FirebaseManager.loadLabels { [unowned self] result in
             switch result {
             case .success(let loadedLabels):
                 RootViewController.labels = loadedLabels
@@ -76,9 +76,9 @@ class RootViewController: UIViewController {
         currentViewController.willMove(toParent: nil)
         new.view.frame = initialFrame
         addChild(new)
-        transition(from: currentViewController, to: new, duration: 1, options: [], animations: {
+        transition(from: currentViewController, to: new, duration: 1, options: [], animations: { [unowned self] in
             new.view.frame = self.view.bounds
-        }) { completed in
+        }) { [unowned self] completed in
             self.currentViewController.removeFromParent()
             new.didMove(toParent: self)
             self.currentViewController = new
@@ -90,7 +90,7 @@ class RootViewController: UIViewController {
         currentViewController.willMove(toParent: nil)
         addChild(new)
         transition(from: currentViewController, to: new, duration: 0.5, options: [.transitionCrossDissolve, .curveEaseOut], animations: {
-        }) { completed in
+        }) {[unowned self] completed in
             self.currentViewController.removeFromParent()
             new.didMove(toParent: self)
             self.currentViewController = new

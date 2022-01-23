@@ -207,7 +207,6 @@ final class FirebaseManager {
         var birthDate: Date?
         var email: String?
         var name: String?
-        //    var avatarPath: String
         firestoreDatabase.collection("users").whereField("userID", isEqualTo: userID).getDocuments { QuerySnapshot, error in
             if let _error = error {
                 completion(.failure(_error))

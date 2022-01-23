@@ -135,7 +135,7 @@ class LoginViewController: UIViewController {
         
     @objc func toggleAnimationButtonColor(button: UIButton) {
         var animator = UIViewPropertyAnimator()
-        animator = UIViewPropertyAnimator(duration: 0.2, curve: .easeOut, animations: {
+        animator = UIViewPropertyAnimator(duration: 0.2, curve: .easeOut, animations: { [unowned self] in
             button.backgroundColor = self.authButtonPressed ? .white : UIColor(red: 0.243, green: 0.776, blue: 1, alpha: 1)
             button.layer.borderColor = self.authButtonPressed ? UIColor(red: 0.243, green: 0.776, blue: 1, alpha: 1).cgColor : UIColor.white.cgColor
             button.setTitleColor(self.authButtonPressed ? UIColor(red: 0.243, green: 0.776, blue: 1, alpha: 1) : UIColor.white, for: .highlighted)

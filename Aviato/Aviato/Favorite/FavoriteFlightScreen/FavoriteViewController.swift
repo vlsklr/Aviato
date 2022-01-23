@@ -219,7 +219,6 @@ class FavoriteViewController: UIViewController {
     func setupAircraftImageView() {
         self.scrollViewContainer.addArrangedSubview(aircraftImage)
         aircraftImage.backgroundColor = .white
-        //        aircraftImage.layer.cornerRadius = 125
         aircraftImage.layer.cornerRadius = 25
         aircraftImage.layer.maskedCorners = [.layerMaxXMaxYCorner, .layerMinXMaxYCorner]
         aircraftImage.clipsToBounds = true

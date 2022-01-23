@@ -116,7 +116,7 @@ class SearchScreenViewController: UIViewController {
     //Анимированно переключает цвет кнопки при нажатии на нее
     @objc func toggleAnimationButtonColor(button: UIButton) {
         var animator = UIViewPropertyAnimator()
-        animator = UIViewPropertyAnimator(duration: 0.2, curve: .easeOut, animations: {
+        animator = UIViewPropertyAnimator(duration: 0.2, curve: .easeOut, animations: { [unowned self] in
             button.backgroundColor = self.searchButtonPressed ? UIColor(red: 0.243, green: 0.776, blue: 1, alpha: 1) : .white
             button.layer.borderColor = self.searchButtonPressed ? UIColor.white.cgColor : UIColor(red: 0.243, green: 0.776, blue: 1, alpha: 1).cgColor
             button.setTitleColor(self.searchButtonPressed ? UIColor.white : UIColor(red: 0.243, green: 0.776, blue: 1, alpha: 1), for: .highlighted)

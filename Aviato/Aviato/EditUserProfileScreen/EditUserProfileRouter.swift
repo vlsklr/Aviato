@@ -7,9 +7,13 @@
 
 import Foundation
 
+protocol IEditUserProfileRouter: AnyObject {
+    func logout()
+    func closeView()
+}
 
-class EditUserProfileRouter {
-    weak var view: EditUserProfileViewController?
+class EditUserProfileRouter: IEditUserProfileRouter {
+    weak var view: IEditUserProfileViewController?
     
     func logout() {
         closeView()
@@ -17,7 +21,7 @@ class EditUserProfileRouter {
     }
     
     func closeView() {
-        view?.dismiss(animated: true, completion: nil)
+        view?.closeView()
     }
     
 }

@@ -7,10 +7,14 @@
 
 import UIKit
 
+protocol IEditUserProfileViewController: AnyObject {
+    var alertController: AlertController { get set }
+    func showUserInfo(userInfo: UserViewModel)
+    func closeView()
+}
 
-class EditUserProfileViewController: UIViewController {
-    
-//    let usernameField: UITextField = UITextField()
+
+class EditUserProfileViewController: UIViewController, IEditUserProfileViewController {
     let passwordField: UITextField = UITextField()
     let emailField: UITextField = UITextField()
     let nameField: UITextField = UITextField()
@@ -23,7 +27,7 @@ class EditUserProfileViewController: UIViewController {
     let editProfilePresenter: IEditUserProfilePresenter
     var buttonPressed: Bool = false
     var imageChanged: Bool = false
-    let alertController = AlertController()
+    var alertController = AlertController()
     let textFieldsColor: UIColor = .black
     let textFieldsPlaceholderColor: UIColor = .darkGray
     
@@ -188,6 +192,10 @@ class EditUserProfileViewController: UIViewController {
         let emailRegEx = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{1,4}$"
         let emailTest = NSPredicate(format:"SELF MATCHES[c] %@", emailRegEx)
         return emailTest.evaluate(with: email)
+    }
+    
+    func closeView() {
+        dismiss(animated: true, completion: nil)
     }
     
     func showUserInfo(userInfo: UserViewModel) {

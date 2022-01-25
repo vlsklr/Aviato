@@ -8,6 +8,7 @@
 import UIKit
 import SnapKit
 
+
 class FavoriteViewController: UIViewController {
     
     let flyghtNumberLabel: UILabel = UILabel()

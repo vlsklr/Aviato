@@ -8,7 +8,12 @@
 import UIKit
 import SnapKit
 
-class UserProfileViewController: UIViewController {
+protocol IUserProfileViewController: AnyObject {
+    func showUserInfo(userInfo: UserViewModel)
+    func showEditUserProfile(editView: EditUserProfileViewController)
+}
+
+class UserProfileViewController: UIViewController, IUserProfileViewController {
     
     let presenter: IUserProfilePresenter
     let userPhoto: UIImageView = UIImageView()
@@ -152,6 +157,10 @@ class UserProfileViewController: UIViewController {
             return
         }
         userPhoto.image = image
+    }
+    
+    func showEditUserProfile(editView: EditUserProfileViewController) {
+        present(editView, animated: true, completion: nil)
     }
     
     @objc func editProfile() {

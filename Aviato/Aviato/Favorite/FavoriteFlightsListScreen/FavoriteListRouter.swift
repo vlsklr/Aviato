@@ -8,7 +8,11 @@
 import Foundation
 import UIKit
 
-class FavoriteListRouter {
+protocol IFavoriteListRouter {
+    func showFavoriteFlyght(flyght: FlyghtViewModel, aircraftImage: UIImage?)
+}
+
+class FavoriteListRouter: IFavoriteListRouter {
     weak var view: FavoriteFlyghtListViewController?
     
     func showFavoriteFlyght(flyght: FlyghtViewModel, aircraftImage: UIImage?) {

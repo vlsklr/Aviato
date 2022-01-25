@@ -8,6 +8,15 @@
 import UIKit
 import SnapKit
 
+protocol IFavoriteFlyghtListViewController {
+    var alertController: IAlert { get set }
+    func getNumberOfSections() -> Int
+    func getNumbersOfRowsInSection(section: Int) -> Int
+    func getCell(at indexPath: IndexPath) -> IFlyghtViewCell
+    func reloadTable()
+    func toggleActivityIndicator()
+}
+
 class FavoriteFlyghtListViewController: UIViewController {
     let tableView: UITableView = UITableView()
     private let activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()

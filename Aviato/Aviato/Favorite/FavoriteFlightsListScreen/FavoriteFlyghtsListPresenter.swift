@@ -20,7 +20,7 @@ class FavoriteFlyghtListPresenter: IFavoriteFlyghtListPresenter {
     let storageManager: IStorageManager = StorageManager()
     let networkManager = NetworkManager()
     let userID: String
-    let router: FavoriteListRouter
+    let router: IFavoriteListRouter
     weak var view: FavoriteFlyghtListViewController?
     
     init(userID: String, router: FavoriteListRouter) {
@@ -42,7 +42,6 @@ class FavoriteFlyghtListPresenter: IFavoriteFlyghtListPresenter {
         }
         if let airCraftImage = storageManager.loadImage(fileName: flyghtID) {
             router.showFavoriteFlyght(flyght: flyght, aircraftImage: airCraftImage)
-            
         } else {
             FirebaseManager.loadImage(filestoragePath: "images/\(userID)/\(flyghtID).png"){ [weak self] result in
                 switch result {

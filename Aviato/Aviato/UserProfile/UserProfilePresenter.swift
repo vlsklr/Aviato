@@ -19,9 +19,9 @@ protocol IUserProfilePresenter {
 class UserProfilePresenter: IUserProfilePresenter {
     
     let userID: String
-    let storageManager = StorageManager()
-    let router: UserProfileRouter
-    weak var view: UserProfileViewController?
+    let storageManager: IStorageManager = StorageManager()
+    let router: IUserProfileRouter
+    weak var view: IUserProfileViewController?
     
     init(router: UserProfileRouter, userID: String) {
         self.router = router

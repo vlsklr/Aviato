@@ -8,7 +8,11 @@
 import UIKit
 import SnapKit
 
-class FlyghtViewCell: UITableViewCell {
+protocol IFlyghtViewCell {
+    var entityID: String? { get set }
+}
+
+class FlyghtViewCell: UITableViewCell, IFlyghtViewCell {
     let flyghtNumberLabel: UILabel = UILabel()
     let departireTimeLabel: UILabel = UILabel()
     var entityID: String?

@@ -10,7 +10,7 @@ import UIKit
 
 
 
-protocol IEditUserProfilePresenter {
+protocol IEditUserProfilePresenter: AnyObject {
     func removeUser()
     func updateUserInfo(userInfo: UserViewModel, userAvatar: UIImage?)
     func getUser()
@@ -22,8 +22,8 @@ class EditUserProfilePresenter: IEditUserProfilePresenter {
     
     let storageManager = StorageManager()
     let userID: String
-    let router: EditUserProfileRouter
-    weak var view: EditUserProfileViewController?
+    let router: IEditUserProfileRouter
+    weak var view: IEditUserProfileViewController?
     
     init(userID: String, router: EditUserProfileRouter) {
         self.router = router
@@ -32,7 +32,7 @@ class EditUserProfilePresenter: IEditUserProfilePresenter {
     
     func updateUserInfo(userInfo: UserViewModel, userAvatar: UIImage?) {
         let user = UserViewModel(userID: userID, password: "", birthDate: userInfo.birthDate, email: userInfo.email, name: userInfo.name)
-        FirebaseManager.validateUserProfileChanges(email: user.email) { result in
+        FirebaseManager.validateUserProfileChanges(email: user.email) { [unowned self] result in
             if result == true {
                 if let image = userAvatar {
                     let savedPath = self.storageManager.saveImage(image: image, fileName: "\(self.userID)")

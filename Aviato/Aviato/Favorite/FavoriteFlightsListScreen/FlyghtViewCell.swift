@@ -9,7 +9,7 @@ import UIKit
 import SnapKit
 
 protocol IFlyghtViewCell {
-    
+    var entityID: String? { get set }
 }
 
 class FlyghtViewCell: UITableViewCell, IFlyghtViewCell {

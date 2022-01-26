@@ -21,7 +21,7 @@ class FavoriteFlyghtListPresenter: IFavoriteFlyghtListPresenter {
     let networkManager = NetworkManager()
     let userID: String
     let router: IFavoriteListRouter
-    weak var view: FavoriteFlyghtListViewController?
+    weak var view: IFavoriteFlyghtListViewController?
     
     init(userID: String, router: FavoriteListRouter) {
         self.userID = userID
@@ -66,14 +66,14 @@ class FavoriteFlyghtListPresenter: IFavoriteFlyghtListPresenter {
      4. Если данные успешно загружены, обновляем их в CoreData
      */
     func updateFlyghtInfo() {
-        guard let totalSections = self.view?.tableView.numberOfSections else {return}
+        guard let totalSections = self.view?.getNumberOfSections() else {return}
         var upatingCounter = 0
         self.view?.toggleActivityIndicator()
         for section in 0..<totalSections {
-            guard let totalRowsInSection = self.view?.tableView.numberOfRows(inSection: section) else {return}
+            guard let totalRowsInSection = self.view?.getNumbersOfRowsInSection(section: section) else {return}
             for row in 0..<totalRowsInSection {
-                let cell = self.view?.tableView.cellForRow(at: IndexPath(row: row, section: section)) as! FlyghtViewCell
-                guard let flyghtID = cell.entityID else {return}
+                let cell = self.view?.getCell(at: IndexPath(row: row, section: section))
+                guard let flyghtID = cell?.entityID else {return}
                 let flyght = self.storageManager.getFlyght(flyghtID: flyghtID)
                 // Приведение номера рейса в соответствие с требованиями API. Для запроса к API нужно писать номер рейса без пробела "KLM1116" или "KL1116", но сам API возвращает номер рейса в таком формате: "KL 1116"
                 guard let flyghtNumber = flyght?.flyghtNumber.replacingOccurrences(of: " ", with: "") else {return}
@@ -83,7 +83,8 @@ class FavoriteFlyghtListPresenter: IFavoriteFlyghtListPresenter {
                         print(error)
                         DispatchQueue.main.async {
                             self?.view?.alertController.showAlert(message: "\(RootViewController.labels!.errorDuringUpdateFlyghtInfo) \(flyghtNumber)")
-                            self?.view?.tableView.reloadData()
+//                            self?.view?.tableView.reloadData()
+                            self?.view?.reloadTable()
                             self?.view?.toggleActivityIndicator()
                         }
                     case .success(let info):
@@ -101,7 +102,7 @@ class FavoriteFlyghtListPresenter: IFavoriteFlyghtListPresenter {
                         upatingCounter += 1
                         DispatchQueue.main.async {
                             if upatingCounter == totalRowsInSection {
-                                self?.view?.tableView.reloadData()
+                                self?.view?.reloadTable()
                                 self?.view?.toggleActivityIndicator()
                             }
                         }

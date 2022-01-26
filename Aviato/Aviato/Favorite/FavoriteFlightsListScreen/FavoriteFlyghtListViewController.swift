@@ -8,16 +8,18 @@
 import UIKit
 import SnapKit
 
-protocol IFavoriteFlyghtListViewController {
+protocol IFavoriteFlyghtListViewController: AnyObject {
     var alertController: IAlert { get set }
     func getNumberOfSections() -> Int
     func getNumbersOfRowsInSection(section: Int) -> Int
     func getCell(at indexPath: IndexPath) -> IFlyghtViewCell
     func reloadTable()
     func toggleActivityIndicator()
+    func showFlyght(flyghtVC: FavoriteViewController)
 }
 
-class FavoriteFlyghtListViewController: UIViewController {
+class FavoriteFlyghtListViewController: UIViewController, IFavoriteFlyghtListViewController {
+  
     let tableView: UITableView = UITableView()
     private let activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
     private let presenter: IFavoriteFlyghtListPresenter
@@ -26,7 +28,7 @@ class FavoriteFlyghtListViewController: UIViewController {
         refresh.addTarget(self, action: #selector(refreshFlyghts(sender:)), for: .valueChanged)
         return refresh
     }()
-    let alertController = AlertController()
+    var alertController: IAlert = AlertController()
     
     init(presenter: IFavoriteFlyghtListPresenter) {
         self.presenter = presenter
@@ -87,6 +89,27 @@ class FavoriteFlyghtListViewController: UIViewController {
             constraint.bottom.equalToSuperview().offset(-100)
         }
     }
+    
+    func getNumberOfSections() -> Int {
+        return tableView.numberOfSections
+    }
+    
+    func getNumbersOfRowsInSection(section: Int) -> Int {
+        return tableView.numberOfRows(inSection: section)
+    }
+    
+    func getCell(at indexPath: IndexPath) -> IFlyghtViewCell {
+        return tableView.cellForRow(at: indexPath) as! IFlyghtViewCell
+    }
+    
+    func reloadTable() {
+        tableView.reloadData()
+    }
+    
+    func showFlyght(flyghtVC: FavoriteViewController) {
+        present(flyghtVC, animated: true, completion: nil)
+    }
+    
 }
 
 extension FavoriteFlyghtListViewController: UITableViewDelegate {

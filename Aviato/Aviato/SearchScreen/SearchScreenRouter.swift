@@ -8,12 +8,15 @@
 import Foundation
 import UIKit
 
-class SearchScreenRouter {
-    weak var view: SearchScreenViewController?
+protocol ISearchScreenRouter {
+    func showFoundFlyght(userID: String, flyght: FlyghtViewModel, aircraftImageData: Data?)
+}
+
+class SearchScreenRouter: ISearchScreenRouter {
+    weak var view: ISearchScreenViewController?
     
     func showFoundFlyght(userID: String, flyght: FlyghtViewModel, aircraftImageData: Data?) {
         let foundFlyghtView = FoundFlyghtAssembly().build(userID: userID, flyght: flyght, aircraftImageData: aircraftImageData)
-        view?.present(foundFlyghtView, animated: true, completion: nil)
+        view?.showFoundFlyght(foundFlyghtView: foundFlyghtView)
     }
-    
 }

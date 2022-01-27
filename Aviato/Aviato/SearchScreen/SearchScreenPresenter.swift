@@ -15,8 +15,8 @@ class SearchScreenPresenter: ISearchScreenPresenter {
     
     let networkManager: INetworkManager = NetworkManager()
     var userID: String
-    let router: SearchScreenRouter
-    weak var view: SearchScreenViewController?
+    let router: ISearchScreenRouter
+    weak var view: ISearchScreenViewController?
     
     init(userID: String, router: SearchScreenRouter) {
         self.userID = userID

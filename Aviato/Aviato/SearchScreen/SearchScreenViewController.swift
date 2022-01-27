@@ -8,6 +8,12 @@
 import UIKit
 import SnapKit
 
+protocol ISearchScreenViewController: AnyObject {
+    var alertController: IAlert { get set }
+    func toggleActivityIndicator()
+    func showFoundFlyght(foundFlyghtView: FoundFlyghtViewController)
+}
+
 class SearchScreenViewController: UIViewController {
     
     let searchBar: UISearchBar = UISearchBar()
@@ -16,7 +22,7 @@ class SearchScreenViewController: UIViewController {
     let verticalMargins: CGFloat = 16.0
     let presenter: ISearchScreenPresenter
     var searchButtonPressed: Bool = false
-    let alertController = AlertController()
+    var alertController: IAlert = AlertController()
     
     init(presenter: ISearchScreenPresenter) {
         self.presenter = presenter
@@ -161,12 +167,14 @@ extension SearchScreenViewController: UIGestureRecognizerDelegate {
     }
 }
 
-protocol IMainViewController {
-    func toggleActivityIndicator()
-}
 
-extension SearchScreenViewController: IMainViewController {
+extension SearchScreenViewController: ISearchScreenViewController {
     func toggleActivityIndicator() {
         activityIndicator.isAnimating ? activityIndicator.stopAnimating() : activityIndicator.startAnimating()
     }
+    
+    func showFoundFlyght(foundFlyghtView: FoundFlyghtViewController) {
+        present(foundFlyghtView, animated: true, completion: nil)
+    }
+    
 }

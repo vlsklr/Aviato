@@ -17,6 +17,8 @@ struct FirebaseUser: Decodable {
     let email: String
 }
 
+
+
 final class FirebaseManager {
     private static let firestoreDatabase = Firestore.firestore()
     private static var databaseReference: DocumentReference? = nil

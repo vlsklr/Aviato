@@ -8,8 +8,13 @@
 import UIKit
 import SnapKit
 
+protocol IRegistrationViewController: AnyObject {
+    var alertController: IAlert { get set }
+    func hideScreen()
+}
 
-class RegistrationViewController: UIViewController {
+
+class RegistrationViewController: UIViewController, IRegistrationViewController {
     let passwordField: UITextField = UITextField()
     let emailField: UITextField = UITextField()
     let nameField: UITextField = UITextField()
@@ -18,7 +23,7 @@ class RegistrationViewController: UIViewController {
     let registerButton: UIButton = UIButton()
     let presenter: IRegistrationPresenter
     var registerButtonPressed: Bool = false
-    let alertController = AlertController()
+    var alertController: IAlert = AlertController()
     let placeholdersColor: UIColor = .darkGray
     let textColor: UIColor = .black
     
@@ -40,6 +45,10 @@ class RegistrationViewController: UIViewController {
         setupNameField()
         setupDateField()
         setupRegisterButton()
+    }
+    
+    func hideScreen() {
+        dismiss(animated: true, completion: nil)
     }
     
     func setupEmailField() {

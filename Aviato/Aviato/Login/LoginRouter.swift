@@ -14,7 +14,7 @@ protocol ILoginRouter {
 }
 
 class LoginRouter: ILoginRouter {
-    weak var view: LoginViewController?
+    weak var view: ILoginViewController?
     
     func switchToMainScreen(userID: String) {
         AppDelegate.shared.rootViewController.switchToMainScreen(userID: userID)
@@ -22,6 +22,6 @@ class LoginRouter: ILoginRouter {
     
     func showRegisterScreen() {
         let registrationViewController = RegistrationAssembly().build()
-        view?.present(registrationViewController, animated: true, completion: nil)
+        view?.showScreen(viewController: registrationViewController)
     }
 }

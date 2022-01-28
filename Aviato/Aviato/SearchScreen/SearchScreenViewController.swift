@@ -15,7 +15,6 @@ protocol ISearchScreenViewController: AnyObject {
 }
 
 class SearchScreenViewController: UIViewController {
-    
     let searchBar: UISearchBar = UISearchBar()
     let searchButton: UIButton = UIButton()
     private let activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()

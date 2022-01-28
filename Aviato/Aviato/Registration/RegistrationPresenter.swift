@@ -14,8 +14,8 @@ protocol IRegistrationPresenter {
 class RegistrationPresenter: IRegistrationPresenter {
     private let storageManager: IStorageManager = StorageManager()
     let firebaseManager = FirebaseManager()
-    let router: RegistrationRouter
-    weak var view: RegistrationViewController?
+    let router: IRegistrationRouter
+    weak var view: IRegistrationViewController?
     
     init(router: RegistrationRouter) {
         self.router = router

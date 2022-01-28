@@ -8,8 +8,6 @@
 import Foundation
 import UIKit
 
-
-
 protocol IEditUserProfilePresenter: AnyObject {
     func removeUser()
     func updateUserInfo(userInfo: UserViewModel, userAvatar: UIImage?)

@@ -7,10 +7,14 @@
 
 import Foundation
 
-class FoundFlyghtRouter {
-    weak var view: FoundFlyghtViewController?
+protocol IFoundFlyghtRouter {
+    func closeViewController()
+}
+
+class FoundFlyghtRouter: IFoundFlyghtRouter {
+    weak var view: IFoundFlyghtViewController?
     
     func closeViewController() {
-        view?.dismiss(animated: true, completion: nil)
+        view?.closeView()
     }
 }

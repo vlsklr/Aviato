@@ -14,7 +14,6 @@ class EditUserProfileAssembly {
         let view = EditUserProfileViewController(editPresenter: presenter)
         router.view = view
         presenter.view = view
-//        presenter.getUser()
         return view
     }
 }

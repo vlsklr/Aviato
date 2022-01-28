@@ -8,8 +8,13 @@
 import UIKit
 import SnapKit
 
-class FoundFlyghtViewController: FavoriteViewController {
-    
+protocol IFoundFlyghtViewController: AnyObject {
+    var alertController: IAlert {get set}
+    func closeView()
+}
+
+class FoundFlyghtViewController: FavoriteViewController, IFoundFlyghtViewController {
+    var alertController: IAlert = AlertController()
     let saveButton: UIButton = UIButton()
     let presenter: IFoundFlyghtPresenter
     var saveButtonPressed: Bool = false
@@ -18,6 +23,7 @@ class FoundFlyghtViewController: FavoriteViewController {
     init(flyghtViewInfo: FlyghtViewModel, presenter: IFoundFlyghtPresenter) {
         self.presenter = presenter
         super.init()
+        alertController.view = self
     }
     
     init(flyghtViewInfo: FlyghtViewModel, presenter: IFoundFlyghtPresenter, aircraftPicture: UIImage) {
@@ -53,6 +59,10 @@ class FoundFlyghtViewController: FavoriteViewController {
             make.leading.equalToSuperview().offset(43)
             make.height.equalTo(50)
         }
+    }
+    
+    func closeView() {
+        dismiss(animated: true, completion: nil)
     }
     
     @objc func addToFavorite() {

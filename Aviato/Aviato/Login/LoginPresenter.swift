@@ -15,8 +15,8 @@ protocol ILoginPresenter {
 
 class LoginPresenter: ILoginPresenter {
     let storageManager: IStorageManager = StorageManager()
-    let loginRouter: LoginRouter
-    weak var view: LoginViewController?
+    let loginRouter: ILoginRouter
+    weak var view: ILoginViewController?
     
     init(router: LoginRouter) {
         loginRouter = router

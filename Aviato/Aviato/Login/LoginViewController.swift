@@ -8,9 +8,12 @@
 import UIKit
 import SnapKit
 
+protocol ILoginViewController: AnyObject {
+    var alertController: IAlert {set get}
+    func showScreen(viewController: RegistrationViewController)
+}
 
-class LoginViewController: UIViewController {
-    
+class LoginViewController: UIViewController, ILoginViewController {
     let emailField: UITextField = UITextField()
     let passwordField: UITextField = UITextField()
     let authButton: UIButton = UIButton()
@@ -18,9 +21,9 @@ class LoginViewController: UIViewController {
     let logoView: UIImageView = UIImageView()
     let presenter: ILoginPresenter
     var authButtonPressed: Bool = false
-    let alertController = AlertController()
+    var alertController: IAlert = AlertController()
     
-    init(presenter: ILoginPresenter	) {
+    init(presenter: ILoginPresenter) {
         self.presenter = presenter
         super.init(nibName: nil, bundle: nil)
     }
@@ -124,6 +127,10 @@ class LoginViewController: UIViewController {
             make.trailing.equalToSuperview().offset(-43)
             make.height.equalTo(50)
         }
+    }
+    
+    func showScreen(viewController: RegistrationViewController) {
+        present(viewController, animated: true, completion: nil)
     }
     
     func setupSwipeDown() {

@@ -16,8 +16,8 @@ class FoundFlyghtPresenter: IFoundFlyghtPresenter {
     let userID: String
     let storageManager: IStorageManager = StorageManager()
     let flyghtInfo: FlyghtViewModel
-    weak var view: FoundFlyghtViewController?
-    let router: FoundFlyghtRouter
+    weak var view: IFoundFlyghtViewController?
+    let router: IFoundFlyghtRouter
     
     init(userID: String, flyght: FlyghtViewModel, router: FoundFlyghtRouter) {
         self.userID = userID

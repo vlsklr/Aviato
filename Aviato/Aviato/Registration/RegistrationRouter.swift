@@ -7,9 +7,13 @@
 
 import Foundation
 
-class RegistrationRouter {
-    weak var view: RegistrationViewController?
+protocol IRegistrationRouter {
+    func returnToLoginScreen()
+}
+
+class RegistrationRouter: IRegistrationRouter {
+    weak var view: IRegistrationViewController?
     func returnToLoginScreen() {
-        view?.dismiss(animated: true)
+        view?.hideScreen()
     }
 }

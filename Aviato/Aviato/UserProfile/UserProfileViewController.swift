@@ -40,12 +40,13 @@ class UserProfileViewController: UIViewController, IUserProfileViewController {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor(red: 0.243, green: 0.776, blue: 1, alpha: 1)
         navigationController?.setNavigationBarHidden(true, animated: false)
+        setupLogoutButton()
+        setupEditButton()
         setupUserImage()
         setupEmailLabel()
         setupNameLabel()
         setupBirthDateLabel()
-        setupLogoutButton()
-        setupEditButton()
+
         setupData()
         //Для обновления информации во ViewController после редактирования в EditUserProfileViewController
         NotificationCenter.default.addObserver(self, selector: #selector(UserProfileViewController.setupData), name: NSNotification.Name(rawValue: "refresh"), object: nil)
@@ -59,7 +60,7 @@ class UserProfileViewController: UIViewController, IUserProfileViewController {
         userPhoto.layer.cornerRadius = 125
         userPhoto.clipsToBounds = true
         userPhoto.snp.makeConstraints { (make) in
-            make.top.equalToSuperview().offset(100)
+            make.top.equalTo(editProfileButton.snp.bottom).offset(5)
             make.centerX.equalToSuperview()
             make.width.equalTo(250)
             make.height.equalTo(250)
@@ -125,7 +126,7 @@ class UserProfileViewController: UIViewController, IUserProfileViewController {
         editProfileButton.contentHorizontalAlignment = .left
         editProfileButton.snp.makeConstraints { (make) in
             make.leading.equalToSuperview().offset(16)
-            make.top.equalToSuperview().offset(50)
+            make.top.equalToSuperview().offset(view.bounds.height * 0.05)
             make.width.equalTo(150)
             make.height.equalTo(50)
         }
@@ -140,7 +141,7 @@ class UserProfileViewController: UIViewController, IUserProfileViewController {
         logoutButton.contentHorizontalAlignment = .right
         logoutButton.snp.makeConstraints { (make) in
             make.trailing.equalToSuperview().offset(-16)
-            make.top.equalToSuperview().offset(50)
+            make.top.equalToSuperview().offset(view.bounds.height * 0.05)
             make.width.equalTo(75)
             make.height.equalTo(50)
         }

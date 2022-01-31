@@ -144,11 +144,11 @@ extension FavoriteFlyghtListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! FlyghtViewCell
         cell.backgroundColor = UIColor.clear
-        if let getter:[FlyghtViewModel] = presenter.getFlyghts() {
-            if indexPath.row < getter.count {
-                cell.setupCell(id: getter[indexPath.row].flyghtID)
-                cell.flyghtNumberLabel.text = "\(RootViewController.labels!.favoriteCellFlyghtNumber)  \(getter[indexPath.row].flyghtNumber)"
-                cell.departireTimeLabel.text = "\(RootViewController.labels!.favoriteCellDepartureDate)  \(getter[indexPath.row].departureDateLocal)"
+        if let flyghtsList: [FlyghtViewModel] = presenter.getFlyghts() {
+            if indexPath.row < flyghtsList.count {
+                cell.setupCell(id: flyghtsList[indexPath.row].flyghtID)
+                cell.flyghtNumberLabel.text = "\(RootViewController.labels!.favoriteCellFlyghtNumber)  \(flyghtsList[indexPath.row].flyghtNumber)"
+                cell.departireTimeLabel.text = "\(RootViewController.labels!.favoriteCellDepartureDate)  \(flyghtsList[indexPath.row].departureDateLocal)"
             }
         }
         return cell

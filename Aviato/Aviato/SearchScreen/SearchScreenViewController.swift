@@ -35,7 +35,7 @@ class SearchScreenViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         alertController.view = self
-        self.navigationController?.navigationBar.backgroundColor = .systemBlue
+        tabBarController?.tabBar.backgroundColor = #colorLiteral(red: 0.243, green: 0.776, blue: 1, alpha: 1)
         setupSearchbar()
         setupSearchButton()
         setupSwipeDown()

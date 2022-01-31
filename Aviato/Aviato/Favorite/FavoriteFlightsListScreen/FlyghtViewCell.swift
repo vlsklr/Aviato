@@ -40,12 +40,13 @@ class FlyghtViewCell: UITableViewCell, IFlyghtViewCell {
         }
         
         contentView.addSubview(departireTimeLabel)
+        departireTimeLabel.numberOfLines = 0
         departireTimeLabel.snp.makeConstraints { make in
             make.leading.equalToSuperview().offset(16)
             make.trailing.equalToSuperview().offset(-16)
             make.top.equalTo(flyghtNumberLabel).offset(20)
             make.width.equalToSuperview().offset(-16)
-            make.height.equalTo(20)
+//            make.height.equalTo(20)
         }
         
         self.contentView.snp.makeConstraints { make in

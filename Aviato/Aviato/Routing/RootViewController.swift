@@ -8,6 +8,7 @@
 import UIKit
 
 class RootViewController: UIViewController {
+    
     private var currentViewController: UIViewController = UIViewController()
     static var labels: Labels?
     

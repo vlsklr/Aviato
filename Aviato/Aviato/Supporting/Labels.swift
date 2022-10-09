@@ -9,10 +9,15 @@ import Foundation
 
 
 struct Labels: Decodable {
+    let loginScreenTitle: String
+    let loginScreenSubtitle: String
+    let forgetPassword: String
+    let loginMethodsTitle: String
     let emailField: String
     let passwordField: String
     let loginButton: String
-    let createAccountButton: String
+    let createAccountButtonRegular: String?
+    let createAccountButtonBold: String?
     let userNameField: String
     let registerButton: String
     let birthDateField: String

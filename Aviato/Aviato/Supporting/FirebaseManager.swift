@@ -27,8 +27,9 @@ final class FirebaseManager {
     
     static func authenticateUser(email: String, password: String, completion: @escaping(Result<String, Error>) -> Void) {
         Auth.auth().signIn(withEmail: email, password: password) { result, error in
-            if let error = error as NSError? {
-                switch AuthErrorCode(rawValue: error.code) {
+            if let error = error as NSError?,
+               let authError = AuthErrorCode.Code.init(rawValue: error.code) {
+                switch authError {
                 case .userNotFound:
                     completion(.failure(FirebaseErrors.userNotFound))
                 case .wrongPassword:
@@ -48,8 +49,9 @@ final class FirebaseManager {
     
     func createUser(email: String, password: String, completion: @escaping (Result<String, Error>) -> Void) {
         Auth.auth().createUser(withEmail: email, password: password) { (result, error) in
-            if let _error = error as NSError? {
-                switch AuthErrorCode(rawValue: _error.code) {
+            if let _error = error as NSError?,
+               let authError = AuthErrorCode.Code.init(rawValue: _error.code) {
+                switch authError {
                 case .emailAlreadyInUse:
                     completion(.failure(FirebaseErrors.emailAlreadyInUse))
                 case .weakPassword:

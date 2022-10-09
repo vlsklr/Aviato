@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1F124CCF28F2A60A00925680 /* Wadik.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1F124CCE28F2A60A00925680 /* Wadik.otf */; };
+		1F124CD428F2AAC500925680 /* RS-extrabold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1F124CD028F2AAC500925680 /* RS-extrabold.otf */; };
+		1F124CD528F2AAC500925680 /* RSRegular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1F124CD128F2AAC500925680 /* RSRegular.otf */; };
+		1F124CD628F2AAC500925680 /* RS-semibold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1F124CD228F2AAC500925680 /* RS-semibold.otf */; };
+		1F124CD728F2AAC500925680 /* RS-extralight.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1F124CD328F2AAC500925680 /* RS-extralight.otf */; };
 		3C1B706326AEAF0F00BC1DA3 /* Crypto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C1B706226AEAF0F00BC1DA3 /* Crypto.swift */; };
 		3C263CFD26A7E78100F491EC /* EditUserProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C263CFC26A7E78100F491EC /* EditUserProfileViewController.swift */; };
 		3C263D0026A7E7B600F491EC /* EditUserProfilePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C263CFF26A7E7B600F491EC /* EditUserProfilePresenter.swift */; };
@@ -62,6 +67,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1F124CCE28F2A60A00925680 /* Wadik.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Wadik.otf; sourceTree = "<group>"; };
+		1F124CD028F2AAC500925680 /* RS-extrabold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "RS-extrabold.otf"; sourceTree = "<group>"; };
+		1F124CD128F2AAC500925680 /* RSRegular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = RSRegular.otf; sourceTree = "<group>"; };
+		1F124CD228F2AAC500925680 /* RS-semibold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "RS-semibold.otf"; sourceTree = "<group>"; };
+		1F124CD328F2AAC500925680 /* RS-extralight.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "RS-extralight.otf"; sourceTree = "<group>"; };
 		3C1B706226AEAF0F00BC1DA3 /* Crypto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Crypto.swift; sourceTree = "<group>"; };
 		3C263CFC26A7E78100F491EC /* EditUserProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditUserProfileViewController.swift; sourceTree = "<group>"; };
 		3C263CFF26A7E7B600F491EC /* EditUserProfilePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditUserProfilePresenter.swift; sourceTree = "<group>"; };
@@ -134,6 +144,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1F124CCD28F2A5DC00925680 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				1F124CD028F2AAC500925680 /* RS-extrabold.otf */,
+				1F124CD328F2AAC500925680 /* RS-extralight.otf */,
+				1F124CD128F2AAC500925680 /* RSRegular.otf */,
+				1F124CD228F2AAC500925680 /* RS-semibold.otf */,
+				1F124CCE28F2A60A00925680 /* Wadik.otf */,
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
 		3C74DA0E2696F84E00779D00 /* FoundFlyght */ = {
 			isa = PBXGroup;
 			children = (
@@ -309,6 +331,7 @@
 		F5392EEB2677364400866C8F /* Aviato */ = {
 			isa = PBXGroup;
 			children = (
+				1F124CCD28F2A5DC00925680 /* Fonts */,
 				841071FA273FA2ED00ECD07B /* EditUserProfileScreen */,
 				F55A4626269B313000A3B352 /* UserProfile */,
 				3C74DA132697116A00779D00 /* Favorite */,
@@ -400,9 +423,14 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1F124CCF28F2A60A00925680 /* Wadik.otf in Resources */,
 				F5392EFC2677364700866C8F /* LaunchScreen.storyboard in Resources */,
 				F5392EF92677364700866C8F /* Assets.xcassets in Resources */,
+				1F124CD628F2AAC500925680 /* RS-semibold.otf in Resources */,
+				1F124CD528F2AAC500925680 /* RSRegular.otf in Resources */,
 				84CE389C26F5C7C800857D27 /* GoogleService-Info.plist in Resources */,
+				1F124CD728F2AAC500925680 /* RS-extralight.otf in Resources */,
+				1F124CD428F2AAC500925680 /* RS-extrabold.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -649,7 +677,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 6PXD6WC3AQ;
 				INFOPLIST_FILE = Aviato/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -671,7 +699,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 6PXD6WC3AQ;
 				INFOPLIST_FILE = Aviato/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

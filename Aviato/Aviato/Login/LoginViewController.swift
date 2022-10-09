@@ -324,11 +324,12 @@ extension LoginViewController {
 extension LoginViewController {
     
     func showScreen(viewController: RegistrationViewController) {
-        present(viewController, animated: true, completion: nil)
+        let navVC = UINavigationController(rootViewController: viewController)
+        navVC.modalPresentationStyle = .fullScreen
+        present(navVC, animated: true, completion: nil)
     }
     
 }
-
 
 // MARK: - Actions
 

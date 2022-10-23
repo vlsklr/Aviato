@@ -16,6 +16,5 @@ final class LoginAssembly {
         presenter.view = viewController
         loginRouter.view = viewController
         return viewController
-        
     }
 }

@@ -22,7 +22,7 @@ protocol IStorageManager {
     func flyghtsCount(userID: String) -> Int
     func contains(userID: String, flyghtNumber: String) -> Bool
     func loadImage(fileName: String) -> UIImage?
-    func saveImage(image: UIImage, fileName: String) -> String
+    @discardableResult func saveImage(image: UIImage, fileName: String) -> String
     func removeImage(fileName: String)
 }
 

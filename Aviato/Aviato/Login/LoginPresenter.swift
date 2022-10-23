@@ -14,13 +14,14 @@ protocol ILoginPresenter {
 }
 
 class LoginPresenter: ILoginPresenter {
-    let storageManager: IStorageManager = StorageManager()
-    let loginRouter: ILoginRouter
+    private let storageManager: IStorageManager = StorageManager()
+    private let loginRouter: ILoginRouter
     weak var view: ILoginViewController?
     
     init(router: LoginRouter) {
         loginRouter = router
     }
+    
     func authentificateUser(email: String, password: String) {
         if email.isEmpty || password.isEmpty {
             self.view?.alertController.showAlert(message: RootViewController.labels!.emptyDataError)
@@ -75,7 +76,6 @@ class LoginPresenter: ILoginPresenter {
                             print("При загрузке данных что-то пошло не так \(error)")
                         }
                     }
-                    
                 }
             }
         }

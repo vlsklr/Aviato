@@ -14,6 +14,9 @@ protocol ILoginRouter {
 }
 
 class LoginRouter: ILoginRouter {
+    
+    // MARK: - Properties
+    
     weak var view: ILoginViewController?
     
     func switchToMainScreen(userID: String) {

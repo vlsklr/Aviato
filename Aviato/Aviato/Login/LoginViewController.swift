@@ -82,7 +82,7 @@ class LoginViewController: UIViewController, ILoginViewController {
         navigationController?.setNavigationBarHidden(true, animated: false)
         super.viewDidLoad()
         alertController.view = self
-        self.view.backgroundColor = UIColor(red: 0, green: 0, blue: 0.4, alpha: 1)
+        view.backgroundColor = UIColor(red: 0, green: 0, blue: 0.4, alpha: 1)
         setupSwipeDown()
         setupUI()
     }
@@ -105,7 +105,6 @@ extension LoginViewController {
     }
     
     private func setupTitleLabel() {
-        
         view.addSubview(titleLabel)
         titleLabel.numberOfLines = 0
         titleLabel.textAlignment = .center
@@ -131,7 +130,6 @@ extension LoginViewController {
             make.trailing.equalToSuperview().offset(VisualConstants.rightPadding)
             make.top.equalTo(titleLabel.snp.bottom).offset(VisualConstants.titlePadding)
         }
-        
     }
     
     private func setupUsernameField() {
@@ -157,6 +155,7 @@ extension LoginViewController {
     }
     
     private func setupPasswordField() {
+        view.addSubview(passwordField)
         passwordField.backgroundColor = VisualConstants.textFieldBackgroundColor
         passwordField.isSecureTextEntry = true
         passwordField.layer.cornerRadius = VisualConstants.cornerRadius
@@ -169,7 +168,6 @@ extension LoginViewController {
                                                                         VisualConstants.textFieldTextColor,
                                                                      NSAttributedString.Key.font:
                                                                         VisualConstants.rockStarRegularfont!])
-        self.view.addSubview(passwordField)
         passwordField.snp.makeConstraints { make in
             make.top.equalTo(emailField.snp.bottom).offset(VisualConstants.passwordFieldPadding)
             make.leading.equalToSuperview().offset(VisualConstants.leftPadding)

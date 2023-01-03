@@ -95,18 +95,29 @@ class RegistrationViewController: UIViewController, IRegistrationViewController 
         setupAuthButton()
         setupAuthMethodsButtons()
     }
+}
+
+// MARK: - Public methods
+
+extension RegistrationViewController {
     
     @objc func hideScreen() {
         dismiss(animated: true, completion: nil)
     }
+    
+}
+
+// MARK: - Private methods
+
+extension RegistrationViewController {
         
-    func validateEmail(email: String) -> Bool {
+    private func validateEmail(email: String) -> Bool {
         let emailRegEx = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{1,4}$"
         let emailTest = NSPredicate(format:"SELF MATCHES[c] %@", emailRegEx)
         return emailTest.evaluate(with: email)
     }
     
-    @objc func toggleAnimationButtonColor(button: UIButton) {
+    @objc private func toggleAnimationButtonColor(button: UIButton) {
         var animator = UIViewPropertyAnimator()
         animator = UIViewPropertyAnimator(duration: 0.2, curve: .easeOut, animations: { [unowned self] in
             button.backgroundColor = self.registerButtonPressed ? .white : UIColor(red: 0, green: 0, blue: 0.4, alpha: 1)
@@ -116,7 +127,7 @@ class RegistrationViewController: UIViewController, IRegistrationViewController 
         animator.startAnimation()
     }
     
-    @objc func donePressed() {
+    @objc private func donePressed() {
         let dateFormatter = DateFormatter()
         dateFormatter.dateStyle = .medium
         dateFormatter.timeStyle = .none
@@ -124,7 +135,7 @@ class RegistrationViewController: UIViewController, IRegistrationViewController 
         self.view.endEditing(true)
     }
     
-    @objc func registerUser() {
+    @objc private func registerUser() {
         toggleAnimationButtonColor(button: self.registerButton)
         guard let password = passwordField.text,
               let name = nameField.text,
@@ -134,7 +145,7 @@ class RegistrationViewController: UIViewController, IRegistrationViewController 
         presenter.registerUser(password: password, birthDate: datePicker.date, email: email, name: name)
     }
     
-    @objc func textFieldsChanged() {
+    @objc private func textFieldsChanged() {
         guard let email = emailField.text,
               nameField.hasText,
               birthDateTextField.hasText else {
@@ -144,7 +155,7 @@ class RegistrationViewController: UIViewController, IRegistrationViewController 
         registerButton.isEnabled = validateEmail(email: email)
     }
     
-    @objc func validateEmailField() {
+    @objc private func validateEmailField() {
         if validateEmail(email: emailField.text ?? "") {
             emailField.layer.borderWidth = 0
         } else {
@@ -326,20 +337,20 @@ extension RegistrationViewController {
     }
     
     private func setupAuthMethods() {
-        let authLabel = UILabel()
+        let registerLabel = UILabel()
         let leftView = UIView()
         let rightView = UIView()
-        authMethodsTitle = UIStackView(arrangedSubviews: [leftView, authLabel, rightView])
+        authMethodsTitle = UIStackView(arrangedSubviews: [leftView, registerLabel, rightView])
         authMethodsTitle.axis = .horizontal
         authMethodsTitle.distribution = .fill
         authMethodsTitle.spacing = 1.0
         authMethodsTitle.alignment = .center
         view.addSubview(authMethodsTitle)
         
-        authLabel.text = RootViewController.labels?.loginMethodsTitle
-        authLabel.textColor = VisualConstants.textFieldTextColor
-        authLabel.font = VisualConstants.rockStarRegularfont12
-        authLabel.textAlignment = .center
+        registerLabel.text = RootViewController.labels?.registerMethodsTitle
+        registerLabel.textColor = VisualConstants.textFieldTextColor
+        registerLabel.font = VisualConstants.rockStarRegularfont12
+        registerLabel.textAlignment = .center
         
         leftView.backgroundColor = VisualConstants.textFieldTextColor
         leftView.snp.makeConstraints { make in
@@ -369,7 +380,6 @@ extension RegistrationViewController {
         authMethodsButtons.snp.makeConstraints { make in
             make.height.equalTo(VisualConstants.fieldHeight)
             make.bottom.equalToSuperview().offset(-110)
-//            make.bottom.equalTo(authButton.snp.top).offset(-VisualConstants.titlePadding)
             make.leading.equalToSuperview().offset(VisualConstants.leftPadding)
             make.trailing.equalToSuperview().offset(VisualConstants.rightPadding)
         }
@@ -401,7 +411,7 @@ extension RegistrationViewController {
     private func setupAuthButton() {
         self.view.addSubview(authButton)
         let attributeString = NSMutableAttributedString(string: "")
-        if let regStr = RootViewController.labels?.createAccountButtonRegular {
+        if let regStr = RootViewController.labels?.loginButtonRegular {
             let regularString = NSAttributedString(string: regStr,
                                                    attributes: [NSAttributedString.Key.foregroundColor:
                                                                     VisualConstants.textFieldTextColor,
@@ -410,8 +420,8 @@ extension RegistrationViewController {
             attributeString.append(regularString)
         }
         
-        if let boldStr = RootViewController.labels?.createAccountButtonBold {
-            let boldString = NSAttributedString(string: boldStr,
+        if let boldStr = RootViewController.labels?.loginButtonBold {
+            let boldString = NSAttributedString(string: " \(boldStr)",
                                                 attributes: [NSAttributedString.Key.foregroundColor:
                                                                 UIColor.white,
                                                              NSAttributedString.Key.font:
@@ -421,7 +431,7 @@ extension RegistrationViewController {
 
         authButton.setAttributedTitle(attributeString, for: .normal)
         authButton.backgroundColor = .clear
-//        registerButton.addTarget(self, action: #selector(registerAction), for: .touchUpInside)
+        authButton.addTarget(self, action: #selector(hideScreen), for: .touchUpInside)
         authButton.snp.makeConstraints { make in
             make.bottom.equalToSuperview().offset(VisualConstants.authMethodsBottomPadding)
             make.leading.equalToSuperview().offset(VisualConstants.authMethodsPadding)

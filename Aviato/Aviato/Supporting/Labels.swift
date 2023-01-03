@@ -13,6 +13,9 @@ struct Labels: Decodable {
     let loginScreenSubtitle: String
     let forgetPassword: String
     let loginMethodsTitle: String
+    let registerMethodsTitle: String
+    let loginButtonRegular: String
+    let loginButtonBold: String
     let emailField: String
     let passwordField: String
     let loginButton: String

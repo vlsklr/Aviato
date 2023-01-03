@@ -25,7 +25,7 @@ class FavoriteFlyghtListViewController: UIViewController, IFavoriteFlyghtListVie
     private let presenter: IFavoriteFlyghtListPresenter
     private let refreshControll: UIRefreshControl = {
         let refresh = UIRefreshControl()
-        refresh.addTarget(self, action: #selector(refreshFlyghts(sender:)), for: .valueChanged)
+        refresh.addTarget(FavoriteFlyghtListViewController.self, action: #selector(refreshFlyghts(sender:)), for: .valueChanged)
         return refresh
     }()
     var alertController: IAlert = AlertController()

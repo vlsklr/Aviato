@@ -88,24 +88,22 @@ class StorageManager: IStorageManager {
         }
     }
     
-    @discardableResult func saveImage(image: UIImage, fileName: String) -> String{
-        if let data = image.pngData() {
-            let path = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first!
-            let url = path.appendingPathComponent(fileName).appendingPathExtension("png")
-            do {
-                try data.write(to: url)
-                return "\(url)"
-            } catch {
-                print(error)
-            }
+    @discardableResult func saveImage(image: UIImage, fileName: String) -> String {
+        let fileManager = FileManager.default
+        let documentsDirectory = try? fileManager.url(for: .cachesDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
+        guard let data = image.pngData(),
+              let url = documentsDirectory?.appendingPathComponent(fileName).appendingPathExtension("png") else {
+            return ""
         }
-        return ""
+        try? data.write(to: url)
+        return "\(url)"
     }
     
     func loadImage(fileName: String) -> UIImage? {
-        let path = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first!
-        let url = path.appendingPathComponent(fileName).appendingPathExtension("png")
-        guard let imageData = try? Data(contentsOf: url) else {
+        let fileManager = FileManager.default
+        let documentsDirectory = try? fileManager.url(for: .cachesDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
+        guard let url = documentsDirectory?.appendingPathComponent(fileName).appendingPathExtension("png"),
+              let imageData = try? Data(contentsOf: url) else {
             return nil
         }
         let image = UIImage.init(data: imageData)
@@ -113,13 +111,11 @@ class StorageManager: IStorageManager {
     }
     
     func removeImage(fileName: String) {
-        let path = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first!
-        let url = path.appendingPathComponent(fileName).appendingPathExtension("png")
-        do {
-            try FileManager.default.removeItem(at: url)
-        } catch {
-            print(error)
-        }
+        let fileManager = FileManager.default
+        let documentsDirectory = try? fileManager.url(for: .cachesDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
+        guard let url = documentsDirectory?.appendingPathComponent(fileName).appendingPathExtension("png") else { return }
+
+        try? fileManager.removeItem(at: url)
     }
     
     func addFlyght(flyght: FlyghtViewModel) {

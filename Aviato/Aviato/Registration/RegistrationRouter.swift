@@ -12,7 +12,13 @@ protocol IRegistrationRouter {
 }
 
 class RegistrationRouter: IRegistrationRouter {
+    
+    // MARK: - Properties
+    
     weak var view: IRegistrationViewController?
+    
+    // MARK: - Public methods
+    
     func returnToLoginScreen() {
         view?.hideScreen()
     }

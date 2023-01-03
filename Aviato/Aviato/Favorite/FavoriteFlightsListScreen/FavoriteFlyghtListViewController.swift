@@ -74,9 +74,7 @@ class FavoriteFlyghtListViewController: UIViewController, IFavoriteFlyghtListVie
     
     func initTableView() {
         view.addSubview(tableView)
-        if let airportImage = UIImage(named: "airport_bgc") {
-            self.view.backgroundColor = UIColor(patternImage: airportImage)
-        }
+        self.view.backgroundColor = UIColor(red: 0, green: 0, blue: 0.4, alpha: 1)
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(FlyghtViewCell.self, forCellReuseIdentifier: "cell")

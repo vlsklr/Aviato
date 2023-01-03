@@ -22,28 +22,36 @@ class MainRouter {
     init(userID: String) {
         self.userID = userID
         tabBar = UITabBarController()
-        tabBar.tabBar.barTintColor =  UIColor(red: 0.243, green: 0.776, blue: 1, alpha: 1)
+        tabBar.tabBar.backgroundColor = UIColor(red: 1, green: 0.8, blue: 1, alpha: 0.1)
+        tabBar.tabBar.tintColor = .white
+        tabBar.tabBar.barTintColor = .white
+        
         
         searchScreenViewController = SearchScreenAssembly().build(userID: userID)
         mainNavigationController = UINavigationController(rootViewController: searchScreenViewController)
-        mainNavigationController.tabBarItem.title = RootViewController.labels!.tabBarFind
         
         flyghtListViewController = FavoriteListAssembly().build(userID: userID)
         flyghtListNavigationController = UINavigationController(rootViewController: flyghtListViewController)
-        flyghtListNavigationController.tabBarItem.title = RootViewController.labels!.tabBarFavorite
         
         userProfileViewController = UserProfileAssembly().build(userID: userID)
         userProfileNavigationController = UINavigationController(rootViewController: userProfileViewController)
-        userProfileNavigationController.tabBarItem.title = RootViewController.labels!.tabBarProfile
         
         if #available(iOS 13.0, *) {
-            mainNavigationController.tabBarItem.image = UIImage(systemName: "airplane")
-            flyghtListNavigationController.tabBarItem.image = UIImage(systemName: "star.fill")
-            userProfileNavigationController.tabBarItem.image = UIImage(systemName: "person.crop.square.fill")
-        } else {
+            mainNavigationController.tabBarItem.image = UIImage(named: "tabBar_search_empty")
+            mainNavigationController.tabBarItem.selectedImage = UIImage(named: "tabBar_search_filled")
+            mainNavigationController.tabBarItem.imageInsets = UIEdgeInsets.init(top: 5,left: 0,bottom: -5,right: 0)
+            
+            flyghtListNavigationController.tabBarItem.image = UIImage(named: "tabBar_favorite_empty")
+            flyghtListNavigationController.tabBarItem.selectedImage = UIImage(named: "tabBar_favorite_filled")
+            flyghtListNavigationController.tabBarItem.imageInsets = UIEdgeInsets.init(top: 5,left: 0,bottom: -5,right: 0)
+            
+            userProfileNavigationController.tabBarItem.image = UIImage(named: "tabBar_profile_empty")
+            userProfileNavigationController.tabBarItem.selectedImage = UIImage(named: "tabBar_profile_filled")
+            userProfileNavigationController.tabBarItem.imageInsets = UIEdgeInsets.init(top: 5,left: 0,bottom: -5,right: 0)
         }
         
-        tabBar.setViewControllers([mainNavigationController, flyghtListNavigationController, userProfileNavigationController], animated: true)
+        tabBar.setViewControllers([flyghtListNavigationController, mainNavigationController, userProfileNavigationController], animated: true)
+        tabBar.selectedIndex = 1
     }
     
     func getTabBar() -> UITabBarController {

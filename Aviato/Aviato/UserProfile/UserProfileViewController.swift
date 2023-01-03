@@ -38,7 +38,7 @@ class UserProfileViewController: UIViewController, IUserProfileViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = UIColor(red: 0.243, green: 0.776, blue: 1, alpha: 1)
+        self.view.backgroundColor = UIColor(red: 0, green: 0, blue: 0.4, alpha: 1)
         navigationController?.setNavigationBarHidden(true, animated: false)
         setupLogoutButton()
         setupEditButton()

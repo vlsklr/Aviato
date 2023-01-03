@@ -59,8 +59,4 @@ struct Labels: Decodable {
     let flyghtNotFound: String
     
     let shortPasswordError: String
-    
-    let tabBarFind: String
-    let tabBarFavorite: String
-    let tabBarProfile: String
 }

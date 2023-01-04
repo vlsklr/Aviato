@@ -8,22 +8,45 @@
 import UIKit
 import SnapKit
 
-protocol ISearchScreenViewController: AnyObject {
-    var alertController: IAlert { get set }
+protocol ISearchScreenViewController: UIViewController {
     func toggleActivityIndicator()
     func showFoundFlyght(foundFlyghtView: FoundFlyghtViewController)
 }
 
 class SearchScreenViewController: UIViewController {
-    let searchBar: UISearchBar = UISearchBar()
-    let searchButton: UIButton = UIButton()
+    
+    // MARK: - VisualConstants
+    
+    private enum VisualConstants {
+        static let titleLabelFont = UIFont(name: "Wadik", size: 16.0)
+        static let rockStarRegularfont = UIFont(name: "RockStar", size: 14.0)
+        static let rockStarRegularfont12 = UIFont(name: "RockStar", size: 12.0)
+        static let textFieldBackgroundColor = UIColor(red: 1, green: 0.8, blue: 1, alpha: 0.1)
+        static let backgroundColor = UIColor(red: 0, green: 0, blue: 0.4, alpha: 1)
+        static let verticalMargins: CGFloat = 16.0
+        static let cornerRadius: CGFloat = 10.0
+    }
+    
+    // MARK: - Properties
+    
+    let titleLabel: UILabel
+    let logoView: UIImageView
+    let searchField: UITextField
+    let searchButton: UIButton
+    let historyButton: UIButton
     private let activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
-    let verticalMargins: CGFloat = 16.0
+    
     let presenter: ISearchScreenPresenter
     var searchButtonPressed: Bool = false
-    var alertController: IAlert = AlertController()
+    
+    // MARK: - Initializers
     
     init(presenter: ISearchScreenPresenter) {
+        titleLabel = UILabel()
+        logoView = UIImageView()
+        searchField = UITextField()
+        searchButton = UIButton()
+        historyButton = UIButton()
         self.presenter = presenter
         super.init(nibName: nil, bundle: nil)
     }
@@ -32,19 +55,51 @@ class SearchScreenViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: - Lifecycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        alertController.view = self
-        setupSearchbar()
+        setupUI()
+    }
+}
+
+// MARK: - UI Management
+
+extension SearchScreenViewController {
+    
+    private func setupUI() {
+        setupTitleLabel()
+        setupLogoView()
+        setupSearchField()
         setupSearchButton()
         setupSwipeDown()
         setupActivityIndicator()
-        self.view.backgroundColor = UIColor(red: 0, green: 0, blue: 0.4, alpha: 1)
-        
+        setupHistoryButton()
+        view.backgroundColor = VisualConstants.backgroundColor
         navigationController?.setNavigationBarHidden(true, animated: false)
     }
     
-    func setupActivityIndicator() {
+    private func setupTitleLabel() {
+        view.addSubview(titleLabel)
+        titleLabel.font = VisualConstants.titleLabelFont
+        titleLabel.textColor = .white
+        titleLabel.text = RootViewController.labels?.searchScreenTitle
+        titleLabel.snp.makeConstraints { make in
+            make.top.equalToSuperview().offset(60)
+            make.centerX.equalToSuperview()
+        }
+    }
+    
+    private func setupLogoView() {
+        view.addSubview(logoView)
+        logoView.image = UIImage(named: "aviato_logo")
+        logoView.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.top.equalTo(titleLabel.snp.bottom).offset(94)
+        }
+    }
+    
+    private func setupActivityIndicator() {
         self.view.addSubview(activityIndicator)
         activityIndicator.transform = CGAffineTransform(scaleX: 2, y: 2)
         activityIndicator.snp.makeConstraints { (make) in
@@ -55,117 +110,128 @@ class SearchScreenViewController: UIViewController {
         }
     }
     
-    func setupSearchButton() {
-        self.view.addSubview(searchButton)
+    private func setupSearchButton() {
+        view.addSubview(searchButton)
+        let title = NSAttributedString(string: RootViewController.labels!.findFlyghtButton,
+                                       attributes:
+                                        [NSAttributedString.Key.font:
+                                            VisualConstants.rockStarRegularfont!,
+                                         NSAttributedString.Key.foregroundColor:
+                                            UIColor(red: 0, green: 0, blue: 0.4, alpha: 1)])
+        searchButton.layer.cornerRadius = VisualConstants.cornerRadius
         searchButton.backgroundColor = .white
-        searchButton.layer.borderColor = #colorLiteral(red: 0.243, green: 0.776, blue: 1, alpha: 1)
-        searchButton.layer.borderWidth = 3
-        searchButton.setTitle(RootViewController.labels!.findFlyghtButton, for: .normal)
-        searchButton.setTitleColor(UIColor(red: 0.243, green: 0.776, blue: 1, alpha: 1), for: .normal)
-        searchButton.layer.cornerRadius = 25
+        searchButton.setAttributedTitle(title, for: .normal)
+
         searchButton.addTarget(self, action: #selector(search), for: .touchUpInside)
-        searchButton.addTarget(self, action: #selector(toggleAnimationButtonColor(button:)), for: .touchDown)
+        searchButton.addTarget(self, action: #selector(toggleAnimationButtonColor(button:)), for: .touchUpInside)
         searchButton.snp.makeConstraints { (make) in
-            make.top.equalTo(searchBar.snp.bottom).offset(10)
+            make.top.equalTo(searchField.snp.bottom).offset(24)
+            make.leading.equalToSuperview().offset(VisualConstants.verticalMargins)
+            make.trailing.equalToSuperview().offset(-1 * VisualConstants.verticalMargins)
+            make.height.equalTo(52)
+        }
+    }
+    
+    private func setupSearchField() {
+        view.addSubview(searchField)
+        let placeholder = NSAttributedString(string: RootViewController.labels!.searchBarPlaceholder,
+                                       attributes:
+                                        [NSAttributedString.Key.font:
+                                            VisualConstants.rockStarRegularfont!,
+                                         NSAttributedString.Key.foregroundColor: UIColor.white.withAlphaComponent(0.5)])
+        searchField.attributedPlaceholder = placeholder
+        searchField.layer.cornerRadius = VisualConstants.cornerRadius
+        searchField.backgroundColor = VisualConstants.textFieldBackgroundColor
+        searchField.textAlignment = .center
+        searchField.font = VisualConstants.rockStarRegularfont
+        searchField.textColor = .white
+        searchField.returnKeyType = .search
+        searchField.clearButtonMode = .whileEditing
+        searchField.delegate = self
+    
+        searchField.snp.makeConstraints { contsraint in
+            contsraint.top.equalTo(logoView.snp.bottom).offset(24)
+            contsraint.height.equalTo(52)
+            contsraint.leading.equalToSuperview().offset(VisualConstants.verticalMargins)
+            contsraint.trailing.equalToSuperview().offset(-1 * VisualConstants.verticalMargins)
+        }
+    }
+    
+    private func setupHistoryButton() {
+        view.addSubview(historyButton)
+        let title = NSAttributedString(string: RootViewController.labels!.searchHistoryButtonTitle,
+                                      attributes:
+                                       [NSAttributedString.Key.font:
+                                           VisualConstants.rockStarRegularfont12!,
+                                        NSAttributedString.Key.foregroundColor:
+                                            UIColor.white])
+        historyButton.setAttributedTitle(title, for: .normal)
+        historyButton.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.leading.equalToSuperview().offset(verticalMargins)
-            make.trailing.equalToSuperview().offset(-1 * verticalMargins)
-            make.height.equalTo(50)
+            make.top.equalTo(searchButton.snp.bottom).offset(16)
         }
     }
     
-    func setupSwipeDown() {
-        let swipeDown = UISwipeGestureRecognizer(target: self, action: #selector(self.hideKeyboardOnSwipeDown))
-        swipeDown.delegate = self
-        swipeDown.direction =  UISwipeGestureRecognizer.Direction.down
-        self.view.addGestureRecognizer(swipeDown)
-    }
+}
+
+// MARK: - Private methods
+
+extension SearchScreenViewController {
     
-    func setupSearchbar() {
-        view.addSubview(searchBar)
-        searchBar.delegate = self
-        searchBar.placeholder = RootViewController.labels!.searchBarPlaceholder
-        searchBar.clipsToBounds = true
-        searchBar.layer.cornerRadius = 25
-        searchBar.layer.borderColor = #colorLiteral(red: 0.243, green: 0.776, blue: 1, alpha: 1)
-        searchBar.layer.borderWidth = 3
-        if #available(iOS 13.0, *) {
-            searchBar.searchTextField.backgroundColor = .white
-            searchBar.barTintColor = .white
-            searchBar.searchTextField.textColor = .black
-        } else {
-            // Fallback on earlier versions
+    @objc private func search() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) { [weak self] in
+            self?.toggleAnimationButtonColor(button: self?.searchButton)
         }
-        searchBar.snp.makeConstraints { contsraint in
-            contsraint.top.equalTo(view).offset(250)
-            contsraint.centerX.equalToSuperview()
-            contsraint.height.equalTo(50)
-            contsraint.leading.equalToSuperview().offset(verticalMargins)
-            contsraint.trailing.equalToSuperview().offset(-1 * verticalMargins)
-        }
-        searchBar.setCenteredPlaceHolder(viewWidth: view.bounds.width, verticalMargins: verticalMargins)
+        guard let searchText = searchField.text else { return }
+        presenter.findFlyghtInfo(flyghtNumber: searchText)
     }
     
-    @objc func search() {
-        toggleAnimationButtonColor(button: self.searchButton)
-        guard let searchBarText = searchBar.text else { return }
-        print(searchBarText)
-        presenter.findFlyghtInfo(flyghtNumber: searchBarText)
-    }
-    
-    @objc func hideKeyboardOnSwipeDown() {
-        view.endEditing(true)
-    }
-    //Анимированно переключает цвет кнопки при нажатии на нее
-    @objc func toggleAnimationButtonColor(button: UIButton) {
+    @objc private func toggleAnimationButtonColor(button: UIButton?) {
+        guard let button else { return }
         var animator = UIViewPropertyAnimator()
         animator = UIViewPropertyAnimator(duration: 0.2, curve: .easeOut, animations: { [unowned self] in
-            button.backgroundColor = self.searchButtonPressed ? UIColor(red: 0.243, green: 0.776, blue: 1, alpha: 1) : .white
-            button.layer.borderColor = self.searchButtonPressed ? UIColor.white.cgColor : UIColor(red: 0.243, green: 0.776, blue: 1, alpha: 1).cgColor
-            button.setTitleColor(self.searchButtonPressed ? UIColor.white : UIColor(red: 0.243, green: 0.776, blue: 1, alpha: 1), for: .highlighted)
+            button.backgroundColor = self.searchButtonPressed ? VisualConstants.textFieldBackgroundColor : .white
+            button.layer.borderColor = self.searchButtonPressed ? UIColor.white.cgColor : VisualConstants.textFieldBackgroundColor.cgColor
+            button.setTitleColor(self.searchButtonPressed ? UIColor.white : VisualConstants.textFieldBackgroundColor, for: .highlighted)
         })
         searchButtonPressed = !searchButtonPressed
         animator.startAnimation()
     }
-}
-//Расширение SearchBar помещающее placeholder в центр
-extension UISearchBar {
-    func setCenteredPlaceHolder(viewWidth: CGFloat, verticalMargins: CGFloat){
-        let textFieldInsideSearchBar = self.value(forKey: "searchField") as? UITextField
-        let margins:CGFloat = verticalMargins * 2
-        let searchBarWidth = viewWidth - margins
-        let placeholderIconWidth = textFieldInsideSearchBar?.leftView?.frame.width
-        let placeHolderWidth = textFieldInsideSearchBar?.attributedPlaceholder?.size().width
-        let offsetIconToPlaceholder: CGFloat = 8
-        let placeHolderWithIcon = placeholderIconWidth! + offsetIconToPlaceholder
-        
-        let offset = UIOffset(horizontal: ((searchBarWidth / 2) - (placeHolderWidth! / 2) - placeHolderWithIcon), vertical: 0)
-        self.setPositionAdjustment(offset, for: .search)
-    }
+    
 }
 
-
-extension SearchScreenViewController: UISearchBarDelegate {
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        guard let searchBarText = searchBar.text else { return }
-        print(searchBarText)
+extension SearchScreenViewController: UITextFieldDelegate {
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        guard let searchBarText = textField.text else { return false}
         presenter.findFlyghtInfo(flyghtNumber: searchBarText)
-    }
-    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        return true
     }
     
-    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
-    }
 }
 
 extension SearchScreenViewController: UIGestureRecognizerDelegate {
+    
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
         return true
     }
+    
+    private func setupSwipeDown() {
+        let swipeDown = UISwipeGestureRecognizer(target: self, action: #selector(self.hideKeyboardOnSwipeDown))
+        swipeDown.delegate = self
+        swipeDown.direction =  UISwipeGestureRecognizer.Direction.down
+        view.addGestureRecognizer(swipeDown)
+    }
+    
+    @objc private func hideKeyboardOnSwipeDown() {
+        view.endEditing(true)
+    }
+    
 }
 
 
 extension SearchScreenViewController: ISearchScreenViewController {
+    
     func toggleActivityIndicator() {
         activityIndicator.isAnimating ? activityIndicator.stopAnimating() : activityIndicator.startAnimating()
     }

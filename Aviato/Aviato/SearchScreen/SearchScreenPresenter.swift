@@ -25,13 +25,14 @@ class SearchScreenPresenter: ISearchScreenPresenter {
     
     func findFlyghtInfo(flyghtNumber: String) {
         view?.toggleActivityIndicator()
-        networkManager.loadFlyghtInfo(flyghtNumber: flyghtNumber.replacingOccurrences(of: " ", with: ""), completion: {[unowned self] result in
+        networkManager.loadFlyghtInfo(flyghtNumber: flyghtNumber.replacingOccurrences(of: " ", with: ""),
+                                      completion: { [unowned self] result in
             switch result {
             case .failure(let error):
                 print(error)
                 DispatchQueue.main.async {
                     self.view?.toggleActivityIndicator()
-                    self.view?.alertController.showAlert(message: RootViewController.labels!.flyghtNotFound)
+                    self.view?.showAlert(message: RootViewController.labels!.flyghtNotFound)
                 }
             case .success(let info):
                 print(info)
@@ -45,7 +46,18 @@ class SearchScreenPresenter: ISearchScreenPresenter {
                 let departureDateLocal = dateFormatter.string(from: departureDateUTC)
                 let arrivalDateLocal  = dateFormatter.string(from: arrivalDateUTC)
                 var airCraftImageData: Data?
-                let viewInfo: FlyghtViewModel = FlyghtViewModel(holder: self.userID, flyghtID: "", flyghtNumber: info.number, departureAirport: "\(info.departure.airport.countryCode)  \(info.departure.airport.name)", arrivalAirport: "\(info.arrival.airport.countryCode)  \(info.arrival.airport.name)", departureDate: departureDateUTC, arrivalDate: arrivalDateUTC, aircraft: info.aircraft.model, airline: info.airline.name, status: info.status, departureDateLocal: departureDateLocal, arrivalDateLocal: arrivalDateLocal)
+                let viewInfo: FlyghtViewModel = FlyghtViewModel(holder: self.userID,
+                                                                flyghtID: "",
+                                                                flyghtNumber: info.number,
+                                                                departureAirport: "\(info.departure.airport.countryCode)  \(info.departure.airport.name)",
+                                                                arrivalAirport: "\(info.arrival.airport.countryCode)  \(info.arrival.airport.name)",
+                                                                departureDate: departureDateUTC,
+                                                                arrivalDate: arrivalDateUTC,
+                                                                aircraft: info.aircraft.model,
+                                                                airline: info.airline.name,
+                                                                status: info.status,
+                                                                departureDateLocal: departureDateLocal,
+                                                                arrivalDateLocal: arrivalDateLocal)
                 
                 self.networkManager.loadAircraftImage(url: info.aircraft.image.url, completion: { result in
                     switch result {

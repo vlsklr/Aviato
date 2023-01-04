@@ -12,6 +12,7 @@
 		1F124CD528F2AAC500925680 /* RSRegular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1F124CD128F2AAC500925680 /* RSRegular.otf */; };
 		1F124CD628F2AAC500925680 /* RS-semibold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1F124CD228F2AAC500925680 /* RS-semibold.otf */; };
 		1F124CD728F2AAC500925680 /* RS-extralight.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1F124CD328F2AAC500925680 /* RS-extralight.otf */; };
+		1FE1FC382964352900D058E8 /* UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FE1FC372964352900D058E8 /* UIViewController.swift */; };
 		3C1B706326AEAF0F00BC1DA3 /* Crypto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C1B706226AEAF0F00BC1DA3 /* Crypto.swift */; };
 		3C263CFD26A7E78100F491EC /* EditUserProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C263CFC26A7E78100F491EC /* EditUserProfileViewController.swift */; };
 		3C263D0026A7E7B600F491EC /* EditUserProfilePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C263CFF26A7E7B600F491EC /* EditUserProfilePresenter.swift */; };
@@ -72,6 +73,7 @@
 		1F124CD128F2AAC500925680 /* RSRegular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = RSRegular.otf; sourceTree = "<group>"; };
 		1F124CD228F2AAC500925680 /* RS-semibold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "RS-semibold.otf"; sourceTree = "<group>"; };
 		1F124CD328F2AAC500925680 /* RS-extralight.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "RS-extralight.otf"; sourceTree = "<group>"; };
+		1FE1FC372964352900D058E8 /* UIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewController.swift; sourceTree = "<group>"; };
 		3C1B706226AEAF0F00BC1DA3 /* Crypto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Crypto.swift; sourceTree = "<group>"; };
 		3C263CFC26A7E78100F491EC /* EditUserProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditUserProfileViewController.swift; sourceTree = "<group>"; };
 		3C263CFF26A7E7B600F491EC /* EditUserProfilePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditUserProfilePresenter.swift; sourceTree = "<group>"; };
@@ -154,6 +156,14 @@
 				1F124CCE28F2A60A00925680 /* Wadik.otf */,
 			);
 			path = Fonts;
+			sourceTree = "<group>";
+		};
+		1FE1FC362964351500D058E8 /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				1FE1FC372964352900D058E8 /* UIViewController.swift */,
+			);
+			path = Extension;
 			sourceTree = "<group>";
 		};
 		3C74DA0E2696F84E00779D00 /* FoundFlyght */ = {
@@ -331,6 +341,7 @@
 		F5392EEB2677364400866C8F /* Aviato */ = {
 			isa = PBXGroup;
 			children = (
+				1FE1FC362964351500D058E8 /* Extension */,
 				1F124CCD28F2A5DC00925680 /* Fonts */,
 				841071FA273FA2ED00ECD07B /* EditUserProfileScreen */,
 				F55A4626269B313000A3B352 /* UserProfile */,
@@ -511,6 +522,7 @@
 				3C7F58DF2678973B001C1193 /* FoundFlyghtViewController.swift in Sources */,
 				844F1910273D08F100C7EFF8 /* FavoriteFlyghtPresenter.swift in Sources */,
 				3C74DA18269711BD00779D00 /* FavoriteFlyghtsListPresenter.swift in Sources */,
+				1FE1FC382964352900D058E8 /* UIViewController.swift in Sources */,
 				84D9EE36273B8D66004CA32C /* RegistrationRouter.swift in Sources */,
 				841071F9273FA2E200ECD07B /* EditUserProfileRouter.swift in Sources */,
 				84D9EE38273B8D82004CA32C /* RegistrationAssembly.swift in Sources */,

@@ -24,7 +24,9 @@ struct Labels: Decodable {
     let userNameField: String
     let registerButton: String
     let birthDateField: String
+    let searchScreenTitle: String
     let searchBarPlaceholder: String
+    let searchHistoryButtonTitle: String
     let findFlyghtButton: String
     let favoriteCellFlyghtNumber: String
     let favoriteCellDepartureDate: String

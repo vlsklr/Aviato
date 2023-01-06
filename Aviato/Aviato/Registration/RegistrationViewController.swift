@@ -8,8 +8,8 @@
 import UIKit
 import SnapKit
 
-protocol IRegistrationViewController: AnyObject {
-    var alertController: IAlert { get set }
+protocol IRegistrationViewController: UIViewController {
+//    var alertController: IAlert { get set }
     func hideScreen()
 }
 
@@ -48,7 +48,7 @@ class RegistrationViewController: UIViewController, IRegistrationViewController 
     private let nameField: UITextField = UITextField()
     private let birthDateTextField: UITextField = UITextField()
     private let datePicker = UIDatePicker()
-    private let registerButton: UIButton = UIButton()
+    private let registerButton: AviatoButton
     private let closeButton = UIButton()
     private let authButton = UIButton()
     private var authMethodsTitle: UIStackView
@@ -57,8 +57,6 @@ class RegistrationViewController: UIViewController, IRegistrationViewController 
     private let facebookAuthButton: UIButton
     private var authMethodsButtons: UIStackView
     private let presenter: IRegistrationPresenter
-    private var registerButtonPressed: Bool = false
-    var alertController: IAlert = AlertController()
     private let placeholdersColor: UIColor = .darkGray
     private let textColor: UIColor = .black
     
@@ -70,6 +68,7 @@ class RegistrationViewController: UIViewController, IRegistrationViewController 
         googleAuthButton = UIButton()
         appleAuthButton = UIButton()
         facebookAuthButton = UIButton()
+        registerButton = AviatoButton()
         authMethodsButtons = UIStackView(arrangedSubviews: [googleAuthButton, appleAuthButton, facebookAuthButton])
         super.init(nibName: nil, bundle: nil)
     }
@@ -82,7 +81,6 @@ class RegistrationViewController: UIViewController, IRegistrationViewController 
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        alertController.view = self
         view.backgroundColor = UIColor(red: 0, green: 0, blue: 0.4, alpha: 1)
         setupCloseButton()
         setupTitleLabel()
@@ -117,16 +115,6 @@ extension RegistrationViewController {
         return emailTest.evaluate(with: email)
     }
     
-    @objc private func toggleAnimationButtonColor(button: UIButton) {
-        var animator = UIViewPropertyAnimator()
-        animator = UIViewPropertyAnimator(duration: 0.2, curve: .easeOut, animations: { [unowned self] in
-            button.backgroundColor = self.registerButtonPressed ? .white : UIColor(red: 0, green: 0, blue: 0.4, alpha: 1)
-            button.setTitleColor(self.registerButtonPressed ? UIColor(red: 0, green: 0, blue: 0.4, alpha: 1) : UIColor.white, for: .highlighted)
-        })
-        registerButtonPressed = !registerButtonPressed
-        animator.startAnimation()
-    }
-    
     @objc private func donePressed() {
         let dateFormatter = DateFormatter()
         dateFormatter.dateStyle = .medium
@@ -136,7 +124,6 @@ extension RegistrationViewController {
     }
     
     @objc private func registerUser() {
-        toggleAnimationButtonColor(button: self.registerButton)
         guard let password = passwordField.text,
               let name = nameField.text,
               let email = emailField.text?.lowercased() else {
@@ -153,6 +140,7 @@ extension RegistrationViewController {
             return
         }
         registerButton.isEnabled = validateEmail(email: email)
+        reloadInputViews()
     }
     
     @objc private func validateEmailField() {
@@ -315,19 +303,16 @@ extension RegistrationViewController {
     }
     
     private func setupRegisterButton() {
-        self.view.addSubview(registerButton)
+        view.addSubview(registerButton)
         registerButton.isEnabled = false
-        registerButton.addTarget(self, action: #selector(registerUser), for: .touchUpInside)
         let title = NSAttributedString(string: RootViewController.labels!.registerButton,
                                        attributes:
                                         [NSAttributedString.Key.font:
                                             VisualConstants.rockStarRegularfont!])
-        registerButton.layer.cornerRadius = VisualConstants.cornerRadius
-        registerButton.backgroundColor = .white
         registerButton.setAttributedTitle(title, for: .normal)
-        registerButton.setTitleColor(UIColor(red: 0, green: 0, blue: 0.4, alpha: 1), for: .normal)
-        registerButton.setTitleColor(.gray, for: .disabled)
-        registerButton.addTarget(self, action: #selector(toggleAnimationButtonColor(button:)), for: .touchDown)
+        registerButton.buttonAction = { [weak self] in
+            self?.registerUser()
+        }
         registerButton.snp.makeConstraints { (make) in
             make.leading.equalToSuperview().offset(VisualConstants.leftPadding)
             make.trailing.equalToSuperview().offset(VisualConstants.rightPadding)

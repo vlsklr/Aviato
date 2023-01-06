@@ -12,6 +12,7 @@
 		1F124CD528F2AAC500925680 /* RSRegular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1F124CD128F2AAC500925680 /* RSRegular.otf */; };
 		1F124CD628F2AAC500925680 /* RS-semibold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1F124CD228F2AAC500925680 /* RS-semibold.otf */; };
 		1F124CD728F2AAC500925680 /* RS-extralight.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1F124CD328F2AAC500925680 /* RS-extralight.otf */; };
+		1F61C93129680A9300646588 /* AviatoButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F61C93029680A9300646588 /* AviatoButton.swift */; };
 		1FE1FC382964352900D058E8 /* UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FE1FC372964352900D058E8 /* UIViewController.swift */; };
 		3C1B706326AEAF0F00BC1DA3 /* Crypto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C1B706226AEAF0F00BC1DA3 /* Crypto.swift */; };
 		3C263CFD26A7E78100F491EC /* EditUserProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C263CFC26A7E78100F491EC /* EditUserProfileViewController.swift */; };
@@ -73,6 +74,7 @@
 		1F124CD128F2AAC500925680 /* RSRegular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = RSRegular.otf; sourceTree = "<group>"; };
 		1F124CD228F2AAC500925680 /* RS-semibold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "RS-semibold.otf"; sourceTree = "<group>"; };
 		1F124CD328F2AAC500925680 /* RS-extralight.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "RS-extralight.otf"; sourceTree = "<group>"; };
+		1F61C93029680A9300646588 /* AviatoButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AviatoButton.swift; sourceTree = "<group>"; };
 		1FE1FC372964352900D058E8 /* UIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewController.swift; sourceTree = "<group>"; };
 		3C1B706226AEAF0F00BC1DA3 /* Crypto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Crypto.swift; sourceTree = "<group>"; };
 		3C263CFC26A7E78100F491EC /* EditUserProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditUserProfileViewController.swift; sourceTree = "<group>"; };
@@ -156,6 +158,22 @@
 				1F124CCE28F2A60A00925680 /* Wadik.otf */,
 			);
 			path = Fonts;
+			sourceTree = "<group>";
+		};
+		1F61C92E29680A1800646588 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				1F61C92F29680A3100646588 /* Button */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		1F61C92F29680A3100646588 /* Button */ = {
+			isa = PBXGroup;
+			children = (
+				1F61C93029680A9300646588 /* AviatoButton.swift */,
+			);
+			path = Button;
 			sourceTree = "<group>";
 		};
 		1FE1FC362964351500D058E8 /* Extension */ = {
@@ -341,6 +359,7 @@
 		F5392EEB2677364400866C8F /* Aviato */ = {
 			isa = PBXGroup;
 			children = (
+				1F61C92E29680A1800646588 /* Common */,
 				1FE1FC362964351500D058E8 /* Extension */,
 				1F124CCD28F2A5DC00925680 /* Fonts */,
 				841071FA273FA2ED00ECD07B /* EditUserProfileScreen */,
@@ -517,6 +536,7 @@
 				844F190A273D065A00C7EFF8 /* FavoriteAssembly.swift in Sources */,
 				844F1908273D064200C7EFF8 /* FavoriteRouter.swift in Sources */,
 				84444AD4272E75860059BA76 /* Labels.swift in Sources */,
+				1F61C93129680A9300646588 /* AviatoButton.swift in Sources */,
 				3C263D0026A7E7B600F491EC /* EditUserProfilePresenter.swift in Sources */,
 				F55A4628269B31BD00A3B352 /* UserProfilePresenter.swift in Sources */,
 				3C7F58DF2678973B001C1193 /* FoundFlyghtViewController.swift in Sources */,

@@ -8,8 +8,7 @@
 import UIKit
 import SnapKit
 
-protocol ILoginViewController: AnyObject {
-    var alertController: IAlert {set get}
+protocol ILoginViewController: UIViewController {
     func showScreen(viewController: RegistrationViewController)
 }
 
@@ -50,18 +49,17 @@ class LoginViewController: UIViewController, ILoginViewController {
     private var authMethodsButtons: UIStackView
     private let emailField: UITextField = UITextField()
     private let passwordField: UITextField = UITextField()
-    private let authButton: UIButton = UIButton()
+    private let authButton: AviatoButton
     private let registerButton: UIButton = UIButton()
     private let logoView: UIImageView = UIImageView()
     private let presenter: ILoginPresenter
-    private var authButtonPressed: Bool = false
-    var alertController: IAlert = AlertController()
     
     // MARK: - Initializers
     
     init(presenter: ILoginPresenter) {
         self.presenter = presenter
         titleLabel = UILabel()
+        authButton = AviatoButton()
         subtitleLabel = UILabel()
         forgetPasswordButton = UIButton()
         authMethodsTitle = UIStackView()
@@ -81,7 +79,6 @@ class LoginViewController: UIViewController, ILoginViewController {
     override func viewDidLoad() {
         navigationController?.setNavigationBarHidden(true, animated: false)
         super.viewDidLoad()
-        alertController.view = self
         view.backgroundColor = UIColor(red: 0, green: 0, blue: 0.4, alpha: 1)
         setupSwipeDown()
         setupUI()
@@ -193,16 +190,15 @@ extension LoginViewController {
     
     private func setupAuthButton() {
         view.addSubview(authButton)
-        authButton.addTarget(self, action: #selector(authAction), for: .touchUpInside)
-        authButton.addTarget(self, action: #selector(toggleAnimationButtonColor(button:)), for: .touchDown)
+        authButton.buttonAction = { [weak self] in
+            self?.authAction()
+        }
         let title = NSAttributedString(string: RootViewController.labels!.loginButton,
                                        attributes:
                                         [NSAttributedString.Key.font:
                                             VisualConstants.rockStarRegularfont!,
                                          NSAttributedString.Key.foregroundColor:
                                             UIColor(red: 0, green: 0, blue: 0.4, alpha: 1)])
-        authButton.layer.cornerRadius = VisualConstants.cornerRadius
-        authButton.backgroundColor = .white
         authButton.setAttributedTitle(title, for: .normal)
         authButton.snp.makeConstraints { make in
             make.top.equalTo(passwordField.snp.bottom).offset(VisualConstants.authButtonPadding)
@@ -339,18 +335,8 @@ extension LoginViewController {
         swipeDown.direction =  UISwipeGestureRecognizer.Direction.down
         self.view.addGestureRecognizer(swipeDown)
     }
-        
-    @objc func toggleAnimationButtonColor(button: UIButton) {
-        let animator = UIViewPropertyAnimator(duration: 0.2, curve: .easeOut, animations: { [unowned self] in
-            button.backgroundColor = self.authButtonPressed ? .white : VisualConstants.textFieldBackgroundColor
-            button.setTitleColor(self.authButtonPressed ? VisualConstants.textFieldBackgroundColor : UIColor.white, for: .highlighted)
-        })
-        animator.startAnimation()
-        authButtonPressed = !authButtonPressed
-    }
     
     @objc func authAction() {
-        toggleAnimationButtonColor(button: authButton)
         guard let email = emailField.text, let password = passwordField.text else { return }
         presenter.authentificateUser(email: email.lowercased(), password: password)
     }

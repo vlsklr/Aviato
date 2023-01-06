@@ -23,7 +23,7 @@ class RegistrationPresenter: IRegistrationPresenter {
     
     func registerUser(password: String, birthDate: Date, email: String, name: String) {
         if email.isEmpty || password.isEmpty {
-            self.view?.alertController.showAlert(message: RootViewController.labels!.emptyDataError)
+            self.view?.showAlert(message: RootViewController.labels!.emptyDataError)
         } else {
             let hashedPassword = Crypto.getHash(inputString: email + password)
             firebaseManager.createUser(email: email, password: hashedPassword) {[weak self] result in
@@ -33,13 +33,13 @@ class RegistrationPresenter: IRegistrationPresenter {
                         print(error)
                         switch _error {
                         case .emailAlreadyInUse:
-                            self?.view?.alertController.showAlert(message: RootViewController.labels!.userExistsError)
+                            self?.view?.showAlert(message: RootViewController.labels!.userExistsError)
                         case .weakPassword:
-                            self?.view?.alertController.showAlert(message: RootViewController.labels!.shortPasswordError)
+                            self?.view?.showAlert(message: RootViewController.labels!.shortPasswordError)
                         case .other:
-                            self?.view?.alertController.showAlert(message: RootViewController.labels!.otherLoginError)
+                            self?.view?.showAlert(message: RootViewController.labels!.otherLoginError)
                         default:
-                            self?.view?.alertController.showAlert(message: RootViewController.labels!.otherLoginError)
+                            self?.view?.showAlert(message: RootViewController.labels!.otherLoginError)
                         }
                     }
                 case .success(let userID):
@@ -49,7 +49,7 @@ class RegistrationPresenter: IRegistrationPresenter {
                         self?.storageManager.addUser(user: user)
                         self?.router.returnToLoginScreen()
                     } else {
-                        self?.view?.alertController.showAlert(message: RootViewController.labels!.otherLoginError)
+                        self?.view?.showAlert(message: RootViewController.labels!.otherLoginError)
                     }
                 }
             }

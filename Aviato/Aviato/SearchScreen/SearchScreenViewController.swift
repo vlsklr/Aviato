@@ -32,12 +32,11 @@ class SearchScreenViewController: UIViewController {
     let titleLabel: UILabel
     let logoView: UIImageView
     let searchField: UITextField
-    let searchButton: UIButton
+    let searchButton: AviatoButton
     let historyButton: UIButton
     private let activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
     
     let presenter: ISearchScreenPresenter
-    var searchButtonPressed: Bool = false
     
     // MARK: - Initializers
     
@@ -45,7 +44,7 @@ class SearchScreenViewController: UIViewController {
         titleLabel = UILabel()
         logoView = UIImageView()
         searchField = UITextField()
-        searchButton = UIButton()
+        searchButton = AviatoButton()
         historyButton = UIButton()
         self.presenter = presenter
         super.init(nibName: nil, bundle: nil)
@@ -118,12 +117,10 @@ extension SearchScreenViewController {
                                             VisualConstants.rockStarRegularfont!,
                                          NSAttributedString.Key.foregroundColor:
                                             UIColor(red: 0, green: 0, blue: 0.4, alpha: 1)])
-        searchButton.layer.cornerRadius = VisualConstants.cornerRadius
-        searchButton.backgroundColor = .white
         searchButton.setAttributedTitle(title, for: .normal)
-
-        searchButton.addTarget(self, action: #selector(search), for: .touchUpInside)
-        searchButton.addTarget(self, action: #selector(toggleAnimationButtonColor(button:)), for: .touchUpInside)
+        searchButton.buttonAction = { [weak self] in
+            self?.search()
+        }
         searchButton.snp.makeConstraints { (make) in
             make.top.equalTo(searchField.snp.bottom).offset(24)
             make.leading.equalToSuperview().offset(VisualConstants.verticalMargins)
@@ -178,24 +175,9 @@ extension SearchScreenViewController {
 
 extension SearchScreenViewController {
     
-    @objc private func search() {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) { [weak self] in
-            self?.toggleAnimationButtonColor(button: self?.searchButton)
-        }
+    private func search() {
         guard let searchText = searchField.text else { return }
         presenter.findFlyghtInfo(flyghtNumber: searchText)
-    }
-    
-    @objc private func toggleAnimationButtonColor(button: UIButton?) {
-        guard let button else { return }
-        var animator = UIViewPropertyAnimator()
-        animator = UIViewPropertyAnimator(duration: 0.2, curve: .easeOut, animations: { [unowned self] in
-            button.backgroundColor = self.searchButtonPressed ? VisualConstants.textFieldBackgroundColor : .white
-            button.layer.borderColor = self.searchButtonPressed ? UIColor.white.cgColor : VisualConstants.textFieldBackgroundColor.cgColor
-            button.setTitleColor(self.searchButtonPressed ? UIColor.white : VisualConstants.textFieldBackgroundColor, for: .highlighted)
-        })
-        searchButtonPressed = !searchButtonPressed
-        animator.startAnimation()
     }
     
 }

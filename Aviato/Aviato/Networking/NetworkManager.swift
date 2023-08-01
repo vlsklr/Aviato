@@ -19,8 +19,9 @@ struct Arrival: Decodable {
 }
 
 struct Airport: Decodable {
-    let name: String
+    let shortName: String
     let countryCode: String
+    let municipalityName: String
 }
 
 struct Aircraft: Decodable {
@@ -39,7 +40,7 @@ struct Airline: Decodable {
 struct FlyghtInfo: Decodable {
     let codeshareStatus: String
     let number: String
-    let status: String
+    let status: FlightStatus
     let arrival: Arrival
     let departure: Departure
     let aircraft: Aircraft

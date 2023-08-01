@@ -14,6 +14,8 @@ final class AviatoButton: UIButton {
         static let backgroundColor = UIColor.white
         static let selectedBackgroundColor = UIColor(red: 1, green: 0.8, blue: 1, alpha: 0.1)
         static let cornerRadius: CGFloat = 10.0
+        static let defaultTitleColor = UIColor(red: 0, green: 0, blue: 0.4, alpha: 1)
+        static let rockStarRegularFont = UIFont(name: "RockStar", size: 16.0)
     }
     
     var buttonAction: (() -> Void)?
@@ -39,7 +41,7 @@ final class AviatoButton: UIButton {
     private func setupButton() {
         layer.cornerRadius = VisualConstants.cornerRadius
         backgroundColor = VisualConstants.backgroundColor
-        setTitleColor(UIColor(red: 0, green: 0, blue: 0.4, alpha: 1), for: .normal)
+        setTitleColor(VisualConstants.defaultTitleColor, for: .normal)
     }
     
     private func toggleAnimationButtonColor() {
@@ -51,6 +53,16 @@ final class AviatoButton: UIButton {
        })
        animator.startAnimation()
    }
+    
+    override func setTitle(_ title: String?, for state: UIControl.State) {
+        guard let titleFont = VisualConstants.rockStarRegularFont,
+              let title else {
+            super.setTitle(title, for: state)
+            return
+        }
+        let attributedTitle = NSAttributedString(string: title, attributes: [NSAttributedString.Key.font: titleFont])
+        setAttributedTitle(attributedTitle, for: state)
+    }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         isHighlighted = true
@@ -67,5 +79,4 @@ final class AviatoButton: UIButton {
         toggleAnimationButtonColor()
         buttonAction?()
     }
-    
 }

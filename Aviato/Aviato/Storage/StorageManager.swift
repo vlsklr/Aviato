@@ -14,11 +14,11 @@ protocol IStorageManager {
     func addUser(user: UserViewModel)
     func deleteUser(userID: String)
     func updateUser(userID: String, userInfo: UserViewModel)
-    func addFlyght(flyght: FlyghtViewModel)
+    func addFlyght(flyght: FlyghtInfoDataModel)
     func removeFlyght(flyghtID: String)
-    func updateFlyght(flyghtID: String, flyght: FlyghtViewModel)
-    func getFlyghts(userID: String) -> [FlyghtViewModel]?
-    func getFlyght(flyghtID: String) -> FlyghtViewModel?
+    func updateFlyght(flyghtID: String, flyght: FlyghtInfoDataModel)
+    func getFlyghts(userID: String) -> [FlyghtInfoDataModel]?
+    func getFlyght(flyghtID: String) -> FlyghtInfoDataModel?
     func flyghtsCount(userID: String) -> Int
     func contains(userID: String, flyghtNumber: String) -> Bool
     func loadImage(fileName: String) -> UIImage?
@@ -118,7 +118,7 @@ class StorageManager: IStorageManager {
         try? fileManager.removeItem(at: url)
     }
     
-    func addFlyght(flyght: FlyghtViewModel) {
+    func addFlyght(flyght: FlyghtInfoDataModel) {
         let context = persistentContainer.viewContext
         do {
             let fetchRequest: NSFetchRequest<User> = User.fetchRequest()
@@ -127,13 +127,15 @@ class StorageManager: IStorageManager {
             let object = Flyght(context: context)
             object.flyghtID = flyght.flyghtID
             object.flyghtNumber = flyght.flyghtNumber
-            object.status = flyght.status
+            object.status = flyght.status.rawValue
             object.aircraft = flyght.aircraft
             object.airline = flyght.airline
             object.arrivalAirport = flyght.arrivalAirport
             object.arrivalTime = flyght.arrivalDate
             object.departureTime = flyght.departureDate
             object.departureAirport = flyght.departureAirport
+            object.departureCity = flyght.departureCity
+            object.arrivalCity = flyght.arrivalCity
             object.user = user
             object.lastModified = Date()
             try context.save()
@@ -142,15 +144,23 @@ class StorageManager: IStorageManager {
         }
     }
     
-    func getFlyghts(userID: String) -> [FlyghtViewModel]? {
+    func getFlyghts(userID: String) -> [FlyghtInfoDataModel]? {
         let fetchRequest: NSFetchRequest<Flyght> = Flyght.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "ANY user.userID = %@", "\(userID)")
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm"
-        dateFormatter.timeZone = TimeZone.current
-        
-        let flyghts = try? persistentContainer.viewContext.fetch(fetchRequest).compactMap { FlyghtViewModel(holder: userID, flyghtID: $0.flyghtID ?? "", flyghtNumber: $0.flyghtNumber ?? "", departureAirport: $0.departureAirport ?? "", arrivalAirport: $0.arrivalAirport ?? "", departureDate: $0.departureTime ?? Date(), arrivalDate: $0.arrivalTime ?? Date(), aircraft: $0.aircraft ?? "", airline: $0.airline ?? "", status: $0.status ?? "", departureDateLocal: dateFormatter.string(from: $0.departureTime ?? Date()) , arrivalDateLocal: dateFormatter.string(from: $0.arrivalTime ?? Date()))
-        }
+        let flyghts = try? persistentContainer.viewContext.fetch(fetchRequest)
+            .compactMap { FlyghtInfoDataModel(holder: userID,
+                                              flyghtID: $0.flyghtID ?? "",
+                                              flyghtNumber: $0.flyghtNumber ?? "",
+                                              departureAirport: $0.departureAirport ?? "",
+                                              arrivalAirport: $0.arrivalAirport ?? "",
+                                              departureDate: $0.departureTime ?? Date(),
+                                              arrivalDate: $0.arrivalTime ?? Date(),
+                                              aircraft: $0.aircraft ?? "",
+                                              airline: $0.airline ?? "",
+                                              status: FlightStatus(rawValue: $0.status ?? "") ?? .unknown,
+                                              departureCity: $0.departureCity ?? "",
+                                              arrivalCity: $0.arrivalCity ?? "")
+            }
         return flyghts
     }
     
@@ -161,20 +171,28 @@ class StorageManager: IStorageManager {
         return flyghtsCount ?? 0
     }
     
-    func getFlyght(flyghtID: String) -> FlyghtViewModel? {
+    func getFlyght(flyghtID: String) -> FlyghtInfoDataModel? {
         let fetchRequest: NSFetchRequest<Flyght> = Flyght.fetchRequest()
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm"
-        dateFormatter.timeZone = TimeZone.current
         fetchRequest.predicate = NSPredicate(format: "flyghtID = %@", "\(flyghtID)")
-        if let flyghts = try? persistentContainer.viewContext.fetch(fetchRequest).first {
-            let flyghtViewModel = FlyghtViewModel(holder: "", flyghtID: flyghtID, flyghtNumber: (flyghts.flyghtNumber!), departureAirport: flyghts.departureAirport!, arrivalAirport: flyghts.arrivalAirport!, departureDate: flyghts.departureTime!, arrivalDate: flyghts.arrivalTime!, aircraft: flyghts.aircraft!, airline: flyghts.airline!, status: flyghts.status!, departureDateLocal: dateFormatter.string(from: flyghts.departureTime!), arrivalDateLocal: dateFormatter.string(from: flyghts.arrivalTime!))
+        if let flyght = try? persistentContainer.viewContext.fetch(fetchRequest).first {
+            let flyghtViewModel = FlyghtInfoDataModel(holder: flyght.user?.userID ?? "",
+                                                      flyghtID: flyghtID,
+                                                      flyghtNumber: flyght.flyghtNumber ?? "",
+                                                      departureAirport: flyght.departureAirport ?? "",
+                                                      arrivalAirport: flyght.arrivalAirport ?? "",
+                                                      departureDate: flyght.departureTime ?? Date(),
+                                                      arrivalDate: flyght.arrivalTime ?? Date(),
+                                                      aircraft: flyght.aircraft ?? "",
+                                                      airline: flyght.airline ?? "",
+                                                      status: FlightStatus(rawValue: flyght.status ?? "") ?? .unknown,
+                                                      departureCity: flyght.departureCity ?? "",
+                                                      arrivalCity: flyght.arrivalCity ?? "")
             return flyghtViewModel
         }
         return nil
     }
     
-    func updateFlyght(flyghtID: String, flyght: FlyghtViewModel) {
+    func updateFlyght(flyghtID: String, flyght: FlyghtInfoDataModel) {
         let context = persistentContainer.viewContext
         do {
             let fetchRequest: NSFetchRequest<Flyght> = Flyght.fetchRequest()

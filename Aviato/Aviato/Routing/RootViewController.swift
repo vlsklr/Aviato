@@ -10,7 +10,7 @@ import UIKit
 class RootViewController: UIViewController {
     
     private var currentViewController: UIViewController = UIViewController()
-    static var labels: Labels?
+    static var labels: Labels!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -18,7 +18,8 @@ class RootViewController: UIViewController {
             switch result {
             case .success(let loadedLabels):
                 RootViewController.labels = loadedLabels
-                guard let userID = KeyChainManager.readUserSession(), let firebaseUserID = FirebaseManager.getCurrentUserID() else {
+                guard let userID = KeyChainManager.readUserSession(),
+                      let firebaseUserID = FirebaseManager.getCurrentUserID() else {
                     self.showLoginScreen()
                     return
                 }
@@ -30,7 +31,7 @@ class RootViewController: UIViewController {
                     self.showLoginScreen()
                 }
             case .failure(let error):
-                print(error)
+               assert(true, "error : \(error) occured")
             }
         }
     }

@@ -78,8 +78,8 @@ class FavoriteFlyghtListPresenter: IFavoriteFlyghtListPresenter {
                 guard let flyghtID = cell?.entityID else {return}
                 let flyght = self.storageManager.getFlyght(flyghtID: flyghtID)
                 // Приведение номера рейса в соответствие с требованиями API. Для запроса к API нужно писать номер рейса без пробела "KLM1116" или "KL1116", но сам API возвращает номер рейса в таком формате: "KL 1116"
-                guard let flyghtNumber = flyght?.flyghtNumber.replacingOccurrences(of: " ", with: "") else {return}
-                self.networkManager.loadFlyghtInfo(flyghtNumber: flyghtNumber, completion: {[weak self] result in
+                guard let flyghtNumber = flyght?.flyghtNumber.replacingOccurrences(of: " ", with: "") else { return }
+                self.networkManager.loadFlyghtInfo(flyghtNumber: flyghtNumber, completion: { [weak self] result in
                     switch result {
                     case .failure(let error):
                         print(error)
@@ -92,7 +92,7 @@ class FavoriteFlyghtListPresenter: IFavoriteFlyghtListPresenter {
                         print(info)
                         let dateFormatter = DateFormatter()
                         dateFormatter.dateFormat = "yyyy-MM-dd HH:mmZ"
-                        dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
+                        dateFormatter.timeZone = .current
                         let departureDateUTC = dateFormatter.date(from:info.departure.scheduledTimeUtc)!
                         let arrivalDateUTC = dateFormatter.date(from: info.arrival.scheduledTimeUtc)!
                         

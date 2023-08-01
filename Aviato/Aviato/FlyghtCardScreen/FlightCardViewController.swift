@@ -243,7 +243,6 @@ private extension FlightCardViewController {
         departureTitleLabel.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(VisualConstants.mediumVerticalMargin)
             make.leading.equalToSuperview().offset(VisualConstants.extraLagreHorizontalMargin)
-            make.trailing.equalToSuperview().inset(VisualConstants.largeVerticalMargin)
         }
         
     }
@@ -266,7 +265,7 @@ private extension FlightCardViewController {
         departureCityLabel.text = presenter.departureCity
         departureCityLabel.snp.makeConstraints { make in
             make.top.equalTo(departureTitleLabel.snp.bottom).offset(VisualConstants.smallVerticalMargin)
-            make.leading.equalTo(departureDateLabel.snp.trailing).offset(VisualConstants.mediumHorizontalMargin)
+            make.leading.equalTo(departureTitleLabel.snp.trailing).offset(VisualConstants.mediumHorizontalMargin)
             make.trailing.lessThanOrEqualToSuperview().inset(VisualConstants.largeVerticalMargin)
         }
     }
@@ -289,7 +288,7 @@ private extension FlightCardViewController {
         departureAirportLabel.font = VisualConstants.rockStarExtraLightFont
         departureAirportLabel.snp.makeConstraints { make in
             make.top.equalTo(departureCityLabel.snp.bottom).offset(VisualConstants.extraSmallVerticalMargin)
-            make.leading.equalTo(departureDateLabel.snp.trailing).offset(VisualConstants.mediumHorizontalMargin)
+            make.leading.equalTo(departureCityLabel.snp.leading)
             make.trailing.lessThanOrEqualToSuperview().inset(VisualConstants.largeVerticalMargin)
         }
     }
@@ -324,7 +323,7 @@ private extension FlightCardViewController {
         arrivalCityLabel.text = presenter.arrivalCity
         arrivalCityLabel.snp.makeConstraints { make in
             make.top.equalTo(arrivalTitleLabel.snp.bottom).offset(VisualConstants.smallVerticalMargin)
-            make.leading.equalTo(arrivalDateLabel.snp.trailing).offset(VisualConstants.mediumHorizontalMargin)
+            make.leading.equalTo(departureTitleLabel.snp.trailing).offset(VisualConstants.mediumHorizontalMargin)
             make.trailing.lessThanOrEqualToSuperview().inset(VisualConstants.largeVerticalMargin)
         }
     }
@@ -346,7 +345,7 @@ private extension FlightCardViewController {
         arrivalAirportLabel.font = VisualConstants.rockStarExtraLightFont
         arrivalAirportLabel.snp.makeConstraints { make in
             make.top.equalTo(arrivalCityLabel.snp.bottom).offset(VisualConstants.extraSmallVerticalMargin)
-            make.leading.equalTo(arrivalDateLabel.snp.trailing).offset(VisualConstants.mediumHorizontalMargin)
+            make.leading.equalTo(arrivalCityLabel.snp.leading)
             make.trailing.lessThanOrEqualToSuperview().inset(VisualConstants.largeVerticalMargin)
             make.bottom.equalToSuperview().offset(-VisualConstants.mediumVerticalMargin)
         }

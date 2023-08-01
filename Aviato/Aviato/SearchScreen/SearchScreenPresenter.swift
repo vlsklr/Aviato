@@ -38,7 +38,7 @@ class SearchScreenPresenter: ISearchScreenPresenter {
                 print(info)
                 let dateFormatter = DateFormatter()
                 dateFormatter.dateFormat = "yyyy-MM-dd HH:mmZ"
-                dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
+                dateFormatter.timeZone = .current
                 let departureDateUTC = dateFormatter.date(from:info.departure.scheduledTimeUtc)!
                 let arrivalDateUTC = dateFormatter.date(from: info.arrival.scheduledTimeUtc)!
                 var airCraftImageData: Data?

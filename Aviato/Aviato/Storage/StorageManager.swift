@@ -204,7 +204,7 @@ class StorageManager: IStorageManager {
                 foundFlyght.setValue(flyght.arrivalDate, forKey: "arrivalTime")
                 foundFlyght.setValue(flyght.departureAirport, forKey: "departureAirport")
                 foundFlyght.setValue(flyght.departureDate, forKey: "departureTime")
-                foundFlyght.setValue(flyght.status, forKey: "status")
+                foundFlyght.setValue(flyght.status.rawValue, forKey: "status")
                 foundFlyght.lastModified = Date()
             }
             try context.save()

@@ -115,6 +115,8 @@ final class FirebaseManager {
             "flyghtNumber" : flyghtInfo.flyghtNumber,
             "departureAirport" : flyghtInfo.departureAirport,
             "arrivalAirport" : flyghtInfo.arrivalAirport,
+            "departureCity": flyghtInfo.departureCity,
+            "arrivalCity": flyghtInfo.arrivalCity,
             "departureDate" : flyghtInfo.departureDate,
             "arrivalDate" : flyghtInfo.arrivalDate,
             "aircraft" : flyghtInfo.aircraft,
@@ -176,13 +178,15 @@ final class FirebaseManager {
                         case "arrivalAirport":
                             flyght.arrivalAirport = element.value as? String ?? ""
                         case "departureDate":
-                            flyght.departureDate = element.value as? Date ?? Date()
+                            let rawDate = element.value as? Timestamp
+                            flyght.departureDate = rawDate?.dateValue() ?? Date()
                         case "arrivalDate":
-                            flyght.arrivalDate = element.value as? Date ?? Date()
+                            let rawDate = element.value as? Timestamp
+                            flyght.arrivalDate = rawDate?.dateValue() ?? Date()
                         case "airline":
                             flyght.airline = element.value as? String ?? ""
                         case "status":
-                            flyght.status = element.value as? FlightStatus ?? .unknown
+                            flyght.status = FlightStatus(rawValue: element.value as? String ?? "") ?? .unknown
                         case "departureCity":
                             flyght.departureCity = element.value as? String ?? ""
                         case "arrivalCity":
@@ -290,12 +294,14 @@ final class FirebaseManager {
     static func updateFlyghtInfo(flyght: FlyghtInfoDataModel) {
         firestoreDatabase.collection(flyght.holder).document(flyght.flyghtID).updateData(
             [
-                "departureAirport" : flyght.departureAirport,
-                "arrivalAirport" : flyght.arrivalAirport,
-                "departureDate" : flyght.departureDate,
-                "arrivalDate" : flyght.arrivalDate,
-                "aircraft" : flyght.aircraft,
-                "status" : flyght.status
+                "departureAirport": flyght.departureAirport,
+                "departureCity": flyght.departureCity,
+                "arrivalCity": flyght.arrivalCity,
+                "arrivalAirport": flyght.arrivalAirport,
+                "departureDate": flyght.departureDate,
+                "arrivalDate": flyght.arrivalDate,
+                "aircraft": flyght.aircraft,
+                "status": flyght.status.rawValue
             ]
         )
     }

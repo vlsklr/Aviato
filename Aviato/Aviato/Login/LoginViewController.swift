@@ -32,6 +32,7 @@ class LoginViewController: UIViewController, ILoginViewController {
         static let authMethodsBottomPadding: CGFloat = -78.0
         static let textFieldBackgroundColor = UIColor(red: 1, green: 0.8, blue: 1, alpha: 0.2)
         static let textFieldTextColor = UIColor(red: 1, green: 1, blue: 1, alpha: 0.5)
+        static let backgroundColor = UIColor(red: 0, green: 0, blue: 0.4, alpha: 1)
         static let rockStarRegularfont = UIFont(name: "RockStar", size: 14.0)
         static let rockStarRegularfont12 = UIFont(name: "RockStar", size: 12.0)
         static let titleLabelFont = UIFont(name: "Wadik", size: 20.0)
@@ -79,7 +80,7 @@ class LoginViewController: UIViewController, ILoginViewController {
     override func viewDidLoad() {
         navigationController?.setNavigationBarHidden(true, animated: false)
         super.viewDidLoad()
-        view.backgroundColor = UIColor(red: 0, green: 0, blue: 0.4, alpha: 1)
+        view.backgroundColor = VisualConstants.backgroundColor
         setupSwipeDown()
         setupUI()
     }

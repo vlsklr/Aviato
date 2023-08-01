@@ -38,6 +38,7 @@ struct Labels: Decodable {
     let deleteUserButton: String
     
     let addToFavorite: String
+    let removeFromFavorite: String
     let flyghtNumber: String
     let flyghtStatus: String
     let departureAirport: String
@@ -47,6 +48,9 @@ struct Labels: Decodable {
     let arriveTimeUTC: String
     let arriveTimeLocal: String
     let aircraft: String
+    let enroute: String
+    let departureTitle: String
+    let arrivalTitle: String
     
     let emptyDataError: String
     let invalidEmailOrPasswordError: String

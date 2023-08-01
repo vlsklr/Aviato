@@ -7,6 +7,7 @@
 		<string>Wadik.otf</string>
 		<string>RSRegular.otf</string>
 		<string>RS-semibold.otf</string>
+		<string>RS-extralight.otf</string>
 	</array>
 	<key>NSCameraUsageDescription</key>
 	<string>$(PRODUCT_NAME) camera use</string>

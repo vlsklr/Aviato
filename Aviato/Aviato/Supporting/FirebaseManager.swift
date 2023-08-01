@@ -17,8 +17,6 @@ struct FirebaseUser: Decodable {
     let email: String
 }
 
-
-
 final class FirebaseManager {
     private static let firestoreDatabase = Firestore.firestore()
     private static var databaseReference: DocumentReference? = nil
@@ -112,7 +110,7 @@ final class FirebaseManager {
         return false
     }
     
-    static func saveFlyght(flyghtInfo: FlyghtViewModel) -> String?{
+    static func saveFlyght(flyghtInfo: FlyghtInfoDataModel) -> String?{
         databaseReference = firestoreDatabase.collection(flyghtInfo.holder).addDocument(data: [
             "flyghtNumber" : flyghtInfo.flyghtNumber,
             "departureAirport" : flyghtInfo.departureAirport,
@@ -121,7 +119,7 @@ final class FirebaseManager {
             "arrivalDate" : flyghtInfo.arrivalDate,
             "aircraft" : flyghtInfo.aircraft,
             "airline" : flyghtInfo.airline,
-            "status" : flyghtInfo.status
+            "status" : flyghtInfo.status.rawValue
         ])
         
         if let flyghtID = databaseReference?.documentID {
@@ -142,7 +140,7 @@ final class FirebaseManager {
         return Auth.auth().currentUser?.uid
     }
     
-    static func loadFlyghts(userID: String, completion: @escaping (Result<[FlyghtViewModel], Error>) -> Void) {
+    static func loadFlyghts(userID: String, completion: @escaping (Result<[FlyghtInfoDataModel], Error>) -> Void) {
         firestoreDatabase.collection(userID).getDocuments { snapshot, error in
             if let error = error {
                 completion(.failure(error))
@@ -151,10 +149,21 @@ final class FirebaseManager {
                     completion(.failure(FirebaseErrors.other))
                     return
                 }
-                var flyghts = [FlyghtViewModel]()
+                var flyghts = [FlyghtInfoDataModel]()
                 
                 for flyghtDocument in snapshotDocuments {
-                    var flyght = FlyghtViewModel(holder: userID, flyghtID: flyghtDocument.documentID, flyghtNumber: "", departureAirport: "", arrivalAirport: "", departureDate: Date(), arrivalDate: Date(), aircraft: "", airline: "", status: "", departureDateLocal: "", arrivalDateLocal: "")
+                    var flyght = FlyghtInfoDataModel(holder: userID,
+                                                     flyghtID: flyghtDocument.documentID,
+                                                     flyghtNumber: "",
+                                                     departureAirport: "",
+                                                     arrivalAirport: "",
+                                                     departureDate: Date(),
+                                                     arrivalDate: Date(),
+                                                     aircraft: "",
+                                                     airline: "",
+                                                     status: .unknown,
+                                                     departureCity: "",
+                                                     arrivalCity: "")
                     
                     for element in flyghtDocument.data() {
                         switch element.key {
@@ -173,7 +182,11 @@ final class FirebaseManager {
                         case "airline":
                             flyght.airline = element.value as? String ?? ""
                         case "status":
-                            flyght.status = element.value as? String ?? ""
+                            flyght.status = element.value as? FlightStatus ?? .unknown
+                        case "departureCity":
+                            flyght.departureCity = element.value as? String ?? ""
+                        case "arrivalCity":
+                            flyght.arrivalCity = element.value as? String ?? ""
                         default:
                             print("Something other data \(element.value as? String)")
                         }
@@ -189,7 +202,7 @@ final class FirebaseManager {
     static func validateUserProfileChanges(email: String, completion: @escaping (Bool) -> Void) {
         let userID = getCurrentUserID()
         firestoreDatabase.collection("users").whereField("email", isEqualTo: email).getDocuments { snapshot, error in
-            if let error = error {
+            if error != nil {
                 completion(false)
             }
             guard let userInfo = snapshot?.documents.first else {
@@ -274,7 +287,7 @@ final class FirebaseManager {
         firestoreDatabase.collection(userID).document(flyghtID).delete()
     }
     
-    static func updateFlyghtInfo(flyght: FlyghtViewModel) {
+    static func updateFlyghtInfo(flyght: FlyghtInfoDataModel) {
         firestoreDatabase.collection(flyght.holder).document(flyght.flyghtID).updateData(
             [
                 "departureAirport" : flyght.departureAirport,

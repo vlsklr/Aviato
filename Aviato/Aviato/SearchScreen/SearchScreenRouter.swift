@@ -9,14 +9,15 @@ import Foundation
 import UIKit
 
 protocol ISearchScreenRouter {
-    func showFoundFlyght(userID: String, flyght: FlyghtViewModel, aircraftImageData: Data?)
+    func showFoundFlyght(userID: String, flyght: FlyghtInfoDataModel, aircraftImageData: Data?)
 }
 
 class SearchScreenRouter: ISearchScreenRouter {
     weak var view: ISearchScreenViewController?
     
-    func showFoundFlyght(userID: String, flyght: FlyghtViewModel, aircraftImageData: Data?) {
-        let foundFlyghtView = FoundFlyghtAssembly().build(userID: userID, flyght: flyght, aircraftImageData: aircraftImageData)
+    func showFoundFlyght(userID: String, flyght: FlyghtInfoDataModel, aircraftImageData: Data?) {
+        let foundFlyghtView = FlightCardAssembly().build(flight: flyght,
+                                                         aircraftImage: UIImage(data: aircraftImageData ?? Data()))
         view?.showFoundFlyght(foundFlyghtView: foundFlyghtView)
     }
 }

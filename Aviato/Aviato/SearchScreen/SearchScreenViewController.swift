@@ -10,7 +10,7 @@ import SnapKit
 
 protocol ISearchScreenViewController: UIViewController {
     func toggleActivityIndicator()
-    func showFoundFlyght(foundFlyghtView: FoundFlyghtViewController)
+    func showFoundFlyght(foundFlyghtView: UIViewController)
 }
 
 class SearchScreenViewController: UIViewController {
@@ -218,7 +218,7 @@ extension SearchScreenViewController: ISearchScreenViewController {
         activityIndicator.isAnimating ? activityIndicator.stopAnimating() : activityIndicator.startAnimating()
     }
     
-    func showFoundFlyght(foundFlyghtView: FoundFlyghtViewController) {
+    func showFoundFlyght(foundFlyghtView: UIViewController) {
         present(foundFlyghtView, animated: true, completion: nil)
     }
     

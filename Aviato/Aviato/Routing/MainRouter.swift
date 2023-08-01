@@ -13,7 +13,7 @@ class MainRouter {
     private let mainNavigationController: UINavigationController
     private let searchScreenViewController: SearchScreenViewController
     private let flyghtListNavigationController: UINavigationController
-    private let flyghtListViewController: FavoriteFlyghtListViewController
+    private let flyghtListViewController: FavoriteFlightsListViewController
     private let userProfileViewController: UserProfileViewController
     private let userProfileNavigationController: UINavigationController
     private let userID: String
